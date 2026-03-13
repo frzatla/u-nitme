@@ -2,6 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import { ArrowRight, Brain, Calendar, Sparkles } from "lucide-react";
+import { SignInButton } from "@clerk/nextjs";
 
 const features = [
   {
@@ -41,12 +42,9 @@ export default function Home() {
             <span className="text-xl font-medium tracking-tight">U-NIT ME</span>
           </button>
 
-          <button
-            onClick={() => router.push("/sign-in")}
-            className="text-base font-medium text-black/55 transition-colors hover:text-black"
-          >
-            Sign In
-          </button>
+          <SignInButton>
+            <button className="your-styles">Sign In</button>
+          </SignInButton>
         </div>
       </header>
 
@@ -83,10 +81,10 @@ export default function Home() {
 
       <section className="border-b border-black/10">
         <div className="mx-auto max-w-7xl px-6 py-20 md:px-10">
-          <div className="grid grid-cols-1 gap-12 md:grid-cols-3 md:gap-10">
+          <div className="grid grid-cols-1 gap-12 md:grid-cols-3 md:gap-10 justify-items-center">
             {features.map(({ title, description, icon: Icon }) => (
-              <div key={title} className="max-w-xs">
-                <div className="mb-6 flex h-14 w-14 items-center justify-center rounded-2xl border border-black/10 bg-white">
+              <div key={title} className="max-w-xs text-center">
+                <div className="mb-6 flex h-14 w-14 items-center justify-center rounded-2xl border border-black/10 bg-white mx-auto">
                   <Icon className="h-6 w-6 text-black/70" />
                 </div>
 
