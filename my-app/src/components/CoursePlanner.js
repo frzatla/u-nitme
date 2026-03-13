@@ -208,12 +208,15 @@ function getSummary(semesters) {
   };
 }
 
-function UnitCard({ unit }) {
+function UnitCard({ unit, onUnitClick }) {
   const pillStyle =
     categoryPillStyles[unit.category] || categoryPillStyles.Core;
 
   return (
-    <div className="rounded-[18px] border border-black/10 bg-white p-4 shadow-[0_1px_2px_rgba(0,0,0,0.04)] transition hover:-translate-y-0.5 hover:shadow-[0_8px_24px_rgba(0,0,0,0.06)]">
+    <button
+      onClick={() => onUnitClick?.(unit)}
+      className="w-full text-left rounded-[18px] border border-black/10 bg-white p-4 shadow-[0_1px_2px_rgba(0,0,0,0.04)] transition hover:-translate-y-0.5 hover:shadow-[0_8px_24px_rgba(0,0,0,0.06)] hover:border-black/20 cursor-pointer"
+    >
       <div className="flex items-start justify-between gap-3">
         <span
           className={`inline-flex rounded-full border px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.08em] ${pillStyle}`}
@@ -238,7 +241,7 @@ function UnitCard({ unit }) {
         </span>
         <Ellipsis className="h-4 w-4 text-black/18" />
       </div>
-    </div>
+    </button>
   );
 }
 
@@ -255,7 +258,7 @@ function EmptyUnitCard() {
   );
 }
 
-export default function CoursePlanner({ studentDetails, showHeader = true }) {
+export default function CoursePlanner({ studentDetails, showHeader = true, onUnitClick }) {
   const semesters = buildSemesterPlan(studentDetails);
 
   if (semesters.length === 0) {
@@ -450,7 +453,7 @@ export default function CoursePlanner({ studentDetails, showHeader = true }) {
                               className="border-r-0 border-b border-black/[0.05] p-4 last:border-b-0 md:border-r xl:border-b-0 xl:last:border-r-0"
                             >
                               {unit ? (
-                                <UnitCard unit={unit} />
+                                <UnitCard unit={unit} onUnitClick={onUnitClick} />
                               ) : (
                                 <EmptyUnitCard />
                               )}
