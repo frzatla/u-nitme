@@ -1,0 +1,80 @@
+{
+  "pro_id":"",
+  "student_id" : "",
+  "pro_year": "",
+  "pro_course_duration": "",
+  "pro_course_spec": "",
+  "pro_aos": "",
+  "pro_creds_total": "",
+  "semesters": [
+    {
+      "year": 1,
+      "semester": "First",
+      "slots": [
+        { "slot": 1, "unit_code": "", "unit_name": "", "type": "" },
+        { "slot": 2, "unit_code": "", "unit_name": "", "type": "" },
+        { "slot": 3, "unit_code": "", "unit_name": "", "type": "" },
+        { "slot": 4, "unit_code": "", "unit_name": "", "type": "" }
+      ]
+    },
+    {
+      "year": 1,
+      "semester": "Second",
+      "slots": [
+        { "slot": 1, "unit_code": "", "unit_name": "", "type": "" },
+        { "slot": 2, "unit_code": "", "unit_name": "", "type": "" },
+        { "slot": 3, "unit_code": "", "unit_name": "", "type": "" },
+        { "slot": 4, "unit_code": "", "unit_name": "", "type": "" }
+      ]
+    },
+    {
+      "year": 2,
+      "semester": "First",
+      "slots": [
+        { "slot": 1, "unit_code": "", "unit_name": "", "type": "" },
+        { "slot": 2, "unit_code": "", "unit_name": "", "type": "" },
+        { "slot": 3, "unit_code": "", "unit_name": "", "type": "" },
+        { "slot": 4, "unit_code": "", "unit_name": "", "type": "" }
+      ]
+    },
+    {
+      "year": 2,
+      "semester": "Second",
+      "slots": [
+        { "slot": 1, "unit_code": "", "unit_name": "", "type": "" },
+        { "slot": 2, "unit_code": "", "unit_name": "", "type": "" },
+        { "slot": 3, "unit_code": "", "unit_name": "", "type": "" },
+        { "slot": 4, "unit_code": "", "unit_name": "", "type": "" }
+      ]
+    },
+    {
+      "year": 3,
+      "semester": "First",
+      "slots": [
+        { "slot": 1, "unit_code": "", "unit_name": "", "type": "" },
+        { "slot": 2, "unit_code": "", "unit_name": "", "type": "" },
+        { "slot": 3, "unit_code": "", "unit_name": "", "type": "" },
+        { "slot": 4, "unit_code": "", "unit_name": "", "type": "" }
+      ]
+    },
+    {
+      "year": 3,
+      "semester": "Second",
+      "slots": [
+        { "slot": 1, "unit_code": "", "unit_name": "", "type": "" },
+        { "slot": 2, "unit_code": "", "unit_name": "", "type": "" },
+        { "slot": 3, "unit_code": "", "unit_name": "", "type": "" },
+        { "slot": 4, "unit_code": "", "unit_name": "", "type": "" }
+      ]
+    }
+  ],
+  "notes": {
+    "Credit points": "",
+    "Year Level Requirements": "",
+    "Unit requisites": "All pre-requisite and co-requisite requirements must be undertaken to be able to enrol into a specific unit",
+    "Duration of degree": "",
+    "Time limit": "",
+    "Monash University handbook": "Students should follow the course requirements for the year the course was commenced https://handbook.monash.edu/browse/By%20Faculty/FacultyofInformationTechnology"
+  },
+  "ibl_note": "* Industry Based Learning (IBL)"
+}
