@@ -1,22 +1,45 @@
 "use client";
 
+import { useState } from "react";
 import { Sparkles, ChevronDown } from "lucide-react";
 
 const inputClass =
   "w-full rounded-xl border border-black/10 bg-black/[0.03] px-4 py-3 text-sm text-black placeholder:text-black/30 outline-none transition-all focus:border-black/20 focus:bg-white focus:ring-4 focus:ring-black/[0.03]";
 
+const disabledInputClass =
+  "disabled:cursor-not-allowed disabled:border-black/6 disabled:bg-black/[0.02] disabled:text-black/25 disabled:placeholder:text-black/18";
+
+const degreeOptionsByFaculty = {
+  IT: [
+    { value: "COMPSCI", label: "COMPSCI" },
+    { value: "IT", label: "IT" },
+  ],
+  Arts: [
+    { value: "International Relations", label: "International Relations" },
+    { value: "Design", label: "Design" },
+    { value: "Linguistics", label: "Linguistics" },
+  ],
+};
+
 export default function StudentDetailsForm({ onSubmit }) {
+  const [faculty, setFaculty] = useState("");
+  const [degree, setDegree] = useState("");
+  const availableDegrees = degreeOptionsByFaculty[faculty] || [];
+
   const handleSubmit = (e) => {
     e.preventDefault();
 
     const formData = new FormData(e.currentTarget);
+    const selectedDegree = formData.get("degree");
 
     const data = {
       university: formData.get("university"),
       faculty: formData.get("faculty"),
-      specialisation: formData.get("specialisation"),
-      major: formData.get("major"),
-      minor: formData.get("minor"),
+      degree: selectedDegree,
+      specialisation:
+        selectedDegree === "COMPSCI" ? formData.get("specialisation") : "",
+      major: selectedDegree === "IT" ? formData.get("major") : "",
+      minor: selectedDegree === "IT" ? formData.get("minor") : "",
       yearStart: formData.get("yearStart"),
       yearEnd: formData.get("yearEnd"),
     };
@@ -70,8 +93,20 @@ export default function StudentDetailsForm({ onSubmit }) {
                   id="faculty"
                   name="faculty"
                   required
+                  value={faculty}
+                  onChange={(e) => {
+                    const nextFaculty = e.target.value;
+                    setFaculty(nextFaculty);
+
+                    const degreeStillValid = degreeOptionsByFaculty[
+                      nextFaculty
+                    ]?.some((option) => option.value === degree);
+
+                    if (!degreeStillValid) {
+                      setDegree("");
+                    }
+                  }}
                   className={`${inputClass} appearance-none pr-10`}
-                  defaultValue=""
                 >
                   <option value="" disabled>
                     Select faculty
@@ -92,35 +127,82 @@ export default function StudentDetailsForm({ onSubmit }) {
             Course Details
           </p>
 
-          <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
+          <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+            <div>
+              <label
+                htmlFor="degree"
+                className="mb-2 block text-sm font-medium text-black/75"
+              >
+                Degree <span className="text-black/30">*</span>
+              </label>
+
+              <div className="relative">
+                <select
+                  id="degree"
+                  name="degree"
+                  required
+                  value={degree}
+                  onChange={(e) => setDegree(e.target.value)}
+                  disabled={!faculty}
+                  className={`${inputClass} ${disabledInputClass} appearance-none pr-10`}
+                >
+                  <option value="" disabled>
+                    {faculty ? "Select degree" : "Select faculty first"}
+                  </option>
+                  {availableDegrees.map((option) => (
+                    <option key={option.value} value={option.value}>
+                      {option.label}
+                    </option>
+                  ))}
+                </select>
+
+                <ChevronDown className="pointer-events-none absolute right-4 top-1/2 h-4 w-4 -translate-y-1/2 text-black/35" />
+              </div>
+            </div>
+
             <div>
               <label
                 htmlFor="specialisation"
                 className="mb-2 block text-sm font-medium text-black/75"
               >
-                Specialisation <span className="text-black/30">*</span>
+                Specialisation{" "}
+                {degree === "COMPSCI" ? (
+                  <span className="text-black/30">*</span>
+                ) : (
+                  <span className="text-black/25">(COMPSCI only)</span>
+                )}
               </label>
               <input
                 id="specialisation"
                 name="specialisation"
                 placeholder="e.g., Software Development"
-                required
-                className={inputClass}
+                required={degree === "COMPSCI"}
+                disabled={!degree || degree === "IT"}
+                className={`${inputClass} ${disabledInputClass}`}
               />
             </div>
+          </div>
 
+          <div className="mt-4 grid grid-cols-1 gap-4 md:grid-cols-2">
             <div>
               <label
                 htmlFor="major"
                 className="mb-2 block text-sm font-medium text-black/75"
               >
-                Major
+                Major{" "}
+                {degree === "IT" ? (
+                  <span className="text-black/30">*</span>
+                ) : (
+                  <span className="text-black/25">(IT only)</span>
+                )}
               </label>
               <input
                 id="major"
                 name="major"
                 placeholder="e.g., Computer Science"
-                className={inputClass}
+                required={degree === "IT"}
+                disabled={!degree || degree === "COMPSCI"}
+                className={`${inputClass} ${disabledInputClass}`}
               />
             </div>
 
@@ -129,13 +211,14 @@ export default function StudentDetailsForm({ onSubmit }) {
                 htmlFor="minor"
                 className="mb-2 block text-sm font-medium text-black/75"
               >
-                Minor <span className="text-black/25">(optional)</span>
+                Minor <span className="text-black/25">(IT optional)</span>
               </label>
               <input
                 id="minor"
                 name="minor"
                 placeholder="e.g., Mathematics"
-                className={inputClass}
+                disabled={!degree || degree === "COMPSCI"}
+                className={`${inputClass} ${disabledInputClass}`}
               />
             </div>
           </div>
