@@ -441,7 +441,7 @@ export default function Home() {
 
                 <div>
                   <div className="text-4xl font-semibold tracking-tight text-black/55">
-                    5
+                    6
                   </div>
                   <div className="mt-1 text-sm text-black/30">Team Members</div>
                 </div>
