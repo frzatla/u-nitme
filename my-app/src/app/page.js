@@ -1,41 +1,71 @@
 "use client";
 
 import { useRouter } from "next/navigation";
+import { useMemo, useRef, useState } from "react";
+import {
+  motion,
+  AnimatePresence,
+  useScroll,
+  useTransform,
+} from "framer-motion";
 import {
   ArrowRight,
+  ArrowUpRight,
   Brain,
   Calendar,
   Sparkles,
   Quote,
   Zap,
   MousePointerClick,
-  ChevronRight,
   GraduationCap,
   Clock,
   Star,
   Heart,
   Users,
+  BookOpen,
+  Layers,
+  Target,
+  Minus,
+  Plus,
 } from "lucide-react";
 import { SignInButton } from "@clerk/nextjs";
 
-const features = [
+const capabilities = [
   {
-    title: "AI-Powered",
-    description:
-      "Generate personalized course plans based on your interests, major, and goals.",
+    num: "01",
+    title: "AI-Powered Engine",
+    desc: "Maps course requirements, prerequisites, and your academic direction into a plan that feels structured instead of chaotic.",
     icon: Brain,
   },
   {
-    title: "Smart Scheduling",
-    description:
-      "Units organized across semesters with an intuitive visual layout.",
+    num: "02",
+    title: "Semester Planning",
+    desc: "Builds a cleaner semester-by-semester breakdown so you can think ahead without getting buried in handbook pages.",
     icon: Calendar,
   },
   {
-    title: "Personalized",
-    description:
-      "Tailored recommendations matching your university, course, and interests.",
-    icon: Sparkles,
+    num: "03",
+    title: "Major + Minor Support",
+    desc: "Designed to handle real student complexity — majors, minors, specialisations, and changing priorities.",
+    icon: Layers,
+  },
+  {
+    num: "04",
+    title: "Goal-Aware Suggestions",
+    desc: "Recommendations are shaped around what you actually want to pursue, not just a generic checklist.",
+    icon: Target,
+  },
+  {
+    num: "05",
+    title: "Fast Regeneration",
+    desc: "Changed your mind? Update your details and generate a fresh course structure in seconds.",
+    icon: Zap,
+  },
+  {
+    num: "06",
+    title: "Plan With Confidence",
+    desc: "Use the generated plan as a strong starting point before checking official handbook requirements.",
+    icon: BookOpen,
   },
 ];
 
@@ -43,19 +73,19 @@ const steps = [
   {
     num: "01",
     title: "Drop your details",
-    desc: "University, faculty, major, specialisation — the basics. Takes about 15 seconds.",
+    desc: "University, faculty, specialisation, and timeline — just the essentials.",
     icon: MousePointerClick,
   },
   {
     num: "02",
-    title: "AI does its thing",
-    desc: "Our engine maps your details into a cleaner semester-by-semester course plan.",
+    title: "AI does the sorting",
+    desc: "The system organizes your study direction into something readable, balanced, and easier to act on.",
     icon: Zap,
   },
   {
     num: "03",
     title: "Get your plan",
-    desc: "A clear study plan you can review, screenshot, and build on with less stress.",
+    desc: "Review a cleaner semester-by-semester path and refine it from there.",
     icon: GraduationCap,
   },
 ];
@@ -79,41 +109,59 @@ const reviews = [
     text: "I liked that it gave structure to everything. It helped me think more clearly about what I actually want to study.",
     rating: 5,
   },
+  {
+    name: "Liam W.",
+    course: "IT, UTS",
+    text: "The best part is that it removes the messy first step. I could finally focus on decisions instead of decoding handbook pages.",
+    rating: 4,
+  },
+  {
+    name: "Aisha R.",
+    course: "Cybersecurity, RMIT",
+    text: "Clean, simple, and actually useful. It feels like something made by people who understand how stressful this process is.",
+    rating: 5,
+  },
+  {
+    name: "Daniel C.",
+    course: "Information Systems, UQ",
+    text: "It made course planning feel much less intimidating. I wish I had this when I first started uni.",
+    rating: 5,
+  },
 ];
 
 const faqs = [
   {
     q: "Is it actually free?",
-    a: "Yes. This is built to make course planning easier for students without adding more friction.",
+    a: "Yes. The goal is to make planning easier for students without adding more cost or complexity.",
   },
   {
     q: "Will it work for every university?",
-    a: "Not all universities yet, but the goal is to expand support over time. Right now the experience is focused and simple.",
+    a: "Not every university immediately, but the intention is to expand support progressively over time.",
   },
   {
     q: "Can I trust the recommendations fully?",
-    a: "Use it as a planning assistant. It helps organize your options, but you should still cross-check with official university information before final enrolment decisions.",
+    a: "Use the generated output as a planning assistant. You should still verify final enrolment decisions against official university information.",
   },
   {
     q: "What if I change my major or interests later?",
-    a: "That’s fine. You can come back, update your details, and generate a new plan that better fits your new direction.",
+    a: "That’s part of the point. You can return, update your inputs, and generate a new plan that better reflects your direction.",
   },
 ];
 
 const valueCards = [
   {
     title: "Student-First",
-    description: "Designed around real student pain points",
+    description: "Built around real student planning pain points",
     icon: Heart,
   },
   {
     title: "Fast AF",
-    description: "Plans generated in under 30 seconds",
+    description: "Useful structure in under 30 seconds",
     icon: Zap,
   },
   {
     title: "Community",
-    description: "Thousands of students already on board",
+    description: "Designed for the students who need this most",
     icon: Users,
   },
   {
@@ -123,21 +171,187 @@ const valueCards = [
   },
 ];
 
-export default function Home() {
-  const router = useRouter();
+function RevealLine({ children, delay = 0, className = "" }) {
+  return (
+    <div className={`overflow-hidden pb-[0.12em] ${className}`}>
+      <motion.div
+        initial={{ y: "110%", opacity: 0 }}
+        whileInView={{ y: "0%", opacity: 1 }}
+        viewport={{ once: true, amount: 0.6 }}
+        transition={{ duration: 0.9, delay, ease: [0.22, 1, 0.36, 1] }}
+      >
+        {children}
+      </motion.div>
+    </div>
+  );
+}
+function HeroRevealLine({ children, delay = 0, className = "" }) {
+  return (
+    <div className={`overflow-hidden pb-[0.12em] ${className}`}>
+      <motion.div
+        initial={{ y: "110%", opacity: 0 }}
+        animate={{ y: "0%", opacity: 1 }}
+        transition={{ duration: 0.9, delay, ease: [0.22, 1, 0.36, 1] }}
+      >
+        {children}
+      </motion.div>
+    </div>
+  );
+}
+
+function FadeUp({ children, delay = 0, className = "" }) {
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 28 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-80px" }}
+      transition={{ duration: 0.8, delay, ease: [0.22, 1, 0.36, 1] }}
+      className={className}
+    >
+      {children}
+    </motion.div>
+  );
+}
+
+function StaggerGrid({ children, className = "" }) {
+  return (
+    <motion.div
+      initial="hidden"
+      whileInView="show"
+      viewport={{ once: true, margin: "-80px" }}
+      variants={{
+        hidden: {},
+        show: {
+          transition: {
+            staggerChildren: 0.08,
+          },
+        },
+      }}
+      className={className}
+    >
+      {children}
+    </motion.div>
+  );
+}
+
+function StaggerItem({ children, className = "" }) {
+  return (
+    <motion.div
+      variants={{
+        hidden: { opacity: 0, y: 24 },
+        show: {
+          opacity: 1,
+          y: 0,
+          transition: { duration: 0.75, ease: [0.22, 1, 0.36, 1] },
+        },
+      }}
+      className={className}
+    >
+      {children}
+    </motion.div>
+  );
+}
+
+function FaqItem({ faq, index, openIndex, setOpenIndex }) {
+  const isOpen = openIndex === index;
 
   return (
-    <main className="min-h-screen bg-[#f5f5f4] text-black">
-      <header className="sticky top-0 z-30 border-b border-black/10 bg-[#f5f5f4]/85 backdrop-blur-md">
+    <motion.div
+      initial={{ opacity: 0, y: 18 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-50px" }}
+      transition={{
+        duration: 0.7,
+        delay: index * 0.05,
+        ease: [0.22, 1, 0.36, 1],
+      }}
+      className="border-b border-white/[0.06]"
+    >
+      <button
+        onClick={() => setOpenIndex(isOpen ? null : index)}
+        className="flex w-full items-center justify-between gap-6 py-7 text-left md:py-9"
+      >
+        <div className="flex items-center gap-5">
+          <span className="text-xs tracking-[0.2em] text-white/15">
+            0{index + 1}
+          </span>
+          <span className="text-lg text-white/80 md:text-xl">{faq.q}</span>
+        </div>
+
+        <motion.div
+          animate={{ rotate: isOpen ? 180 : 0 }}
+          transition={{ duration: 0.35 }}
+          className="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full border border-white/[0.1]"
+        >
+          {isOpen ? (
+            <Minus className="h-3.5 w-3.5 text-white/40" />
+          ) : (
+            <Plus className="h-3.5 w-3.5 text-white/40" />
+          )}
+        </motion.div>
+      </button>
+
+      <AnimatePresence initial={false}>
+        {isOpen && (
+          <motion.div
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: "auto", opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
+            className="overflow-hidden"
+          >
+            <div className="pb-8 pl-10 pr-12 md:pl-14">
+              <p className="max-w-2xl text-sm leading-7 text-white/40 md:text-base">
+                {faq.a}
+              </p>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </motion.div>
+  );
+}
+
+export default function Home() {
+  const router = useRouter();
+  const [openFaq, setOpenFaq] = useState(0);
+
+  const heroRef = useRef(null);
+  const { scrollYProgress } = useScroll({
+    target: heroRef,
+    offset: ["start start", "end start"],
+  });
+
+  const heroY = useTransform(scrollYProgress, [0, 1], [0, 120]);
+  const heroOpacity = useTransform(scrollYProgress, [0, 0.7], [1, 0.2]);
+  const glowY = useTransform(scrollYProgress, [0, 1], [0, -80]);
+
+  const marqueeItems = useMemo(
+    () => [
+      "AI-Powered",
+      "Semester Planning",
+      "Prerequisites",
+      "Course Mapping",
+      "Smarter Scheduling",
+      "Major + Minor Support",
+      "Built for Students",
+      "Free Forever",
+    ],
+    [],
+  );
+
+  return (
+    <main className="min-h-screen overflow-x-hidden bg-black text-white">
+      <header className="sticky top-0 z-40 border-b border-white/[0.06] bg-black/75 backdrop-blur-xl">
         <div className="mx-auto flex h-24 max-w-7xl items-center justify-between px-6 md:px-10">
           <button
             onClick={() => router.push("/")}
             className="flex items-center gap-3 transition-opacity hover:opacity-80"
           >
-            <span className="flex h-11 w-11 items-center justify-center rounded-2xl bg-black text-lg font-semibold text-white shadow-sm">
+            <span className="flex h-10 w-10 items-center justify-center rounded-xl border border-white/15 bg-white/[0.03] text-sm font-semibold text-white">
               U
             </span>
-            <span className="text-xl font-semibold tracking-tight">
+            <span className="text-sm font-medium uppercase tracking-[0.18em] text-white/70">
               U-NIT ME
             </span>
           </button>
@@ -147,351 +361,532 @@ export default function Home() {
             forceRedirectUrl="/dashboard"
             fallbackRedirectUrl="/dashboard"
           >
-            <button className="rounded-xl px-4 py-2 text-sm font-medium text-black/60 transition hover:bg-black/[0.04] hover:text-black">
+            <button className="inline-flex items-center gap-2 text-xs uppercase tracking-[0.18em] text-white/45 transition hover:text-white">
               Sign In
+              <ArrowUpRight className="h-3.5 w-3.5" />
             </button>
           </SignInButton>
         </div>
       </header>
 
-      <section className="border-b border-black/10">
-        <div className="mx-auto flex min-h-[620px] max-w-6xl items-center justify-center px-6 py-24 text-center md:px-10">
-          <div className="w-full max-w-4xl">
-            <div className="mb-10 inline-flex items-center gap-2 rounded-full border border-black/10 bg-white px-5 py-2.5 shadow-[0_1px_2px_rgba(0,0,0,0.03)]">
-              <Sparkles className="h-4 w-4 text-black/70" />
-              <span className="text-sm font-medium text-black/60">
-                AI-Powered Course Planning
-              </span>
-            </div>
-
-            <h1 className="text-5xl font-semibold leading-[0.95] tracking-[-0.06em] sm:text-6xl md:text-7xl lg:text-8xl">
-              <span className="block text-black">Plan your degree,</span>
-              <span className="block text-black/28">without the handbook.</span>
-            </h1>
-
-            <p className="mx-auto mt-10 max-w-3xl text-lg leading-8 text-black/45 md:text-xl">
-              Reading in 2026??? Hell nahhh — just drop your details and let AI
-              sort your entire degree out. Semester-by-semester, no stress.
-            </p>
-
-            <div className="mt-12 flex items-center justify-center gap-4">
-              <button
-                onClick={() => router.push("/sign-in")}
-                className="inline-flex items-center gap-3 rounded-2xl bg-black px-8 py-4 text-lg font-semibold text-white shadow-sm transition hover:-translate-y-0.5 hover:bg-black/90"
-              >
-                Get Started
-                <ArrowRight className="h-5 w-5" />
-              </button>
-
-              <button
-                onClick={() =>
-                  document
-                    .getElementById("how-it-works")
-                    ?.scrollIntoView({ behavior: "smooth" })
-                }
-                className="rounded-2xl border border-black/10 bg-white px-6 py-4 text-sm font-medium text-black/65 transition hover:border-black/20 hover:text-black"
-              >
-                See how it works
-              </button>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section className="border-b border-black/10 bg-white">
-        <div className="mx-auto max-w-7xl px-6 py-20 md:px-10">
-          <div className="grid grid-cols-1 gap-12 md:grid-cols-3 md:gap-10 justify-items-center">
-            {features.map(({ title, description, icon: Icon }) => (
-              <div
-                key={title}
-                className="group max-w-xs rounded-3xl border border-transparent p-4 text-center transition hover:border-black/8 hover:bg-white"
-              >
-                <div className="mx-auto mb-6 flex h-14 w-14 items-center justify-center rounded-2xl border border-black/10 bg-[#fafaf9] shadow-[0_1px_2px_rgba(0,0,0,0.03)] transition group-hover:-translate-y-0.5">
-                  <Icon className="h-6 w-6 text-black/70" />
-                </div>
-
-                <h2 className="text-2xl font-semibold tracking-tight">
-                  {title}
-                </h2>
-
-                <p className="mt-3 text-base leading-7 text-black/45">
-                  {description}
-                </p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
       <section
-        id="how-it-works"
-        className="border-b border-black/10 bg-black/[0.02]"
+        ref={heroRef}
+        className="relative overflow-hidden border-b border-white/[0.06]"
       >
-        <div className="mx-auto max-w-6xl px-6 py-24 md:px-10">
-          <div className="mb-14 text-center">
-            <div className="mb-3 text-xs uppercase tracking-[0.18em] text-black/30">
-              How It Works
-            </div>
-            <h2 className="text-3xl font-semibold tracking-tight md:text-4xl">
-              Three steps. That&apos;s it.
-            </h2>
-          </div>
+        <motion.div
+          style={{ y: glowY }}
+          className="absolute inset-0 bg-[radial-gradient(ellipse_70%_45%_at_50%_0%,rgba(255,255,255,0.09),transparent)]"
+        />
+        <div className="absolute inset-0 bg-[linear-gradient(to_bottom,transparent,rgba(255,255,255,0.015))]" />
 
-          <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
-            {steps.map((step) => (
-              <div
-                key={step.num}
-                className="group rounded-3xl border border-black/10 bg-white p-6 shadow-[0_1px_2px_rgba(0,0,0,0.02)] transition hover:-translate-y-1 hover:border-black/20 hover:shadow-[0_12px_30px_rgba(0,0,0,0.05)]"
-              >
-                <div className="mb-4 flex items-center gap-3">
-                  <span className="text-3xl font-semibold tracking-tighter text-black/10">
-                    {step.num}
-                  </span>
-                  <div className="flex h-9 w-9 items-center justify-center rounded-xl border border-black/10 bg-[#fafaf9]">
-                    <step.icon className="h-4 w-4 text-black/50" />
-                  </div>
-                </div>
-
-                <h3 className="mb-2 text-lg font-semibold">{step.title}</h3>
-                <p className="text-sm leading-relaxed text-black/45">
-                  {step.desc}
-                </p>
+        <motion.div
+          style={{ y: heroY, opacity: heroOpacity }}
+          className="relative mx-auto flex min-h-[92vh] max-w-7xl items-end px-6 pb-20 pt-24 md:px-10 md:pb-24"
+        >
+          <div className="w-full">
+            <FadeUp delay={0.1}>
+              <div className="mb-8 text-xs uppercase tracking-[0.3em] text-white/20">
+                Edition — 2026
               </div>
-            ))}
+            </FadeUp>
+
+            <div className="max-w-6xl">
+              <HeroRevealLine>
+                <h1 className="text-[clamp(3.5rem,10vw,8.5rem)] font-semibold leading-[0.88] tracking-[-0.08em] text-white">
+                  Plan your
+                </h1>
+              </HeroRevealLine>
+              <HeroRevealLine delay={0.08}>
+                <h1 className="text-[clamp(3.5rem,10vw,8.5rem)] font-semibold leading-[0.88] tracking-[-0.08em] text-white/18">
+                  entire degree.
+                </h1>
+              </HeroRevealLine>
+            </div>
+
+            <div className="mt-12 flex flex-col justify-between gap-10 md:flex-row md:items-end">
+              <FadeUp delay={0.25}>
+                <p className="max-w-md text-base leading-8 text-white/28 md:text-lg">
+                  Reading in 2026??? Hell nahhh — just drop your details and let
+                  AI sort your entire degree out. Semester-by-semester, no
+                  stress.
+                </p>
+              </FadeUp>
+
+              <FadeUp delay={0.35}>
+                <div className="flex items-center gap-5">
+                  <button
+                    onClick={() => router.push("/sign-in")}
+                    className="group inline-flex items-center gap-4"
+                  >
+                    <span className="flex h-16 w-16 items-center justify-center rounded-full border border-white/15 transition duration-500 group-hover:scale-105 group-hover:bg-white">
+                      <ArrowRight className="h-5 w-5 text-white/70 transition duration-500 group-hover:text-black" />
+                    </span>
+                    <span className="text-xs uppercase tracking-[0.18em] text-white/40 transition duration-500 group-hover:text-white/70">
+                      Get Started
+                    </span>
+                  </button>
+
+                  <button
+                    onClick={() =>
+                      document
+                        .getElementById("process")
+                        ?.scrollIntoView({ behavior: "smooth" })
+                    }
+                    className="rounded-full border border-white/[0.08] px-5 py-3 text-xs uppercase tracking-[0.18em] text-white/35 transition hover:border-white/[0.18] hover:text-white/65"
+                  >
+                    Explore
+                  </button>
+                </div>
+              </FadeUp>
+            </div>
           </div>
-        </div>
+        </motion.div>
       </section>
 
-      <section className="border-b border-black/10 bg-white">
-        <div className="mx-auto max-w-6xl px-6 py-24 md:px-10">
-          <div className="mb-14 text-center">
-            <div className="mb-3 text-xs uppercase tracking-[0.18em] text-black/30">
-              Student Reviews
-            </div>
-            <h2 className="mb-3 text-3xl font-semibold tracking-tight md:text-4xl">
-              Don&apos;t take our word for it
-            </h2>
-            <p className="text-sm text-black/40">
-              Real students. Real plans. Real relief.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3">
-            {reviews.map((review, i) => (
+      <section className="border-b border-white/[0.06] py-6">
+        <div className="mx-auto max-w-7xl overflow-hidden px-6 md:px-10">
+          <motion.div
+            animate={{ x: ["0%", "-50%"] }}
+            transition={{ duration: 22, repeat: Infinity, ease: "linear" }}
+            className="flex w-max gap-8"
+          >
+            {[...marqueeItems, ...marqueeItems].map((item, i) => (
               <div
                 key={i}
-                className="group flex flex-col rounded-3xl border border-black/10 bg-[#fcfcfb] p-6 shadow-[0_1px_2px_rgba(0,0,0,0.02)] transition hover:-translate-y-1 hover:border-black/20 hover:shadow-[0_16px_30px_rgba(0,0,0,0.04)]"
+                className="flex items-center gap-3 text-xs uppercase tracking-[0.18em] text-white/18"
               >
-                <Quote className="mb-4 h-5 w-5 text-black/10" />
-
-                <p className="mb-5 flex-1 text-sm leading-relaxed text-black/60">
-                  &quot;{review.text}&quot;
-                </p>
-
-                <div className="flex items-center justify-between border-t border-black/[0.06] pt-4">
-                  <div>
-                    <div className="text-sm font-medium">{review.name}</div>
-                    <div className="text-xs text-black/35">{review.course}</div>
-                  </div>
-
-                  <div className="flex gap-0.5">
-                    {Array.from({ length: review.rating }).map((_, j) => (
-                      <Star
-                        key={j}
-                        className="h-3.5 w-3.5 fill-black/70 text-black/70"
-                      />
-                    ))}
-                  </div>
-                </div>
+                <span className="h-1.5 w-1.5 rounded-full bg-white/10" />
+                {item}
               </div>
             ))}
+          </motion.div>
+        </div>
+      </section>
+
+      <section className="px-6 py-28 md:px-10 md:py-40">
+        <div className="mx-auto max-w-7xl">
+          <div className="max-w-5xl">
+            <RevealLine>
+              <p className="text-3xl font-semibold leading-[1.08] tracking-[-0.05em] text-white/75 md:text-5xl lg:text-6xl">
+                The smarter way to plan university.
+              </p>
+            </RevealLine>
+            <RevealLine delay={0.08}>
+              <p className="mt-2 text-3xl font-semibold leading-[1.08] tracking-[-0.05em] text-white/18 md:text-5xl lg:text-6xl">
+                Built for students who are done with handbook chaos.
+              </p>
+            </RevealLine>
           </div>
         </div>
       </section>
 
-      <section className="border-b border-black/10 bg-black/[0.02]">
-        <div className="mx-auto max-w-6xl px-6 py-24 md:px-10">
-          <div className="mb-16 text-center">
-            <div className="mb-3 text-xs uppercase tracking-[0.18em] text-black/30">
-              About U-NIT ME
+      <section className="border-t border-white/[0.06] px-6 md:px-10">
+        <div className="mx-auto max-w-7xl py-28 md:py-36">
+          <FadeUp>
+            <div className="mb-16 text-xs uppercase tracking-[0.3em] text-white/15">
+              Capabilities
             </div>
-            <h2 className="mb-4 text-3xl font-semibold tracking-tight md:text-5xl">
-              Built by students,{" "}
-              <span className="text-black/35">for students.</span>
-            </h2>
-            <p className="mx-auto max-w-md text-sm text-black/40 md:text-base">
-              We got tired of the handbook grind. So we made something better.
-            </p>
-          </div>
+          </FadeUp>
 
-          <div className="mb-14 grid gap-6 md:grid-cols-12">
-            <div className="relative overflow-hidden rounded-[28px] border border-black/10 md:col-span-7">
-              <img
-                src="https://images.unsplash.com/photo-1513258496099-48168024aec0?auto=format&fit=crop&w=1200&q=80"
-                alt="Student studying"
-                className="h-[540px] w-full object-cover grayscale transition duration-700 hover:grayscale-0"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/55 via-black/5 to-transparent" />
-              <div className="absolute bottom-0 left-0 p-7">
-                <p className="max-w-sm text-lg leading-relaxed text-white/95">
-                  &quot;We spent more time reading the handbook than actually
-                  studying. That had to change.&quot;
-                </p>
-              </div>
-            </div>
-
-            <div className="flex flex-col gap-6 md:col-span-5">
-              <div className="relative overflow-hidden rounded-[28px] border border-black/10">
-                <img
-                  src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=1200&q=80"
-                  alt="Students collaborating"
-                  className="h-[257px] w-full object-cover grayscale transition duration-700 hover:grayscale-0"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent" />
-                <div className="absolute bottom-4 left-5 text-xs font-medium uppercase tracking-[0.18em] text-white/85">
-                  The Team
-                </div>
-              </div>
-
-              <div className="relative overflow-hidden rounded-[28px] border border-black/10">
-                <img
-                  src="https://images.unsplash.com/photo-1515879218367-8466d910aaa4?auto=format&fit=crop&w=1200&q=80"
-                  alt="Planning workspace"
-                  className="h-[257px] w-full object-cover grayscale transition duration-700 hover:grayscale-0"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent" />
-                <div className="absolute bottom-4 left-5 text-xs font-medium uppercase tracking-[0.18em] text-white/85">
-                  The Problem
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div className="grid items-start gap-12 md:grid-cols-2">
-            <div className="space-y-6 text-lg leading-relaxed text-black/50">
-              <p>
-                We got tired of spending hours cross-referencing handbooks,
-                prerequisite chains, and course maps just to figure out what to
-                enrol in next semester.
-              </p>
-
-              <p>
-                So we built U-NIT ME — an AI-powered tool that does all of that
-                in seconds. No more guesswork, no more anxiety, no more
-                &quot;wait, can I even take that unit in semester 2?&quot;
-              </p>
-
-              <p>
-                We&apos;re a small team of uni students who believe course
-                planning shouldn&apos;t require a PhD in spreadsheet management.
-              </p>
-
-              <div className="flex items-center gap-10 border-t border-black/10 pt-6">
-                <div>
-                  <div className="text-4xl font-semibold tracking-tight text-black/55">
-                    2026
-                  </div>
-                  <div className="mt-1 text-sm text-black/30">Founded</div>
+          {capabilities.map(({ num, title, desc, icon: Icon }, i) => (
+            <FadeUp key={num} delay={i * 0.04}>
+              <div className="group grid grid-cols-12 items-start gap-6 border-t border-white/[0.06] py-10 md:py-14">
+                <div className="col-span-2 md:col-span-1">
+                  <span className="text-xs tracking-[0.18em] text-white/12">
+                    {num}
+                  </span>
                 </div>
 
-                <div className="h-12 w-px bg-black/10" />
-
-                <div>
-                  <div className="text-4xl font-semibold tracking-tight text-black/55">
-                    6
-                  </div>
-                  <div className="mt-1 text-sm text-black/30">Team Members</div>
-                </div>
-
-                <div className="h-12 w-px bg-black/10" />
-
-                <div>
-                  <div className="text-4xl font-semibold tracking-tight text-black/55">
-                    ∞
-                  </div>
-                  <div className="mt-1 text-sm text-black/30">
-                    Handbook Rage
+                <div className="col-span-10 md:col-span-4">
+                  <div className="flex items-center gap-4">
+                    <Icon className="h-4 w-4 flex-shrink-0 text-white/20 transition group-hover:text-white/55" />
+                    <h3 className="text-lg font-medium tracking-tight text-white/80 transition group-hover:text-white md:text-xl">
+                      {title}
+                    </h3>
                   </div>
                 </div>
-              </div>
-            </div>
 
-            <div className="grid grid-cols-2 gap-5">
-              {valueCards.map(({ title, description, icon: Icon }) => (
-                <div
-                  key={title}
-                  className="rounded-3xl border border-black/10 bg-white p-6 text-center shadow-[0_1px_2px_rgba(0,0,0,0.02)] transition hover:-translate-y-1 hover:border-black/20 hover:shadow-[0_14px_30px_rgba(0,0,0,0.04)]"
-                >
-                  <Icon className="mx-auto mb-4 h-6 w-6 text-black/45" />
-                  <div className="text-lg font-semibold">{title}</div>
-                  <p className="mt-2 text-sm leading-relaxed text-black/35">
-                    {description}
+                <div className="col-span-10 col-start-3 md:col-span-5 md:col-start-7">
+                  <p className="text-sm leading-7 text-white/26 transition group-hover:text-white/40 md:text-base">
+                    {desc}
                   </p>
                 </div>
-              ))}
+
+                <div className="hidden md:flex md:col-span-2 md:justify-end">
+                  <ArrowUpRight className="h-4 w-4 translate-y-1 text-white/0 transition duration-500 group-hover:translate-y-0 group-hover:text-white/25" />
+                </div>
+              </div>
+            </FadeUp>
+          ))}
+        </div>
+      </section>
+
+      <section id="process" className="bg-white px-6 text-black md:px-10">
+        <div className="mx-auto max-w-7xl py-28 md:py-36">
+          <div className="mb-20 grid gap-12 md:grid-cols-2 md:items-end">
+            <div>
+              <FadeUp>
+                <div className="mb-5 text-xs uppercase tracking-[0.3em] text-black/20">
+                  Process
+                </div>
+              </FadeUp>
+              <RevealLine>
+                <h2 className="text-5xl font-semibold leading-[0.92] tracking-[-0.06em] md:text-7xl">
+                  Three steps.
+                </h2>
+              </RevealLine>
+              <RevealLine delay={0.08}>
+                <h2 className="text-5xl font-semibold leading-[0.92] tracking-[-0.06em] text-black/15 md:text-7xl">
+                  That&apos;s it.
+                </h2>
+              </RevealLine>
             </div>
+
+            <FadeUp delay={0.18}>
+              <p className="max-w-sm text-base leading-8 text-black/38">
+                No handbook rabbit holes. No course-planning spreadsheet
+                nightmares. Just a cleaner path from confusion to clarity.
+              </p>
+            </FadeUp>
+          </div>
+
+          {steps.map(({ num, title, desc, icon: Icon }, i) => (
+            <FadeUp key={num} delay={i * 0.06}>
+              <div className="grid grid-cols-12 gap-8 border-t border-black/[0.07] py-12 md:py-16">
+                <div className="col-span-3 md:col-span-2">
+                  <span className="text-6xl font-semibold tracking-[-0.08em] text-black/[0.05] md:text-8xl">
+                    {num}
+                  </span>
+                </div>
+
+                <div className="col-span-9 md:col-span-3">
+                  <div className="flex items-center gap-3">
+                    <Icon className="h-5 w-5 text-black/25" />
+                    <h3 className="text-xl font-semibold tracking-tight md:text-2xl">
+                      {title}
+                    </h3>
+                  </div>
+                </div>
+
+                <div className="col-span-9 col-start-4 md:col-span-5 md:col-start-7">
+                  <p className="text-sm leading-8 text-black/42 md:text-base">
+                    {desc}
+                  </p>
+                </div>
+              </div>
+            </FadeUp>
+          ))}
+        </div>
+      </section>
+
+      <section className="border-t border-white/[0.06] bg-black px-6 md:px-10">
+        <div className="mx-auto max-w-7xl py-28 md:py-36">
+          <StaggerGrid className="grid grid-cols-2 gap-10 md:grid-cols-4">
+            {[
+              { value: "2.4k+", label: "Plans Generated" },
+              { value: "12", label: "Universities" },
+              { value: "<30s", label: "Avg Plan Time" },
+              { value: "4.9", label: "Student Rating" },
+            ].map((stat) => (
+              <StaggerItem key={stat.label}>
+                <div>
+                  <div className="text-5xl font-semibold tracking-[-0.08em] text-white/80 md:text-7xl lg:text-8xl">
+                    {stat.value}
+                  </div>
+                  <div className="mt-3 text-xs uppercase tracking-[0.2em] text-white/16">
+                    {stat.label}
+                  </div>
+                </div>
+              </StaggerItem>
+            ))}
+          </StaggerGrid>
+        </div>
+      </section>
+
+      <section className="relative h-[70vh] overflow-hidden">
+        <motion.img
+          initial={{ scale: 1.12 }}
+          whileInView={{ scale: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 1.5, ease: [0.22, 1, 0.36, 1] }}
+          src="https://images.unsplash.com/photo-1704748082614-8163a88e56b8?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHx1bml2ZXJzaXR5JTIwc3R1ZGVudHMlMjBzdHVkeWluZyUyMGxhcHRvcHxlbnwxfHx8fDE3NzMzOTAzNjR8MA&ixlib=rb-4.1.0&q=80&w=1080"
+          alt="Students studying"
+          className="h-full w-full object-cover grayscale"
+        />
+        <div className="absolute inset-0 bg-black/55" />
+        <div className="absolute inset-0 flex items-center justify-center px-6">
+          <FadeUp>
+            <p className="max-w-3xl text-center text-2xl font-medium leading-snug tracking-tight text-white/65 md:text-4xl">
+              “We spent more time reading the handbook than actually studying.”
+            </p>
+          </FadeUp>
+        </div>
+      </section>
+
+      <section className="border-t border-white/[0.06] bg-black px-6 md:px-10">
+        <div className="mx-auto max-w-7xl py-28 md:py-36">
+          <div className="mb-20 grid gap-12 md:grid-cols-2 md:items-end">
+            <div>
+              <FadeUp>
+                <div className="mb-5 text-xs uppercase tracking-[0.3em] text-white/15">
+                  Reviews
+                </div>
+              </FadeUp>
+              <RevealLine>
+                <h2 className="text-4xl font-semibold leading-[0.95] tracking-[-0.06em] text-white md:text-6xl">
+                  Don&apos;t take
+                </h2>
+              </RevealLine>
+              <RevealLine delay={0.08}>
+                <h2 className="text-4xl font-semibold leading-[0.95] tracking-[-0.06em] text-white/18 md:text-6xl">
+                  our word for it.
+                </h2>
+              </RevealLine>
+            </div>
+
+            <FadeUp delay={0.18}>
+              <p className="max-w-xs text-sm leading-7 text-white/22 md:justify-self-end md:text-right">
+                Real students. Real plans. Real relief.
+              </p>
+            </FadeUp>
+          </div>
+
+          <StaggerGrid className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+            {reviews.map((review, i) => (
+              <StaggerItem key={i}>
+                <div className="flex h-full flex-col rounded-3xl border border-white/[0.06] bg-white/[0.02] p-6 transition hover:-translate-y-1 hover:border-white/[0.12] hover:bg-white/[0.03]">
+                  <Quote className="mb-4 h-5 w-5 text-white/[0.08]" />
+
+                  <p className="mb-6 flex-1 text-sm leading-7 text-white/34">
+                    &quot;{review.text}&quot;
+                  </p>
+
+                  <div className="flex items-center justify-between border-t border-white/[0.06] pt-4">
+                    <div>
+                      <div className="text-sm font-medium text-white/65">
+                        {review.name}
+                      </div>
+                      <div className="text-xs text-white/18">
+                        {review.course}
+                      </div>
+                    </div>
+
+                    <div className="flex gap-0.5">
+                      {Array.from({ length: review.rating }).map((_, j) => (
+                        <Star
+                          key={j}
+                          className="h-3 w-3 fill-white/20 text-white/20"
+                        />
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              </StaggerItem>
+            ))}
+          </StaggerGrid>
+        </div>
+      </section>
+
+      <section className="border-t border-white/[0.06] bg-black px-6 md:px-10">
+        <div className="mx-auto max-w-7xl py-28 md:py-36">
+          <div className="mb-16">
+            <FadeUp>
+              <div className="mb-5 text-xs uppercase tracking-[0.3em] text-white/15">
+                About
+              </div>
+            </FadeUp>
+            <RevealLine>
+              <h2 className="text-5xl font-semibold leading-[0.94] tracking-[-0.06em] text-white md:text-7xl">
+                Built by students,
+              </h2>
+            </RevealLine>
+            <RevealLine delay={0.08}>
+              <h2 className="text-5xl font-semibold leading-[0.94] tracking-[-0.06em] text-white/15 md:text-7xl">
+                for students.
+              </h2>
+            </RevealLine>
+          </div>
+
+          <div className="mb-20 grid gap-4 md:grid-cols-12">
+            <FadeUp className="md:col-span-8">
+              <div className="overflow-hidden rounded-3xl">
+                <motion.img
+                  initial={{ scale: 1.08 }}
+                  whileInView={{ scale: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 1.3, ease: [0.22, 1, 0.36, 1] }}
+                  src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=1200&q=80"
+                  alt="Team"
+                  className="h-[420px] w-full object-cover grayscale opacity-60 transition duration-700 hover:opacity-85 hover:grayscale-0 md:h-[520px]"
+                />
+              </div>
+            </FadeUp>
+
+            <FadeUp delay={0.12} className="md:col-span-4">
+              <div className="overflow-hidden rounded-3xl">
+                <motion.img
+                  initial={{ scale: 1.08 }}
+                  whileInView={{ scale: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 1.3, ease: [0.22, 1, 0.36, 1] }}
+                  src="https://images.unsplash.com/photo-1515879218367-8466d910aaa4?auto=format&fit=crop&w=1200&q=80"
+                  alt="Planning"
+                  className="h-[420px] w-full object-cover grayscale opacity-60 transition duration-700 hover:opacity-85 hover:grayscale-0 md:h-[520px]"
+                />
+              </div>
+            </FadeUp>
+          </div>
+
+          <div className="grid gap-16 md:grid-cols-2">
+            <FadeUp>
+              <div className="space-y-6 text-base leading-8 text-white/28 md:text-lg">
+                <p>
+                  We got tired of spending hours cross-referencing handbooks,
+                  prerequisite chains, and course maps just to figure out what
+                  to enrol in next semester.
+                </p>
+
+                <p>
+                  So we built U-NIT ME — an AI-powered tool that does all of
+                  that in seconds. No more guesswork, no more anxiety.
+                </p>
+
+                <p>
+                  We&apos;re a small team of uni students who believe course
+                  planning shouldn&apos;t require a PhD in spreadsheet
+                  management.
+                </p>
+
+                <div className="flex items-center gap-8 border-t border-white/[0.06] pt-6 md:gap-12">
+                  <div>
+                    <div className="text-4xl font-semibold tracking-[-0.06em] text-white/72">
+                      2026
+                    </div>
+                    <div className="mt-1 text-xs uppercase tracking-[0.18em] text-white/15">
+                      Founded
+                    </div>
+                  </div>
+
+                  <div className="h-12 w-px bg-white/[0.06]" />
+
+                  <div>
+                    <div className="text-4xl font-semibold tracking-[-0.06em] text-white/72">
+                      6
+                    </div>
+                    <div className="mt-1 text-xs uppercase tracking-[0.18em] text-white/15">
+                      Team
+                    </div>
+                  </div>
+
+                  <div className="h-12 w-px bg-white/[0.06]" />
+
+                  <div>
+                    <div className="text-4xl font-semibold tracking-[-0.06em] text-white/72">
+                      ∞
+                    </div>
+                    <div className="mt-1 text-xs uppercase tracking-[0.18em] text-white/15">
+                      Rage
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </FadeUp>
+
+            <StaggerGrid className="grid grid-cols-2 gap-5">
+              {valueCards.map(({ title, description, icon: Icon }) => (
+                <StaggerItem key={title}>
+                  <div className="rounded-3xl border border-white/[0.06] bg-white/[0.02] p-6 text-center transition hover:-translate-y-1 hover:border-white/[0.12] hover:bg-white/[0.03]">
+                    <Icon className="mx-auto mb-4 h-6 w-6 text-white/35" />
+                    <div className="text-lg font-semibold text-white/80">
+                      {title}
+                    </div>
+                    <p className="mt-2 text-sm leading-7 text-white/24">
+                      {description}
+                    </p>
+                  </div>
+                </StaggerItem>
+              ))}
+            </StaggerGrid>
           </div>
         </div>
       </section>
 
-      <section className="border-b border-black/10 bg-white">
-        <div className="mx-auto max-w-4xl px-6 py-20 md:px-10">
-          <div className="mb-12 text-center">
-            <div className="mb-3 text-xs uppercase tracking-[0.18em] text-black/30">
-              Quick Questions
-            </div>
-            <h2 className="text-3xl font-semibold tracking-tight">
-              Yeah but...
-            </h2>
+      <section className="border-t border-white/[0.06] bg-black px-6 md:px-10">
+        <div className="mx-auto max-w-5xl py-28 md:py-36">
+          <div className="mb-14">
+            <FadeUp>
+              <div className="mb-5 text-xs uppercase tracking-[0.3em] text-white/15">
+                FAQ
+              </div>
+            </FadeUp>
+            <RevealLine>
+              <h2 className="text-5xl font-semibold leading-[0.94] tracking-[-0.06em] text-white md:text-7xl">
+                Yeah but...
+              </h2>
+            </RevealLine>
           </div>
 
-          <div className="space-y-4">
+          <div>
             {faqs.map((faq, i) => (
-              <div
+              <FaqItem
                 key={i}
-                className="rounded-2xl border border-black/10 bg-white p-5 transition hover:border-black/20 hover:bg-[#fcfcfb]"
-              >
-                <div className="flex items-start gap-3">
-                  <ChevronRight className="mt-0.5 h-4 w-4 flex-shrink-0 text-black/25" />
-                  <div>
-                    <div className="mb-1.5 text-sm font-medium">{faq.q}</div>
-                    <p className="text-sm leading-relaxed text-black/45">
-                      {faq.a}
-                    </p>
-                  </div>
-                </div>
-              </div>
+                faq={faq}
+                index={i}
+                openIndex={openFaq}
+                setOpenIndex={setOpenFaq}
+              />
             ))}
           </div>
         </div>
       </section>
 
-      <section className="border-b border-black/10 bg-black text-white">
-        <div className="mx-auto max-w-3xl px-6 py-20 text-center md:px-10">
-          <h2 className="mb-4 text-3xl font-semibold tracking-tight md:text-4xl">
-            Ready to stop stressing?
-          </h2>
+      <section className="relative overflow-hidden border-t border-white/[0.06] bg-black px-6 md:px-10">
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_50%_50%_at_50%_100%,rgba(255,255,255,0.05),transparent)]" />
 
-          <p className="mx-auto mb-8 max-w-md text-sm text-white/40">
-            Join students who want a faster, cleaner way to think about their
-            degree plan.
-          </p>
+        <div className="relative mx-auto max-w-6xl py-36 text-center md:py-52">
+          <HeroRevealLine>
+            <h2 className="text-6xl font-semibold leading-[0.9] tracking-[-0.08em] text-white md:text-8xl lg:text-9xl">
+              Ready?
+            </h2>
+          </HeroRevealLine>
 
-          <button
-            onClick={() => router.push("/sign-in")}
-            className="inline-flex items-center gap-3 rounded-2xl bg-white px-8 py-3.5 text-sm font-semibold text-black transition hover:bg-white/90"
-          >
-            Plan My Degree
-            <ArrowRight className="h-4 w-4" />
-          </button>
+          <FadeUp delay={0.2}>
+            <p className="mx-auto mt-6 max-w-md text-sm leading-7 text-white/22 md:text-base">
+              Join students who want a faster, cleaner, and less painful way to
+              think about their degree.
+            </p>
+          </FadeUp>
+
+          <FadeUp delay={0.32}>
+            <button
+              onClick={() => router.push("/sign-in")}
+              className="group mt-12 inline-flex items-center gap-4"
+            >
+              <span className="flex h-16 w-16 items-center justify-center rounded-full border border-white/15 transition duration-500 group-hover:scale-105 group-hover:bg-white">
+                <ArrowRight className="h-5 w-5 text-white/70 transition duration-500 group-hover:text-black" />
+              </span>
+              <span className="text-xs uppercase tracking-[0.18em] text-white/40 transition duration-500 group-hover:text-white/80">
+                Plan My Degree
+              </span>
+            </button>
+          </FadeUp>
         </div>
       </section>
 
-      <footer className="px-6 py-8 md:px-10">
-        <div className="mx-auto max-w-7xl text-center">
-          <p className="text-sm text-black/25">
-            U-NIT ME — Your intelligent course planning assistant
-          </p>
+      <footer className="border-t border-white/[0.06] px-6 py-10 md:px-10">
+        <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-4 md:flex-row">
+          <div className="flex items-center gap-3">
+            <span className="flex h-5 w-5 items-center justify-center rounded-sm border border-white/20 text-[8px] text-white/50">
+              U
+            </span>
+            <span className="text-xs uppercase tracking-[0.18em] text-white/15">
+              U-NIT ME
+            </span>
+          </div>
+
+          <span className="text-[10px] uppercase tracking-[0.18em] text-white/10">
+            © 2026 — All rights reserved
+          </span>
         </div>
       </footer>
     </main>

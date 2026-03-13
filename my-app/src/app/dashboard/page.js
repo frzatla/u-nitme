@@ -1,18 +1,16 @@
 "use client";
 
 import { useUser, UserButton } from "@clerk/nextjs";
+import { useRouter } from "next/navigation";
 import StudentDetailsForm from "../../components/StudentDetailsForm";
 
 export default function DashboardPage() {
   const { user } = useUser();
+  const router = useRouter();
 
   const handleSubmit = (data) => {
-    console.log("Submitted data:", data);
-
-    // later you can:
-    // 1. save to your database
-    // 2. call an API route
-    // 3. redirect to generated plan page
+    localStorage.setItem("studentDetails", JSON.stringify(data));
+    router.push("/course-plan");
   };
 
   return (
