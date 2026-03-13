@@ -42,7 +42,11 @@ export default function Home() {
             <span className="text-xl font-medium tracking-tight">U-NIT ME</span>
           </button>
 
-          <SignInButton>
+          <SignInButton
+            mode="redirect"
+            forceRedirectUrl="/dashboard"
+            fallbackRedirectUrl="/dashboard"
+          >
             <button className="your-styles">Sign In</button>
           </SignInButton>
         </div>
