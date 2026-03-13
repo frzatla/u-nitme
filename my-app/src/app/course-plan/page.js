@@ -10,10 +10,12 @@ import {
   Sparkles,
 } from "lucide-react";
 import CoursePlanner from "../../components/CoursePlanner";
+import UnitDetailPanel from "../../components/UnitDetailPanel";
 
 export default function CoursePlanPage() {
   const router = useRouter();
   const [studentDetails, setStudentDetails] = useState(null);
+  const [selectedUnit, setSelectedUnit] = useState(null);
 
   useEffect(() => {
     const storedDetails = localStorage.getItem("studentDetails");
@@ -125,7 +127,11 @@ export default function CoursePlanPage() {
 
       <section className="px-6 py-8 md:px-8 md:py-10">
         <div className="mx-auto max-w-7xl">
-          <CoursePlanner studentDetails={studentDetails} showHeader={false} />
+          <CoursePlanner
+            studentDetails={studentDetails}
+            showHeader={false}
+            onUnitClick={(unit) => setSelectedUnit(unit)}
+          />
         </div>
       </section>
 
@@ -140,6 +146,11 @@ export default function CoursePlanPage() {
           </p>
         </div>
       </footer>
+
+      <UnitDetailPanel
+        unit={selectedUnit}
+        onClose={() => setSelectedUnit(null)}
+      />
     </main>
   );
 }
