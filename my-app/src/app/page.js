@@ -262,49 +262,6 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="border-b border-black/10 bg-black text-white">
-        <div className="mx-auto max-w-6xl px-6 py-14 md:px-10">
-          <div className="grid grid-cols-2 gap-8 text-center md:grid-cols-4">
-            <div>
-              <div className="mb-1 text-3xl font-semibold tracking-tight md:text-4xl">
-                2.4k+
-              </div>
-              <div className="text-xs uppercase tracking-[0.18em] text-white/40">
-                Plans Generated
-              </div>
-            </div>
-
-            <div>
-              <div className="mb-1 text-3xl font-semibold tracking-tight md:text-4xl">
-                12
-              </div>
-              <div className="text-xs uppercase tracking-[0.18em] text-white/40">
-                Universities
-              </div>
-            </div>
-
-            <div>
-              <div className="mb-1 text-3xl font-semibold tracking-tight md:text-4xl">
-                &lt;30s
-              </div>
-              <div className="text-xs uppercase tracking-[0.18em] text-white/40">
-                Avg Plan Time
-              </div>
-            </div>
-
-            <div>
-              <div className="mb-1 text-3xl font-semibold tracking-tight md:text-4xl">
-                4.9
-              </div>
-              <div className="flex items-center justify-center gap-1 text-xs uppercase tracking-[0.18em] text-white/40">
-                <Star className="h-3 w-3 fill-white/40 text-white/40" />
-                Rating
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
       <section className="border-b border-black/10 bg-white">
         <div className="mx-auto max-w-6xl px-6 py-24 md:px-10">
           <div className="mb-14 text-center">
