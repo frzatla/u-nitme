@@ -266,28 +266,28 @@ function FaqItem({ faq, index, openIndex, setOpenIndex }) {
         delay: index * 0.05,
         ease: [0.22, 1, 0.36, 1],
       }}
-      className="border-b border-white/[0.08]"
+      className="border-b border-white/[0.18]"
     >
       <button
         onClick={() => setOpenIndex(isOpen ? null : index)}
         className="flex w-full items-center justify-between gap-6 py-7 text-left md:py-9"
       >
         <div className="flex items-center gap-5">
-          <span className="text-xs tracking-[0.2em] text-white/30">
+          <span className="text-xs tracking-[0.2em] text-white">
             0{index + 1}
           </span>
-          <span className="text-lg text-white/88 md:text-xl">{faq.q}</span>
+          <span className="text-lg text-white md:text-xl">{faq.q}</span>
         </div>
 
         <motion.div
           animate={{ rotate: isOpen ? 180 : 0 }}
           transition={{ duration: 0.35 }}
-          className="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full border border-white/[0.16]"
+          className="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full border border-white/[0.28]"
         >
           {isOpen ? (
-            <Minus className="h-3.5 w-3.5 text-white/60" />
+            <Minus className="h-3.5 w-3.5 text-white" />
           ) : (
-            <Plus className="h-3.5 w-3.5 text-white/60" />
+            <Plus className="h-3.5 w-3.5 text-white" />
           )}
         </motion.div>
       </button>
@@ -302,7 +302,7 @@ function FaqItem({ faq, index, openIndex, setOpenIndex }) {
             className="overflow-hidden"
           >
             <div className="pb-8 pl-10 pr-12 md:pl-14">
-              <p className="max-w-2xl text-sm leading-7 text-white/62 md:text-base">
+              <p className="max-w-2xl text-sm leading-7 text-white md:text-base">
                 {faq.a}
               </p>
             </div>
@@ -343,7 +343,7 @@ export default function Home() {
 
   return (
     <main className="min-h-screen overflow-x-hidden bg-black text-white">
-      <header className="sticky top-0 z-40 border-b border-white/[0.08] bg-black/80 backdrop-blur-xl">
+      <header className="sticky top-0 z-40 border-b border-white/[0.18] bg-black/80 backdrop-blur-xl">
         <div className="mx-auto flex h-24 max-w-7xl items-center justify-between px-6 md:px-10">
           <button
             onClick={() => router.push("/")}
@@ -372,7 +372,7 @@ export default function Home() {
 
       <section
         ref={heroRef}
-        className="relative overflow-hidden border-b border-white/[0.08]"
+        className="relative overflow-hidden border-b border-white/[0.18]"
       >
         <motion.div
           style={{ y: glowY }}
@@ -386,7 +386,7 @@ export default function Home() {
         >
           <div className="w-full">
             <FadeUp delay={0.1}>
-              <div className="mb-8 text-xs uppercase tracking-[0.3em] text-white/38">
+              <div className="mb-8 text-xs uppercase tracking-[0.3em] text-white">
                 Edition — 2026
               </div>
             </FadeUp>
@@ -399,7 +399,7 @@ export default function Home() {
               </HeroRevealLine>
 
               <HeroRevealLine delay={0.08}>
-                <h1 className="text-[clamp(3.5rem,10vw,8.5rem)] font-semibold leading-[0.88] tracking-[-0.08em] text-white/52">
+                <h1 className="text-[clamp(3.5rem,10vw,8.5rem)] font-semibold leading-[0.88] tracking-[-0.08em] text-white">
                   entire degree.
                 </h1>
               </HeroRevealLine>
@@ -407,7 +407,7 @@ export default function Home() {
 
             <div className="mt-12 flex flex-col justify-between gap-10 md:flex-row md:items-end">
               <FadeUp delay={0.25}>
-                <p className="max-w-md text-base leading-8 text-white/58 md:text-lg">
+                <p className="max-w-md text-base leading-8 text-white md:text-lg">
                   Reading in 2026??? Hell nahhh — just drop your details and let
                   AI sort your entire degree out. Semester-by-semester, no
                   stress.
@@ -423,7 +423,7 @@ export default function Home() {
                     <span className="flex h-16 w-16 items-center justify-center rounded-full border border-white/18 transition duration-500 group-hover:scale-105 group-hover:bg-white">
                       <ArrowRight className="h-5 w-5 text-white/75 transition duration-500 group-hover:text-black" />
                     </span>
-                    <span className="text-xs uppercase tracking-[0.18em] text-white/58 transition duration-500 group-hover:text-white/90">
+                    <span className="text-xs uppercase tracking-[0.18em] text-white transition duration-500 group-hover:text-white">
                       Get Started
                     </span>
                   </button>
@@ -434,7 +434,7 @@ export default function Home() {
                         .getElementById("process")
                         ?.scrollIntoView({ behavior: "smooth" })
                     }
-                    className="rounded-full border border-white/[0.12] px-5 py-3 text-xs uppercase tracking-[0.18em] text-white/55 transition hover:border-white/[0.25] hover:text-white/80"
+                    className="rounded-full border border-white/[0.12] px-5 py-3 text-xs uppercase tracking-[0.18em] text-white transition hover:border-white/[0.25] hover:text-white"
                   >
                     Explore
                   </button>
@@ -445,7 +445,7 @@ export default function Home() {
         </motion.div>
       </section>
 
-      <section className="border-b border-white/[0.08] py-6">
+      <section className="border-b border-white/[0.18] py-6">
         <div className="mx-auto max-w-7xl overflow-hidden px-6 md:px-10">
           <motion.div
             animate={{ x: ["0%", "-50%"] }}
@@ -455,7 +455,7 @@ export default function Home() {
             {[...marqueeItems, ...marqueeItems].map((item, i) => (
               <div
                 key={i}
-                className="flex items-center gap-3 text-xs uppercase tracking-[0.18em] text-white/34"
+                className="flex items-center gap-3 text-xs uppercase tracking-[0.18em] text-white"
               >
                 <span className="h-1.5 w-1.5 rounded-full bg-white/20" />
                 {item}
@@ -469,12 +469,12 @@ export default function Home() {
         <div className="mx-auto max-w-7xl">
           <div className="max-w-5xl">
             <RevealLine>
-              <p className="text-3xl font-semibold leading-[1.08] tracking-[-0.05em] text-white/82 md:text-5xl lg:text-6xl">
+              <p className="text-3xl font-semibold leading-[1.08] tracking-[-0.05em] text-white md:text-5xl lg:text-6xl">
                 The smarter way to plan university.
               </p>
             </RevealLine>
             <RevealLine delay={0.08}>
-              <p className="mt-2 text-3xl font-semibold leading-[1.08] tracking-[-0.05em] text-white/46 md:text-5xl lg:text-6xl">
+              <p className="mt-2 text-3xl font-semibold leading-[1.08] tracking-[-0.05em] text-white md:text-5xl lg:text-6xl">
                 Built for students who are done with handbook chaos.
               </p>
             </RevealLine>
@@ -482,34 +482,34 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="border-t border-white/[0.08] px-6 md:px-10">
+      <section className="border-t border-white/[0.18] px-6 md:px-10">
         <div className="mx-auto max-w-7xl py-[4.5rem] md:py-24">
           <FadeUp>
-            <div className="mb-12 text-xs uppercase tracking-[0.3em] text-white/68">
+            <div className="mb-12 text-xs uppercase tracking-[0.3em] text-white">
               Capabilities
             </div>
           </FadeUp>
 
           {capabilities.map(({ num, title, desc, icon: Icon }, i) => (
             <FadeUp key={num} delay={i * 0.04}>
-              <div className="group grid grid-cols-12 items-start gap-6 border-t border-white/[0.08] py-10 md:py-14">
+              <div className="group grid grid-cols-12 items-start gap-6 border-t border-white/[0.18] py-10 md:py-14">
                 <div className="col-span-2 md:col-span-1">
-                  <span className="text-xs tracking-[0.18em] text-white/28">
+                  <span className="text-xs tracking-[0.18em] text-white">
                     {num}
                   </span>
                 </div>
 
                 <div className="col-span-10 md:col-span-4">
                   <div className="flex items-center gap-4">
-                    <Icon className="h-4 w-4 flex-shrink-0 text-white/42 transition group-hover:text-white/72" />
-                    <h3 className="text-lg font-medium tracking-tight text-white/88 transition group-hover:text-white md:text-xl">
+                    <Icon className="h-4 w-4 flex-shrink-0 text-white transition group-hover:text-white" />
+                    <h3 className="text-lg font-medium tracking-tight text-white transition group-hover:text-white md:text-xl">
                       {title}
                     </h3>
                   </div>
                 </div>
 
                 <div className="col-span-10 col-start-3 md:col-span-5 md:col-start-7">
-                  <p className="text-sm leading-7 text-white/56 transition group-hover:text-white/76 md:text-base">
+                  <p className="text-sm leading-7 text-white transition group-hover:text-white md:text-base">
                     {desc}
                   </p>
                 </div>
@@ -581,7 +581,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="border-t border-white/[0.08] bg-black px-6 md:px-10">
+      <section className="border-t border-white/[0.18] bg-black px-6 md:px-10">
         <div className="mx-auto max-w-7xl py-28 md:py-36">
           <StaggerGrid className="grid grid-cols-2 gap-10 md:grid-cols-4">
             {[
@@ -592,10 +592,10 @@ export default function Home() {
             ].map((stat) => (
               <StaggerItem key={stat.label}>
                 <div>
-                  <div className="text-5xl font-semibold tracking-[-0.08em] text-white/88 md:text-7xl lg:text-8xl">
+                  <div className="text-5xl font-semibold tracking-[-0.08em] text-white md:text-7xl lg:text-8xl">
                     {stat.value}
                   </div>
-                  <div className="mt-3 text-xs uppercase tracking-[0.2em] text-white/32">
+                  <div className="mt-3 text-xs uppercase tracking-[0.2em] text-white">
                     {stat.label}
                   </div>
                 </div>
@@ -618,19 +618,19 @@ export default function Home() {
         <div className="absolute inset-0 bg-black/45" />
         <div className="absolute inset-0 flex items-center justify-center px-6">
           <FadeUp>
-            <p className="max-w-3xl text-center text-2xl font-medium leading-snug tracking-tight text-white/78 md:text-4xl">
+            <p className="max-w-3xl text-center text-2xl font-medium leading-snug tracking-tight text-white md:text-4xl">
               “We spent more time reading the handbook than actually studying.”
             </p>
           </FadeUp>
         </div>
       </section>
 
-      <section className="border-t border-white/[0.08] bg-black px-6 md:px-10">
+      <section className="border-t border-white/[0.18] bg-black px-6 md:px-10">
         <div className="mx-auto max-w-7xl py-28 md:py-36">
           <div className="mb-20 grid gap-12 md:grid-cols-2 md:items-end">
             <div>
               <FadeUp>
-                <div className="mb-5 text-xs uppercase tracking-[0.3em] text-white/68">
+                <div className="mb-5 text-xs uppercase tracking-[0.3em] text-white">
                   Reviews
                 </div>
               </FadeUp>
@@ -640,14 +640,14 @@ export default function Home() {
                 </h2>
               </RevealLine>
               <RevealLine delay={0.08}>
-                <h2 className="text-4xl font-semibold leading-[0.95] tracking-[-0.06em] text-white/48 md:text-6xl">
+                <h2 className="text-4xl font-semibold leading-[0.95] tracking-[-0.06em] text-white md:text-6xl">
                   our word for it.
                 </h2>
               </RevealLine>
             </div>
 
             <FadeUp delay={0.18}>
-              <p className="max-w-xs text-sm leading-7 text-white/58 md:justify-self-end md:text-right">
+              <p className="max-w-xs text-sm leading-7 text-white md:justify-self-end md:text-right">
                 Real students. Real plans. Real relief.
               </p>
             </FadeUp>
@@ -656,19 +656,19 @@ export default function Home() {
           <StaggerGrid className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
             {reviews.map((review, i) => (
               <StaggerItem key={i}>
-                <div className="flex h-full flex-col rounded-3xl border border-white/[0.08] bg-white/[0.03] p-6 transition hover:-translate-y-1 hover:border-white/[0.14] hover:bg-white/[0.045]">
+                <div className="flex h-full flex-col rounded-3xl border border-white/[0.18] bg-white/[0.03] p-6 transition hover:-translate-y-1 hover:border-white/[0.28] hover:bg-white/[0.045]">
                   <Quote className="mb-4 h-5 w-5 text-white/[0.18]" />
 
-                  <p className="mb-6 flex-1 text-sm leading-7 text-white/62">
+                  <p className="mb-6 flex-1 text-sm leading-7 text-white">
                     &quot;{review.text}&quot;
                   </p>
 
-                  <div className="flex items-center justify-between border-t border-white/[0.08] pt-4">
+                  <div className="flex items-center justify-between border-t border-white/[0.18] pt-4">
                     <div>
-                      <div className="text-sm font-medium text-white/82">
+                      <div className="text-sm font-medium text-white">
                         {review.name}
                       </div>
-                      <div className="text-xs text-white/42">
+                      <div className="text-xs text-white">
                         {review.course}
                       </div>
                     </div>
@@ -689,11 +689,11 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="border-t border-white/[0.08] bg-black px-6 md:px-10">
+      <section className="border-t border-white/[0.18] bg-black px-6 md:px-10">
         <div className="mx-auto max-w-7xl py-28 md:py-36">
           <div className="mb-16">
             <FadeUp>
-              <div className="mb-5 text-xs uppercase tracking-[0.3em] text-white/68">
+              <div className="mb-5 text-xs uppercase tracking-[0.3em] text-white">
                 About
               </div>
             </FadeUp>
@@ -703,7 +703,7 @@ export default function Home() {
               </h2>
             </RevealLine>
             <RevealLine delay={0.08}>
-              <h2 className="text-5xl font-semibold leading-[0.94] tracking-[-0.06em] text-white/48 md:text-7xl">
+              <h2 className="text-5xl font-semibold leading-[0.94] tracking-[-0.06em] text-white md:text-7xl">
                 for students.
               </h2>
             </RevealLine>
@@ -741,7 +741,7 @@ export default function Home() {
 
           <div className="grid gap-16 md:grid-cols-2">
             <FadeUp>
-              <div className="space-y-6 text-base leading-8 text-white/62 md:text-lg">
+              <div className="space-y-6 text-base leading-8 text-white md:text-lg">
                 <p>
                   We got tired of spending hours cross-referencing handbooks,
                   prerequisite chains, and course maps just to figure out what
@@ -759,12 +759,12 @@ export default function Home() {
                   management.
                 </p>
 
-                <div className="flex items-center gap-8 border-t border-white/[0.08] pt-6 md:gap-12">
+                <div className="flex items-center gap-8 border-t border-white/[0.18] pt-6 md:gap-12">
                   <div>
-                    <div className="text-4xl font-semibold tracking-[-0.06em] text-white/84">
+                    <div className="text-4xl font-semibold tracking-[-0.06em] text-white">
                       2026
                     </div>
-                    <div className="mt-1 text-xs uppercase tracking-[0.18em] text-white/32">
+                    <div className="mt-1 text-xs uppercase tracking-[0.18em] text-white">
                       Founded
                     </div>
                   </div>
@@ -772,10 +772,10 @@ export default function Home() {
                   <div className="h-12 w-px bg-white/[0.08]" />
 
                   <div>
-                    <div className="text-4xl font-semibold tracking-[-0.06em] text-white/84">
+                    <div className="text-4xl font-semibold tracking-[-0.06em] text-white">
                       6
                     </div>
-                    <div className="mt-1 text-xs uppercase tracking-[0.18em] text-white/32">
+                    <div className="mt-1 text-xs uppercase tracking-[0.18em] text-white">
                       Team
                     </div>
                   </div>
@@ -783,10 +783,10 @@ export default function Home() {
                   <div className="h-12 w-px bg-white/[0.08]" />
 
                   <div>
-                    <div className="text-4xl font-semibold tracking-[-0.06em] text-white/84">
+                    <div className="text-4xl font-semibold tracking-[-0.06em] text-white">
                       ∞
                     </div>
-                    <div className="mt-1 text-xs uppercase tracking-[0.18em] text-white/32">
+                    <div className="mt-1 text-xs uppercase tracking-[0.18em] text-white">
                       Rage
                     </div>
                   </div>
@@ -797,12 +797,12 @@ export default function Home() {
             <StaggerGrid className="grid grid-cols-2 gap-5">
               {valueCards.map(({ title, description, icon: Icon }) => (
                 <StaggerItem key={title}>
-                  <div className="rounded-3xl border border-white/[0.08] bg-white/[0.03] p-6 text-center transition hover:-translate-y-1 hover:border-white/[0.14] hover:bg-white/[0.045]">
-                    <Icon className="mx-auto mb-4 h-6 w-6 text-white/58" />
-                    <div className="text-lg font-semibold text-white/86">
+                  <div className="rounded-3xl border border-white/[0.18] bg-white/[0.03] p-6 text-center transition hover:-translate-y-1 hover:border-white/[0.28] hover:bg-white/[0.045]">
+                    <Icon className="mx-auto mb-4 h-6 w-6 text-white" />
+                    <div className="text-lg font-semibold text-white">
                       {title}
                     </div>
-                    <p className="mt-2 text-sm leading-7 text-white/54">
+                    <p className="mt-2 text-sm leading-7 text-white">
                       {description}
                     </p>
                   </div>
@@ -813,11 +813,11 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="border-t border-white/[0.08] bg-black px-6 md:px-10">
+      <section className="border-t border-white/[0.18] bg-black px-6 md:px-10">
         <div className="mx-auto max-w-5xl py-28 md:py-36">
           <div className="mb-14">
             <FadeUp>
-              <div className="mb-5 text-xs uppercase tracking-[0.3em] text-white/30">
+              <div className="mb-5 text-xs uppercase tracking-[0.3em] text-white">
                 FAQ
               </div>
             </FadeUp>
@@ -842,7 +842,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="relative overflow-hidden border-t border-white/[0.08] bg-black px-6 md:px-10">
+      <section className="relative overflow-hidden border-t border-white/[0.18] bg-black px-6 md:px-10">
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_50%_50%_at_50%_100%,rgba(255,255,255,0.06),transparent)]" />
 
         <div className="relative mx-auto max-w-6xl py-36 text-center md:py-52">
@@ -853,7 +853,7 @@ export default function Home() {
           </HeroRevealLine>
 
           <FadeUp delay={0.2}>
-            <p className="mx-auto mt-6 max-w-md text-sm leading-7 text-white/58 md:text-base">
+            <p className="mx-auto mt-6 max-w-md text-sm leading-7 text-white md:text-base">
               Join students who want a faster, cleaner, and less painful way to
               think about their degree.
             </p>
@@ -867,7 +867,7 @@ export default function Home() {
               <span className="flex h-16 w-16 items-center justify-center rounded-full border border-white/18 transition duration-500 group-hover:scale-105 group-hover:bg-white">
                 <ArrowRight className="h-5 w-5 text-white/75 transition duration-500 group-hover:text-black" />
               </span>
-              <span className="text-xs uppercase tracking-[0.18em] text-white/58 transition duration-500 group-hover:text-white/88">
+              <span className="text-xs uppercase tracking-[0.18em] text-white transition duration-500 group-hover:text-white">
                 Plan My Degree
               </span>
             </button>
@@ -875,18 +875,18 @@ export default function Home() {
         </div>
       </section>
 
-      <footer className="border-t border-white/[0.08] px-6 py-10 md:px-10">
+      <footer className="border-t border-white/[0.18] px-6 py-10 md:px-10">
         <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-4 md:flex-row">
           <div className="flex items-center gap-3">
             <span className="flex h-5 w-5 items-center justify-center rounded-sm border border-white/24 text-[8px] text-white/60">
               U
             </span>
-            <span className="text-xs uppercase tracking-[0.18em] text-white/28">
+            <span className="text-xs uppercase tracking-[0.18em] text-white">
               U-NIT ME
             </span>
           </div>
 
-          <span className="text-[10px] uppercase tracking-[0.18em] text-white/24">
+          <span className="text-[10px] uppercase tracking-[0.18em] text-white">
             © 2026 — All rights reserved
           </span>
         </div>
