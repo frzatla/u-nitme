@@ -68,19 +68,22 @@ export default async function DashboardPage() {
   }
 
   const profile = await getProfileByEmail(email);
-  const plan = profile?.plans?.[0] ?? null;
+  const plans = profile?.plans ?? [];
   const userName = email.split("@")[0];
-
-  const start = Number(plan?.yearStart);
-  const end = Number(plan?.yearEnd);
-  const unitCount =
-    Number.isFinite(start) && Number.isFinite(end) && end >= start
-      ? (end - start + 1) * 8
-      : 0;
-  const totalCredits = unitCount * 6;
   const lastSaved = getTimeAgo(
     profile?.updated_at || profile?.created_at || null,
   );
+  const totalUnits = plans.reduce((sum, plan) => {
+    const start = Number(plan?.yearStart);
+    const end = Number(plan?.yearEnd);
+    const unitCount =
+      Number.isFinite(start) && Number.isFinite(end) && end >= start
+        ? (end - start + 1) * 8
+        : 0;
+
+    return sum + unitCount;
+  }, 0);
+  const totalCredits = totalUnits * 6;
 
   return (
     <main className="min-h-screen bg-white font-[var(--font-geist-sans)] text-black">
@@ -131,7 +134,7 @@ export default async function DashboardPage() {
                 <span>Saved Plans</span>
               </div>
               <div className="mt-8 text-[56px] font-semibold leading-none tracking-[-0.08em]">
-                {plan ? 1 : 0}
+                {plans.length}
               </div>
             </div>
 
@@ -141,7 +144,7 @@ export default async function DashboardPage() {
                 <span>Total Units</span>
               </div>
               <div className="mt-8 text-[56px] font-semibold leading-none tracking-[-0.08em] text-black">
-                {unitCount}
+                {totalUnits}
               </div>
             </div>
 
@@ -180,61 +183,78 @@ export default async function DashboardPage() {
             </Link>
           </div>
 
-          {plan ? (
-            <div className="mt-8 rounded-[28px] border border-black/[0.08] bg-white p-8 shadow-[0_1px_2px_rgba(0,0,0,0.02)]">
-              <div className="flex flex-col gap-7 lg:flex-row lg:items-end lg:justify-between">
-                <div>
-                  <h2 className="text-[42px] font-semibold leading-none tracking-[-0.06em] text-black">
-                    {plan.planName || plan.courses || "Course Plan"}
-                  </h2>
+          {plans.length > 0 ? (
+            <div className="mt-8 space-y-6">
+              {plans.map((plan, index) => {
+                const start = Number(plan?.yearStart);
+                const end = Number(plan?.yearEnd);
+                const unitCount =
+                  Number.isFinite(start) && Number.isFinite(end) && end >= start
+                    ? (end - start + 1) * 8
+                    : 0;
+                const totalCredits = unitCount * 6;
 
-                  <div className="mt-5 flex flex-wrap gap-3">
-                    {[
-                      plan.planName,
-                      plan.courses,
-                      plan.university,
-                      plan.areaOfStudy,
-                      plan.semesterOffering,
-                      plan.yearStart && plan.yearEnd
-                        ? `${plan.yearStart}-${plan.yearEnd}`
-                        : null,
-                      totalCredits ? `${totalCredits} CP` : null,
-                    ]
-                      .filter(Boolean)
-                      .map((item) => (
-                        <span
-                          key={item}
-                          className="rounded-full bg-black/[0.04] px-4 py-2 text-sm text-black/52"
-                        >
-                          {item}
-                        </span>
-                      ))}
-                  </div>
-                </div>
-
-                <div className="flex flex-col items-start gap-6 lg:items-end">
-                  <div className="flex items-center gap-6 text-sm text-black/26">
-                    <div className="flex items-center gap-2">
-                      <BookOpen className="h-4 w-4" />
-                      <span>{unitCount} units</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <Calendar className="h-4 w-4" />
-                      <span>
-                        {plan.yearStart}-{plan.yearEnd}
-                      </span>
-                    </div>
-                  </div>
-
-                  <Link
-                    href="/course-plan"
-                    className="inline-flex items-center gap-3 rounded-full border border-black/[0.1] bg-white px-8 py-4 text-[15px] font-medium text-black transition-colors hover:border-black/20 hover:bg-black/[0.02]"
+                return (
+                  <div
+                    key={`${plan.planName || plan.courses || "plan"}-${index}`}
+                    className="rounded-[28px] border border-black/[0.08] bg-white p-8 shadow-[0_1px_2px_rgba(0,0,0,0.02)]"
                   >
-                    View Plan
-                    <ArrowRight className="h-5 w-5" />
-                  </Link>
-                </div>
-              </div>
+                    <div className="flex flex-col gap-7 lg:flex-row lg:items-end lg:justify-between">
+                      <div>
+                        <h2 className="text-[42px] font-semibold leading-none tracking-[-0.06em] text-black">
+                          {plan.planName || plan.courses || "Course Plan"}
+                        </h2>
+
+                        <div className="mt-5 flex flex-wrap gap-3">
+                          {[
+                            plan.planName,
+                            plan.courses,
+                            plan.university,
+                            plan.areaOfStudy,
+                            plan.semesterOffering,
+                            plan.yearStart && plan.yearEnd
+                              ? `${plan.yearStart}-${plan.yearEnd}`
+                              : null,
+                            totalCredits ? `${totalCredits} CP` : null,
+                          ]
+                            .filter(Boolean)
+                            .map((item) => (
+                              <span
+                                key={item}
+                                className="rounded-full bg-black/[0.04] px-4 py-2 text-sm text-black/52"
+                              >
+                                {item}
+                              </span>
+                            ))}
+                        </div>
+                      </div>
+
+                      <div className="flex flex-col items-start gap-6 lg:items-end">
+                        <div className="flex items-center gap-6 text-sm text-black/26">
+                          <div className="flex items-center gap-2">
+                            <BookOpen className="h-4 w-4" />
+                            <span>{unitCount} units</span>
+                          </div>
+                          <div className="flex items-center gap-2">
+                            <Calendar className="h-4 w-4" />
+                            <span>
+                              {plan.yearStart}-{plan.yearEnd}
+                            </span>
+                          </div>
+                        </div>
+
+                        <Link
+                          href="/course-plan"
+                          className="inline-flex items-center gap-3 rounded-full border border-black/[0.1] bg-white px-8 py-4 text-[15px] font-medium text-black transition-colors hover:border-black/20 hover:bg-black/[0.02]"
+                        >
+                          View Plan
+                          <ArrowRight className="h-5 w-5" />
+                        </Link>
+                      </div>
+                    </div>
+                  </div>
+                );
+              })}
             </div>
           ) : (
             <div className="mt-8 rounded-[28px] border border-dashed border-black/[0.1] bg-white px-8 py-20 md:px-12 md:py-24">
