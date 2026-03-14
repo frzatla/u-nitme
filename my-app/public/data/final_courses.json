@@ -25719,7 +25719,7 @@
             {
                 "id": "req_4",
                 "parent_id": "req_3",
-                "type": "AND",
+                "type": "OR",
                 "title": "Discipline elective studies",
                 "description": "If you are studying at the Clayton campus you can choose to enhance your IT studies with the following recommended minors and elective units from the Faculty of Information Technology which can be taken as part of your free electives. Other IT minors are also available, check the Faculty Handbook pages.<br /><br />Note: If you are undertaking the Cybersecurity specialisation you cannot do the Cybersecurity minor.",
                 "credit_points": 0,
@@ -25759,7 +25759,7 @@
             {
                 "id": "req_6",
                 "parent_id": "root_1",
-                "type": "AND",
+                "type": "OR",
                 "title": "Part D. Applied studies",
                 "description": "You must complete one of the following options.<br /><br />Clayton students - you complete a project studies (12 credit points) relevant to your specialisation; or the industry-based learning placement (18 credit points).<br /><br />Malaysia students - you complete a project studies (12 credit points) relevant to your specialisation plus the industry-based learning placement (18 credit points) or the industry work experience unit (0 credit points).",
                 "credit_points": 12,
