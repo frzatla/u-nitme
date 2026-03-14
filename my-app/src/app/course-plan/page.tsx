@@ -27,7 +27,7 @@ export default async function CoursePlanPage() {
     studentDetails.planName,
     studentDetails.university,
     studentDetails.courses,
-    studentDetails.degree,
+    studentDetails.areaOfStudy,
     studentDetails.semesterOffering,
     `${studentDetails.yearStart}–${studentDetails.yearEnd}`,
   ].filter(Boolean);

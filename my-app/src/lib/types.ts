@@ -2,7 +2,7 @@ export type Plan = {
   planName: string;
   courses: string;
   university: string;
-  degree: string;
+  areaOfStudy: string;
   semesterOffering: string;
   yearStart: number | string;
   yearEnd: number | string;
