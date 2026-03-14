@@ -2,67 +2,66 @@ import Image from "next/image";
 import Link from "next/link";
 import { UserButton } from "@clerk/nextjs";
 import { currentUser } from "@clerk/nextjs/server";
-import { ArrowLeft, RefreshCw, Sparkles } from "lucide-react";
+import { ArrowLeft, RefreshCw, Sparkles, BookmarkCheck } from "lucide-react";
 import { redirect } from "next/navigation";
 import CoursePlanner from "../../components/CoursePlanner";
-import { getProfileByEmail } from "../../lib/profile";
+import { getProfileByEmail, updateProfile } from "../../lib/profile";
 import { Plan, Profile } from "@/lib/types";
 
-export default async function CoursePlanPage() {
+export default async function CoursePlanPage({
+  searchParams,
+}: {
+  searchParams: { planId?: string };
+}) {
   const user = await currentUser();
   const email: string = user?.primaryEmailAddress?.emailAddress;
 
-  if (!email) {
-    redirect("/sign-in");
-  }
+  if (!email) redirect("/sign-in");
 
   const profile: Profile = await getProfileByEmail(email);
-  const studentDetails: Plan | undefined = profile?.plans?.[0];
+  const plans: Plan[] = profile?.plans ?? [];
 
-  if (!studentDetails) {
-    redirect("/profile");
+  // Find by planId from URL, or fall back to most recent plan
+  const plan = plans.find((p) => p.id === searchParams.planId) ?? plans[plans.length - 1];
+
+  if (!plan) redirect("/profile");
+  if (!plan.schedule) redirect("/profile");
+
+  async function handleSave() {
+    "use server";
+    const updated = plans.map((p) =>
+      p.id === plan.id ? { ...p, saved: true } : p
+    );
+    await updateProfile(email, { plans: updated });
+    redirect("/dashboard");
   }
 
   const infoPills = [
-    studentDetails.planName,
-    studentDetails.university,
-    studentDetails.courses,
-    studentDetails.areaOfStudy,
-    studentDetails.semesterOffering,
-    `${studentDetails.yearStart}–${studentDetails.yearEnd}`,
+    plan.planName,
+    plan.university,
+    plan.schedule.course_title,
+    plan.schedule.specialisation,
+    plan.semesterOffering,
+    `${plan.yearStart}–${plan.yearEnd}`,
   ].filter(Boolean);
-
-  const handleRegenerate = () => {
-    localStorage.removeItem("currentPlanId");
-    redirect("/profile");
-  };
-
-  const handleExport = () => {
-    window.print();
-  };
 
   return (
     <main className="min-h-screen bg-[#f5f5f2] text-black">
       <header className="border-b border-black/10 bg-[#f5f5f2]">
         <div className="mx-auto flex h-20 max-w-7xl items-center justify-between px-6 md:px-8">
           <div className="flex items-center gap-4">
-            <div className="flex items-center gap-3">
-              <div className="relative h-8 w-8 overflow-hidden rounded-lg">
-                <Image
-                  src="/U-NIT ME-3.png"
-                  alt="U-NIT ME logo"
-                  fill
-                  sizes="32px"
-                  className="object-contain"
-                  priority
-                />
-              </div>
-              <span className="text-sm font-medium tracking-tight">
-                U-NIT ME
-              </span>
+            <div className="relative h-8 w-8 overflow-hidden rounded-lg">
+              <Image
+                src="/U-NIT ME-3.png"
+                alt="U-NIT ME logo"
+                fill
+                sizes="32px"
+                className="object-contain"
+                priority
+              />
             </div>
+            <span className="text-sm font-medium tracking-tight">U-NIT ME</span>
           </div>
-
           <UserButton />
         </div>
       </header>
@@ -77,7 +76,7 @@ export default async function CoursePlanPage() {
               </div>
 
               <h1 className="text-3xl font-semibold tracking-tight md:text-4xl">
-                Your Course Plan
+                {plan.planName}
               </h1>
 
               <div className="mt-4 flex flex-wrap gap-2">
@@ -100,6 +99,25 @@ export default async function CoursePlanPage() {
                 <RefreshCw className="h-3.5 w-3.5" />
                 Regenerate
               </Link>
+
+              {!plan.saved && (
+                <form action={handleSave}>
+                  <button
+                    type="submit"
+                    className="flex items-center gap-2 rounded-lg bg-white px-4 py-2 text-xs font-medium text-black transition-all hover:bg-white/90"
+                  >
+                    <BookmarkCheck className="h-3.5 w-3.5" />
+                    Save Plan
+                  </button>
+                </form>
+              )}
+
+              {plan.saved && (
+                <span className="flex items-center gap-2 rounded-lg border border-white/15 px-4 py-2 text-xs text-white/40">
+                  <BookmarkCheck className="h-3.5 w-3.5" />
+                  Saved
+                </span>
+              )}
             </div>
           </div>
         </div>
@@ -115,7 +133,16 @@ export default async function CoursePlanPage() {
             Back to Dashboard
           </Link>
 
-          <CoursePlanner studentDetails={studentDetails} showHeader={false} />
+          <CoursePlanner
+            schedule={plan.schedule}
+            studentDetails={{
+              planName: plan.planName,
+              university: plan.university,
+              yearStart: plan.yearStart,
+              yearEnd: plan.yearEnd,
+            }}
+            showHeader={false}
+          />
         </div>
       </section>
 
@@ -126,8 +153,7 @@ export default async function CoursePlanPage() {
             official handbook
           </p>
           <p className="text-xs text-black/20">
-            {studentDetails.semesterOffering} • {studentDetails.yearStart}–
-            {studentDetails.yearEnd}
+            {plan.semesterOffering} • {plan.yearStart}–{plan.yearEnd}
           </p>
         </div>
       </footer>
