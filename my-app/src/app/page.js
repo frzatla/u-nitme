@@ -891,8 +891,14 @@ export default function Home() {
       <footer className="border-t border-white/[0.18] px-6 py-10 md:px-10">
         <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-4 md:flex-row">
           <div className="flex items-center gap-3">
-            <span className="flex h-5 w-5 items-center justify-center rounded-sm border border-white/24 text-[8px] text-white/60">
-              U
+            <span className="relative h-5 w-5 overflow-hidden rounded-sm">
+              <Image
+                src="/U-NIT ME-2.png"
+                alt="U-NIT ME logo"
+                fill
+                sizes="20px"
+                className="object-contain"
+              />
             </span>
             <span className="text-xs uppercase tracking-[0.18em] text-white">
               U-NIT ME

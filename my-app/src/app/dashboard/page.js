@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useUser, UserButton } from "@clerk/nextjs";
@@ -119,8 +120,15 @@ export default function DashboardPage() {
       <nav className="w-full border-b border-black/[0.06] px-6 py-5 md:px-12">
         <div className="mx-auto flex max-w-[1200px] items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="flex h-8 w-8 items-center justify-center rounded-md bg-black">
-              <span className="text-sm text-white">U</span>
+            <div className="relative h-8 w-8 overflow-hidden rounded-md">
+              <Image
+                src="/U-NIT ME-3.png"
+                alt="U-NIT ME logo"
+                fill
+                sizes="32px"
+                className="object-contain"
+                priority
+              />
             </div>
             <span className="tracking-tight">U-NIT ME</span>
           </div>

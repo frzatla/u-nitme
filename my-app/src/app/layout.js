@@ -15,6 +15,11 @@ const geistMono = Geist_Mono({
 export const metadata = {
   title: "U-NIT ME",
   description: "Your intelligent course planning assistant",
+  icons: {
+    icon: "/icon.png",
+    shortcut: "/icon.png",
+    apple: "/icon.png",
+  },
 };
 
 export default function RootLayout({ children }) {

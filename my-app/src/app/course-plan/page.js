@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { UserButton } from "@clerk/nextjs";
@@ -109,8 +110,15 @@ export default function CoursePlanPage() {
         <div className="mx-auto flex h-20 max-w-7xl items-center justify-between px-6 md:px-8">
           <div className="flex items-center gap-4">
             <div className="flex items-center gap-3">
-              <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-black text-sm font-semibold text-white">
-                U
+              <div className="relative h-8 w-8 overflow-hidden rounded-lg">
+                <Image
+                  src="/U-NIT ME-3.png"
+                  alt="U-NIT ME logo"
+                  fill
+                  sizes="32px"
+                  className="object-contain"
+                  priority
+                />
               </div>
               <span className="text-sm font-medium tracking-tight">U-NIT ME</span>
             </div>

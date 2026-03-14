@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { UserButton } from "@clerk/nextjs";
 import { ArrowLeft } from "lucide-react";
@@ -21,9 +22,16 @@ export default function NewPlanPage() {
           <div className="flex items-center gap-3">
             <button
               onClick={() => router.push("/dashboard")}
-              className="flex h-8 w-8 items-center justify-center rounded-lg bg-black text-sm font-semibold text-white"
+              className="relative h-8 w-8 overflow-hidden rounded-lg"
             >
-              U
+              <Image
+                src="/U-NIT ME-3.png"
+                alt="U-NIT ME logo"
+                fill
+                sizes="32px"
+                className="object-contain"
+                priority
+              />
             </button>
 
             <div className="flex items-center gap-3">
