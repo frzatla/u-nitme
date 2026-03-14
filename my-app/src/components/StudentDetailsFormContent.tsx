@@ -203,26 +203,6 @@ export default function StudentDetailsFormContent() {
           </div>
         </div>
 
-        <div className="mt-4">
-          <label
-            htmlFor="semesterOffering"
-            className="mb-2 block text-sm font-medium text-black/75"
-          >
-            Unit Offerings
-          </label>
-          <div className="relative">
-            <select
-              id="semesterOffering"
-              name="semesterOffering"
-              defaultValue="February"
-              className={`${inputClass} appearance-none pr-10`}
-            >
-              <option value="February">February</option>
-            </select>
-
-            <ChevronDown className="pointer-events-none absolute right-4 top-1/2 h-4 w-4 -translate-y-1/2 text-black/35" />
-          </div>
-        </div>
       </section>
 
       <section>
@@ -230,7 +210,28 @@ export default function StudentDetailsFormContent() {
           Timeline
         </p>
 
-        <div className="grid grid-cols-2 gap-4 md:grid-cols-4">
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
+          <div>
+            <label
+              htmlFor="semesterOffering"
+              className="mb-2 block text-sm font-medium text-black/75"
+            >
+              Unit Offerings
+            </label>
+            <div className="relative">
+              <select
+                id="semesterOffering"
+                name="semesterOffering"
+                defaultValue="February"
+                className={`${inputClass} appearance-none pr-10`}
+              >
+                <option value="February">February</option>
+              </select>
+
+              <ChevronDown className="pointer-events-none absolute right-4 top-1/2 h-4 w-4 -translate-y-1/2 text-black/35" />
+            </div>
+          </div>
+
           <div>
             <label
               htmlFor="yearStart"

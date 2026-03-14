@@ -44,7 +44,7 @@ export default function NewPlanPage() {
             </div>
           </div>
 
-          <UserButton afterSignOutUrl="/" />
+          <UserButton />
         </div>
       </header>
 
