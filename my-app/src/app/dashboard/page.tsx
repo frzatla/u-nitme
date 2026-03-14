@@ -171,21 +171,14 @@ export default async function DashboardPage() {
               <div className="flex flex-col gap-7 lg:flex-row lg:items-end lg:justify-between">
                 <div>
                   <h2 className="text-[42px] font-semibold leading-none tracking-[-0.06em] text-black">
-                    {plan.specialisation ||
-                      plan.major ||
-                      plan.degree ||
-                      "Course Plan"}
+                    {plan.course || plan.degree || "Course Plan"}
                   </h2>
 
                   <div className="mt-5 flex flex-wrap gap-3">
                     {[
+                      plan.course,
                       plan.university,
-                      plan.faculty,
                       plan.degree,
-                      plan.minor ? `Minor: ${plan.minor}` : null,
-                      plan.specialisation
-                        ? `Spec: ${plan.specialisation}`
-                        : null,
                       plan.semesterOffering,
                       plan.yearStart && plan.yearEnd
                         ? `${plan.yearStart}-${plan.yearEnd}`

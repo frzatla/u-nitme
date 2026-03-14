@@ -24,18 +24,10 @@ export default async function NewPlanPage() {
     const payload = {
       email,
       plan: {
+        course: String(formData.get("course") || ""),
         university: String(formData.get("university") || ""),
-        faculty: String(formData.get("faculty") || ""),
         degree: selectedDegree,
         semesterOffering: String(formData.get("semesterOffering") || ""),
-        specialisation:
-          selectedDegree === "COMPSCI"
-            ? String(formData.get("specialisation") || "")
-            : null,
-        major:
-          selectedDegree === "IT" ? String(formData.get("major") || "") : null,
-        minor:
-          selectedDegree === "IT" ? String(formData.get("minor") || "") : null,
         yearStart: Number(formData.get("yearStart")),
         yearEnd: Number(formData.get("yearEnd")),
       },

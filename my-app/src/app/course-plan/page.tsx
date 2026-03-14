@@ -24,11 +24,8 @@ export default async function CoursePlanPage() {
 
   const infoPills = [
     studentDetails.planName,
+    studentDetails.course,
     studentDetails.degree,
-    studentDetails.major,
-    studentDetails.minor && `Minor: ${studentDetails.minor}`,
-    studentDetails.specialisation && `Spec: ${studentDetails.specialisation}`,
-    studentDetails.faculty,
     studentDetails.semesterOffering,
     studentDetails.university,
   ].filter(Boolean);

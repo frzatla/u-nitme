@@ -13,12 +13,9 @@ export default async function Page() {
         await createProfile({
           email,
           plan: {
+            course: "",
             university: "",
-            faculty: "",
             degree: "",
-            specialisation: "",
-            major: "",
-            minor: "",
             semesterOffering: "",
             yearStart: "",
             yearEnd: "",
