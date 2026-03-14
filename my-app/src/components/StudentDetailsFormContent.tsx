@@ -22,8 +22,8 @@ const degreeOptionsByFaculty = {
 };
 
 export default function StudentDetailsFormContent() {
-  const [faculty, setFaculty] = useState("IT");
-  const [degree, setDegree] = useState("COMPSCI");
+  const [faculty, setFaculty] = useState("");
+  const [degree, setDegree] = useState("");
 
   const availableDegrees = degreeOptionsByFaculty[faculty] || [];
 
@@ -49,8 +49,11 @@ export default function StudentDetailsFormContent() {
                 name="university"
                 required
                 className={`${inputClass} appearance-none pr-10`}
-                defaultValue="Monash University"
+                defaultValue=""
               >
+                <option value="" disabled>
+                  Select university
+                </option>
                 <option value="Monash University">Monash University</option>
               </select>
 
@@ -81,13 +84,14 @@ export default function StudentDetailsFormContent() {
                   ]?.some((option) => option.value === degree);
 
                   if (!degreeStillValid) {
-                    const firstDegree =
-                      degreeOptionsByFaculty[nextFaculty]?.[0]?.value || "";
-                    setDegree(firstDegree);
+                    setDegree("");
                   }
                 }}
                 className={`${inputClass} appearance-none pr-10`}
               >
+                <option value="" disabled>
+                  Select faculty
+                </option>
                 <option value="IT">IT</option>
                 <option value="Arts">Arts</option>
               </select>
@@ -122,6 +126,9 @@ export default function StudentDetailsFormContent() {
                 disabled={!faculty}
                 className={`${inputClass} ${disabledInputClass} appearance-none pr-10`}
               >
+                <option value="" disabled>
+                  Select degree
+                </option>
                 {availableDegrees.map((option) => (
                   <option key={option.value} value={option.value}>
                     {option.label}
@@ -149,7 +156,6 @@ export default function StudentDetailsFormContent() {
               id="specialisation"
               name="specialisation"
               placeholder="e.g., Software Development"
-              defaultValue="Software Development"
               required={degree === "COMPSCI"}
               disabled={!degree || degree === "IT"}
               className={`${inputClass} ${disabledInputClass}`}
@@ -174,7 +180,6 @@ export default function StudentDetailsFormContent() {
               id="major"
               name="major"
               placeholder="e.g., Computer Science"
-              defaultValue="Computer Science"
               required={degree === "IT"}
               disabled={!degree || degree === "COMPSCI"}
               className={`${inputClass} ${disabledInputClass}`}
@@ -192,10 +197,30 @@ export default function StudentDetailsFormContent() {
               id="minor"
               name="minor"
               placeholder="e.g., Mathematics"
-              defaultValue="Mathematics"
               disabled={!degree || degree === "COMPSCI"}
               className={`${inputClass} ${disabledInputClass}`}
             />
+          </div>
+        </div>
+
+        <div className="mt-4">
+          <label
+            htmlFor="semesterOffering"
+            className="mb-2 block text-sm font-medium text-black/75"
+          >
+            Unit Offerings
+          </label>
+          <div className="relative">
+            <select
+              id="semesterOffering"
+              name="semesterOffering"
+              defaultValue="February"
+              className={`${inputClass} appearance-none pr-10`}
+            >
+              <option value="February">February</option>
+            </select>
+
+            <ChevronDown className="pointer-events-none absolute right-4 top-1/2 h-4 w-4 -translate-y-1/2 text-black/35" />
           </div>
         </div>
       </section>
@@ -211,7 +236,7 @@ export default function StudentDetailsFormContent() {
               htmlFor="yearStart"
               className="mb-2 block text-sm font-medium text-black/75"
             >
-              Year Start <span className="text-black/30">*</span>
+              Course Start <span className="text-black/30">*</span>
             </label>
             <input
               id="yearStart"
@@ -221,7 +246,6 @@ export default function StudentDetailsFormContent() {
               min="2020"
               max="2035"
               required
-              defaultValue="2024"
               className={inputClass}
             />
           </div>
@@ -231,7 +255,7 @@ export default function StudentDetailsFormContent() {
               htmlFor="yearEnd"
               className="mb-2 block text-sm font-medium text-black/75"
             >
-              Year End <span className="text-black/30">*</span>
+              Course End <span className="text-black/30">*</span>
             </label>
             <input
               id="yearEnd"
@@ -241,7 +265,6 @@ export default function StudentDetailsFormContent() {
               min="2020"
               max="2040"
               required
-              defaultValue="2027"
               className={inputClass}
             />
           </div>

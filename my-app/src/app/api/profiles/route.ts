@@ -21,6 +21,8 @@ export async function POST(req) {
         plan: {
           university: payload.plan.university,
           faculty: payload.plan.faculty,
+          degree: payload.plan.degree,
+          semesterOffering: payload.plan.semesterOffering,
           specialisation: payload.plan.specialisation,
           major: payload.plan.major,
           minor: payload.plan.minor,

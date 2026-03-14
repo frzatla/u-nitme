@@ -15,6 +15,7 @@ export default async function DashboardPage() {
       university: String(formData.get("university") || ""),
       faculty: String(formData.get("faculty") || ""),
       degree: selectedDegree,
+      semesterOffering: String(formData.get("semesterOffering") || ""),
       specialisation:
         selectedDegree === "COMPSCI"
           ? String(formData.get("specialisation") || "")
@@ -38,6 +39,8 @@ export default async function DashboardPage() {
         plan: {
           university: formData.university,
           faculty: formData.faculty,
+          degree: formData.degree,
+          semesterOffering: formData.semesterOffering,
           specialisation: formData.specialisation,
           major: formData.major,
           minor: formData.minor,
