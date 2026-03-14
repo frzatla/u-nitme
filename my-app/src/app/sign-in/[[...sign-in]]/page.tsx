@@ -13,6 +13,7 @@ export default async function Page() {
         await createProfile({
           email,
           plan: {
+            planName: "",
             course: "",
             university: "",
             degree: "",

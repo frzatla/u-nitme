@@ -24,6 +24,7 @@ export default async function NewPlanPage() {
     const payload = {
       email,
       plan: {
+        planName: String(formData.get("planName") || ""),
         course: String(formData.get("course") || ""),
         university: String(formData.get("university") || ""),
         degree: selectedDegree,
