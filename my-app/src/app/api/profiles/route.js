@@ -16,8 +16,6 @@ export async function GET() {
 export async function POST(req) {
   const body = await req.json()
 
-  console.log(body.email);
-
   const { data, error } = await supabase
     .from("profiles")
     .insert([
@@ -43,19 +41,42 @@ export async function POST(req) {
 
   return NextResponse.json({ success: true, data })
 }
+
 export async function PUT(req) {
-  const body = await req.json()
+  try {
+    const body = await req.json();
 
-  const { data, error } = await supabase
-    .from("profiles")
-    .update({
-      university: body.university,
-      faculty: body.faculty,
-      degree: body.degree,
-    })
-    .eq("id", body.id)
+    const { data, error } = await supabase
+      .from("profiles")
+      .update({
+        plan: {
+          university: body.university,
+          faculty: body.faculty,
+          degree: body.degree,
+          specialisation: body.specialisation || "",
+          major: body.major || "",
+          minor: body.minor || "",
+          year_start: body.yearStart,
+          year_end: body.yearEnd,
+          choosen_unit_id: body.choosen_unit_id || [],
+        },
+      })
+      .eq("student_email", body.email)
+      .select();
 
-  return NextResponse.json({ data, error })
+    if (error) {
+      console.error("Supabase update error:", error);
+      return NextResponse.json({ error: error.message }, { status: 500 });
+    }
+
+    return NextResponse.json({ data });
+  } catch (error) {
+    console.error("PUT error:", error);
+    return NextResponse.json(
+      { error: "Failed to update profile" },
+      { status: 500 }
+    );
+  }
 }
 
 export async function DELETE(req) {

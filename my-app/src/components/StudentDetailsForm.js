@@ -22,35 +22,44 @@ const degreeOptionsByFaculty = {
 };
 
 export default function StudentDetailsForm({ onSubmit }) {
-  const [faculty, setFaculty] = useState("");
-  const [degree, setDegree] = useState("");
+  const [faculty, setFaculty] = useState("IT");
+  const [degree, setDegree] = useState("COMPSCI");
+
   const availableDegrees = degreeOptionsByFaculty[faculty] || [];
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
     const formData = new FormData(e.currentTarget);
-    const selectedDegree = formData.get("degree");
+    const selectedDegree = String(formData.get("degree") || "");
 
     const data = {
-      university: formData.get("university"),
-      faculty: formData.get("faculty"),
+      university: String(formData.get("university") || ""),
+      faculty: String(formData.get("faculty") || ""),
       degree: selectedDegree,
       specialisation:
-        selectedDegree === "COMPSCI" ? formData.get("specialisation") : "",
-      major: selectedDegree === "IT" ? formData.get("major") : "",
-      minor: selectedDegree === "IT" ? formData.get("minor") : "",
-      yearStart: formData.get("yearStart"),
-      yearEnd: formData.get("yearEnd"),
+        selectedDegree === "COMPSCI"
+          ? String(formData.get("specialisation") || "")
+          : null,
+      major:
+        selectedDegree === "IT"
+          ? String(formData.get("major") || "")
+          : null,
+      minor:
+        selectedDegree === "IT"
+          ? String(formData.get("minor") || "")
+          : null,
+      yearStart: Number(formData.get("yearStart")),
+      yearEnd: Number(formData.get("yearEnd")),
     };
 
+    console.log("form submit data:", data);
     onSubmit?.(data);
   };
 
   return (
     <div className="rounded-3xl border border-black/10 bg-white px-7 py-8 shadow-[0_1px_2px_rgba(0,0,0,0.02)] md:px-8 md:py-9">
       <form onSubmit={handleSubmit} className="space-y-7">
-        {/* Institution */}
         <section>
           <p className="mb-4 text-[11px] font-medium uppercase tracking-[0.16em] text-black/28">
             Institution
@@ -103,14 +112,13 @@ export default function StudentDetailsForm({ onSubmit }) {
                     ]?.some((option) => option.value === degree);
 
                     if (!degreeStillValid) {
-                      setDegree("");
+                      const firstDegree =
+                        degreeOptionsByFaculty[nextFaculty]?.[0]?.value || "";
+                      setDegree(firstDegree);
                     }
                   }}
                   className={`${inputClass} appearance-none pr-10`}
                 >
-                  <option value="" disabled>
-                    Select faculty
-                  </option>
                   <option value="IT">IT</option>
                   <option value="Arts">Arts</option>
                 </select>
@@ -121,7 +129,6 @@ export default function StudentDetailsForm({ onSubmit }) {
           </div>
         </section>
 
-        {/* Course Details */}
         <section>
           <p className="mb-4 text-[11px] font-medium uppercase tracking-[0.16em] text-black/28">
             Course Details
@@ -146,9 +153,6 @@ export default function StudentDetailsForm({ onSubmit }) {
                   disabled={!faculty}
                   className={`${inputClass} ${disabledInputClass} appearance-none pr-10`}
                 >
-                  <option value="" disabled>
-                    {faculty ? "Select degree" : "Select faculty first"}
-                  </option>
                   {availableDegrees.map((option) => (
                     <option key={option.value} value={option.value}>
                       {option.label}
@@ -176,6 +180,7 @@ export default function StudentDetailsForm({ onSubmit }) {
                 id="specialisation"
                 name="specialisation"
                 placeholder="e.g., Software Development"
+                defaultValue="Software Development"
                 required={degree === "COMPSCI"}
                 disabled={!degree || degree === "IT"}
                 className={`${inputClass} ${disabledInputClass}`}
@@ -200,6 +205,7 @@ export default function StudentDetailsForm({ onSubmit }) {
                 id="major"
                 name="major"
                 placeholder="e.g., Computer Science"
+                defaultValue="Computer Science"
                 required={degree === "IT"}
                 disabled={!degree || degree === "COMPSCI"}
                 className={`${inputClass} ${disabledInputClass}`}
@@ -217,6 +223,7 @@ export default function StudentDetailsForm({ onSubmit }) {
                 id="minor"
                 name="minor"
                 placeholder="e.g., Mathematics"
+                defaultValue="Mathematics"
                 disabled={!degree || degree === "COMPSCI"}
                 className={`${inputClass} ${disabledInputClass}`}
               />
@@ -224,7 +231,6 @@ export default function StudentDetailsForm({ onSubmit }) {
           </div>
         </section>
 
-        {/* Timeline */}
         <section>
           <p className="mb-4 text-[11px] font-medium uppercase tracking-[0.16em] text-black/28">
             Timeline
@@ -246,6 +252,7 @@ export default function StudentDetailsForm({ onSubmit }) {
                 min="2020"
                 max="2035"
                 required
+                defaultValue="2024"
                 className={inputClass}
               />
             </div>
@@ -265,13 +272,13 @@ export default function StudentDetailsForm({ onSubmit }) {
                 min="2020"
                 max="2040"
                 required
+                defaultValue="2027"
                 className={inputClass}
               />
             </div>
           </div>
         </section>
 
-        {/* Submit */}
         <div className="pt-1">
           <button
             type="submit"
