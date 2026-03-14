@@ -1,27 +1,62 @@
-"use client";
-
 import Image from "next/image";
-import { useRouter } from "next/navigation";
+import Link from "next/link";
+import { currentUser } from "@clerk/nextjs/server";
 import { UserButton } from "@clerk/nextjs";
 import { ArrowLeft } from "lucide-react";
 import StudentDetailsForm from "../../../components/StudentDetailsForm";
+import { POST as postProfile } from "@/app/api/profiles/route";
+import { redirect } from "next/navigation";
 
-export default function NewPlanPage() {
-  const router = useRouter();
+export default async function NewPlanPage() {
+  const user = await currentUser();
 
-  const handleSubmit = (data) => {
-    localStorage.setItem("studentDetails", JSON.stringify(data));
-    localStorage.removeItem("currentPlanId");
-    router.push("/course-plan");
-  };
+  async function handleSubmit(formData: FormData) {
+    "use server";
+
+    const selectedDegree = String(formData.get("degree") || "");
+    const email = user?.primaryEmailAddress?.emailAddress;
+
+    if (!email) {
+      redirect("/sign-in");
+    }
+
+    const payload = {
+      email,
+      plan: {
+        university: String(formData.get("university") || ""),
+        faculty: String(formData.get("faculty") || ""),
+        degree: selectedDegree,
+        semesterOffering: String(formData.get("semesterOffering") || ""),
+        specialisation:
+          selectedDegree === "COMPSCI"
+            ? String(formData.get("specialisation") || "")
+            : null,
+        major:
+          selectedDegree === "IT" ? String(formData.get("major") || "") : null,
+        minor:
+          selectedDegree === "IT" ? String(formData.get("minor") || "") : null,
+        yearStart: Number(formData.get("yearStart")),
+        yearEnd: Number(formData.get("yearEnd")),
+      },
+    };
+
+    await postProfile(
+      new Request("https://localhost/", {
+        method: "POST",
+        body: JSON.stringify(payload),
+      }),
+    );
+
+    redirect("/course-plan");
+  }
 
   return (
     <main className="min-h-screen bg-[#f5f5f4] text-black">
       <header className="border-b border-black/10 bg-[#f5f5f4]">
         <div className="mx-auto flex h-20 max-w-6xl items-center justify-between px-6 md:px-8">
           <div className="flex items-center gap-3">
-            <button
-              onClick={() => router.push("/dashboard")}
+            <Link
+              href="/dashboard"
               className="relative h-8 w-8 overflow-hidden rounded-lg"
             >
               <Image
@@ -32,7 +67,7 @@ export default function NewPlanPage() {
                 className="object-contain"
                 priority
               />
-            </button>
+            </Link>
 
             <div className="flex items-center gap-3">
               <span className="text-sm font-medium tracking-tight">
@@ -50,13 +85,13 @@ export default function NewPlanPage() {
 
       <section className="px-6 py-12 md:px-8 md:py-14">
         <div className="mx-auto max-w-3xl">
-          <button
-            onClick={() => router.push("/dashboard")}
+          <Link
+            href="/dashboard"
             className="mb-6 inline-flex items-center gap-2 text-sm text-black/45 transition-colors hover:text-black"
           >
             <ArrowLeft className="h-4 w-4" />
             Back to Dashboard
-          </button>
+          </Link>
 
           <div className="mb-8">
             <h1 className="text-4xl font-semibold tracking-tight text-black">
@@ -68,7 +103,7 @@ export default function NewPlanPage() {
             </p>
           </div>
 
-          <StudentDetailsForm onSubmit={handleSubmit} />
+          <StudentDetailsForm action={handleSubmit} />
         </div>
       </section>
     </main>
