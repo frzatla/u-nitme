@@ -74,10 +74,6 @@ export default async function CoursePlanPage({
         <div className="mx-auto max-w-7xl">
           <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
             <div>
-              <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-white/15 px-3 py-1">
-                <Sparkles className="h-3.5 w-3.5 text-white/50" />
-                <span className="text-xs text-white/50">AI Generated</span>
-              </div>
 
               <h1 className="text-3xl font-semibold tracking-tight md:text-4xl">
                 {coursePlanName}

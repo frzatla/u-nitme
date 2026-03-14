@@ -12,10 +12,14 @@ const inputClass =
 export default function StudentDetailsFormContent({
   courses,
   aosList,
+  minorAosList,
+  majorAosList,
   courseToAos,
 }: {
   courses: CourseOption[];
   aosList: AosOption[];
+  minorAosList: AosOption[];
+  majorAosList: AosOption[];
   courseToAos: Record<string, string[]>;
 }) {
   const [selectedCourse, setSelectedCourse] = useState("");
@@ -182,7 +186,7 @@ export default function StudentDetailsFormContent({
                 <option value="">
                   {minorMajorType ? `Select ${minorMajorType}` : "Select type first"}
                 </option>
-                {aosList.map((a) => (
+                {(minorMajorType === "minor" ? minorAosList : minorMajorType === "major" ? majorAosList : aosList).map((a) => (
                   <option key={a.code} value={a.code}>
                     {a.code}: {a.title}
                   </option>
