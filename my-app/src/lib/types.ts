@@ -13,3 +13,14 @@ export type Profile = {
   email: string;
   plans: Plan[];
 };
+
+export type ChosenUnit = {
+  chosenId: number;
+  unitId: number;
+  unitName: string;
+  chosenYear: number;
+  chosenSem: string;
+  type: string;
+  creditPoint: number;
+  difficulty: string;
+};
