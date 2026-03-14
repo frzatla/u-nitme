@@ -17,6 +17,7 @@ export default async function NewPlanPage() {
     console.log(Object.fromEntries(formData.entries()));
 
     const email = user?.primaryEmailAddress?.emailAddress;
+    c;
 
     if (!email) {
       redirect("/sign-in");
@@ -32,7 +33,7 @@ export default async function NewPlanPage() {
       yearEnd: Number(formData.get("yearEnd")),
     };
 
-    await updateProfile(email, newPlan);
+    await updateProfile(email, [...profile.plans, newPlan]);
 
     redirect("/course-plan");
   }
