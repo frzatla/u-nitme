@@ -26,7 +26,7 @@ export default async function NewPlanPage() {
       planName: String(formData.get("planName") || ""),
       courses: String(formData.get("courses") || ""),
       university: String(formData.get("university") || ""),
-      degree: String(formData.get("areaOfStudy") || ""),
+      degree: String(formData.get("degree") || ""),
       semesterOffering: String(formData.get("semesterOffering") || ""),
       yearStart: Number(formData.get("yearStart")),
       yearEnd: Number(formData.get("yearEnd")),
