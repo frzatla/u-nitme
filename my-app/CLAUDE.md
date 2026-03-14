@@ -66,9 +66,10 @@ my-app/
 1. User signs in via **Clerk**
 2. Dashboard shows existing saved plans with stats
 3. User clicks "New Plan" → goes to `/profile`
-4. User fills in: Plan Name, University, Course (dropdown), Area of Study (filtered by course), Offering, Start/End year
+4. User fills in: Plan Name, University, Course (dropdown), Area of Study (filtered by course), Minor/Major type + code (optional), Offering, Start/End year
 5. On submit → server action in `profile/page.tsx`:
    - Runs `algo1.py` via `spawnPython()` (tries `py` → `python` → `python3` on Windows; `python3` → `python` → `py` on Unix)
+   - Passes `--major` or `--minor` flag to algo1.py if the user selected one
    - algo1.py writes `schedule_<uuid>.json` to `src/algo/`
    - Server reads and parses the file, then deletes it
    - Enriches each unit with a `category` field (`Specialisation` if in AOS `all_units`, `Elective` if code=`ELECTIVE`, else `Core`)
@@ -138,12 +139,16 @@ type Schedule = {
 **`StudentDetailsForm.tsx`** (server component):
 - Reads `final_courses.json` and `final_aos.json` via `fs.readFileSync`
 - Filters AOS to only entries with `total_credit_points > 0`
+- Builds `minorAosList` (entries with `total_credit_points === 24`) and `majorAosList` (entries with `total_credit_points === 48`) using Monash conventions
 - Builds `courseToAos` map: a group contributes AOS codes only if `credit_points > 0` AND every unit in the group is a valid AOS code (excludes mixed FIT/MAT groups like "Discipline elective studies")
-- Passes `courses`, `aosList`, `courseToAos` as props to `StudentDetailsFormContent`
+- Passes `courses`, `aosList`, `minorAosList`, `majorAosList`, `courseToAos` as props to `StudentDetailsFormContent`
 
 **`StudentDetailsFormContent.tsx`** (client component — `"use client"`):
 - `selectedCourse` state drives AOS filtering
+- `minorMajorType` state (`""` | `"major"` | `"minor"`) drives the second Minor/Major dropdown
 - Area of Study dropdown disabled with "Select a course first" until a course is chosen
+- Minor/Major section: first dropdown selects type (None / Major / Minor); second dropdown shows `majorAosList` or `minorAosList` depending on type, disabled until type is chosen
+- Submitted form fields: `minorMajorType` (`"major"` | `"minor"` | `""`) and `minorMajorCode` (AOS code)
 - Submitted values are **codes** (e.g. `C2001`, `ALGSFTWR01`), not titles
 
 ---
@@ -152,6 +157,9 @@ type Schedule = {
 
 ```bash
 python3 algo1.py --course C2001 --specialisation ALGSFTWR01 --campus Clayton --output schedule_<uuid>.json
+# with optional major or minor:
+python3 algo1.py --course C2001 --specialisation ALGSFTWR01 --major MAJCODE --campus Clayton --output schedule_<uuid>.json
+python3 algo1.py --course C2001 --specialisation ALGSFTWR01 --minor MINCODE --campus Clayton --output schedule_<uuid>.json
 ```
 
 - Default campus: `Clayton`
@@ -241,4 +249,4 @@ npm run lint     # ESLint
 
 - Only Monash University is supported (hardcoded in form + algo)
 - Only "February" semester offering available (July not yet added)
-- Category enrichment is simplified: AOS units → Specialisation, ELECTIVE → Elective, everything else → Core (no Major/Minor distinction yet)
+- Category enrichment is simplified: AOS units → Specialisation, ELECTIVE → Elective, everything else → Core (Major/Minor units from algo output are not yet distinguished from Core in the category enrichment step)
