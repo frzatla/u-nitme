@@ -37,10 +37,60 @@ def load_data():
         path = os.path.join(data_dir, name)
         with open(path, encoding="utf-8") as f:
             return json.load(f)
+    units_db = _load("final_units.json")
+    # Convert string requisites to group-dict format expected by the algorithm.
+    #
+    # String format uses:
+    #   ';'  as OR  separator  (take 1 of these)
+    #   '&'  as AND separator  (each clause is a separate required group)
+    #   '()' for grouping
+    #
+    # e.g. "(FIT1045;FIT1053)&(MAT1830;FIT1058)"
+    #   → [{"units":["FIT1045","FIT1053"]}, {"units":["MAT1830","FIT1058"]}]
+    import re as _re
+    _UNIT_RE = _re.compile(r'\b[A-Z]{2,4}\d{4}\b')
+
+    def _split_top_and(s):
+        """Split s on '&' only at paren-depth 0."""
+        parts, depth, start = [], 0, 0
+        for i, ch in enumerate(s):
+            if ch == '(':   depth += 1
+            elif ch == ')': depth -= 1
+            elif ch == '&' and depth == 0:
+                parts.append(s[start:i])
+                start = i + 1
+        parts.append(s[start:])
+        return [p.strip() for p in parts if p.strip()]
+
+    def _parse_req_string(expr):
+        """Return list of group-dicts from one requisite expression string."""
+        groups = []
+        for clause in _split_top_and(expr.strip()):
+            units = _UNIT_RE.findall(clause)
+            if units:
+                groups.append({"units": units})
+        return groups
+
+    def _norm_groups(raw):
+        result = []
+        for item in (raw or []):
+            if isinstance(item, str):
+                result.extend(_parse_req_string(item))
+            elif isinstance(item, dict):
+                result.append(item)
+        return result
+
+    for unit in units_db.values():
+        reqs = unit.get("requisites")
+        if not reqs:
+            continue
+        reqs["prerequisites"] = _norm_groups(reqs.get("prerequisites"))
+        reqs["corequisites"]  = _norm_groups(reqs.get("corequisites"))
+        reqs["prohibitions"]  = _norm_groups(reqs.get("prohibitions"))
     return (
-        _load("processed_units.json"),
-        _load("parsed_courses_full.json"),
-        _load("parsed_aos_full.json"),
+        units_db,
+        _load("final_courses.json"),
+        _load("final_aos.json"),
     )
 
 
@@ -437,6 +487,50 @@ def compute_unlock_depths(required, units_db, chain_lengths):
     return {u: max_unlock(u) for u in required}
 
 
+# ─── backward pass: latest-start deadlines ───────────────────────────────────
+
+def compute_latest_starts(required, units_db, required_sems):
+    """
+    Backward pass (CPM): for each required unit compute the latest 0-based
+    semester index at which it can start and still allow every downstream
+    dependent to finish within `required_sems` semesters.
+
+    Units with a smaller latest_start have tighter deadlines and must be
+    prioritised by the scheduler.
+    """
+    from collections import defaultdict
+
+    # Reverse graph: prereq -> direct dependents inside `required`
+    dependents = defaultdict(set)
+    for unit in required:
+        unit_data = units_db.get(unit)
+        if not unit_data:
+            continue
+        for group in (unit_data.get("requisites") or {}).get("prerequisites") or []:
+            for prereq in group.get("units", []):
+                if prereq in required:
+                    dependents[prereq].add(unit)
+
+    memo = {}
+
+    def latest_start(u, visiting=frozenset()):
+        if u in memo:
+            return memo[u]
+        if u in visiting:           # cycle guard — default to last slot
+            return required_sems - 1
+        deps = dependents[u]
+        if not deps:
+            memo[u] = required_sems - 1
+            return required_sems - 1
+        v2 = visiting | {u}
+        # must be placed at least 1 semester before the tightest dependent
+        tightest = min(latest_start(d, v2) for d in deps)
+        memo[u] = tightest - 1
+        return memo[u]
+
+    return {u: latest_start(u) for u in required}
+
+
 # ─── prerequisite dependency graph (within the required set) ──────────────────
 
 def build_prereq_graph(required, units_db, chain_lengths):
@@ -515,6 +609,8 @@ def schedule_units(required, prereq_graph, chain_lengths, unlock_depths, units_d
 
     Semesters cycle S1 → S2 → S1 → S2 ...
     """
+    required_sems = standard_years * 2
+    latest_starts = compute_latest_starts(required, units_db, required_sems)
     completed    = set()
     remaining    = set(required)
     cumulative_cp = 0
@@ -553,7 +649,8 @@ def schedule_units(required, prereq_graph, chain_lengths, unlock_depths, units_d
         # then deepest own chain, then fewest offered semesters (least flexible
         # units scheduled first — e.g. S2-only before S1+S2 to avoid bumping
         # them to a much later semester), then code for determinism
-        available.sort(key=lambda u: (-unlock_depths.get(u, 0),
+        available.sort(key=lambda u: (latest_starts.get(u, required_sems - 1),
+                                      -unlock_depths.get(u, 0),
                                       -chain_lengths.get(u, 0),
                                       len(get_offered_semesters(u, units_db, campus)),
                                       u))
