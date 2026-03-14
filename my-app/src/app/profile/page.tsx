@@ -14,11 +14,25 @@ import path from "path";
 const ALGO_DIR = path.join(process.cwd(), "src/algo");
 const AOS_PATH = path.join(process.cwd(), "public/data/final_aos.json");
 
-function runAlgo(courseCode: string, aosCode: string, outputFile: string): Schedule | null {
+function runAlgo(
+  courseCode: string,
+  aosCode: string,
+  outputFile: string,
+): Schedule | null {
   const result = spawnSync(
     "python3",
-    ["algo1.py", "--course", courseCode, "--specialisation", aosCode, "--campus", "Clayton", "--output", outputFile],
-    { cwd: ALGO_DIR, encoding: "utf-8", timeout: 60000 }
+    [
+      "algo1.py",
+      "--course",
+      courseCode,
+      "--specialisation",
+      aosCode,
+      "--campus",
+      "Clayton",
+      "--output",
+      outputFile,
+    ],
+    { cwd: ALGO_DIR, encoding: "utf-8", timeout: 60000 },
   );
 
   if (result.status !== 0) {
@@ -98,7 +112,7 @@ export default async function NewPlanPage() {
     const existingPlans: Plan[] = profile?.plans ?? [];
     await updateProfile(email, { plans: [...existingPlans, newPlan] });
 
-    redirect(`/course-plan?planId=${planId}`);
+    redirect(`/course-plan/${planId}`);
   }
 
   return (

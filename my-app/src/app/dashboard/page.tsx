@@ -13,10 +13,7 @@ import {
   Plus,
   Sparkles,
 } from "lucide-react";
-import {
-  createNewProfile,
-  getProfileByEmail,
-} from "../../lib/profile";
+import { createNewProfile, getProfileByEmail } from "../../lib/profile";
 
 function getGreeting() {
   const hour = new Date().getHours();
@@ -243,7 +240,7 @@ export default async function DashboardPage() {
                         </div>
 
                         <Link
-                          href="/course-plan"
+                          href={`/course-plan/${plan.id}`}
                           className="inline-flex items-center gap-3 rounded-full border border-black/[0.1] bg-white px-8 py-4 text-[15px] font-medium text-black transition-colors hover:border-black/20 hover:bg-black/[0.02]"
                         >
                           View Plan
