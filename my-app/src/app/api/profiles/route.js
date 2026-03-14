@@ -16,10 +16,13 @@ export async function GET() {
 export async function POST(req) {
   const body = await req.json()
 
+  console.log(body.email);
+
   const { data, error } = await supabase
     .from("profiles")
     .insert([
       {
+        student_email: body.email,
         plan: {
           university: body.university,
           faculty: body.faculty,
