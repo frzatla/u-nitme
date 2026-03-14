@@ -245,7 +245,7 @@ export default async function DashboardPage() {
                 </p>
 
                 <Link
-                  href="/dashboard/profile"
+                  href="/dashboard/new"
                   className="mt-12 inline-flex items-center gap-3 rounded-full bg-black px-8 py-4 text-[15px] font-medium text-white transition-colors hover:bg-black/90"
                 >
                   <Plus className="h-5 w-5" />
