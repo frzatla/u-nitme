@@ -1,5 +1,3 @@
-"use client";
-
 import {
   Sparkles,
   RotateCcw,
@@ -12,7 +10,43 @@ import {
   GraduationCap,
 } from "lucide-react";
 
-const foundationUnits = [
+type Category =
+  | "Core"
+  | "Major"
+  | "Minor"
+  | "Elective"
+  | "Specialisation";
+
+type Unit = {
+  code: string;
+  name: string;
+  category: Category;
+  level: string;
+  cp: number;
+};
+
+type Semester = {
+  id: string;
+  title: string;
+  year: number;
+  units: Unit[];
+};
+
+type YearGroup = {
+  year: number;
+  yearLabel: string;
+  semesters: Semester[];
+};
+
+type Summary = {
+  totalPlannedUnits: number;
+  totalCredits: number;
+  progress: number;
+  completedTarget: number;
+  breakdown: Record<Category, number>;
+};
+
+const foundationUnits: Unit[] = [
   {
     code: "FIT1045",
     name: "Introduction to Programming",
@@ -99,51 +133,105 @@ const foundationUnits = [
   },
 ];
 
-const categoryPillStyles = {
-  Core: "bg-black text-white border-black",
-  Major: "bg-black/70 text-white border-black/70",
-  Elective: "bg-white text-black/70 border-black/20",
-  Minor: "bg-black/8 text-black/55 border-black/10",
+const categoryPillStyles: Record<Category, string> = {
+  Core: "border-[#719DEE] bg-[#719DEE] text-white",
+  Major: "border-[#79B98B] bg-[#79B98B] text-white",
+  Minor: "border-[#F5DF8E] bg-[#F5DF8E] text-black/80",
+  Elective: "border-[#DD8255] bg-[#DD8255] text-white",
+  Specialisation: "border-[#DD8255] bg-[#DD8255] text-white",
 };
 
-const categoryDotStyles = {
-  Core: "bg-black",
-  Major: "bg-black/70",
-  Elective: "bg-black/30",
-  Minor: "bg-black/15",
+const categoryDotStyles: Record<Category, string> = {
+  Core: "bg-[#719DEE]",
+  Major: "bg-[#79B98B]",
+  Minor: "bg-[#F5DF8E]",
+  Elective: "bg-[#DD8255]",
+  Specialisation: "bg-[#DD8255]",
 };
 
-function buildSemesterPlan(studentDetails) {
+type StudentDetails = {
+  degree?: string;
+  specialisation?: string;
+  major?: string;
+  minor?: string;
+  faculty?: string;
+  university?: string;
+  yearStart?: number | string;
+  yearEnd?: number | string;
+};
+
+type CoursePlannerProps = {
+  studentDetails: StudentDetails;
+  showHeader?: boolean;
+};
+
+function normalizeCategory(
+  category: Category,
+  degree?: string,
+): Category {
+  if (degree === "COMPSCI" && (category === "Major" || category === "Minor")) {
+    return "Specialisation";
+  }
+
+  return category;
+}
+
+function buildSemesterPlan(studentDetails: StudentDetails): Semester[] {
   const start = Number(studentDetails?.yearStart);
   const end = Number(studentDetails?.yearEnd);
-  const majorLabel =
-    studentDetails?.major || studentDetails?.specialisation || "Specialisation";
+  const degree = studentDetails?.degree;
+  const focusLabel =
+    studentDetails?.specialisation || studentDetails?.major || "Specialisation";
   const facultyLabel = studentDetails?.faculty || "Faculty";
+  const minorLabel = studentDetails?.minor || "Elective";
 
   if (!Number.isFinite(start) || !Number.isFinite(end) || end < start) {
     return [];
   }
 
-  const semesters = [];
+  const semesters: Semester[] = [];
   let unitIndex = 0;
 
   for (let year = start; year <= end; year += 1) {
     for (let semester = 1; semester <= 2; semester += 1) {
-      const units = [];
+      const units: Unit[] = [];
 
       for (let slot = 0; slot < 4; slot += 1) {
         const unit = foundationUnits[unitIndex];
 
         if (unit) {
-          units.push(unit);
-        } else {
-          const isMajor = slot % 2 === 0;
           units.push({
-            code: `${isMajor ? majorLabel.slice(0, 2).toUpperCase() || "SP" : facultyLabel.slice(0, 2).toUpperCase() || "FA"}${400 + unitIndex}`,
-            name: isMajor
-              ? `${majorLabel} Elective ${unitIndex - foundationUnits.length + 1}`
-              : `${facultyLabel} Breadth ${unitIndex - foundationUnits.length + 1}`,
-            category: isMajor ? "Elective" : "Minor",
+            ...unit,
+            category: normalizeCategory(unit.category, degree),
+          });
+        } else {
+          const primaryTrack = degree === "COMPSCI" ? "Specialisation" : "Major";
+          const secondaryTrack =
+            degree === "COMPSCI"
+              ? "Elective"
+              : studentDetails?.minor
+                ? "Minor"
+                : "Elective";
+          const category = slot % 2 === 0 ? primaryTrack : secondaryTrack;
+          const prefixSource =
+            category === "Specialisation" || category === "Major"
+              ? focusLabel
+              : category === "Minor"
+                ? minorLabel
+                : facultyLabel;
+          const unitLabel =
+            category === "Specialisation"
+              ? `${focusLabel} Specialisation ${unitIndex - foundationUnits.length + 1}`
+              : category === "Major"
+                ? `${focusLabel} Major ${unitIndex - foundationUnits.length + 1}`
+                : category === "Minor"
+                  ? `${minorLabel} Minor ${unitIndex - foundationUnits.length + 1}`
+                  : `${facultyLabel} Elective ${unitIndex - foundationUnits.length + 1}`;
+
+          units.push({
+            code: `${prefixSource.slice(0, 2).toUpperCase() || "SP"}${400 + unitIndex}`,
+            name: unitLabel,
+            category,
             level: year === start ? "INTRO" : year === end ? "ADV" : "MID",
             cp: 6,
           });
@@ -164,7 +252,7 @@ function buildSemesterPlan(studentDetails) {
   return semesters;
 }
 
-function groupSemestersByYear(semesters) {
+function groupSemestersByYear(semesters: Semester[]): YearGroup[] {
   const map = new Map();
 
   semesters.forEach((semester) => {
@@ -179,7 +267,14 @@ function groupSemestersByYear(semesters) {
   }));
 }
 
-function getSummary(semesters) {
+function getSummary(semesters: Semester[]): Summary {
+  const categories = Array.from(
+    new Set(
+      semesters.flatMap((semester) =>
+        semester.units.map((unit) => unit.category),
+      ),
+    ),
+  ) as Category[];
   const totalPlannedUnits = semesters.reduce(
     (sum, semester) => sum + semester.units.filter(Boolean).length,
     0,
@@ -191,7 +286,16 @@ function getSummary(semesters) {
     Math.round((totalPlannedUnits / completedTarget) * 100),
   );
 
-  const breakdown = { Core: 0, Major: 0, Elective: 0, Minor: 0 };
+  const breakdown = categories.reduce<Record<Category, number>>((acc, category) => {
+    acc[category] = 0;
+    return acc;
+  }, {
+    Core: 0,
+    Major: 0,
+    Minor: 0,
+    Elective: 0,
+    Specialisation: 0,
+  });
 
   semesters.forEach((semester) => {
     semester.units.forEach((unit) => {
@@ -208,12 +312,11 @@ function getSummary(semesters) {
   };
 }
 
-function UnitCard({ unit }) {
-  const pillStyle =
-    categoryPillStyles[unit.category] || categoryPillStyles.Core;
+function UnitCard({ unit }: { unit: Unit }) {
+  const pillStyle = categoryPillStyles[unit.category];
 
   return (
-    <div className="rounded-[18px] border border-black/10 bg-white p-4 shadow-[0_1px_2px_rgba(0,0,0,0.04)] transition hover:-translate-y-0.5 hover:shadow-[0_8px_24px_rgba(0,0,0,0.06)]">
+    <div className="w-full rounded-[18px] border border-black/10 bg-white p-4 shadow-[0_1px_2px_rgba(0,0,0,0.04)]">
       <div className="flex items-start justify-between gap-3">
         <span
           className={`inline-flex rounded-full border px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.08em] ${pillStyle}`}
@@ -255,7 +358,10 @@ function EmptyUnitCard() {
   );
 }
 
-export default function CoursePlanner({ studentDetails, showHeader = true }) {
+export default function CoursePlanner({
+  studentDetails,
+  showHeader = true,
+}: CoursePlannerProps) {
   const semesters = buildSemesterPlan(studentDetails);
 
   if (semesters.length === 0) {
@@ -383,7 +489,7 @@ export default function CoursePlanner({ studentDetails, showHeader = true }) {
                 <div key={key} className="flex items-center justify-between">
                   <div className="flex items-center gap-3 text-[14px] text-black/55">
                     <span
-                      className={`h-2.5 w-2.5 rounded-full ${categoryDotStyles[key] || "bg-black/20"}`}
+                      className={`h-2.5 w-2.5 rounded-full ${categoryDotStyles[key as Category]}`}
                     />
                     {key}
                   </div>
@@ -449,11 +555,7 @@ export default function CoursePlanner({ studentDetails, showHeader = true }) {
                               key={`${semester.id}-${slotIndex}`}
                               className="border-r-0 border-b border-black/[0.05] p-4 last:border-b-0 md:border-r xl:border-b-0 xl:last:border-r-0"
                             >
-                              {unit ? (
-                                <UnitCard unit={unit} />
-                              ) : (
-                                <EmptyUnitCard />
-                              )}
+                              {unit ? <UnitCard unit={unit} /> : <EmptyUnitCard />}
                             </div>
                           );
                         })}
