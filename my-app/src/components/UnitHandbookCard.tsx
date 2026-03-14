@@ -145,7 +145,7 @@ export default function UnitHandbookCard({ unit, onClose }: Props) {
               {/* Synopsis */}
               {data.synopsis && (
                 <div className="px-5 py-4">
-                  <p className="mb-2 text-[11px] font-semibold uppercase tracking-[0.1em] text-black/25">
+                  <p className="mb-2 text-[11px] font-semibold uppercase tracking-[0.1em]" style={{ color: "#7C3AED" }}>
                     Synopsis
                   </p>
                   <p className="text-[13px] leading-5 text-black/55 line-clamp-4">
@@ -157,7 +157,7 @@ export default function UnitHandbookCard({ unit, onClose }: Props) {
               {/* Offerings */}
               {uniqueOfferings.length > 0 && (
                 <div className="px-5 py-4">
-                  <p className="mb-2.5 flex items-center gap-1.5 text-[11px] font-semibold uppercase tracking-[0.1em] text-black/25">
+                  <p className="mb-2.5 flex items-center gap-1.5 text-[11px] font-semibold uppercase tracking-[0.1em]" style={{ color: "#0EA5E9" }}>
                     <MapPin className="h-3 w-3" />
                     Offerings
                   </p>
@@ -177,7 +177,7 @@ export default function UnitHandbookCard({ unit, onClose }: Props) {
               {/* Assessments */}
               {data.assessments.length > 0 && (
                 <div className="px-5 py-4">
-                  <p className="mb-2.5 flex items-center gap-1.5 text-[11px] font-semibold uppercase tracking-[0.1em] text-black/25">
+                  <p className="mb-2.5 flex items-center gap-1.5 text-[11px] font-semibold uppercase tracking-[0.1em]" style={{ color: "#10B981" }}>
                     <ClipboardList className="h-3 w-3" />
                     Assessments
                   </p>
@@ -199,7 +199,7 @@ export default function UnitHandbookCard({ unit, onClose }: Props) {
               {/* Requisites */}
               {data.requisites.length > 0 && (
                 <div className="px-5 py-4">
-                  <p className="mb-2.5 flex items-center gap-1.5 text-[11px] font-semibold uppercase tracking-[0.1em] text-black/25">
+                  <p className="mb-2.5 flex items-center gap-1.5 text-[11px] font-semibold uppercase tracking-[0.1em]" style={{ color: "#F59E0B" }}>
                     <Link className="h-3 w-3" />
                     Requisites
                   </p>
