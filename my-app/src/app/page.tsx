@@ -367,8 +367,8 @@ export default function Home() {
 
           <SignInButton
             mode="redirect"
-            forceRedirectUrl="/dashboard"
-            fallbackRedirectUrl="/dashboard"
+            forceRedirectUrl="/dashboard/new"
+            fallbackRedirectUrl="/dashboard/new"
           >
             <button className="inline-flex items-center gap-2 text-xs uppercase tracking-[0.18em] text-white/65 transition hover:text-white">
               Sign In

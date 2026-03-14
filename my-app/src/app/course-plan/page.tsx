@@ -1,83 +1,25 @@
-"use client";
-
 import Image from "next/image";
-import { useEffect, useState } from "react";
-import { redirect, useRouter } from "next/navigation";
+import Link from "next/link";
 import { UserButton } from "@clerk/nextjs";
-import { ArrowLeft, Download, RefreshCw, Sparkles } from "lucide-react";
+import { currentUser } from "@clerk/nextjs/server";
+import { ArrowLeft, RefreshCw, Sparkles } from "lucide-react";
+import { redirect } from "next/navigation";
 import CoursePlanner from "../../components/CoursePlanner";
-import UnitDetailPanel from "../../components/UnitDetailPanel";
+import { getProfileByEmail } from "../../lib/profile";
 
-export default function CoursePlanPage() {
-  const router = useRouter();
-  const [studentDetails, setStudentDetails] = useState(null);
-  const [selectedUnit, setSelectedUnit] = useState(null);
+export default async function CoursePlanPage() {
+  const user = await currentUser();
+  const email = user?.primaryEmailAddress?.emailAddress;
 
-  useEffect(() => {
-    const storedDetails = localStorage.getItem("studentDetails");
+  if (!email) {
+    redirect("/sign-in");
+  }
 
-    if (!storedDetails) {
-      redirect("/dashboard/new");
-    }
-
-    try {
-      setStudentDetails(JSON.parse(storedDetails));
-    } catch {
-      localStorage.removeItem("studentDetails");
-      redirect("/dashboard/new");
-    }
-  }, [router]);
-
-  useEffect(() => {
-    if (!studentDetails) {
-      return;
-    }
-
-    const start = Number(studentDetails.yearStart);
-    const end = Number(studentDetails.yearEnd);
-    const yearSpan =
-      Number.isFinite(start) && Number.isFinite(end) && end >= start
-        ? end - start + 1
-        : 0;
-    const unitCount = yearSpan * 8;
-    const totalCredits = unitCount * 6;
-    const currentPlanId = localStorage.getItem("currentPlanId");
-
-    let savedPlans = [];
-
-    try {
-      savedPlans = JSON.parse(localStorage.getItem("savedPlans") || "[]");
-      if (!Array.isArray(savedPlans)) {
-        savedPlans = [];
-      }
-    } catch {
-      savedPlans = [];
-    }
-
-    const nextPlan = {
-      id: currentPlanId || crypto.randomUUID(),
-      studentDetails,
-      savedAt: new Date().toISOString(),
-      unitCount,
-      totalCredits,
-    };
-
-    const existingIndex = savedPlans.findIndex(
-      (plan) => plan.id === nextPlan.id,
-    );
-
-    if (existingIndex >= 0) {
-      savedPlans[existingIndex] = nextPlan;
-    } else {
-      savedPlans.unshift(nextPlan);
-    }
-
-    localStorage.setItem("savedPlans", JSON.stringify(savedPlans));
-    localStorage.setItem("currentPlanId", nextPlan.id);
-  }, [studentDetails]);
+  const profile = await getProfileByEmail(email);
+  const studentDetails = profile?.plan;
 
   if (!studentDetails) {
-    return null;
+    redirect("/dashboard/new");
   }
 
   const infoPills = [
@@ -152,20 +94,13 @@ export default function CoursePlanPage() {
             </div>
 
             <div className="flex items-center gap-3">
-              <button
-                onClick={handleRegenerate}
+              <Link
+                href="/dashboard/new"
                 className="flex items-center gap-2 rounded-lg border border-white/15 px-4 py-2 text-xs text-white/50 transition-all hover:border-white/30 hover:text-white"
               >
                 <RefreshCw className="h-3.5 w-3.5" />
                 Regenerate
-              </button>
-              <button
-                onClick={handleExport}
-                className="flex items-center gap-2 rounded-lg bg-white px-4 py-2 text-xs text-black transition-all hover:bg-white/90"
-              >
-                <Download className="h-3.5 w-3.5" />
-                Export
-              </button>
+              </Link>
             </div>
           </div>
         </div>
@@ -173,19 +108,15 @@ export default function CoursePlanPage() {
 
       <section className="px-6 py-8 md:px-8 md:py-10">
         <div className="mx-auto max-w-7xl">
-          <button
-            onClick={() => router.push("/dashboard")}
+          <Link
+            href="/dashboard"
             className="mb-6 inline-flex items-center gap-2 text-sm text-black/40 transition-colors hover:text-black"
           >
             <ArrowLeft className="h-4 w-4" />
             Back to Dashboard
-          </button>
+          </Link>
 
-          <CoursePlanner
-            studentDetails={studentDetails}
-            showHeader={false}
-            onUnitClick={(unit) => setSelectedUnit(unit)}
-          />
+          <CoursePlanner studentDetails={studentDetails} showHeader={false} />
         </div>
       </section>
 
@@ -201,11 +132,6 @@ export default function CoursePlanPage() {
           </p>
         </div>
       </footer>
-
-      <UnitDetailPanel
-        unit={selectedUnit}
-        onClose={() => setSelectedUnit(null)}
-      />
     </main>
   );
 }
