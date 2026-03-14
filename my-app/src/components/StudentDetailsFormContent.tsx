@@ -30,14 +30,14 @@ export default function StudentDetailsFormContent() {
         <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
           <div>
             <label
-              htmlFor="course"
+              htmlFor="courses"
               className="mb-2 block text-sm font-medium text-black/75"
             >
               Courses <span className="text-black/30">*</span>
             </label>
             <input
-              id="course"
-              name="course"
+              id="courses"
+              name="courses"
               required
               placeholder="e.g., Bachelor of Computer Science"
               className={inputClass}
@@ -74,14 +74,14 @@ export default function StudentDetailsFormContent() {
         <div className="grid grid-cols-1 gap-4">
           <div>
             <label
-              htmlFor="degree"
+              htmlFor="areaOfStudy"
               className="mb-2 block text-sm font-medium text-black/75"
             >
               Area of Study <span className="text-black/30">*</span>
             </label>
             <input
-              id="degree"
-              name="degree"
+              id="areaOfStudy"
+              name="areaOfStudy"
               required
               placeholder="e.g., Software Development, Computer Science, Design"
               className={inputClass}

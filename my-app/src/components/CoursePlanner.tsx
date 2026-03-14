@@ -10,12 +10,7 @@ import {
   GraduationCap,
 } from "lucide-react";
 
-type Category =
-  | "Core"
-  | "Major"
-  | "Minor"
-  | "Elective"
-  | "Specialisation";
+type Category = "Core" | "Major" | "Minor" | "Elective" | "Specialisation";
 
 type Unit = {
   code: string;
@@ -150,7 +145,7 @@ const categoryDotStyles: Record<Category, string> = {
 };
 
 type StudentDetails = {
-  degree?: string;
+  areaOfStudy?: string;
   specialisation?: string;
   major?: string;
   minor?: string;
@@ -165,11 +160,11 @@ type CoursePlannerProps = {
   showHeader?: boolean;
 };
 
-function normalizeCategory(
-  category: Category,
-  degree?: string,
-): Category {
-  if (degree === "COMPSCI" && (category === "Major" || category === "Minor")) {
+function normalizeCategory(category: Category, areaOfStudy?: string): Category {
+  if (
+    areaOfStudy === "COMPSCI" &&
+    (category === "Major" || category === "Minor")
+  ) {
     return "Specialisation";
   }
 
@@ -179,7 +174,7 @@ function normalizeCategory(
 function buildSemesterPlan(studentDetails: StudentDetails): Semester[] {
   const start = Number(studentDetails?.yearStart);
   const end = Number(studentDetails?.yearEnd);
-  const degree = studentDetails?.degree;
+  const areaOfStudy = studentDetails?.areaOfStudy;
   const focusLabel =
     studentDetails?.specialisation || studentDetails?.major || "Specialisation";
   const facultyLabel = studentDetails?.faculty || "Faculty";
@@ -205,9 +200,10 @@ function buildSemesterPlan(studentDetails: StudentDetails): Semester[] {
             category: normalizeCategory(unit.category, degree),
           });
         } else {
-          const primaryTrack = degree === "COMPSCI" ? "Specialisation" : "Major";
+          const primaryTrack =
+            areaOfStudy === "COMPSCI" ? "Specialisation" : "Major";
           const secondaryTrack =
-            degree === "COMPSCI"
+            areaOfStudy === "COMPSCI"
               ? "Elective"
               : studentDetails?.minor
                 ? "Minor"
@@ -286,16 +282,19 @@ function getSummary(semesters: Semester[]): Summary {
     Math.round((totalPlannedUnits / completedTarget) * 100),
   );
 
-  const breakdown = categories.reduce<Record<Category, number>>((acc, category) => {
-    acc[category] = 0;
-    return acc;
-  }, {
-    Core: 0,
-    Major: 0,
-    Minor: 0,
-    Elective: 0,
-    Specialisation: 0,
-  });
+  const breakdown = categories.reduce<Record<Category, number>>(
+    (acc, category) => {
+      acc[category] = 0;
+      return acc;
+    },
+    {
+      Core: 0,
+      Major: 0,
+      Minor: 0,
+      Elective: 0,
+      Specialisation: 0,
+    },
+  );
 
   semesters.forEach((semester) => {
     semester.units.forEach((unit) => {
@@ -555,7 +554,11 @@ export default function CoursePlanner({
                               key={`${semester.id}-${slotIndex}`}
                               className="border-r-0 border-b border-black/[0.05] p-4 last:border-b-0 md:border-r xl:border-b-0 xl:last:border-r-0"
                             >
-                              {unit ? <UnitCard unit={unit} /> : <EmptyUnitCard />}
+                              {unit ? (
+                                <UnitCard unit={unit} />
+                              ) : (
+                                <EmptyUnitCard />
+                              )}
                             </div>
                           );
                         })}
