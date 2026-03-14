@@ -24,10 +24,10 @@ export default async function NewPlanPage() {
 
     const newPlan: Plan = {
       planName: String(formData.get("planName") || ""),
-      university: String(formData.get("university") || ""),
       courses: String(formData.get("courses") || ""),
-      areaOfStudy: String(formData.get("areaOfStudy") || ""),
-      unitOffering: String(formData.get("unitOffering") || ""),
+      university: String(formData.get("university") || ""),
+      degree: String(formData.get("areaOfStudy") || ""),
+      semesterOffering: String(formData.get("semesterOffering") || ""),
       yearStart: Number(formData.get("yearStart")),
       yearEnd: Number(formData.get("yearEnd")),
     };

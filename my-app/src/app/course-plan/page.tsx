@@ -27,8 +27,8 @@ export default async function CoursePlanPage() {
     studentDetails.planName,
     studentDetails.university,
     studentDetails.courses,
-    studentDetails.areaOfStudy,
-    studentDetails.unitOffering,
+    studentDetails.degree,
+    studentDetails.semesterOffering,
     `${studentDetails.yearStart}–${studentDetails.yearEnd}`,
   ].filter(Boolean);
 
@@ -126,7 +126,7 @@ export default async function CoursePlanPage() {
             official handbook
           </p>
           <p className="text-xs text-black/20">
-            {studentDetails.unitOffering} • {studentDetails.yearStart}–
+            {studentDetails.semesterOffering} • {studentDetails.yearStart}–
             {studentDetails.yearEnd}
           </p>
         </div>
