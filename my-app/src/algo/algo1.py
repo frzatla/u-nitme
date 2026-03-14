@@ -27,15 +27,96 @@ FIT_PREFERRED_MATH = {"MAT1830", "MAT1841"}
 # ─── data loading ────────────────────────────────────────────────────────────
 
 def load_data():
+    data_dir = os.path.join(SCRIPT_DIR, "..", "..", "public", "data")
     def _load(name):
-        path = os.path.join(SCRIPT_DIR, name)
+        path = os.path.join(data_dir, name)
         with open(path) as f:
             return json.load(f)
-    return (
-        _load("processed_units.json"),
-        _load("parsed_courses_full.json"),
-        _load("parsed_aos_full.json"),
-    )
+    units_db   = _load("final_units.json")
+    courses_db = _load("final_courses.json")
+    aos_db     = _load("final_aos.json")
+    _normalize_units_db(units_db)
+    return units_db, courses_db, aos_db
+
+
+def _parse_req_expression(expr):
+    """
+    Parse a new-format requisite expression string into a list of group dicts.
+
+    Grammar:
+      - Simple OR:      "A;B;C"           → [{"NumReq": 1, "units": ["A","B","C"]}]
+      - Simple AND:     "A&B&C"           → [{"NumReq": 3, "units": ["A","B","C"]}]
+      - Compound:       "(A;B)&(C&D)"     → two groups: OR(A,B) AND AND(C,D)
+        i.e. top-level '&' separates groups; inside parens ';'=OR, '&'=AND.
+
+    Returns a list of {"NumReq": int, "units": [str, ...]} dicts.
+    Each dict in the list must be independently satisfied (AND between groups).
+    """
+    expr = expr.strip()
+    if not expr:
+        return []
+
+    def _parse_group(s):
+        """Parse a single (possibly paren-stripped) group fragment."""
+        inner = s.strip().strip("()")
+        if ";" in inner:
+            codes = [c.strip() for c in inner.split(";") if c.strip()]
+            return {"NumReq": 1, "units": codes}
+        elif "&" in inner:
+            codes = [c.strip() for c in inner.split("&") if c.strip()]
+            return {"NumReq": len(codes), "units": codes}
+        else:
+            return {"NumReq": 1, "units": [inner]} if inner else None
+
+    if "(" in expr:
+        # Split on top-level '&' (outside parentheses)
+        fragments, current, depth = [], "", 0
+        for ch in expr:
+            if ch == "(":
+                depth += 1
+                current += ch
+            elif ch == ")":
+                depth -= 1
+                current += ch
+            elif ch == "&" and depth == 0:
+                if current.strip():
+                    fragments.append(current.strip())
+                current = ""
+            else:
+                current += ch
+        if current.strip():
+            fragments.append(current.strip())
+        return [g for g in (_parse_group(f) for f in fragments) if g]
+
+    # No parentheses — single group
+    g = _parse_group(expr)
+    return [g] if g else []
+
+
+def _normalize_units_db(units_db):
+    """
+    Convert new-format requisite strings into the dict groups the algorithm expects.
+
+    New format (each list entry is a string expression):
+      prerequisites:  ["(A;B)&(C&D)", "E;F"]
+      corequisites:   ["A&B&C"]
+      prohibitions:   ["X;Y"]
+
+    Old (internal) format used by the rest of the algorithm:
+      [{"NumReq": N, "units": ["CODE1", ...]}, ...]
+    """
+    for unit in units_db.values():
+        req = unit.get("requisites")
+        if not req:
+            continue
+        for field in ("prerequisites", "corequisites", "prohibitions"):
+            items = req.get(field) or []
+            if items and isinstance(items[0], str):
+                normalized = []
+                for s in items:
+                    if isinstance(s, str):
+                        normalized.extend(_parse_req_expression(s))
+                req[field] = normalized
 
 
 # ─── unit extraction from course / AOS requirement trees ─────────────────────
