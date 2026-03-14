@@ -9,13 +9,12 @@ import {
   ChevronRight,
   GraduationCap,
 } from "lucide-react";
-
-type Category = "Core" | "Major" | "Minor" | "Elective" | "Specialisation";
+import { Schedule, UnitCategory } from "@/lib/types";
 
 type Unit = {
   code: string;
   name: string;
-  category: Category;
+  category: UnitCategory;
   level: string;
   cp: number;
 };
@@ -38,277 +37,101 @@ type Summary = {
   totalCredits: number;
   progress: number;
   completedTarget: number;
-  breakdown: Record<Category, number>;
+  breakdown: Record<UnitCategory, number>;
 };
 
-const foundationUnits: Unit[] = [
-  {
-    code: "FIT1045",
-    name: "Introduction to Programming",
-    category: "Core",
-    level: "INTRO",
-    cp: 6,
-  },
-  {
-    code: "FIT1047",
-    name: "Computer Systems",
-    category: "Core",
-    level: "INTRO",
-    cp: 6,
-  },
-  {
-    code: "MAT1830",
-    name: "Discrete Mathematics",
-    category: "Core",
-    level: "INTRO",
-    cp: 6,
-  },
-  {
-    code: "FIT1051",
-    name: "Database Concepts",
-    category: "Core",
-    level: "INTRO",
-    cp: 6,
-  },
-  {
-    code: "FIT2004",
-    name: "Algorithms and Data Structures",
-    category: "Major",
-    level: "MID",
-    cp: 6,
-  },
-  {
-    code: "FIT2099",
-    name: "Object-Oriented Design",
-    category: "Core",
-    level: "MID",
-    cp: 6,
-  },
-  {
-    code: "FIT2102",
-    name: "Programming Paradigms",
-    category: "Major",
-    level: "MID",
-    cp: 6,
-  },
-  {
-    code: "FIT3171",
-    name: "Databases",
-    category: "Minor",
-    level: "MID",
-    cp: 6,
-  },
-  {
-    code: "FIT3143",
-    name: "Parallel Computing",
-    category: "Major",
-    level: "ADV",
-    cp: 6,
-  },
-  {
-    code: "FIT3161",
-    name: "Computer Science Project",
-    category: "Major",
-    level: "ADV",
-    cp: 6,
-  },
-  {
-    code: "FIT3077",
-    name: "Software Engineering",
-    category: "Elective",
-    level: "ADV",
-    cp: 6,
-  },
-  {
-    code: "FIT4001",
-    name: "Industry Experience Studio",
-    category: "Core",
-    level: "ADV",
-    cp: 6,
-  },
-];
-
-const categoryPillStyles: Record<Category, string> = {
+const categoryPillStyles: Record<UnitCategory, string> = {
   Core: "border-[#719DEE] bg-[#719DEE] text-white",
   Major: "border-[#79B98B] bg-[#79B98B] text-white",
   Minor: "border-[#F5DF8E] bg-[#F5DF8E] text-black/80",
   Elective: "border-[#DD8255] bg-[#DD8255] text-white",
-  Specialisation: "border-[#DD8255] bg-[#DD8255] text-white",
+  Specialisation: "border-[#A07ED1] bg-[#A07ED1] text-white",
 };
 
-const categoryDotStyles: Record<Category, string> = {
+const categoryDotStyles: Record<UnitCategory, string> = {
   Core: "bg-[#719DEE]",
   Major: "bg-[#79B98B]",
   Minor: "bg-[#F5DF8E]",
   Elective: "bg-[#DD8255]",
-  Specialisation: "bg-[#DD8255]",
+  Specialisation: "bg-[#A07ED1]",
 };
 
 type StudentDetails = {
-  areaOfStudy?: string;
-  specialisation?: string;
-  major?: string;
-  minor?: string;
-  faculty?: string;
+  planName?: string;
   university?: string;
   yearStart?: number | string;
   yearEnd?: number | string;
 };
 
 type CoursePlannerProps = {
+  schedule: Schedule;
   studentDetails: StudentDetails;
   showHeader?: boolean;
 };
 
-function normalizeCategory(category: Category, areaOfStudy?: string): Category {
-  if (
-    areaOfStudy === "COMPSCI" &&
-    (category === "Major" || category === "Minor")
-  ) {
-    return "Specialisation";
-  }
-
-  return category;
+// Convert algo1.py "Year 1, Semester 1" label into a relative year number (1-based)
+function parseYearFromLabel(label: string): number {
+  const match = label.match(/Year\s+(\d+)/i);
+  return match ? parseInt(match[1]) : 1;
 }
 
-function buildSemesterPlan(studentDetails: StudentDetails): Semester[] {
-  const start = Number(studentDetails?.yearStart);
-  const end = Number(studentDetails?.yearEnd);
-  const areaOfStudy = studentDetails?.areaOfStudy;
-  const focusLabel =
-    studentDetails?.specialisation || studentDetails?.major || "Specialisation";
-  const facultyLabel = studentDetails?.faculty || "Faculty";
-  const minorLabel = studentDetails?.minor || "Elective";
+function parseSemNumFromLabel(label: string): number {
+  const match = label.match(/Semester\s+(\d+)/i);
+  return match ? parseInt(match[1]) : 1;
+}
 
-  if (!Number.isFinite(start) || !Number.isFinite(end) || end < start) {
-    return [];
-  }
+function buildFromSchedule(schedule: Schedule, yearStart: number): Semester[] {
+  return schedule.schedule
+    .filter((s) => s.period !== null)
+    .map((s) => {
+      const relativeYear = parseYearFromLabel(s.semester);
+      const semNum = parseSemNumFromLabel(s.semester);
+      const calendarYear = yearStart + (relativeYear - 1);
 
-  const semesters: Semester[] = [];
-  let unitIndex = 0;
-
-  for (let year = start; year <= end; year += 1) {
-    for (let semester = 1; semester <= 2; semester += 1) {
-      const units: Unit[] = [];
-
-      for (let slot = 0; slot < 4; slot += 1) {
-        const unit = foundationUnits[unitIndex];
-
-        if (unit) {
-          units.push({
-            ...unit,
-            category: normalizeCategory(unit.category, areaOfStudy),
-          });
-        } else {
-          const primaryTrack =
-            areaOfStudy === "COMPSCI" ? "Specialisation" : "Major";
-          const secondaryTrack =
-            areaOfStudy === "COMPSCI"
-              ? "Elective"
-              : studentDetails?.minor
-                ? "Minor"
-                : "Elective";
-          const category = slot % 2 === 0 ? primaryTrack : secondaryTrack;
-          const prefixSource =
-            category === "Specialisation" || category === "Major"
-              ? focusLabel
-              : category === "Minor"
-                ? minorLabel
-                : facultyLabel;
-          const unitLabel =
-            category === "Specialisation"
-              ? `${focusLabel} Specialisation ${unitIndex - foundationUnits.length + 1}`
-              : category === "Major"
-                ? `${focusLabel} Major ${unitIndex - foundationUnits.length + 1}`
-                : category === "Minor"
-                  ? `${minorLabel} Minor ${unitIndex - foundationUnits.length + 1}`
-                  : `${facultyLabel} Elective ${unitIndex - foundationUnits.length + 1}`;
-
-          units.push({
-            code: `${prefixSource.slice(0, 2).toUpperCase() || "SP"}${400 + unitIndex}`,
-            name: unitLabel,
-            category,
-            level: year === start ? "INTRO" : year === end ? "ADV" : "MID",
-            cp: 6,
-          });
-        }
-
-        unitIndex += 1;
-      }
-
-      semesters.push({
-        id: `${year}-s${semester}`,
-        title: `Semester ${semester}`,
-        year,
-        units,
-      });
-    }
-  }
-
-  return semesters;
+      return {
+        id: s.semester,
+        title: `Semester ${semNum}`,
+        year: calendarYear,
+        units: s.units.map((u) => ({
+          code: u.code,
+          name: u.title,
+          category: u.category,
+          level: u.level !== null ? `L${u.level}` : "—",
+          cp: u.credit_points,
+        })),
+      };
+    });
 }
 
 function groupSemestersByYear(semesters: Semester[]): YearGroup[] {
-  const map = new Map();
-
-  semesters.forEach((semester) => {
-    if (!map.has(semester.year)) map.set(semester.year, []);
-    map.get(semester.year).push(semester);
+  const map = new Map<number, Semester[]>();
+  semesters.forEach((sem) => {
+    if (!map.has(sem.year)) map.set(sem.year, []);
+    map.get(sem.year)!.push(sem);
   });
 
-  return Array.from(map.entries()).map(([year, semestersInYear], index) => ({
+  return Array.from(map.entries()).map(([year, sems], index) => ({
     year,
     yearLabel: `Year ${index + 1}`,
-    semesters: semestersInYear,
+    semesters: sems,
   }));
 }
 
-function getSummary(semesters: Semester[]): Summary {
-  const categories = Array.from(
-    new Set(
-      semesters.flatMap((semester) =>
-        semester.units.map((unit) => unit.category),
-      ),
-    ),
-  ) as Category[];
-  const totalPlannedUnits = semesters.reduce(
-    (sum, semester) => sum + semester.units.filter(Boolean).length,
-    0,
-  );
-  const completedTarget = 28;
-  const totalCredits = totalPlannedUnits * 6;
-  const progress = Math.min(
-    100,
-    Math.round((totalPlannedUnits / completedTarget) * 100),
-  );
+function getSummary(semesters: Semester[], schedule: Schedule): Summary {
+  const totalPlannedUnits = schedule.summary.total_units;
+  const totalCredits = schedule.summary.total_cp;
+  const completedTarget = totalPlannedUnits;
+  const scheduledUnits = semesters.reduce((n, s) => n + s.units.length, 0);
+  const progress = Math.min(100, Math.round((scheduledUnits / totalPlannedUnits) * 100));
 
-  const breakdown = categories.reduce<Record<Category, number>>(
-    (acc, category) => {
-      acc[category] = 0;
-      return acc;
-    },
-    {
-      Core: 0,
-      Major: 0,
-      Minor: 0,
-      Elective: 0,
-      Specialisation: 0,
-    },
-  );
-
-  semesters.forEach((semester) => {
-    semester.units.forEach((unit) => {
-      if (breakdown[unit.category] !== undefined) breakdown[unit.category] += 1;
-    });
-  });
-
-  return {
-    totalPlannedUnits,
-    totalCredits,
-    progress,
-    completedTarget,
-    breakdown,
+  const breakdown: Record<UnitCategory, number> = {
+    Core: 0, Major: 0, Minor: 0, Elective: 0, Specialisation: 0,
   };
+  semesters.forEach((sem) =>
+    sem.units.forEach((u) => { breakdown[u.category] = (breakdown[u.category] ?? 0) + 1; })
+  );
+
+  return { totalPlannedUnits, totalCredits, progress, completedTarget, breakdown };
 }
 
 function UnitCard({ unit }: { unit: Unit }) {
@@ -358,10 +181,12 @@ function EmptyUnitCard() {
 }
 
 export default function CoursePlanner({
+  schedule,
   studentDetails,
   showHeader = true,
 }: CoursePlannerProps) {
-  const semesters = buildSemesterPlan(studentDetails);
+  const yearStart = Number(studentDetails?.yearStart) || new Date().getFullYear();
+  const semesters = buildFromSchedule(schedule, yearStart);
 
   if (semesters.length === 0) {
     return (
@@ -378,17 +203,7 @@ export default function CoursePlanner({
   }
 
   const years = groupSemestersByYear(semesters);
-  const summary = getSummary(semesters);
-
-  const headerTags = [
-    studentDetails?.major,
-    studentDetails?.minor ? `Minor: ${studentDetails.minor}` : null,
-    studentDetails?.specialisation
-      ? `Spec: ${studentDetails.specialisation}`
-      : null,
-    studentDetails?.faculty,
-    studentDetails?.university,
-  ].filter(Boolean);
+  const summary = getSummary(semesters, schedule);
 
   return (
     <div className="overflow-hidden rounded-[30px] border border-black/10 bg-[#f5f5f4]">
@@ -406,14 +221,16 @@ export default function CoursePlanner({
               </h1>
 
               <div className="mt-5 flex flex-wrap gap-2.5">
-                {headerTags.map((tag, index) => (
-                  <span
-                    key={`${tag}-${index}`}
-                    className="rounded-full border border-white/10 bg-white/[0.05] px-4 py-2 text-[14px] text-white/65"
-                  >
-                    {tag}
-                  </span>
-                ))}
+                {[schedule.course_title, schedule.specialisation, schedule.major, schedule.campus]
+                  .filter(Boolean)
+                  .map((tag, i) => (
+                    <span
+                      key={i}
+                      className="rounded-full border border-white/10 bg-white/[0.05] px-4 py-2 text-[14px] text-white/65"
+                    >
+                      {tag}
+                    </span>
+                  ))}
               </div>
             </div>
 
@@ -484,19 +301,19 @@ export default function CoursePlanner({
             </div>
 
             <div className="mt-6 space-y-3">
-              {Object.entries(summary.breakdown).map(([key, value]) => (
-                <div key={key} className="flex items-center justify-between">
-                  <div className="flex items-center gap-3 text-[14px] text-black/55">
-                    <span
-                      className={`h-2.5 w-2.5 rounded-full ${categoryDotStyles[key as Category]}`}
-                    />
-                    {key}
+              {(Object.entries(summary.breakdown) as [UnitCategory, number][])
+                .filter(([, count]) => count > 0)
+                .map(([key, value]) => (
+                  <div key={key} className="flex items-center justify-between">
+                    <div className="flex items-center gap-3 text-[14px] text-black/55">
+                      <span className={`h-2.5 w-2.5 rounded-full ${categoryDotStyles[key]}`} />
+                      {key}
+                    </div>
+                    <span className="text-[14px] font-medium text-black/55">
+                      {value}
+                    </span>
                   </div>
-                  <span className="text-[14px] font-medium text-black/55">
-                    {value}
-                  </span>
-                </div>
-              ))}
+                ))}
             </div>
           </div>
         </div>
@@ -516,8 +333,7 @@ export default function CoursePlanner({
 
               <div className="space-y-5">
                 {yearGroup.semesters.map((semester) => {
-                  const filledUnits = semester.units.filter(Boolean);
-                  const semesterCredits = filledUnits.length * 6;
+                  const semesterCredits = semester.units.reduce((sum, u) => sum + u.cp, 0);
 
                   return (
                     <section
@@ -537,7 +353,7 @@ export default function CoursePlanner({
 
                         <div className="flex items-center gap-4">
                           <span className="text-[15px] text-black/32">
-                            {filledUnits.length} units
+                            {semester.units.length} units
                           </span>
                           <span className="rounded-full bg-black/[0.04] px-3 py-1 text-[13px] font-medium text-black/30">
                             {semesterCredits} CP
@@ -548,17 +364,12 @@ export default function CoursePlanner({
                       <div className="grid grid-cols-1 gap-0 border-black/[0.05] md:grid-cols-2 xl:grid-cols-4">
                         {Array.from({ length: 4 }).map((_, slotIndex) => {
                           const unit = semester.units[slotIndex];
-
                           return (
                             <div
                               key={`${semester.id}-${slotIndex}`}
                               className="border-r-0 border-b border-black/[0.05] p-4 last:border-b-0 md:border-r xl:border-b-0 xl:last:border-r-0"
                             >
-                              {unit ? (
-                                <UnitCard unit={unit} />
-                              ) : (
-                                <EmptyUnitCard />
-                              )}
+                              {unit ? <UnitCard unit={unit} /> : <EmptyUnitCard />}
                             </div>
                           );
                         })}

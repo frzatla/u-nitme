@@ -7,6 +7,8 @@ export type Plan = {
   semesterOffering: string;
   yearStart: number | string;
   yearEnd: number | string;
+  schedule?: Schedule;
+  saved?: boolean;
 };
 
 export type Profile = {
@@ -36,4 +38,45 @@ export type ChosenUnit = {
   cp: number;
   chosenYear: number;
   chosenSem: string;
+};
+
+// ── algo1.py output types ─────────────────────────────────────────────────────
+
+export type UnitCategory = "Core" | "Major" | "Minor" | "Elective" | "Specialisation";
+
+export type ScheduledUnit = {
+  code: string;
+  title: string;
+  credit_points: number;
+  level: number | null;
+  chain_length: number | null;
+  extended: boolean | null;
+  category: UnitCategory;
+};
+
+export type ScheduledSemester = {
+  semester: string;        // e.g. "Year 1, Semester 1"
+  period: string | null;   // "S1" | "S2" | null (null = unscheduled bucket)
+  semester_index: number;
+  extended: boolean | null;
+  units: ScheduledUnit[];
+  fixed_cp: number;
+  total_cp: number;
+  cumulative_cp: number;
+};
+
+export type Schedule = {
+  course_code: string;
+  course_title: string;
+  specialisation: string | null;
+  major: string | null;
+  minor: string | null;
+  campus: string;
+  summary: {
+    total_units: number;
+    total_cp: number;
+    scheduled_cp: number;
+    semesters: number;
+  };
+  schedule: ScheduledSemester[];
 };

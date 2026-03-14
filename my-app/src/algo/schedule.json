@@ -1,9 +1,9 @@
 {
-  "course_code": "C2001",
-  "course_title": "Bachelor of Computer Science",
-  "specialisation": "DATASCI11",
+  "course_code": "E3001",
+  "course_title": "Bachelor of Engineering (Honours)",
+  "specialisation": "AEROENG04",
   "major": null,
-  "minor": "CYBERSEC05",
+  "minor": null,
   "campus": "Clayton",
   "algorithm": "longest-prerequisite-chain (DAG critical path)",
   "notes": [
@@ -13,10 +13,10 @@
     "cp_required constraints (minimum credit points before enrolment) are enforced."
   ],
   "summary": {
-    "total_units": 21,
-    "total_cp": 126,
-    "scheduled_cp": 168,
-    "semesters": 7
+    "total_units": 30,
+    "total_cp": 180,
+    "scheduled_cp": 192,
+    "semesters": 8
   },
   "schedule": [
     {
@@ -26,34 +26,34 @@
       "extended": null,
       "units": [
         {
-          "code": "FIT1045",
-          "title": "Introduction to programming",
+          "code": "ENG1005",
+          "title": "Engineering mathematics",
           "credit_points": 6,
           "level": 1,
           "chain_length": 0,
           "extended": null
         },
         {
-          "code": "FIT1049",
-          "title": "IT professional practice",
+          "code": "ENG1011",
+          "title": "Engineering methods",
           "credit_points": 6,
           "level": 1,
           "chain_length": 0,
           "extended": null
         },
         {
-          "code": "FIT1058",
-          "title": "Foundations of computing",
+          "code": "ENG1014",
+          "title": "Engineering numerical analysis",
           "credit_points": 6,
           "level": 1,
           "chain_length": 0,
           "extended": null
         },
         {
-          "code": "FIT1047",
-          "title": "Introduction to computer systems, networks and security",
+          "code": "ENG4701",
+          "title": "Final year project A",
           "credit_points": 6,
-          "level": 1,
+          "level": 4,
           "chain_length": 0,
           "extended": null
         }
@@ -69,32 +69,32 @@
       "extended": null,
       "units": [
         {
-          "code": "FIT1008",
-          "title": "Fundamentals of algorithms",
-          "credit_points": 6,
-          "level": 1,
-          "chain_length": 1,
-          "extended": null
-        },
-        {
-          "code": "FIT2094",
-          "title": "Databases",
+          "code": "MMA2004",
+          "title": "Dynamics 1",
           "credit_points": 6,
           "level": 2,
           "chain_length": 1,
           "extended": null
         },
         {
-          "code": "FIT1043",
-          "title": " Introduction to data science ",
+          "code": "MMA2003",
+          "title": "Thermofluids 1",
           "credit_points": 6,
-          "level": 1,
-          "chain_length": 0,
+          "level": 2,
+          "chain_length": 1,
           "extended": null
         },
         {
-          "code": "FIT2086",
-          "title": "Modelling for data analysis",
+          "code": "MAE2402",
+          "title": "Thermodynamics and gas dynamics",
+          "credit_points": 6,
+          "level": 2,
+          "chain_length": 1,
+          "extended": null
+        },
+        {
+          "code": "MMA2005",
+          "title": "Modelling and control",
           "credit_points": 6,
           "level": 2,
           "chain_length": 1,
@@ -112,35 +112,35 @@
       "extended": null,
       "units": [
         {
-          "code": "FIT2004",
-          "title": "Algorithms and data structures",
-          "credit_points": 6,
-          "level": 2,
-          "chain_length": 2,
-          "extended": null
-        },
-        {
-          "code": "FIT3152",
-          "title": "Data analytics",
+          "code": "MAE3002",
+          "title": "Aerospace dynamics 2",
           "credit_points": 6,
           "level": 3,
           "chain_length": 2,
           "extended": null
         },
         {
-          "code": "FIT2173",
-          "title": "Software security",
+          "code": "MAE3001",
+          "title": "Aero and gas dynamics",
+          "credit_points": 6,
+          "level": 3,
+          "chain_length": 2,
+          "extended": null
+        },
+        {
+          "code": "MMA2002",
+          "title": "Solid mechanics 1\t\t",
           "credit_points": 6,
           "level": 2,
           "chain_length": 1,
           "extended": null
         },
         {
-          "code": "FIT2179",
-          "title": "Data visualisation",
+          "code": "MAE3401",
+          "title": "Aerodynamics 2",
           "credit_points": 6,
-          "level": 2,
-          "chain_length": 1,
+          "level": 3,
+          "chain_length": 2,
           "extended": null
         }
       ],
@@ -155,35 +155,35 @@
       "extended": null,
       "units": [
         {
-          "code": "FIT3163",
-          "title": "Data science project 1",
+          "code": "MMA3001",
+          "title": "Numerical methods and machine learning",
           "credit_points": 6,
           "level": 3,
+          "chain_length": 1,
+          "extended": null
+        },
+        {
+          "code": "MAE4410",
+          "title": "Flight vehicle design",
+          "credit_points": 6,
+          "level": 4,
           "chain_length": 3,
           "extended": null
         },
         {
-          "code": "FIT3003",
-          "title": "Business intelligence and data warehousing",
+          "code": "MAE3405",
+          "title": "Aerospace propulsion",
           "credit_points": 6,
           "level": 3,
           "chain_length": 2,
           "extended": null
         },
         {
-          "code": "FIT2014",
-          "title": "Theory of computation",
-          "credit_points": 6,
-          "level": 2,
-          "chain_length": 1,
-          "extended": null
-        },
-        {
-          "code": "FIT3183",
-          "title": "Malicious AI and dark side security",
+          "code": "MAE3411",
+          "title": "Aerospace structural mechanics",
           "credit_points": 6,
           "level": 3,
-          "chain_length": 1,
+          "chain_length": 2,
           "extended": null
         }
       ],
@@ -198,39 +198,39 @@
       "extended": null,
       "units": [
         {
-          "code": "FIT3164",
-          "title": "Data science project 2",
+          "code": "MAE4416",
+          "title": "Orbital mechanics and spaceflight dynamics",
+          "credit_points": 6,
+          "level": 4,
+          "chain_length": 2,
+          "extended": null
+        },
+        {
+          "code": "MMA3101",
+          "title": "Computational fluid dynamics",
           "credit_points": 6,
           "level": 3,
-          "chain_length": 4,
+          "chain_length": 2,
           "extended": null
         },
         {
-          "code": "FIT1057",
-          "title": "Introduction to cybersecurity",
+          "code": "TRC4800",
+          "title": "Robotics",
           "credit_points": 6,
-          "level": 1,
-          "chain_length": 0,
+          "level": 4,
+          "chain_length": 2,
           "extended": null
         },
         {
-          "code": "ELECTIVE",
-          "title": "Free elective (student's choice)",
+          "code": "MMA3102",
+          "title": "Composite mechanics\t\t",
           "credit_points": 6,
-          "level": null,
-          "chain_length": null,
-          "extended": null
-        },
-        {
-          "code": "ELECTIVE",
-          "title": "Free elective (student's choice)",
-          "credit_points": 6,
-          "level": null,
-          "chain_length": null,
+          "level": 3,
+          "chain_length": 2,
           "extended": null
         }
       ],
-      "fixed_cp": 12,
+      "fixed_cp": 24,
       "total_cp": 24,
       "cumulative_cp": 120
     },
@@ -241,18 +241,104 @@
       "extended": null,
       "units": [
         {
-          "code": "FIT1093",
-          "title": "Cybersecurity tools and techniques",
+          "code": "MMA4001",
+          "title": "Finite element analysis",
+          "credit_points": 6,
+          "level": 4,
+          "chain_length": 2,
+          "extended": null
+        },
+        {
+          "code": "ENG2005",
+          "title": "Advanced engineering mathematics",
+          "credit_points": 6,
+          "level": 2,
+          "chain_length": 1,
+          "extended": null
+        },
+        {
+          "code": "ENG4702",
+          "title": "Final year project B",
+          "credit_points": 6,
+          "level": 4,
+          "chain_length": 1,
+          "extended": null
+        },
+        {
+          "code": "ENG1012",
+          "title": "Engineering design",
+          "credit_points": 6,
+          "level": 1,
+          "chain_length": 0,
+          "extended": null
+        }
+      ],
+      "fixed_cp": 24,
+      "total_cp": 24,
+      "cumulative_cp": 144
+    },
+    {
+      "semester": "Year 4, Semester 1",
+      "period": "S1",
+      "semester_index": 7,
+      "extended": null,
+      "units": [
+        {
+          "code": "BMS1021",
+          "title": "Cells, tissues and organisms",
           "credit_points": 6,
           "level": 1,
           "chain_length": 0,
           "extended": null
         },
         {
-          "code": "FIT3195",
-          "title": "Deep tech entrepreneurship",
+          "code": "ENG1090",
+          "title": "Foundation mathematics",
           "credit_points": 6,
-          "level": 3,
+          "level": 1,
+          "chain_length": 0,
+          "extended": null
+        },
+        {
+          "code": "MMA2001",
+          "title": "Design 1",
+          "credit_points": 6,
+          "level": 2,
+          "chain_length": 0,
+          "extended": null
+        },
+        {
+          "code": "PHS1001",
+          "title": "Foundation physics",
+          "credit_points": 6,
+          "level": 1,
+          "chain_length": 0,
+          "extended": null
+        }
+      ],
+      "fixed_cp": 24,
+      "total_cp": 24,
+      "cumulative_cp": 168
+    },
+    {
+      "semester": "Year 4, Semester 2",
+      "period": "S2",
+      "semester_index": 8,
+      "extended": null,
+      "units": [
+        {
+          "code": "ENG1013",
+          "title": "Engineering smart systems",
+          "credit_points": 6,
+          "level": 1,
+          "chain_length": 0,
+          "extended": null
+        },
+        {
+          "code": "ENG4801",
+          "title": "Professional practice (Curriculum embedded)",
+          "credit_points": 6,
+          "level": 4,
           "chain_length": 0,
           "extended": null
         },
@@ -275,50 +361,7 @@
       ],
       "fixed_cp": 12,
       "total_cp": 24,
-      "cumulative_cp": 144
-    },
-    {
-      "semester": "Year 4, Semester 1",
-      "period": "S1",
-      "semester_index": 7,
-      "extended": true,
-      "units": [
-        {
-          "code": "FIT3031",
-          "title": "Network security",
-          "credit_points": 6,
-          "level": 3,
-          "chain_length": 1,
-          "extended": true
-        },
-        {
-          "code": "ELECTIVE",
-          "title": "Free elective (student's choice)",
-          "credit_points": 6,
-          "level": null,
-          "chain_length": null,
-          "extended": true
-        },
-        {
-          "code": "ELECTIVE",
-          "title": "Free elective (student's choice)",
-          "credit_points": 6,
-          "level": null,
-          "chain_length": null,
-          "extended": true
-        },
-        {
-          "code": "ELECTIVE",
-          "title": "Free elective (student's choice)",
-          "credit_points": 6,
-          "level": null,
-          "chain_length": null,
-          "extended": true
-        }
-      ],
-      "fixed_cp": 6,
-      "total_cp": 24,
-      "cumulative_cp": 168
+      "cumulative_cp": 192
     }
   ]
 }
