@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useMemo, useRef, useState } from "react";
 import {
@@ -349,8 +350,15 @@ export default function Home() {
             onClick={() => router.push("/")}
             className="flex items-center gap-3 transition-opacity hover:opacity-80"
           >
-            <span className="flex h-10 w-10 items-center justify-center rounded-xl border border-white/20 bg-white/[0.04] text-sm font-semibold text-white">
-              U
+            <span className="relative h-[42px] w-[42px] overflow-hidden rounded-xl">
+              <Image
+                src="/U-NIT ME-2.png"
+                alt="U-NIT ME logo"
+                fill
+                sizes="42px"
+                className="object-contain"
+                priority
+              />
             </span>
             <span className="text-sm font-medium uppercase tracking-[0.18em] text-white/82">
               U-NIT ME
@@ -802,12 +810,12 @@ export default function Home() {
             <StaggerGrid className="grid grid-cols-2 gap-5">
               {valueCards.map(({ title, description, icon: Icon }) => (
                 <StaggerItem key={title}>
-                  <div className="rounded-3xl border border-white/[0.18] bg-white/[0.03] p-6 text-center transition hover:-translate-y-1 hover:border-white/[0.28] hover:bg-white/[0.045]">
+                  <div className="flex h-full min-h-[220px] flex-col items-center justify-center rounded-3xl border border-white/[0.18] bg-white/[0.03] p-6 text-center transition hover:-translate-y-1 hover:border-white/[0.28] hover:bg-white/[0.045]">
                     <Icon className="mx-auto mb-4 h-6 w-6 text-white" />
                     <div className="text-lg font-semibold text-white">
                       {title}
                     </div>
-                    <p className="mt-2 text-sm leading-7 text-white">
+                    <p className="mt-2 max-w-[18rem] text-sm leading-7 text-white">
                       {description}
                     </p>
                   </div>

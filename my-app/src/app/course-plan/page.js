@@ -108,16 +108,6 @@ export default function CoursePlanPage() {
       <header className="border-b border-black/10 bg-[#f5f5f2]">
         <div className="mx-auto flex h-20 max-w-7xl items-center justify-between px-6 md:px-8">
           <div className="flex items-center gap-4">
-            <button
-              onClick={() => router.push("/dashboard")}
-              className="flex items-center gap-2 text-sm text-black/40 transition-colors hover:text-black"
-            >
-              <ArrowLeft className="h-4 w-4" />
-              Back
-            </button>
-
-            <div className="h-5 w-px bg-black/10" />
-
             <div className="flex items-center gap-3">
               <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-black text-sm font-semibold text-white">
                 U
@@ -177,6 +167,14 @@ export default function CoursePlanPage() {
 
       <section className="px-6 py-8 md:px-8 md:py-10">
         <div className="mx-auto max-w-7xl">
+          <button
+            onClick={() => router.push("/dashboard")}
+            className="mb-6 inline-flex items-center gap-2 text-sm text-black/40 transition-colors hover:text-black"
+          >
+            <ArrowLeft className="h-4 w-4" />
+            Back to Dashboard
+          </button>
+
           <CoursePlanner
             studentDetails={studentDetails}
             showHeader={false}
