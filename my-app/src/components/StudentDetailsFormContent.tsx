@@ -50,6 +50,30 @@ export default function StudentDetailsFormContent({
         <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
           <div>
             <label
+              htmlFor="university"
+              className="mb-2 block text-sm font-medium text-black/75"
+            >
+              University <span className="text-black/30">*</span>
+            </label>
+            <div className="relative">
+              <select
+                id="university"
+                name="university"
+                required
+                defaultValue=""
+                className={`${inputClass} appearance-none pr-10`}
+              >
+                <option value="" disabled>
+                  Select university
+                </option>
+                <option value="Monash University">Monash University</option>
+              </select>
+              <ChevronDown className="pointer-events-none absolute right-4 top-1/2 h-4 w-4 -translate-y-1/2 text-black/35" />
+            </div>
+          </div>
+
+          <div>
+            <label
               htmlFor="courses"
               className="mb-2 block text-sm font-medium text-black/75"
             >
@@ -69,7 +93,7 @@ export default function StudentDetailsFormContent({
                 </option>
                 {courses.map((c) => (
                   <option key={c.code} value={c.code}>
-                    {c.title}
+                     {c.code}: {c.title}
                   </option>
                 ))}
               </select>
@@ -77,29 +101,7 @@ export default function StudentDetailsFormContent({
             </div>
           </div>
 
-          <div>
-            <label
-              htmlFor="university"
-              className="mb-2 block text-sm font-medium text-black/75"
-            >
-              University
-            </label>
-            <div className="relative">
-              <select
-                id="university"
-                name="university"
-                required
-                defaultValue=""
-                className={`${inputClass} appearance-none pr-10`}
-              >
-                <option value="" disabled>
-                  Select university
-                </option>
-                <option value="Monash University">Monash University</option>
-              </select>
-              <ChevronDown className="pointer-events-none absolute right-4 top-1/2 h-4 w-4 -translate-y-1/2 text-black/35" />
-            </div>
-          </div>
+          
         </div>
       </section>
 
