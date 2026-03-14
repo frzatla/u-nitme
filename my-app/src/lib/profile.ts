@@ -1,12 +1,30 @@
 "use server";
 
 import { supabase } from "./supabase";
+import { Profile } from "./types";
 
 const TABLE = "profiles";
 
 // CREATE PROFILE
 export async function createProfile(payload) {
   const { data, error } = await supabase.from(TABLE).insert([payload]).select();
+  if (error) throw error;
+  return data;
+}
+
+// CREATE New PROFILE
+export async function createNewProfile(email: string) {
+  const payload: Profile = {
+    email,
+    plans: [],
+  };
+
+  const { data, error } = await supabase
+    .from(TABLE)
+    .insert([payload])
+    .select()
+    .single();
+
   if (error) throw error;
   return data;
 }
@@ -38,7 +56,7 @@ export async function updateProfile(email, updates) {
     .select();
 
   const updated = await supabase
-    .from("profiles")
+    .from(TABLE)
     .select("*")
     .eq("email", email)
     .single();

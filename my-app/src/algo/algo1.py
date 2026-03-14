@@ -16,6 +16,11 @@ import argparse
 import os
 import sys
 
+if sys.stdout.encoding != "utf-8":
+    sys.stdout.reconfigure(encoding="utf-8")
+if sys.stderr.encoding != "utf-8":
+    sys.stderr.reconfigure(encoding="utf-8")
+
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 MAX_UNITS_PER_SEM = 4       # standard full-time load (24 CP/sem)
 MAX_SEMESTERS     = 24      # safety upper bound
@@ -30,90 +35,13 @@ def load_data():
     data_dir = os.path.join(SCRIPT_DIR, "..", "..", "public", "data")
     def _load(name):
         path = os.path.join(data_dir, name)
-        with open(path) as f:
+        with open(path, encoding="utf-8") as f:
             return json.load(f)
-    units_db   = _load("final_units.json")
-    courses_db = _load("final_course.json")
-    aos_db     = _load("final_aos.json")
-    _normalize_units_db(units_db)
-    return units_db, courses_db, aos_db
-
-
-def _parse_req_expression(expr):
-    """
-    Parse a new-format requisite expression string into a list of group dicts.
-
-    Grammar:
-      - Simple OR:      "A;B;C"           → [{"NumReq": 1, "units": ["A","B","C"]}]
-      - Simple AND:     "A&B&C"           → [{"NumReq": 3, "units": ["A","B","C"]}]
-      - Compound:       "(A;B)&(C&D)"     → two groups: OR(A,B) AND AND(C,D)
-        i.e. top-level '&' separates groups; inside parens ';'=OR, '&'=AND.
-
-    Returns a list of {"NumReq": int, "units": [str, ...]} dicts.
-    Each dict in the list must be independently satisfied (AND between groups).
-    """
-    expr = expr.strip()
-    if not expr:
-        return []
-
-    def _parse_group(s):
-        inner = s.strip().strip("()")
-        if ";" in inner:
-            codes = [c.strip() for c in inner.split(";") if c.strip()]
-            return {"NumReq": 1, "units": codes}
-        elif "&" in inner:
-            codes = [c.strip() for c in inner.split("&") if c.strip()]
-            return {"NumReq": len(codes), "units": codes}
-        else:
-            return {"NumReq": 1, "units": [inner]} if inner else None
-
-    if "(" in expr:
-        fragments, current, depth = [], "", 0
-        for ch in expr:
-            if ch == "(":
-                depth += 1
-                current += ch
-            elif ch == ")":
-                depth -= 1
-                current += ch
-            elif ch == "&" and depth == 0:
-                if current.strip():
-                    fragments.append(current.strip())
-                current = ""
-            else:
-                current += ch
-        if current.strip():
-            fragments.append(current.strip())
-        return [g for g in (_parse_group(f) for f in fragments) if g]
-
-    g = _parse_group(expr)
-    return [g] if g else []
-
-
-def _normalize_units_db(units_db):
-    """
-    Convert new-format requisite strings into the dict groups the algorithm expects.
-
-    New format (each list entry is a string expression):
-      prerequisites:  ["(A;B)&(C&D)", "E;F"]
-      corequisites:   ["A&B&C"]
-      prohibitions:   ["X;Y"]
-
-    Old (internal) format used by the rest of the algorithm:
-      [{"NumReq": N, "units": ["CODE1", ...]}, ...]
-    """
-    for unit in units_db.values():
-        req = unit.get("requisites")
-        if not req:
-            continue
-        for field in ("prerequisites", "corequisites", "prohibitions"):
-            items = req.get(field) or []
-            if items and isinstance(items[0], str):
-                normalized = []
-                for s in items:
-                    if isinstance(s, str):
-                        normalized.extend(_parse_req_expression(s))
-                req[field] = normalized
+    return (
+        _load("processed_units.json"),
+        _load("parsed_courses_full.json"),
+        _load("parsed_aos_full.json"),
+    )
 
 
 # ─── unit extraction from course / AOS requirement trees ─────────────────────
@@ -1174,6 +1102,36 @@ def main():
     print("Scheduling units into semesters...")
     schedule = schedule_units(required, prereq_graph, chain_lengths, unlock_depths,
                               units_db, args.campus, standard_years=standard_years)
+
+    # Pad schedule so the JSON always covers every semester of the degree
+    required_sems = standard_years * 2
+    while len(schedule) < required_sems:
+        idx        = len(schedule)          # 0-based position
+        year_num   = (idx // 2) + 1
+        sem_num    = (idx % 2) + 1
+        sem_label  = f"Year {year_num}, Semester {sem_num}"
+        period     = "S1" if sem_num == 1 else "S2"
+        prev_cum   = schedule[-1]["cumulative_cp"] if schedule else 0
+        schedule.append({
+            "semester":       sem_label,
+            "period":         period,
+            "semester_index": idx + 1,
+            "extended":       None,
+            "units": [
+                {
+                    "code":          "ELECTIVE",
+                    "title":         "Free elective (student's choice)",
+                    "credit_points": 6,
+                    "level":         None,
+                    "chain_length":  None,
+                    "extended":      None,
+                }
+                for _ in range(4)
+            ],
+            "fixed_cp":      0,
+            "total_cp":      24,
+            "cumulative_cp": prev_cum + 24,
+        })
 
     # ── 6. build output ────────────────────────────────────────────────────────
     course_data  = courses_db.get(args.course, {})
