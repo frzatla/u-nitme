@@ -173,12 +173,12 @@ const valueCards = [
 
 function RevealLine({ children, delay = 0, className = "" }) {
   return (
-    <div className={`overflow-hidden pb-[0.12em] ${className}`}>
+    <div className={`overflow-hidden pb-[0.18em] ${className}`}>
       <motion.div
-        initial={{ y: "110%", opacity: 0 }}
+        initial={{ y: "100%", opacity: 0 }}
         whileInView={{ y: "0%", opacity: 1 }}
-        viewport={{ once: true, amount: 0.6 }}
-        transition={{ duration: 0.9, delay, ease: [0.22, 1, 0.36, 1] }}
+        viewport={{ once: true, amount: 0.15 }}
+        transition={{ duration: 0.8, delay, ease: [0.22, 1, 0.36, 1] }}
       >
         {children}
       </motion.div>
@@ -465,19 +465,26 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="px-6 py-16 md:px-10 md:py-20">
+      <section className="px-6 py-28 md:px-10 md:py-40">
         <div className="mx-auto max-w-7xl">
-          <div className="max-w-5xl">
-            <RevealLine>
-              <p className="text-3xl font-semibold leading-[1.08] tracking-[-0.05em] text-white md:text-5xl lg:text-6xl">
-                The smarter way to plan university.
+          <div className="max-w-4xl space-y-3">
+            <FadeUp>
+              <p className="text-3xl font-semibold leading-[1.15] tracking-[-0.04em] text-white md:text-5xl lg:text-6xl">
+                The smartest way to
               </p>
-            </RevealLine>
-            <RevealLine delay={0.08}>
-              <p className="mt-2 text-3xl font-semibold leading-[1.08] tracking-[-0.05em] text-white md:text-5xl lg:text-6xl">
-                Built for students who are done with handbook chaos.
+            </FadeUp>
+
+            <FadeUp delay={0.12}>
+              <p className="text-3xl font-semibold leading-[1.15] tracking-[-0.04em] text-white/60 md:text-5xl lg:text-6xl">
+                plan university — powered
               </p>
-            </RevealLine>
+            </FadeUp>
+
+            <FadeUp delay={0.24}>
+              <p className="text-3xl font-semibold leading-[1.15] tracking-[-0.04em] text-white/60 md:text-5xl lg:text-6xl">
+                by AI that actually works.
+              </p>
+            </FadeUp>
           </div>
         </div>
       </section>
@@ -668,9 +675,7 @@ export default function Home() {
                       <div className="text-sm font-medium text-white">
                         {review.name}
                       </div>
-                      <div className="text-xs text-white">
-                        {review.course}
-                      </div>
+                      <div className="text-xs text-white">{review.course}</div>
                     </div>
 
                     <div className="flex gap-0.5">

@@ -33,9 +33,11 @@ export default function StudentDetailsForm({ onSubmit }) {
     const selectedDegree = formData.get("degree");
 
     const data = {
+      planName: formData.get("planName"),
       university: formData.get("university"),
       faculty: formData.get("faculty"),
       degree: selectedDegree,
+      semesterOffering: formData.get("semesterOffering"),
       specialisation:
         selectedDegree === "COMPSCI" ? formData.get("specialisation") : "",
       major: selectedDegree === "IT" ? formData.get("major") : "",
@@ -57,6 +59,21 @@ export default function StudentDetailsForm({ onSubmit }) {
           </p>
 
           <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+            <div className="md:col-span-2">
+              <label
+                htmlFor="planName"
+                className="mb-2 block text-sm font-medium text-black/75"
+              >
+                Plan Name <span className="text-black/25">(optional)</span>
+              </label>
+              <input
+                id="planName"
+                name="planName"
+                placeholder='e.g., "First student plan"'
+                className={inputClass}
+              />
+            </div>
+
             <div>
               <label
                 htmlFor="university"
@@ -230,7 +247,34 @@ export default function StudentDetailsForm({ onSubmit }) {
             Timeline
           </p>
 
-          <div className="grid grid-cols-2 gap-4 md:grid-cols-4">
+          <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
+            <div>
+              <label
+                htmlFor="semesterOffering"
+                className="mb-2 block text-sm font-medium text-black/75"
+              >
+                Semester Offering <span className="text-black/30">*</span>
+              </label>
+
+              <div className="relative">
+                <select
+                  id="semesterOffering"
+                  name="semesterOffering"
+                  required
+                  className={`${inputClass} appearance-none pr-10`}
+                  defaultValue=""
+                >
+                  <option value="" disabled>
+                    Select intake
+                  </option>
+                  <option value="February intake">February intake</option>
+                  <option value="July intake">July intake</option>
+                </select>
+
+                <ChevronDown className="pointer-events-none absolute right-4 top-1/2 h-4 w-4 -translate-y-1/2 text-black/35" />
+              </div>
+            </div>
+
             <div>
               <label
                 htmlFor="yearStart"

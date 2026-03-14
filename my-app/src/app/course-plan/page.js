@@ -21,7 +21,7 @@ export default function CoursePlanPage() {
     const storedDetails = localStorage.getItem("studentDetails");
 
     if (!storedDetails) {
-      router.replace("/dashboard");
+      router.replace("/dashboard/new");
       return;
     }
 
@@ -29,24 +29,74 @@ export default function CoursePlanPage() {
       setStudentDetails(JSON.parse(storedDetails));
     } catch {
       localStorage.removeItem("studentDetails");
-      router.replace("/dashboard");
+      router.replace("/dashboard/new");
     }
   }, [router]);
+
+  useEffect(() => {
+    if (!studentDetails) {
+      return;
+    }
+
+    const start = Number(studentDetails.yearStart);
+    const end = Number(studentDetails.yearEnd);
+    const yearSpan =
+      Number.isFinite(start) && Number.isFinite(end) && end >= start
+        ? end - start + 1
+        : 0;
+    const unitCount = yearSpan * 8;
+    const totalCredits = unitCount * 6;
+    const currentPlanId = localStorage.getItem("currentPlanId");
+
+    let savedPlans = [];
+
+    try {
+      savedPlans = JSON.parse(localStorage.getItem("savedPlans") || "[]");
+      if (!Array.isArray(savedPlans)) {
+        savedPlans = [];
+      }
+    } catch {
+      savedPlans = [];
+    }
+
+    const nextPlan = {
+      id: currentPlanId || crypto.randomUUID(),
+      studentDetails,
+      savedAt: new Date().toISOString(),
+      unitCount,
+      totalCredits,
+    };
+
+    const existingIndex = savedPlans.findIndex((plan) => plan.id === nextPlan.id);
+
+    if (existingIndex >= 0) {
+      savedPlans[existingIndex] = nextPlan;
+    } else {
+      savedPlans.unshift(nextPlan);
+    }
+
+    localStorage.setItem("savedPlans", JSON.stringify(savedPlans));
+    localStorage.setItem("currentPlanId", nextPlan.id);
+  }, [studentDetails]);
 
   if (!studentDetails) {
     return null;
   }
 
   const infoPills = [
+    studentDetails.planName,
+    studentDetails.degree,
     studentDetails.major,
     studentDetails.minor && `Minor: ${studentDetails.minor}`,
     studentDetails.specialisation && `Spec: ${studentDetails.specialisation}`,
     studentDetails.faculty,
+    studentDetails.semesterOffering,
     studentDetails.university,
   ].filter(Boolean);
 
   const handleRegenerate = () => {
-    router.push("/dashboard");
+    localStorage.removeItem("currentPlanId");
+    router.push("/dashboard/new");
   };
 
   const handleExport = () => {
@@ -142,7 +192,8 @@ export default function CoursePlanPage() {
             official handbook
           </p>
           <p className="text-xs text-black/20">
-            {studentDetails.yearStart}–{studentDetails.yearEnd}
+            {studentDetails.semesterOffering} • {studentDetails.yearStart}–
+            {studentDetails.yearEnd}
           </p>
         </div>
       </footer>
