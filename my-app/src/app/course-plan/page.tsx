@@ -2,7 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { UserButton } from "@clerk/nextjs";
 import { currentUser } from "@clerk/nextjs/server";
-import { ArrowLeft, RefreshCw, Save, Sparkles, BookmarkCheck } from "lucide-react";
+import { ArrowLeft, RefreshCw, Sparkles, BookmarkCheck } from "lucide-react";
 import { redirect } from "next/navigation";
 import CoursePlanner from "../../components/CoursePlanner";
 import { getProfileByEmail, updateProfile } from "../../lib/profile";
@@ -11,8 +11,9 @@ import { Plan, Profile } from "@/lib/types";
 export default async function CoursePlanPage({
   searchParams,
 }: {
-  searchParams: { planId?: string };
+  searchParams: Promise<{ planId?: string }>;
 }) {
+  const { planId } = await searchParams;
   const user = await currentUser();
   const email: string = user?.primaryEmailAddress?.emailAddress;
 
@@ -22,7 +23,7 @@ export default async function CoursePlanPage({
   const plans: Plan[] = profile?.plans ?? [];
 
   // Find by planId from URL, or fall back to most recent plan
-  const plan = plans.find((p) => p.id === searchParams.planId) ?? plans[plans.length - 1];
+  const plan = plans.find((p) => p.id === planId) ?? plans[plans.length - 1];
 
   if (!plan) redirect("/profile");
   if (!plan.schedule) redirect("/profile");
@@ -92,13 +93,6 @@ export default async function CoursePlanPage({
             </div>
 
             <div className="flex items-center gap-3">
-              <button
-                type="button"
-                className="flex items-center gap-2 rounded-lg border border-white/60 px-4 py-2 text-xs text-white/80 transition-all hover:border-white/30 hover:text-white"
-              >
-                <Save className="h-3.5 w-3.5" />
-                Save Plan
-              </button>
               <Link
                 href="/profile"
                 className="flex items-center gap-2 rounded-lg border border-white/15 px-4 py-2 text-xs text-white/50 transition-all hover:border-white/30 hover:text-white"
