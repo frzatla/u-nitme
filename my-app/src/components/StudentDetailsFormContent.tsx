@@ -1,9 +1,29 @@
+"use client";
+
+import { useState } from "react";
 import { ChevronDown, Sparkles } from "lucide-react";
+
+type CourseOption = { code: string; title: string };
+type AosOption = { code: string; title: string };
 
 const inputClass =
   "w-full rounded-xl border border-black/10 bg-black/[0.03] px-4 py-3 text-sm text-black placeholder:text-black/30 outline-none transition-all focus:border-black/20 focus:bg-white focus:ring-4 focus:ring-black/[0.03]";
 
-export default function StudentDetailsFormContent() {
+export default function StudentDetailsFormContent({
+  courses,
+  aosList,
+  courseToAos,
+}: {
+  courses: CourseOption[];
+  aosList: AosOption[];
+  courseToAos: Record<string, string[]>;
+}) {
+  const [selectedCourse, setSelectedCourse] = useState("");
+
+  const filteredAos = selectedCourse && courseToAos[selectedCourse]
+    ? aosList.filter((a) => courseToAos[selectedCourse].includes(a.code))
+    : [];
+
   return (
     <>
       <section>
@@ -35,13 +55,26 @@ export default function StudentDetailsFormContent() {
             >
               Courses <span className="text-black/30">*</span>
             </label>
-            <input
-              id="courses"
-              name="courses"
-              required
-              placeholder="e.g., Bachelor of Computer Science"
-              className={inputClass}
-            />
+            <div className="relative">
+              <select
+                id="courses"
+                name="courses"
+                required
+                value={selectedCourse}
+                onChange={(e) => setSelectedCourse(e.target.value)}
+                className={`${inputClass} appearance-none pr-10`}
+              >
+                <option value="" disabled>
+                  Select course
+                </option>
+                {courses.map((c) => (
+                  <option key={c.code} value={c.code}>
+                    {c.title}
+                  </option>
+                ))}
+              </select>
+              <ChevronDown className="pointer-events-none absolute right-4 top-1/2 h-4 w-4 -translate-y-1/2 text-black/35" />
+            </div>
           </div>
 
           <div>
@@ -79,13 +112,26 @@ export default function StudentDetailsFormContent() {
             >
               Area of Study <span className="text-black/30">*</span>
             </label>
-            <input
-              id="areaOfStudy"
-              name="areaOfStudy"
-              required
-              placeholder="e.g., Software Development, Computer Science, Design"
-              className={inputClass}
-            />
+            <div className="relative">
+              <select
+                id="areaOfStudy"
+                name="areaOfStudy"
+                required
+                defaultValue=""
+                disabled={!selectedCourse}
+                className={`${inputClass} appearance-none pr-10 disabled:cursor-not-allowed disabled:opacity-50`}
+              >
+                <option value="" disabled>
+                  {selectedCourse ? "Select area of study" : "Select a course first"}
+                </option>
+                {filteredAos.map((a) => (
+                  <option key={a.code} value={a.code}>
+                    {a.title}
+                  </option>
+                ))}
+              </select>
+              <ChevronDown className="pointer-events-none absolute right-4 top-1/2 h-4 w-4 -translate-y-1/2 text-black/35" />
+            </div>
           </div>
         </div>
       </section>

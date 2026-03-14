@@ -16,6 +16,11 @@ import argparse
 import os
 import sys
 
+if sys.stdout.encoding != "utf-8":
+    sys.stdout.reconfigure(encoding="utf-8")
+if sys.stderr.encoding != "utf-8":
+    sys.stderr.reconfigure(encoding="utf-8")
+
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 MAX_UNITS_PER_SEM = 4       # standard full-time load (24 CP/sem)
 MAX_SEMESTERS     = 24      # safety upper bound
@@ -30,7 +35,7 @@ def load_data():
     data_dir = os.path.join(SCRIPT_DIR, "..", "..", "public", "data")
     def _load(name):
         path = os.path.join(data_dir, name)
-        with open(path) as f:
+        with open(path, encoding="utf-8") as f:
             return json.load(f)
     units_db   = _load("final_units.json")
     courses_db = _load("final_courses.json")
@@ -1137,6 +1142,36 @@ def main():
     print("Scheduling units into semesters...")
     schedule = schedule_units(required, prereq_graph, chain_lengths, unlock_depths,
                               units_db, args.campus, standard_years=standard_years)
+
+    # Pad schedule so the JSON always covers every semester of the degree
+    required_sems = standard_years * 2
+    while len(schedule) < required_sems:
+        idx        = len(schedule)          # 0-based position
+        year_num   = (idx // 2) + 1
+        sem_num    = (idx % 2) + 1
+        sem_label  = f"Year {year_num}, Semester {sem_num}"
+        period     = "S1" if sem_num == 1 else "S2"
+        prev_cum   = schedule[-1]["cumulative_cp"] if schedule else 0
+        schedule.append({
+            "semester":       sem_label,
+            "period":         period,
+            "semester_index": idx + 1,
+            "extended":       None,
+            "units": [
+                {
+                    "code":          "ELECTIVE",
+                    "title":         "Free elective (student's choice)",
+                    "credit_points": 6,
+                    "level":         None,
+                    "chain_length":  None,
+                    "extended":      None,
+                }
+                for _ in range(4)
+            ],
+            "fixed_cp":      0,
+            "total_cp":      24,
+            "cumulative_cp": prev_cum + 24,
+        })
 
     # ── 6. build output ────────────────────────────────────────────────────────
     course_data  = courses_db.get(args.course, {})

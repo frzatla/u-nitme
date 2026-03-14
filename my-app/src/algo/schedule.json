@@ -1,0 +1,324 @@
+{
+  "course_code": "C2001",
+  "course_title": "Bachelor of Computer Science",
+  "specialisation": "DATASCI11",
+  "major": null,
+  "minor": "CYBERSEC05",
+  "campus": "Clayton",
+  "algorithm": "longest-prerequisite-chain (DAG critical path)",
+  "notes": [
+    "Free electives (Part F) are NOT included \u2014 the student chooses those freely.",
+    "Where a group offers unit alternatives, the algorithm picks the option with the shortest prerequisite chain.",
+    "Units marked 'Unscheduled' have unresolvable prerequisite cycles or offering conflicts.",
+    "cp_required constraints (minimum credit points before enrolment) are enforced."
+  ],
+  "summary": {
+    "total_units": 21,
+    "total_cp": 126,
+    "scheduled_cp": 168,
+    "semesters": 7
+  },
+  "schedule": [
+    {
+      "semester": "Year 1, Semester 1",
+      "period": "S1",
+      "semester_index": 1,
+      "extended": null,
+      "units": [
+        {
+          "code": "FIT1045",
+          "title": "Introduction to programming",
+          "credit_points": 6,
+          "level": 1,
+          "chain_length": 0,
+          "extended": null
+        },
+        {
+          "code": "FIT1049",
+          "title": "IT professional practice",
+          "credit_points": 6,
+          "level": 1,
+          "chain_length": 0,
+          "extended": null
+        },
+        {
+          "code": "FIT1058",
+          "title": "Foundations of computing",
+          "credit_points": 6,
+          "level": 1,
+          "chain_length": 0,
+          "extended": null
+        },
+        {
+          "code": "FIT1047",
+          "title": "Introduction to computer systems, networks and security",
+          "credit_points": 6,
+          "level": 1,
+          "chain_length": 0,
+          "extended": null
+        }
+      ],
+      "fixed_cp": 24,
+      "total_cp": 24,
+      "cumulative_cp": 24
+    },
+    {
+      "semester": "Year 1, Semester 2",
+      "period": "S2",
+      "semester_index": 2,
+      "extended": null,
+      "units": [
+        {
+          "code": "FIT1008",
+          "title": "Fundamentals of algorithms",
+          "credit_points": 6,
+          "level": 1,
+          "chain_length": 1,
+          "extended": null
+        },
+        {
+          "code": "FIT2094",
+          "title": "Databases",
+          "credit_points": 6,
+          "level": 2,
+          "chain_length": 1,
+          "extended": null
+        },
+        {
+          "code": "FIT1043",
+          "title": " Introduction to data science ",
+          "credit_points": 6,
+          "level": 1,
+          "chain_length": 0,
+          "extended": null
+        },
+        {
+          "code": "FIT2086",
+          "title": "Modelling for data analysis",
+          "credit_points": 6,
+          "level": 2,
+          "chain_length": 1,
+          "extended": null
+        }
+      ],
+      "fixed_cp": 24,
+      "total_cp": 24,
+      "cumulative_cp": 48
+    },
+    {
+      "semester": "Year 2, Semester 1",
+      "period": "S1",
+      "semester_index": 3,
+      "extended": null,
+      "units": [
+        {
+          "code": "FIT2004",
+          "title": "Algorithms and data structures",
+          "credit_points": 6,
+          "level": 2,
+          "chain_length": 2,
+          "extended": null
+        },
+        {
+          "code": "FIT3152",
+          "title": "Data analytics",
+          "credit_points": 6,
+          "level": 3,
+          "chain_length": 2,
+          "extended": null
+        },
+        {
+          "code": "FIT2173",
+          "title": "Software security",
+          "credit_points": 6,
+          "level": 2,
+          "chain_length": 1,
+          "extended": null
+        },
+        {
+          "code": "FIT2179",
+          "title": "Data visualisation",
+          "credit_points": 6,
+          "level": 2,
+          "chain_length": 1,
+          "extended": null
+        }
+      ],
+      "fixed_cp": 24,
+      "total_cp": 24,
+      "cumulative_cp": 72
+    },
+    {
+      "semester": "Year 2, Semester 2",
+      "period": "S2",
+      "semester_index": 4,
+      "extended": null,
+      "units": [
+        {
+          "code": "FIT3163",
+          "title": "Data science project 1",
+          "credit_points": 6,
+          "level": 3,
+          "chain_length": 3,
+          "extended": null
+        },
+        {
+          "code": "FIT3003",
+          "title": "Business intelligence and data warehousing",
+          "credit_points": 6,
+          "level": 3,
+          "chain_length": 2,
+          "extended": null
+        },
+        {
+          "code": "FIT2014",
+          "title": "Theory of computation",
+          "credit_points": 6,
+          "level": 2,
+          "chain_length": 1,
+          "extended": null
+        },
+        {
+          "code": "FIT3183",
+          "title": "Malicious AI and dark side security",
+          "credit_points": 6,
+          "level": 3,
+          "chain_length": 1,
+          "extended": null
+        }
+      ],
+      "fixed_cp": 24,
+      "total_cp": 24,
+      "cumulative_cp": 96
+    },
+    {
+      "semester": "Year 3, Semester 1",
+      "period": "S1",
+      "semester_index": 5,
+      "extended": null,
+      "units": [
+        {
+          "code": "FIT3164",
+          "title": "Data science project 2",
+          "credit_points": 6,
+          "level": 3,
+          "chain_length": 4,
+          "extended": null
+        },
+        {
+          "code": "FIT1057",
+          "title": "Introduction to cybersecurity",
+          "credit_points": 6,
+          "level": 1,
+          "chain_length": 0,
+          "extended": null
+        },
+        {
+          "code": "ELECTIVE",
+          "title": "Free elective (student's choice)",
+          "credit_points": 6,
+          "level": null,
+          "chain_length": null,
+          "extended": null
+        },
+        {
+          "code": "ELECTIVE",
+          "title": "Free elective (student's choice)",
+          "credit_points": 6,
+          "level": null,
+          "chain_length": null,
+          "extended": null
+        }
+      ],
+      "fixed_cp": 12,
+      "total_cp": 24,
+      "cumulative_cp": 120
+    },
+    {
+      "semester": "Year 3, Semester 2",
+      "period": "S2",
+      "semester_index": 6,
+      "extended": null,
+      "units": [
+        {
+          "code": "FIT1093",
+          "title": "Cybersecurity tools and techniques",
+          "credit_points": 6,
+          "level": 1,
+          "chain_length": 0,
+          "extended": null
+        },
+        {
+          "code": "FIT3195",
+          "title": "Deep tech entrepreneurship",
+          "credit_points": 6,
+          "level": 3,
+          "chain_length": 0,
+          "extended": null
+        },
+        {
+          "code": "ELECTIVE",
+          "title": "Free elective (student's choice)",
+          "credit_points": 6,
+          "level": null,
+          "chain_length": null,
+          "extended": null
+        },
+        {
+          "code": "ELECTIVE",
+          "title": "Free elective (student's choice)",
+          "credit_points": 6,
+          "level": null,
+          "chain_length": null,
+          "extended": null
+        }
+      ],
+      "fixed_cp": 12,
+      "total_cp": 24,
+      "cumulative_cp": 144
+    },
+    {
+      "semester": "Year 4, Semester 1",
+      "period": "S1",
+      "semester_index": 7,
+      "extended": true,
+      "units": [
+        {
+          "code": "FIT3031",
+          "title": "Network security",
+          "credit_points": 6,
+          "level": 3,
+          "chain_length": 1,
+          "extended": true
+        },
+        {
+          "code": "ELECTIVE",
+          "title": "Free elective (student's choice)",
+          "credit_points": 6,
+          "level": null,
+          "chain_length": null,
+          "extended": true
+        },
+        {
+          "code": "ELECTIVE",
+          "title": "Free elective (student's choice)",
+          "credit_points": 6,
+          "level": null,
+          "chain_length": null,
+          "extended": true
+        },
+        {
+          "code": "ELECTIVE",
+          "title": "Free elective (student's choice)",
+          "credit_points": 6,
+          "level": null,
+          "chain_length": null,
+          "extended": true
+        }
+      ],
+      "fixed_cp": 6,
+      "total_cp": 24,
+      "cumulative_cp": 168
+    }
+  ]
+}
