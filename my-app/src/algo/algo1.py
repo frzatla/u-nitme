@@ -37,91 +37,61 @@ def load_data():
         path = os.path.join(data_dir, name)
         with open(path, encoding="utf-8") as f:
             return json.load(f)
-    units_db   = _load("final_units.json")
-    courses_db = _load("final_courses.json")
-    aos_db     = _load("final_aos.json")
-    _normalize_units_db(units_db)
-    return units_db, courses_db, aos_db
+    units_db = _load("final_units.json")
+    # Convert string requisites to group-dict format expected by the algorithm.
+    #
+    # String format uses:
+    #   ';'  as OR  separator  (take 1 of these)
+    #   '&'  as AND separator  (each clause is a separate required group)
+    #   '()' for grouping
+    #
+    # e.g. "(FIT1045;FIT1053)&(MAT1830;FIT1058)"
+    #   → [{"units":["FIT1045","FIT1053"]}, {"units":["MAT1830","FIT1058"]}]
+    import re as _re
+    _UNIT_RE = _re.compile(r'\b[A-Z]{2,4}\d{4}\b')
 
+    def _split_top_and(s):
+        """Split s on '&' only at paren-depth 0."""
+        parts, depth, start = [], 0, 0
+        for i, ch in enumerate(s):
+            if ch == '(':   depth += 1
+            elif ch == ')': depth -= 1
+            elif ch == '&' and depth == 0:
+                parts.append(s[start:i])
+                start = i + 1
+        parts.append(s[start:])
+        return [p.strip() for p in parts if p.strip()]
 
-def _parse_req_expression(expr):
-    """
-    Parse a new-format requisite expression string into a list of group dicts.
+    def _parse_req_string(expr):
+        """Return list of group-dicts from one requisite expression string."""
+        groups = []
+        for clause in _split_top_and(expr.strip()):
+            units = _UNIT_RE.findall(clause)
+            if units:
+                groups.append({"units": units})
+        return groups
 
-    Grammar:
-      - Simple OR:      "A;B;C"           → [{"NumReq": 1, "units": ["A","B","C"]}]
-      - Simple AND:     "A&B&C"           → [{"NumReq": 3, "units": ["A","B","C"]}]
-      - Compound:       "(A;B)&(C&D)"     → two groups: OR(A,B) AND AND(C,D)
-        i.e. top-level '&' separates groups; inside parens ';'=OR, '&'=AND.
+    def _norm_groups(raw):
+        result = []
+        for item in (raw or []):
+            if isinstance(item, str):
+                result.extend(_parse_req_string(item))
+            elif isinstance(item, dict):
+                result.append(item)
+        return result
 
-    Returns a list of {"NumReq": int, "units": [str, ...]} dicts.
-    Each dict in the list must be independently satisfied (AND between groups).
-    """
-    expr = expr.strip()
-    if not expr:
-        return []
-
-    def _parse_group(s):
-        """Parse a single (possibly paren-stripped) group fragment."""
-        inner = s.strip().strip("()")
-        if ";" in inner:
-            codes = [c.strip() for c in inner.split(";") if c.strip()]
-            return {"NumReq": 1, "units": codes}
-        elif "&" in inner:
-            codes = [c.strip() for c in inner.split("&") if c.strip()]
-            return {"NumReq": len(codes), "units": codes}
-        else:
-            return {"NumReq": 1, "units": [inner]} if inner else None
-
-    if "(" in expr:
-        # Split on top-level '&' (outside parentheses)
-        fragments, current, depth = [], "", 0
-        for ch in expr:
-            if ch == "(":
-                depth += 1
-                current += ch
-            elif ch == ")":
-                depth -= 1
-                current += ch
-            elif ch == "&" and depth == 0:
-                if current.strip():
-                    fragments.append(current.strip())
-                current = ""
-            else:
-                current += ch
-        if current.strip():
-            fragments.append(current.strip())
-        return [g for g in (_parse_group(f) for f in fragments) if g]
-
-    # No parentheses — single group
-    g = _parse_group(expr)
-    return [g] if g else []
-
-
-def _normalize_units_db(units_db):
-    """
-    Convert new-format requisite strings into the dict groups the algorithm expects.
-
-    New format (each list entry is a string expression):
-      prerequisites:  ["(A;B)&(C&D)", "E;F"]
-      corequisites:   ["A&B&C"]
-      prohibitions:   ["X;Y"]
-
-    Old (internal) format used by the rest of the algorithm:
-      [{"NumReq": N, "units": ["CODE1", ...]}, ...]
-    """
     for unit in units_db.values():
-        req = unit.get("requisites")
-        if not req:
+        reqs = unit.get("requisites")
+        if not reqs:
             continue
-        for field in ("prerequisites", "corequisites", "prohibitions"):
-            items = req.get(field) or []
-            if items and isinstance(items[0], str):
-                normalized = []
-                for s in items:
-                    if isinstance(s, str):
-                        normalized.extend(_parse_req_expression(s))
-                req[field] = normalized
+        reqs["prerequisites"] = _norm_groups(reqs.get("prerequisites"))
+        reqs["corequisites"]  = _norm_groups(reqs.get("corequisites"))
+        reqs["prohibitions"]  = _norm_groups(reqs.get("prohibitions"))
+    return (
+        units_db,
+        _load("final_courses.json"),
+        _load("final_aos.json"),
+    )
 
 
 # ─── unit extraction from course / AOS requirement trees ─────────────────────
@@ -209,8 +179,12 @@ def extract_required_units(course_code, aos_selections, campus, courses_db, aos_
                 if chosen:
                     visit(chosen)
             else:  # AND
-                # If all children are campus-specific branches, treat as OR
-                if children and _all_children_campus_specific(children, node_map):
+                # If all children are campus-specific or specialisation-specific
+                # branches, treat as OR — pick the one relevant to the student.
+                if children and (
+                    _all_children_campus_specific(children, node_map)
+                    or _all_children_specialisation_specific(children, node_map, aos_db)
+                ):
                     chosen = _pick_or_child(node, children, node_map, campus, aos_set,
                                         aos_db=aos_db, units_db=units_db,
                                         aos_selections=_aos_selections_ordered)
@@ -264,6 +238,42 @@ def _all_children_campus_specific(children, node_map):
             for kw in _CAMPUS_KEYWORDS)
         for cid in children
     )
+
+
+def _all_children_specialisation_specific(children, node_map, aos_db):
+    """
+    True if the children of an AND node are mutually exclusive specialisation
+    branches — i.e. each child title matches a different AOS title from the db.
+
+    Used to detect cases where the course data encodes specialisation-specific
+    project/capstone groups as AND children when they should be OR alternatives.
+    Allows one non-matching child (e.g. an IBL/industry placement option).
+    """
+    if not children or len(children) < 2:
+        return False
+
+    _STOP = {"and", "the", "of", "in", "for", "with", "studies", "project",
+             "based", "learning", "industry", "placement"}
+
+    def _kws(title):
+        words = title.lower().split()
+        bigrams = {f"{words[i]} {words[i+1]}" for i in range(len(words) - 1)}
+        singles = {w for w in words if len(w) > 4 and w not in _STOP}
+        return bigrams, singles
+
+    # Build keyword sets for every AOS in the database
+    aos_kw_list = [_kws(e.get("course_title", "")) for e in aos_db.values()]
+
+    matched = sum(
+        1 for cid in children
+        if any(
+            (bgs and any(bg in node_map.get(cid, {}).get("title", "").lower() for bg in bgs))
+            or (sns and any(w in node_map.get(cid, {}).get("title", "").lower() for w in sns))
+            for bgs, sns in aos_kw_list
+        )
+    )
+    # At least (n-1) children must match an AOS title to be considered specialisation branches
+    return matched >= max(2, len(children) - 1)
 
 
 def _child_has_standard_units(cid, node_map, aos_db, units_db):
@@ -477,6 +487,50 @@ def compute_unlock_depths(required, units_db, chain_lengths):
     return {u: max_unlock(u) for u in required}
 
 
+# ─── backward pass: latest-start deadlines ───────────────────────────────────
+
+def compute_latest_starts(required, units_db, required_sems):
+    """
+    Backward pass (CPM): for each required unit compute the latest 0-based
+    semester index at which it can start and still allow every downstream
+    dependent to finish within `required_sems` semesters.
+
+    Units with a smaller latest_start have tighter deadlines and must be
+    prioritised by the scheduler.
+    """
+    from collections import defaultdict
+
+    # Reverse graph: prereq -> direct dependents inside `required`
+    dependents = defaultdict(set)
+    for unit in required:
+        unit_data = units_db.get(unit)
+        if not unit_data:
+            continue
+        for group in (unit_data.get("requisites") or {}).get("prerequisites") or []:
+            for prereq in group.get("units", []):
+                if prereq in required:
+                    dependents[prereq].add(unit)
+
+    memo = {}
+
+    def latest_start(u, visiting=frozenset()):
+        if u in memo:
+            return memo[u]
+        if u in visiting:           # cycle guard — default to last slot
+            return required_sems - 1
+        deps = dependents[u]
+        if not deps:
+            memo[u] = required_sems - 1
+            return required_sems - 1
+        v2 = visiting | {u}
+        # must be placed at least 1 semester before the tightest dependent
+        tightest = min(latest_start(d, v2) for d in deps)
+        memo[u] = tightest - 1
+        return memo[u]
+
+    return {u: latest_start(u) for u in required}
+
+
 # ─── prerequisite dependency graph (within the required set) ──────────────────
 
 def build_prereq_graph(required, units_db, chain_lengths):
@@ -555,6 +609,8 @@ def schedule_units(required, prereq_graph, chain_lengths, unlock_depths, units_d
 
     Semesters cycle S1 → S2 → S1 → S2 ...
     """
+    required_sems = standard_years * 2
+    latest_starts = compute_latest_starts(required, units_db, required_sems)
     completed    = set()
     remaining    = set(required)
     cumulative_cp = 0
@@ -593,7 +649,8 @@ def schedule_units(required, prereq_graph, chain_lengths, unlock_depths, units_d
         # then deepest own chain, then fewest offered semesters (least flexible
         # units scheduled first — e.g. S2-only before S1+S2 to avoid bumping
         # them to a much later semester), then code for determinism
-        available.sort(key=lambda u: (-unlock_depths.get(u, 0),
+        available.sort(key=lambda u: (latest_starts.get(u, required_sems - 1),
+                                      -unlock_depths.get(u, 0),
                                       -chain_lengths.get(u, 0),
                                       len(get_offered_semesters(u, units_db, campus)),
                                       u))
