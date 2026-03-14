@@ -2,14 +2,9 @@
 
 import Image from "next/image";
 import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
+import { redirect, useRouter } from "next/navigation";
 import { UserButton } from "@clerk/nextjs";
-import {
-  ArrowLeft,
-  Download,
-  RefreshCw,
-  Sparkles,
-} from "lucide-react";
+import { ArrowLeft, Download, RefreshCw, Sparkles } from "lucide-react";
 import CoursePlanner from "../../components/CoursePlanner";
 import UnitDetailPanel from "../../components/UnitDetailPanel";
 
@@ -22,15 +17,14 @@ export default function CoursePlanPage() {
     const storedDetails = localStorage.getItem("studentDetails");
 
     if (!storedDetails) {
-      router.replace("/dashboard/new");
-      return;
+      redirect("/dashboard/new");
     }
 
     try {
       setStudentDetails(JSON.parse(storedDetails));
     } catch {
       localStorage.removeItem("studentDetails");
-      router.replace("/dashboard/new");
+      redirect("/dashboard/new");
     }
   }, [router]);
 
@@ -68,7 +62,9 @@ export default function CoursePlanPage() {
       totalCredits,
     };
 
-    const existingIndex = savedPlans.findIndex((plan) => plan.id === nextPlan.id);
+    const existingIndex = savedPlans.findIndex(
+      (plan) => plan.id === nextPlan.id,
+    );
 
     if (existingIndex >= 0) {
       savedPlans[existingIndex] = nextPlan;
@@ -97,7 +93,7 @@ export default function CoursePlanPage() {
 
   const handleRegenerate = () => {
     localStorage.removeItem("currentPlanId");
-    router.push("/dashboard/new");
+    redirect("/dashboard/new");
   };
 
   const handleExport = () => {
@@ -120,11 +116,13 @@ export default function CoursePlanPage() {
                   priority
                 />
               </div>
-              <span className="text-sm font-medium tracking-tight">U-NIT ME</span>
+              <span className="text-sm font-medium tracking-tight">
+                U-NIT ME
+              </span>
             </div>
           </div>
 
-          <UserButton afterSignOutUrl="/" />
+          <UserButton />
         </div>
       </header>
 

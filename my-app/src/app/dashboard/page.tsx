@@ -1,8 +1,8 @@
 import { UserButton } from "@clerk/nextjs";
 import { currentUser } from "@clerk/nextjs/server";
-import { POST as postProfile } from "@/app/api/profiles/route";
 import StudentDetailsForm from "../../components/StudentDetailsForm";
 import { redirect } from "next/navigation";
+import { updateProfile } from "@/lib/profile";
 
 export default async function DashboardPage() {
   const user = await currentUser();
@@ -30,33 +30,14 @@ export default async function DashboardPage() {
     console.log("form submit data:", data);
 
     try {
-      const formData = data;
       const email = user?.primaryEmailAddress?.emailAddress;
 
-      const payload = {
-        email: email,
-        plan: {
-          university: formData.university,
-          faculty: formData.faculty,
-          specialisation: formData.specialisation,
-          major: formData.major,
-          minor: formData.minor,
-          yearStart: formData.yearStart,
-          yearEnd: formData.yearEnd,
-        },
+      const plan = {
+        plan: { ...data },
       };
 
-      console.log(payload);
+      const postData = await updateProfile(email, plan);
 
-      // 2️⃣ Call POST to create or update
-
-      const postRes = await postProfile(
-        new Request("https://localhost/", {
-          method: "POST",
-          body: JSON.stringify(payload),
-        }),
-      );
-      const postData = await postRes.json();
       console.log("POST result:", postData);
 
       // Redirect if needed
