@@ -1,9 +1,5 @@
 import { NextResponse } from "next/server";
-import {
-  createProfile,
-  getProfileByEmail,
-  updateProfile,
-} from "../../../lib/profile";
+import { createProfile, getProfileByEmail, updateProfile } from "@/lib/profile";
 
 export async function POST(req) {
   try {
@@ -11,12 +7,9 @@ export async function POST(req) {
 
     const email = payload.email;
 
-    console.log(email);
     const existed = await getProfileByEmail(email);
 
     if (existed) {
-      console.log("exist");
-
       const updates = {
         plan: {
           university: payload.plan.university,
@@ -31,7 +24,7 @@ export async function POST(req) {
         },
       };
 
-      console.log(payload, updates);
+      console.log("payload and updates", payload, updates);
 
       const data = await updateProfile(email, updates);
       return NextResponse.json(data);

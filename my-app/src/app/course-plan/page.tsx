@@ -33,6 +33,15 @@ export default async function CoursePlanPage() {
     studentDetails.university,
   ].filter(Boolean);
 
+  const handleRegenerate = () => {
+    localStorage.removeItem("currentPlanId");
+    redirect("/dashboard/new");
+  };
+
+  const handleExport = () => {
+    window.print();
+  };
+
   return (
     <main className="min-h-screen bg-[#f5f5f2] text-black">
       <header className="border-b border-black/10 bg-[#f5f5f2]">

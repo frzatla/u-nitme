@@ -31,8 +31,6 @@ export async function getProfileByEmail(email) {
 
 // UPDATE PROFILE
 export async function updateProfile(email, updates) {
-  console.log("Row after update:");
-
   const { data, error } = await supabase
     .from(TABLE)
     .update(updates)

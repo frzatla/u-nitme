@@ -33,8 +33,44 @@ export default async function DashboardPage() {
   const user = await currentUser();
   const email = user?.primaryEmailAddress?.emailAddress;
 
-  if (!email) {
-    redirect("/sign-in");
+  async function handleSubmit(formData: FormData) {
+    "use server";
+    const selectedDegree = String(formData.get("degree") || "");
+
+    const data = {
+      university: String(formData.get("university") || ""),
+      faculty: String(formData.get("faculty") || ""),
+      degree: selectedDegree,
+      specialisation:
+        selectedDegree === "COMPSCI"
+          ? String(formData.get("specialisation") || "")
+          : null,
+      major:
+        selectedDegree === "IT" ? String(formData.get("major") || "") : null,
+      minor:
+        selectedDegree === "IT" ? String(formData.get("minor") || "") : null,
+      yearStart: Number(formData.get("yearStart")),
+      yearEnd: Number(formData.get("yearEnd")),
+    };
+
+    console.log("form submit data:", data);
+
+    try {
+      const email = user?.primaryEmailAddress?.emailAddress;
+
+      const plan = {
+        plan: { ...data },
+      };
+
+      const postData = await updateProfile(email, plan);
+
+      console.log("POST result:", postData);
+
+      // Redirect if needed
+      redirect("/course-plan");
+    } catch (error) {
+      console.error(error.message);
+    }
   }
 
   const profile = await getProfileByEmail(email);
