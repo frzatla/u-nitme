@@ -12397,7 +12397,6 @@
         "school": "Faculty of Arts",
         "title": "Japanese intermediate 1"
     },
-    
     "AHT3220": {
         "academic_org": "Faculty of Art, Design and Architecture",
         "assessments": [],
@@ -46881,7 +46880,7 @@
         "school": "Faculty of Information Technology",
         "title": "Honours thesis part 1"
     },
-        "FIT1058": {
+    "FIT1058": {
         "academic_org": "Faculty of Information Technology",
         "assessments": [
             {
@@ -74519,7 +74518,7 @@
         "school": "Faculty of Science",
         "title": "Optimisation and operations research"
     },
-        "FIT1048": {
+    "FIT1048": {
         "academic_org": "Faculty of Information Technology",
         "assessments": [],
         "code": "FIT1048",
