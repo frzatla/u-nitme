@@ -4,7 +4,8 @@ import { UserButton } from "@clerk/nextjs";
 import { currentUser } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
 import { ArrowRight, BookOpen, Calendar, Layers, Plus } from "lucide-react";
-import { getProfileByEmail } from "../../lib/profile";
+import { getProfileByEmail, updateProfile } from "../../lib/profile";
+
 
 function getTimeAgo(dateStr?: string | null) {
   if (!dateStr) return "Not saved yet";
