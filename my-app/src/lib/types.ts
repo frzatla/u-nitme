@@ -1,4 +1,5 @@
 export type Plan = {
+  id: string;
   planName: string;
   courses: string;
   university: string;

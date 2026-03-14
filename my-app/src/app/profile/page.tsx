@@ -23,6 +23,7 @@ export default async function NewPlanPage() {
     }
 
     const newPlan: Plan = {
+      id: crypto.randomUUID(),
       planName: String(formData.get("planName") || ""),
       courses: String(formData.get("courses") || ""),
       university: String(formData.get("university") || ""),
@@ -33,7 +34,7 @@ export default async function NewPlanPage() {
     };
 
     const profile = await getProfileByEmail(email);
-    const existingPlans = profile?.plans ?? [];
+    const existingPlans: Plan[] = profile?.plans ?? [];
 
     await updateProfile(email, { plans: [...existingPlans, newPlan] });
 
