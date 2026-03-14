@@ -1,9 +1,7 @@
 "use client";
 
 import { ChevronDown, Sparkles } from "lucide-react";
-import { useState, useEffect } from "react";
-import { useUser } from "@clerk/nextjs";
-import { getProfileByEmail } from "@/lib/profile";
+import { useState } from "react";
 
 const inputClass =
   "w-full rounded-xl border border-black/10 bg-black/[0.03] px-4 py-3 text-sm text-black placeholder:text-black/30 outline-none transition-all focus:border-black/20 focus:bg-white focus:ring-4 focus:ring-black/[0.03]";
@@ -27,39 +25,15 @@ const degreeOptionsByFaculty: Record<
 };
 
 export default function StudentDetailsFormContent() {
-  const { user, isLoaded } = useUser();
-
   const [university, setUniversity] = useState("");
   const [faculty, setFaculty] = useState("");
   const [degree, setDegree] = useState("");
   const [specialisation, setSpecialisation] = useState("");
   const [major, setMajor] = useState("");
   const [minor, setMinor] = useState("");
-  const [semesterOffering, setSemesterOffering] = useState("February");
+  const [semesterOffering, setSemesterOffering] = useState("");
   const [yearStart, setYearStart] = useState("");
   const [yearEnd, setYearEnd] = useState("");
-
-  useEffect(() => {
-    if (!isLoaded) return;
-    const email = user?.primaryEmailAddress?.emailAddress;
-    if (!email) return;
-
-    getProfileByEmail(email)
-      .then((profile) => {
-        const p = profile?.plan;
-        if (!p) return;
-        setUniversity(p.university ?? "");
-        setFaculty(p.faculty ?? "");
-        setDegree(p.degree ?? "");
-        setSpecialisation(p.specialisation ?? "");
-        setMajor(p.major ?? "");
-        setMinor(p.minor ?? "");
-        setSemesterOffering(p.semesterOffering ?? "February");
-        setYearStart(p.yearStart ? String(p.yearStart) : "");
-        setYearEnd(p.yearEnd ? String(p.yearEnd) : "");
-      })
-      .catch(() => {});
-  }, [isLoaded, user]);
 
   const availableDegrees = degreeOptionsByFaculty[faculty] || [];
 
@@ -254,10 +228,14 @@ export default function StudentDetailsFormContent() {
               <select
                 id="semesterOffering"
                 name="semesterOffering"
+                required
                 value={semesterOffering}
                 onChange={(e) => setSemesterOffering(e.target.value)}
                 className={`${inputClass} appearance-none pr-10`}
               >
+                <option value="" disabled>
+                  Select offering
+                </option>
                 <option value="February">February</option>
               </select>
               <ChevronDown className="pointer-events-none absolute right-4 top-1/2 h-4 w-4 -translate-y-1/2 text-black/35" />

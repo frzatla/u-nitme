@@ -1,6 +1,6 @@
 import { createProfile, getProfileByEmail } from "@/lib/profile";
 import { SignIn } from "@clerk/nextjs";
-import { currentUser } from "@clerk/nextjs/dist/types/server";
+import { currentUser } from "@clerk/nextjs/server";
 
 export default async function Page() {
   const user = await currentUser();
@@ -32,8 +32,8 @@ export default async function Page() {
 
   return (
     <SignIn
-      forceRedirectUrl="/dashboard/new"
-      fallbackRedirectUrl="/dashboard/new"
+      forceRedirectUrl="/dashboard"
+      fallbackRedirectUrl="/dashboard"
     />
   );
 }

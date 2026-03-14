@@ -64,7 +64,9 @@ export default async function DashboardPage() {
       ? (end - start + 1) * 8
       : 0;
   const totalCredits = unitCount * 6;
-  const lastSaved = getTimeAgo(profile?.updated_at || profile?.created_at || null);
+  const lastSaved = getTimeAgo(
+    profile?.updated_at || profile?.created_at || null,
+  );
 
   return (
     <main className="min-h-screen bg-white font-[var(--font-geist-sans)] text-black">
@@ -82,7 +84,9 @@ export default async function DashboardPage() {
               />
             </div>
             <div className="flex items-center gap-4">
-              <span className="text-sm font-medium tracking-tight">U-NIT ME</span>
+              <span className="text-sm font-medium tracking-tight">
+                U-NIT ME
+              </span>
               <span className="hidden text-sm text-black/25 sm:inline">
                 Dashboard
               </span>
@@ -96,7 +100,7 @@ export default async function DashboardPage() {
       <section className="px-6 pb-20 pt-10 md:px-10 md:pt-12">
         <div className="mx-auto max-w-[1200px]">
           <div className="mb-14">
-            <p className="text-[11px] uppercase tracking-[0.24em] text-black/20">
+            <p className="text-[11px] uppercase tracking-[0.24em] text-black/60">
               Dashboard
             </p>
             <h1 className="mt-4 text-[44px] font-semibold leading-[0.94] tracking-[-0.07em] text-black md:text-[74px]">
@@ -150,11 +154,11 @@ export default async function DashboardPage() {
           </div>
 
           <div className="mt-16 flex items-center justify-between">
-            <p className="text-[11px] uppercase tracking-[0.24em] text-black/20">
+            <p className="text-[11px] uppercase tracking-[0.24em] text-black/60">
               Your Plans
             </p>
             <Link
-              href="/dashboard/profile"
+              href="/dashboard/new"
               className="inline-flex items-center gap-3 rounded-full border border-black/[0.12] bg-white px-8 py-4 text-[15px] font-medium text-black transition-colors hover:border-black/20 hover:bg-black/[0.02]"
             >
               <Plus className="h-5 w-5" />
@@ -167,7 +171,10 @@ export default async function DashboardPage() {
               <div className="flex flex-col gap-7 lg:flex-row lg:items-end lg:justify-between">
                 <div>
                   <h2 className="text-[42px] font-semibold leading-none tracking-[-0.06em] text-black">
-                    {plan.specialisation || plan.major || plan.degree || "Course Plan"}
+                    {plan.specialisation ||
+                      plan.major ||
+                      plan.degree ||
+                      "Course Plan"}
                   </h2>
 
                   <div className="mt-5 flex flex-wrap gap-3">
@@ -176,7 +183,9 @@ export default async function DashboardPage() {
                       plan.faculty,
                       plan.degree,
                       plan.minor ? `Minor: ${plan.minor}` : null,
-                      plan.specialisation ? `Spec: ${plan.specialisation}` : null,
+                      plan.specialisation
+                        ? `Spec: ${plan.specialisation}`
+                        : null,
                       plan.semesterOffering,
                       plan.yearStart && plan.yearEnd
                         ? `${plan.yearStart}-${plan.yearEnd}`
