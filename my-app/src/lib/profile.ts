@@ -56,7 +56,7 @@ export async function updateProfile(email, updates) {
     .select();
 
   const updated = await supabase
-    .from("profiles")
+    .from(TABLE)
     .select("*")
     .eq("email", email)
     .single();
