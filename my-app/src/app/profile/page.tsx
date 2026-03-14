@@ -5,7 +5,7 @@ import { UserButton } from "@clerk/nextjs";
 import { ArrowLeft } from "lucide-react";
 import StudentDetailsForm from "../../components/StudentDetailsForm";
 import { redirect } from "next/navigation";
-import { updateProfile } from "@/lib/profile";
+import { getProfileByEmail, updateProfile } from "@/lib/profile";
 import { Plan, Profile } from "@/lib/types";
 
 export default async function NewPlanPage() {
@@ -17,7 +17,6 @@ export default async function NewPlanPage() {
     console.log(Object.fromEntries(formData.entries()));
 
     const email = user?.primaryEmailAddress?.emailAddress;
-    c;
 
     if (!email) {
       redirect("/sign-in");
@@ -33,7 +32,10 @@ export default async function NewPlanPage() {
       yearEnd: Number(formData.get("yearEnd")),
     };
 
-    await updateProfile(email, [...profile.plans, newPlan]);
+    const profile = await getProfileByEmail(email);
+    const existingPlans = profile?.plans ?? [];
+
+    await updateProfile(email, { plans: [...existingPlans, newPlan] });
 
     redirect("/course-plan");
   }
