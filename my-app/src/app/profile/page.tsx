@@ -14,11 +14,22 @@ import path from "path";
 const ALGO_DIR = path.join(process.cwd(), "src/algo");
 const AOS_PATH = path.join(process.cwd(), "public/data/final_aos.json");
 
+const PYTHON_COMMANDS = ["python3", "py", "python"];
+
+function spawnPython(args: string[]): ReturnType<typeof spawnSync> {
+  for (const cmd of PYTHON_COMMANDS) {
+    const result = spawnSync(cmd, args, { cwd: ALGO_DIR, encoding: "utf-8", timeout: 60000 });
+    // error code ENOENT means the command wasn't found — try the next one
+    if (result.error && (result.error as any).code === "ENOENT") continue;
+    return result;
+  }
+  // Return the last attempt's result if all commands fail
+  return spawnSync(PYTHON_COMMANDS[PYTHON_COMMANDS.length - 1], args, { cwd: ALGO_DIR, encoding: "utf-8", timeout: 60000 });
+}
+
 function runAlgo(courseCode: string, aosCode: string, outputFile: string): Schedule | null {
-  const result = spawnSync(
-    "python3",
+  const result = spawnPython(
     ["algo1.py", "--course", courseCode, "--specialisation", aosCode, "--campus", "Clayton", "--output", outputFile],
-    { cwd: ALGO_DIR, encoding: "utf-8", timeout: 60000 }
   );
 
   if (result.status !== 0) {
