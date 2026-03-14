@@ -8,38 +8,42 @@ export default function DashboardPage() {
   const { user } = useUser();
   const router = useRouter();
 
-  const handleSubmit = async (data) => {
-    try {
-      const payload = {
-        ...data,
-        email: String(user?.primaryEmailAddress?.emailAddress ?? ""),
-      };
+  const handleSubmit = async (formData) => {
+  try {
+    const email = user?.primaryEmailAddress?.emailAddress;
 
-      console.log("submit payload:", payload);
+    const payload = {
+      email,
+      university: formData.university,
+      faculty: formData.faculty,
+      degree: formData.degree,
+      specialisation: formData.specialisation,
+      major: formData.major,
+      minor: formData.minor,
+      yearStart: formData.yearStart,
+      yearEnd: formData.yearEnd,
+    };
 
-      const res = await fetch("/api/profiles", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(payload),
-      });
+    const res = await fetch("/api/profiles", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(payload),
+    });
 
-      const result = await res.json();
-      console.log("profile result:", result);
+    const result = await res.json();
 
-      if (!res.ok) {
-        console.error(result.error);
-        alert(result.error || "Failed to save profile");
-        return;
-      }
-
-      router.push("/course-plan");
-    } catch (error) {
-      console.error("Submit error:", error);
-      alert(error?.message || "Something went wrong");
+    if (!res.ok) {
+      throw new Error(result.error || "Failed to save profile");
     }
-  };
+
+    router.push("/course-plan");
+    console.log("Saved profile:", result.data);
+  } catch (error) {
+    console.error(error.message);
+  }
+};
 
   return (
     <main className="min-h-screen bg-[#f5f5f4] text-black">
