@@ -14,16 +14,21 @@ import path from "path";
 const ALGO_DIR = path.join(process.cwd(), "src/algo");
 const AOS_PATH = path.join(process.cwd(), "public/data/final_aos.json");
 
-const PYTHON_COMMANDS = ["python3", "py", "python"];
+// On Windows try "py" first (Python Launcher); on other platforms try "python3" first
+const PYTHON_COMMANDS = process.platform === "win32"
+  ? ["py", "python", "python3"]
+  : ["python3", "python", "py"];
 
 function spawnPython(args: string[]): ReturnType<typeof spawnSync> {
   for (const cmd of PYTHON_COMMANDS) {
     const result = spawnSync(cmd, args, { cwd: ALGO_DIR, encoding: "utf-8", timeout: 60000 });
-    // error code ENOENT means the command wasn't found — try the next one
+    // ENOENT = command not found on Unix
     if (result.error && (result.error as any).code === "ENOENT") continue;
+    // 9009 = "command not recognized" on Windows
+    if (result.status === 9009) continue;
     return result;
   }
-  // Return the last attempt's result if all commands fail
+  // All commands exhausted — return last result so the caller can log the error
   return spawnSync(PYTHON_COMMANDS[PYTHON_COMMANDS.length - 1], args, { cwd: ALGO_DIR, encoding: "utf-8", timeout: 60000 });
 }
 
