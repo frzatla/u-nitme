@@ -6,65 +6,66 @@
   "pro_course_spec": "",
   "pro_aos": "",
   "pro_creds_total": "",
+  "pro_status": "graduated",
   "semesters": [
     {
       "year": 1,
       "semester": "First",
       "slots": [
-        { "slot": 1, "unit_code": "", "unit_name": "", "type": "" },
-        { "slot": 2, "unit_code": "", "unit_name": "", "type": "" },
-        { "slot": 3, "unit_code": "", "unit_name": "", "type": "" },
-        { "slot": 4, "unit_code": "", "unit_name": "", "type": "" }
+        { "slot": 1, "unit_code": "", "unit_name": "", "type": "", "status": "" },
+        { "slot": 2, "unit_code": "", "unit_name": "", "type": "", "status": "" },
+        { "slot": 3, "unit_code": "", "unit_name": "", "type": "", "status": "" },
+        { "slot": 4, "unit_code": "", "unit_name": "", "type": "", "status": "" }
       ]
     },
     {
       "year": 1,
       "semester": "Second",
       "slots": [
-        { "slot": 1, "unit_code": "", "unit_name": "", "type": "" },
-        { "slot": 2, "unit_code": "", "unit_name": "", "type": "" },
-        { "slot": 3, "unit_code": "", "unit_name": "", "type": "" },
-        { "slot": 4, "unit_code": "", "unit_name": "", "type": "" }
+        { "slot": 1, "unit_code": "", "unit_name": "", "type": "", "status": "" },
+        { "slot": 2, "unit_code": "", "unit_name": "", "type": "", "status": "" },
+        { "slot": 3, "unit_code": "", "unit_name": "", "type": "", "status": "" },
+        { "slot": 4, "unit_code": "", "unit_name": "", "type": "", "status": "" }
       ]
     },
     {
       "year": 2,
       "semester": "First",
       "slots": [
-        { "slot": 1, "unit_code": "", "unit_name": "", "type": "" },
-        { "slot": 2, "unit_code": "", "unit_name": "", "type": "" },
-        { "slot": 3, "unit_code": "", "unit_name": "", "type": "" },
-        { "slot": 4, "unit_code": "", "unit_name": "", "type": "" }
+        { "slot": 1, "unit_code": "", "unit_name": "", "type": "", "status": "" },
+        { "slot": 2, "unit_code": "", "unit_name": "", "type": "", "status": "" },
+        { "slot": 3, "unit_code": "", "unit_name": "", "type": "", "status": "" },
+        { "slot": 4, "unit_code": "", "unit_name": "", "type": "", "status": "" }
       ]
     },
     {
       "year": 2,
       "semester": "Second",
       "slots": [
-        { "slot": 1, "unit_code": "", "unit_name": "", "type": "" },
-        { "slot": 2, "unit_code": "", "unit_name": "", "type": "" },
-        { "slot": 3, "unit_code": "", "unit_name": "", "type": "" },
-        { "slot": 4, "unit_code": "", "unit_name": "", "type": "" }
+        { "slot": 1, "unit_code": "", "unit_name": "", "type": "", "status": "" },
+        { "slot": 2, "unit_code": "", "unit_name": "", "type": "", "status": "" },
+        { "slot": 3, "unit_code": "", "unit_name": "", "type": "", "status": "" },
+        { "slot": 4, "unit_code": "", "unit_name": "", "type": "", "status": "" }
       ]
     },
     {
       "year": 3,
       "semester": "First",
       "slots": [
-        { "slot": 1, "unit_code": "", "unit_name": "", "type": "" },
-        { "slot": 2, "unit_code": "", "unit_name": "", "type": "" },
-        { "slot": 3, "unit_code": "", "unit_name": "", "type": "" },
-        { "slot": 4, "unit_code": "", "unit_name": "", "type": "" }
+        { "slot": 1, "unit_code": "", "unit_name": "", "type": "", "status": "" },
+        { "slot": 2, "unit_code": "", "unit_name": "", "type": "", "status": "" },
+        { "slot": 3, "unit_code": "", "unit_name": "", "type": "", "status": "" },
+        { "slot": 4, "unit_code": "", "unit_name": "", "type": "", "status": "" }
       ]
     },
     {
       "year": 3,
       "semester": "Second",
       "slots": [
-        { "slot": 1, "unit_code": "", "unit_name": "", "type": "" },
-        { "slot": 2, "unit_code": "", "unit_name": "", "type": "" },
-        { "slot": 3, "unit_code": "", "unit_name": "", "type": "" },
-        { "slot": 4, "unit_code": "", "unit_name": "", "type": "" }
+        { "slot": 1, "unit_code": "", "unit_name": "", "type": "", "status": "" },
+        { "slot": 2, "unit_code": "", "unit_name": "", "type": "", "status": "" },
+        { "slot": 3, "unit_code": "", "unit_name": "", "type": "", "status": "" },
+        { "slot": 4, "unit_code": "", "unit_name": "", "type": "", "status": "" }
       ]
     }
   ],
