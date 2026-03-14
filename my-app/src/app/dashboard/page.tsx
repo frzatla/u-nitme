@@ -15,7 +15,6 @@ import {
 } from "lucide-react";
 import {
   createNewProfile,
-  createProfile,
   getProfileByEmail,
 } from "../../lib/profile";
 
