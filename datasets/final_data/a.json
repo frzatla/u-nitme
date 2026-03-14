@@ -1,0 +1,613 @@
+
+    "AHT3220": {
+        "academic_org": "Faculty of Art, Design and Architecture",
+        "assessments": [],
+        "code": "AHT3220",
+        "credit_points": "6",
+        "level": 3,
+        "offerings": [],
+        "requisites": {
+            "permission": false,
+            "prohibitions": [],
+            "corequisites": [],
+            "prerequisites": [],
+            "cp_required": 6
+        },
+        "sca_band": 2,
+        "school": "Department of Fine Art",
+        "title": "Museums, archives and cultural heritage"
+    },
+    "AMU1160": {
+        "academic_org": "Faculty of Arts",
+        "assessments": [],
+        "code": "AMU1160",
+        "credit_points": "6",
+        "level": 1,
+        "offerings": [],
+        "requisites": {
+            "permission": false,
+            "prohibitions": [],
+            "corequisites": [],
+            "prerequisites": [],
+            "cp_required": 6
+        },
+        "sca_band": 4,
+        "school": "Malaysia School of Arts and Social Sciences",
+        "title": "Digital culture and society"
+    },
+    "AMU1163": {
+        "academic_org": "Faculty of Arts",
+        "assessments": [],
+        "code": "AMU1163",
+        "credit_points": "6",
+        "level": 1,
+        "offerings": [],
+        "requisites": {
+            "permission": false,
+            "prohibitions": [],
+            "corequisites": [],
+            "prerequisites": [],
+            "cp_required": 6
+        },
+        "sca_band": 4,
+        "school": "Malaysia School of Arts and Social Sciences",
+        "title": "Media and global mobility"
+    },
+    "AMU2007": {
+        "academic_org": "Faculty of Arts",
+        "assessments": [],
+        "code": "AMU2007",
+        "credit_points": "6",
+        "level": 2,
+        "offerings": [],
+        "requisites": {
+            "permission": false,
+            "prohibitions": [],
+            "corequisites": [],
+            "prerequisites": [],
+            "cp_required": 6
+        },
+        "sca_band": 4,
+        "school": "Malaysia School of Arts and Social Sciences",
+        "title": "Digital media and social change"
+    },
+    "AMU2013": {
+        "academic_org": "Faculty of Arts",
+        "assessments": [],
+        "code": "AMU2013",
+        "credit_points": "6",
+        "level": 2,
+        "offerings": [],
+        "requisites": {
+            "permission": false,
+            "prohibitions": [],
+            "corequisites": [],
+            "prerequisites": [],
+            "cp_required": 6
+        },
+        "sca_band": 4,
+        "school": "Malaysia School of Arts and Social Sciences",
+        "title": "Digital media policy and governance"
+    },
+    "AMU2832": {
+        "academic_org": "Faculty of Arts",
+        "assessments": [],
+        "code": "AMU2832",
+        "credit_points": "6",
+        "level": 2,
+        "offerings": [],
+        "requisites": {
+            "permission": false,
+            "prohibitions": [],
+            "corequisites": [],
+            "prerequisites": [],
+            "cp_required": 6
+        },
+        "sca_band": 1,
+        "school": "Malaysia School of Arts and Social Sciences",
+        "title": "Postcolonial and diasporic literature"
+    },
+    "AMU3010": {
+        "academic_org": "Faculty of Arts",
+        "assessments": [],
+        "code": "AMU3010",
+        "credit_points": "6",
+        "level": 3,
+        "offerings": [],
+        "requisites": {
+            "permission": false,
+            "prohibitions": [],
+            "corequisites": [],
+            "prerequisites": [],
+            "cp_required": 6
+        },
+        "sca_band": 4,
+        "school": "Malaysia School of Arts and Social Sciences",
+        "title": "Social media and communication campaign"
+    },
+    "BFX3370": {
+        "academic_org": "Faculty of Business and Economics",
+        "assessments": [],
+        "code": "BFX3370",
+        "credit_points": "6",
+        "level": 3,
+        "offerings": [],
+        "requisites": {
+            "permission": false,
+            "prohibitions": [],
+            "corequisites": [],
+            "prerequisites": [],
+            "cp_required": 6
+        },
+        "sca_band": 4,
+        "school": "Department of Banking and Finance",
+        "title": "Foundations and applications of financial technologies"
+    },
+    "BIO3020": {
+        "academic_org": "Faculty of Science",
+        "assessments": [],
+        "code": "BIO3020",
+        "credit_points": "6",
+        "level": 3,
+        "offerings": [],
+        "requisites": {
+            "permission": false,
+            "prohibitions": [],
+            "corequisites": [],
+            "prerequisites": [],
+            "cp_required": 6
+        },
+        "sca_band": 2,
+        "school": "School of Biological Sciences",
+        "title": "Evolutionary ecology"
+    },
+    "BTF3111": {
+        "academic_org": "Faculty of Business and Economics",
+        "assessments": [],
+        "code": "BTF3111",
+        "credit_points": "6",
+        "level": 3,
+        "offerings": [],
+        "requisites": {
+            "permission": false,
+            "prohibitions": [],
+            "corequisites": [],
+            "prerequisites": [],
+            "cp_required": 6
+        },
+        "sca_band": 4,
+        "school": "Department of Business Law and Taxation",
+        "title": "Technology: Risk and regulation in the digital age"
+    },
+    "ECC3000": {
+        "academic_org": "Faculty of Business and Economics",
+        "assessments": [],
+        "code": "ECC3000",
+        "credit_points": "6",
+        "level": 3,
+        "offerings": [],
+        "requisites": {
+            "permission": false,
+            "prohibitions": [],
+            "corequisites": [],
+            "prerequisites": [],
+            "cp_required": 6
+        },
+        "sca_band": 4,
+        "school": "Department of Economics",
+        "title": "Advanced microeconomics"
+    },
+    "EDF1401": {
+        "academic_org": "Faculty of Education",
+        "assessments": [],
+        "code": "EDF1401",
+        "credit_points": "6",
+        "level": 1,
+        "offerings": [],
+        "requisites": {
+            "permission": false,
+            "prohibitions": [],
+            "corequisites": [],
+            "prerequisites": [],
+            "cp_required": 6
+        },
+        "sca_band": 1,
+        "school": "Faculty of Education",
+        "title": "Foundations of learning design and technology"
+    },
+    "EDF1402": {
+        "academic_org": "Faculty of Education",
+        "assessments": [],
+        "code": "EDF1402",
+        "credit_points": "6",
+        "level": 1,
+        "offerings": [],
+        "requisites": {
+            "permission": false,
+            "prohibitions": [],
+            "corequisites": [],
+            "prerequisites": [],
+            "cp_required": 6
+        },
+        "sca_band": 1,
+        "school": "Faculty of Education",
+        "title": "Designing for socially inclusive learning"
+    },
+    "EDF2401": {
+        "academic_org": "Faculty of Education",
+        "assessments": [],
+        "code": "EDF2401",
+        "credit_points": "6",
+        "level": 2,
+        "offerings": [],
+        "requisites": {
+            "permission": false,
+            "prohibitions": [],
+            "corequisites": [],
+            "prerequisites": [],
+            "cp_required": 6
+        },
+        "sca_band": 1,
+        "school": "Faculty of Education",
+        "title": "Learning design methodologies"
+    },
+    "EDF3401": {
+        "academic_org": "Faculty of Education",
+        "assessments": [],
+        "code": "EDF3401",
+        "credit_points": "6",
+        "level": 3,
+        "offerings": [],
+        "requisites": {
+            "permission": false,
+            "prohibitions": [],
+            "corequisites": [],
+            "prerequisites": [],
+            "cp_required": 6
+        },
+        "sca_band": 1,
+        "school": "Faculty of Education",
+        "title": "Ethics, law and governance in learning design and technology"
+    },
+    "EDF3402": {
+        "academic_org": "Faculty of Education",
+        "assessments": [],
+        "code": "EDF3402",
+        "credit_points": "6",
+        "level": 3,
+        "offerings": [],
+        "requisites": {
+            "permission": false,
+            "prohibitions": [],
+            "corequisites": [],
+            "prerequisites": [],
+            "cp_required": 6
+        },
+        "sca_band": 1,
+        "school": "Faculty of Education",
+        "title": "Learning and learner motivation in educational design"
+    },
+    "EDF3404": {
+        "academic_org": "Faculty of Education",
+        "assessments": [],
+        "code": "EDF3404",
+        "credit_points": "6",
+        "level": 3,
+        "offerings": [],
+        "requisites": {
+            "permission": false,
+            "prohibitions": [],
+            "corequisites": [],
+            "prerequisites": [],
+            "cp_required": 6
+        },
+        "sca_band": 1,
+        "school": "Faculty of Education",
+        "title": "Interacting with learners"
+    },
+    "EDF3405": {
+        "academic_org": "Faculty of Education",
+        "assessments": [],
+        "code": "EDF3405",
+        "credit_points": "6",
+        "level": 3,
+        "offerings": [],
+        "requisites": {
+            "permission": false,
+            "prohibitions": [],
+            "corequisites": [],
+            "prerequisites": [],
+            "cp_required": 6
+        },
+        "sca_band": 1,
+        "school": "Faculty of Education",
+        "title": "Evaluation and research in learning design and technology"
+    },
+    "EDF3406": {
+        "academic_org": "Faculty of Education",
+        "assessments": [],
+        "code": "EDF3406",
+        "credit_points": "6",
+        "level": 3,
+        "offerings": [],
+        "requisites": {
+            "permission": false,
+            "prohibitions": [],
+            "corequisites": [],
+            "prerequisites": [],
+            "cp_required": 6
+        },
+        "sca_band": 1,
+        "school": "Faculty of Education",
+        "title": "Industry engagement: Part 2"
+    },
+    "ETM1015": {
+        "academic_org": "Faculty of Business and Economics",
+        "assessments": [],
+        "code": "ETM1015",
+        "credit_points": "6",
+        "level": 1,
+        "offerings": [],
+        "requisites": {
+            "permission": false,
+            "prohibitions": [],
+            "corequisites": [],
+            "prerequisites": [],
+            "cp_required": 6
+        },
+        "sca_band": 1,
+        "school": "Department of Econometrics and Business Statistics",
+        "title": "Calculus 1"
+    },
+    "ETM1020": {
+        "academic_org": "Faculty of Business and Economics",
+        "assessments": [],
+        "code": "ETM1020",
+        "credit_points": "6",
+        "level": 1,
+        "offerings": [],
+        "requisites": {
+            "permission": false,
+            "prohibitions": [],
+            "corequisites": [],
+            "prerequisites": [],
+            "cp_required": 6
+        },
+        "sca_band": 1,
+        "school": "Department of Econometrics and Business Statistics",
+        "title": "Calculus 2"
+    },
+    "ETM1030": {
+        "academic_org": "Faculty of Business and Economics",
+        "assessments": [],
+        "code": "ETM1030",
+        "credit_points": "6",
+        "level": 1,
+        "offerings": [],
+        "requisites": {
+            "permission": false,
+            "prohibitions": [],
+            "corequisites": [],
+            "prerequisites": [],
+            "cp_required": 6
+        },
+        "sca_band": 1,
+        "school": "Department of Econometrics and Business Statistics",
+        "title": "Mathematical statistics"
+    },
+    "ETM2110": {
+        "academic_org": "Faculty of Business and Economics",
+        "assessments": [],
+        "code": "ETM2110",
+        "credit_points": "6",
+        "level": 2,
+        "offerings": [],
+        "requisites": {
+            "permission": false,
+            "prohibitions": [],
+            "corequisites": [],
+            "prerequisites": [],
+            "cp_required": 6
+        },
+        "sca_band": 4,
+        "school": "Department of Econometrics and Business Statistics",
+        "title": "Risk and survival modelling"
+    },
+    "ETM2200": {
+        "academic_org": "Faculty of Business and Economics",
+        "assessments": [],
+        "code": "ETM2200",
+        "credit_points": "6",
+        "level": 2,
+        "offerings": [],
+        "requisites": {
+            "permission": false,
+            "prohibitions": [],
+            "corequisites": [],
+            "prerequisites": [],
+            "cp_required": 6
+        },
+        "sca_band": 4,
+        "school": "Department of Econometrics and Business Statistics",
+        "title": "Time series analysis and stochastic processes"
+    },
+    "ETM2550": {
+        "academic_org": "Faculty of Business and Economics",
+        "assessments": [],
+        "code": "ETM2550",
+        "credit_points": "6",
+        "level": 2,
+        "offerings": [],
+        "requisites": {
+            "permission": false,
+            "prohibitions": [],
+            "corequisites": [],
+            "prerequisites": [],
+            "cp_required": 6
+        },
+        "sca_band": 4,
+        "school": "Department of Econometrics and Business Statistics",
+        "title": "Actuarial mathematics 1"
+    },
+    "ETM2860": {
+        "academic_org": "Faculty of Business and Economics",
+        "assessments": [],
+        "code": "ETM2860",
+        "credit_points": "6",
+        "level": 2,
+        "offerings": [],
+        "requisites": {
+            "permission": false,
+            "prohibitions": [],
+            "corequisites": [],
+            "prerequisites": [],
+            "cp_required": 6
+        },
+        "sca_band": 4,
+        "school": "Department of Econometrics and Business Statistics",
+        "title": "Economic modelling 1"
+    },
+    "ETM3550": {
+        "academic_org": "Faculty of Business and Economics",
+        "assessments": [],
+        "code": "ETM3550",
+        "credit_points": "6",
+        "level": 3,
+        "offerings": [],
+        "requisites": {
+            "permission": false,
+            "prohibitions": [],
+            "corequisites": [],
+            "prerequisites": [],
+            "cp_required": 6
+        },
+        "sca_band": 4,
+        "school": "Department of Econometrics and Business Statistics",
+        "title": "Actuarial mathematics 2"
+    },
+    "ETM3800": {
+        "academic_org": "Faculty of Business and Economics",
+        "assessments": [],
+        "code": "ETM3800",
+        "credit_points": "6",
+        "level": 3,
+        "offerings": [],
+        "requisites": {
+            "permission": false,
+            "prohibitions": [],
+            "corequisites": [],
+            "prerequisites": [],
+            "cp_required": 6
+        },
+        "sca_band": 1,
+        "school": "Department of Econometrics and Business Statistics",
+        "title": "Text analytics for business"
+    },
+    "ETM3860": {
+        "academic_org": "Faculty of Business and Economics",
+        "assessments": [],
+        "code": "ETM3860",
+        "credit_points": "6",
+        "level": 3,
+        "offerings": [],
+        "requisites": {
+            "permission": false,
+            "prohibitions": [],
+            "corequisites": [],
+            "prerequisites": [],
+            "cp_required": 6
+        },
+        "sca_band": 4,
+        "school": "Department of Econometrics and Business Statistics",
+        "title": "Economic modelling 2"
+    },
+    "MGC2961": {
+        "academic_org": "Faculty of Business and Economics",
+        "assessments": [],
+        "code": "MGC2961",
+        "credit_points": "6",
+        "level": 2,
+        "offerings": [],
+        "requisites": {
+            "permission": false,
+            "prohibitions": [],
+            "corequisites": [],
+            "prerequisites": [],
+            "cp_required": 6
+        },
+        "sca_band": 4,
+        "school": "Department of Management",
+        "title": "Introduction to supply chain management"
+    },
+    "MGM2200": {
+        "academic_org": "Faculty of Business and Economics",
+        "assessments": [],
+        "code": "MGM2200",
+        "credit_points": "6",
+        "level": 2,
+        "offerings": [],
+        "requisites": {
+            "permission": false,
+            "prohibitions": [],
+            "corequisites": [],
+            "prerequisites": [],
+            "cp_required": 6
+        },
+        "sca_band": 4,
+        "school": "Department of Management",
+        "title": "Managerial communication for global leaders"
+    },
+    "MKX2010": {
+        "academic_org": "Faculty of Business and Economics",
+        "assessments": [],
+        "code": "MKX2010",
+        "credit_points": "6",
+        "level": 2,
+        "offerings": [],
+        "requisites": {
+            "permission": false,
+            "prohibitions": [],
+            "corequisites": [],
+            "prerequisites": [],
+            "cp_required": 6
+        },
+        "sca_band": 4,
+        "school": "Department of Marketing",
+        "title": "Digital communication"
+    },
+    "MMD1010": {
+        "academic_org": "Faculty of Business and Economics",
+        "assessments": [],
+        "code": "MMD1010",
+        "credit_points": "6",
+        "level": 1,
+        "offerings": [],
+        "requisites": {
+            "permission": false,
+            "prohibitions": [],
+            "corequisites": [],
+            "prerequisites": [],
+            "cp_required": 6
+        },
+        "sca_band": 4,
+        "school": "Malaysia School of Pathways & Immersion",
+        "title": "Accounting 101"
+    },
+    "MMD1090": {
+        "academic_org": "Faculty of Business and Economics",
+        "assessments": [],
+        "code": "MMD1090",
+        "credit_points": "6",
+        "level": 1,
+        "offerings": [],
+        "requisites": {
+            "permission": false,
+            "prohibitions": [],
+            "corequisites": [],
+            "prerequisites": [],
+            "cp_required": 6
+        },
+        "sca_band": 4,
+        "school": "Malaysia School of Pathways & Immersion",
+        "title": "Marketing 101"
+    }
