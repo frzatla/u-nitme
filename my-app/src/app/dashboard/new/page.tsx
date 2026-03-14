@@ -6,6 +6,7 @@ import { ArrowLeft } from "lucide-react";
 import StudentDetailsForm from "../../../components/StudentDetailsForm";
 import { POST as postProfile } from "@/app/api/profiles/route";
 import { redirect } from "next/navigation";
+import { updateProfile } from "@/lib/profile";
 
 export default async function NewPlanPage() {
   const user = await currentUser();
@@ -40,12 +41,11 @@ export default async function NewPlanPage() {
       },
     };
 
-    await postProfile(
-      new Request("https://localhost/", {
-        method: "POST",
-        body: JSON.stringify(payload),
-      }),
-    );
+    const plan = {
+      plan: { ...payload.plan },
+    };
+
+    await updateProfile(email, plan);
 
     redirect("/course-plan");
   }

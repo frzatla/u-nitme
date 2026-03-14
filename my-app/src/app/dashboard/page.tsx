@@ -6,7 +6,6 @@ import { redirect } from "next/navigation";
 import { ArrowRight, BookOpen, Calendar, Layers, Plus } from "lucide-react";
 import { getProfileByEmail, updateProfile } from "../../lib/profile";
 
-
 function getTimeAgo(dateStr?: string | null) {
   if (!dateStr) return "Not saved yet";
 
@@ -178,7 +177,10 @@ export default async function DashboardPage() {
                     Latest Plan
                   </p>
                   <h2 className="mt-4 text-3xl font-semibold tracking-tight text-black">
-                    {plan.specialisation || plan.major || plan.degree || "Course Plan"}
+                    {plan.specialisation ||
+                      plan.major ||
+                      plan.degree ||
+                      "Course Plan"}
                   </h2>
                   <div className="mt-4 flex flex-wrap gap-2">
                     {[
