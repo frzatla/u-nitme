@@ -36,14 +36,17 @@ export default async function CoursePlanPage({
     await updateProfile(email, { plans: updated });
     redirect("/dashboard");
   }
+  
+  const coursePlanName = plan.planName;
 
   const infoPills = [
-    plan.planName,
     plan.university,
     plan.schedule.course_title,
     plan.schedule.specialisation,
+    plan.schedule.major,
+    plan.schedule.minor,
     plan.semesterOffering,
-    `${plan.yearStart}–${plan.yearEnd}`,
+    `${plan.yearStart}-${plan.yearEnd}`,
   ].filter(Boolean);
 
   return (
@@ -77,7 +80,7 @@ export default async function CoursePlanPage({
               </div>
 
               <h1 className="text-3xl font-semibold tracking-tight md:text-4xl">
-                {plan.planName}
+                {coursePlanName}
               </h1>
 
               <div className="mt-4 flex flex-wrap gap-2">

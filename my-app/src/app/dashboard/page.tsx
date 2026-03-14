@@ -187,11 +187,12 @@ export default async function DashboardPage() {
               {plans.map((plan, index) => {
                 const start = Number(plan?.yearStart);
                 const end = Number(plan?.yearEnd);
-                const unitCount =
-                  Number.isFinite(start) && Number.isFinite(end) && end >= start
+                const unitCount = plan.schedule?.summary.total_units
+                  ?? (Number.isFinite(start) && Number.isFinite(end) && end >= start
                     ? (end - start + 1) * 8
-                    : 0;
-                const totalCredits = unitCount * 6;
+                    : 0);
+                const totalCredits = plan.schedule?.summary.total_cp
+                  ?? unitCount * 6;
 
                 return (
                   <div
@@ -206,7 +207,6 @@ export default async function DashboardPage() {
 
                         <div className="mt-5 flex flex-wrap gap-3">
                           {[
-                            plan.planName,
                             plan.courses,
                             plan.university,
                             plan.areaOfStudy,

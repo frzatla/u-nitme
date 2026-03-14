@@ -32,10 +32,12 @@ function spawnPython(args: string[]): ReturnType<typeof spawnSync> {
   return spawnSync(PYTHON_COMMANDS[PYTHON_COMMANDS.length - 1], args, { cwd: ALGO_DIR, encoding: "utf-8", timeout: 60000 });
 }
 
-function runAlgo(courseCode: string, aosCode: string, outputFile: string): Schedule | null {
-  const result = spawnPython(
-    ["algo1.py", "--course", courseCode, "--specialisation", aosCode, "--campus", "Clayton", "--output", outputFile],
-  );
+function runAlgo(courseCode: string, aosCode: string, outputFile: string, minorMajorType?: string, minorMajorCode?: string): Schedule | null {
+  const args = ["algo1.py", "--course", courseCode, "--specialisation", aosCode, "--campus", "Clayton", "--output", outputFile];
+  if (minorMajorType && minorMajorCode) {
+    args.push(`--${minorMajorType}`, minorMajorCode);
+  }
+  const result = spawnPython(args);
 
   if (result.status !== 0) {
     console.error("algo1.py stderr:", result.stderr);
@@ -91,6 +93,8 @@ export default async function NewPlanPage() {
     const planId = crypto.randomUUID();
     const courseCode = String(formData.get("courses") || "");
     const aosCode = String(formData.get("areaOfStudy") || "");
+    const minorMajorType = String(formData.get("minorMajorType") || "");
+    const minorMajorCode = String(formData.get("minorMajorCode") || "");
 
     const newPlan: Plan = {
       id: planId,
@@ -105,7 +109,7 @@ export default async function NewPlanPage() {
     };
 
     const outputFile = `schedule_${planId}.json`;
-    const rawSchedule = runAlgo(courseCode, aosCode, outputFile);
+    const rawSchedule = runAlgo(courseCode, aosCode, outputFile, minorMajorType || undefined, minorMajorCode || undefined);
     if (rawSchedule) {
       newPlan.schedule = enrichCategories(rawSchedule, aosCode);
     }
