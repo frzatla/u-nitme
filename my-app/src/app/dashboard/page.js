@@ -85,12 +85,7 @@ export default function DashboardPage() {
       ),
     [plans],
   );
-
-  const totalUnits = sortedPlans.reduce((sum, plan) => sum + plan.unitCount, 0);
-  const totalCredits = sortedPlans.reduce(
-    (sum, plan) => sum + plan.totalCredits,
-    0,
-  );
+  const latestPlan = sortedPlans[0] || null;
 
   const handleDeletePlan = (id) => {
     const updated = plans.filter((plan) => plan.id !== id);
@@ -144,13 +139,13 @@ export default function DashboardPage() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
           >
-            <div className="mb-4 text-xs uppercase tracking-[0.2em] text-black/20">
+            <div className="mb-4 text-xs uppercase tracking-[0.2em] text-black/60">
               Dashboard
             </div>
             <h1 className="mb-3 text-4xl tracking-tighter md:text-5xl">
               {getGreeting()},
               <br />
-              <span className="text-black/20">{firstName}.</span>
+              <span className="text-black/60">{firstName}.</span>
             </h1>
           </motion.div>
         </div>
@@ -182,13 +177,13 @@ export default function DashboardPage() {
 
             <div className="rounded-2xl border border-black/[0.06] p-6">
               <div className="mb-4 flex items-center gap-2">
-                <BookOpen className="h-4 w-4 text-black/30" />
+                <Sparkles className="h-4 w-4 text-black/30" />
                 <span className="text-[10px] uppercase tracking-[0.2em] text-black/25">
-                  Total Units
+                  Latest Plan
                 </span>
               </div>
-              <div className="text-4xl tracking-tighter md:text-5xl">
-                {totalUnits}
+              <div className="text-lg tracking-tight text-black/50 md:text-2xl">
+                {latestPlan ? getPlanTitle(latestPlan.studentDetails) : "—"}
               </div>
             </div>
 
@@ -196,12 +191,11 @@ export default function DashboardPage() {
               <div className="mb-4 flex items-center gap-2">
                 <GraduationCap className="h-4 w-4 text-black/30" />
                 <span className="text-[10px] uppercase tracking-[0.2em] text-black/25">
-                  Total Credits
+                  University
                 </span>
               </div>
-              <div className="text-4xl tracking-tighter md:text-5xl">
-                {totalCredits}
-                <span className="text-lg text-black/15"> CP</span>
+              <div className="text-lg tracking-tight text-black/50 md:text-2xl">
+                {latestPlan?.studentDetails?.university || "—"}
               </div>
             </div>
 
@@ -213,7 +207,7 @@ export default function DashboardPage() {
                 </span>
               </div>
               <div className="text-lg tracking-tight text-black/50">
-                {sortedPlans.length > 0 ? timeAgo(sortedPlans[0].savedAt) : "—"}
+                {latestPlan ? timeAgo(latestPlan.savedAt) : "—"}
               </div>
             </div>
           </motion.div>
@@ -228,7 +222,7 @@ export default function DashboardPage() {
             transition={{ delay: 0.25 }}
             className="mb-8 flex items-center justify-between"
           >
-            <div className="text-xs uppercase tracking-[0.2em] text-black/20">
+            <div className="text-xs uppercase tracking-[0.2em] text-black/60">
               Your Plans
             </div>
             <button
@@ -389,10 +383,10 @@ export default function DashboardPage() {
 
       <footer className="border-t border-black/[0.04] px-6 py-6 md:px-12">
         <div className="mx-auto flex max-w-[1200px] items-center justify-between">
-          <span className="text-[10px] tracking-wider text-black/15">
+          <span className="text-[10px] tracking-wider text-black/60">
             U-NIT ME — Your intelligent course planning assistant
           </span>
-          <span className="text-[10px] tracking-wider text-black/10">
+          <span className="text-[10px] tracking-wider text-black/60">
             © 2026
           </span>
         </div>
