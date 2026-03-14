@@ -6,17 +6,18 @@ import { ArrowLeft, RefreshCw, Sparkles } from "lucide-react";
 import { redirect } from "next/navigation";
 import CoursePlanner from "../../components/CoursePlanner";
 import { getProfileByEmail } from "../../lib/profile";
+import { Plan, Profile } from "@/lib/types";
 
 export default async function CoursePlanPage() {
   const user = await currentUser();
-  const email = user?.primaryEmailAddress?.emailAddress;
+  const email: string = user?.primaryEmailAddress?.emailAddress;
 
   if (!email) {
     redirect("/sign-in");
   }
 
-  const profile = await getProfileByEmail(email);
-  const studentDetails = profile?.plan;
+  const profile: Profile = await getProfileByEmail(email);
+  const studentDetails: Plan | undefined = profile?.plans?.[0];
 
   if (!studentDetails) {
     redirect("/dashboard/new");
@@ -24,10 +25,11 @@ export default async function CoursePlanPage() {
 
   const infoPills = [
     studentDetails.planName,
-    studentDetails.course,
-    studentDetails.degree,
-    studentDetails.semesterOffering,
     studentDetails.university,
+    studentDetails.courses,
+    studentDetails.areaOfStudy,
+    studentDetails.unitOffering,
+    `${studentDetails.yearStart}–${studentDetails.yearEnd}`,
   ].filter(Boolean);
 
   const handleRegenerate = () => {
@@ -124,7 +126,7 @@ export default async function CoursePlanPage() {
             official handbook
           </p>
           <p className="text-xs text-black/20">
-            {studentDetails.semesterOffering} • {studentDetails.yearStart}–
+            {studentDetails.unitOffering} • {studentDetails.yearStart}–
             {studentDetails.yearEnd}
           </p>
         </div>

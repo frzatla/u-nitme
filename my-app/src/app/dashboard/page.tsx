@@ -68,8 +68,9 @@ export default async function DashboardPage() {
   }
 
   const profile = await getProfileByEmail(email);
-  const plan = profile?.plan || null;
+  const plan = profile?.plans?.[0] ?? null;
   const userName = email.split("@")[0];
+
   const start = Number(plan?.yearStart);
   const end = Number(plan?.yearEnd);
   const unitCount =

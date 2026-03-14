@@ -1,11 +1,9 @@
 export type Plan = {
+  planName: string;
   university: string;
-  faculty: string;
-  degree: string;
-  specialisation: string | null;
-  major: string | null;
-  minor: string | null;
-  semesterOffering: string;
+  courses: string;
+  areaOfStudy: string;
+  unitOffering: string;
   yearStart: number | string;
   yearEnd: number | string;
 };
