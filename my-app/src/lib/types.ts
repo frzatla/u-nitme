@@ -1,4 +1,5 @@
 export type Plan = {
+  id: string;
   planName: string;
   courses: string;
   university: string;
@@ -12,4 +13,15 @@ export type Profile = {
   id?: string;
   email: string;
   plans: Plan[];
+};
+
+export type ChosenUnit = {
+  chosenId: number;
+  unitId: number;
+  unitName: string;
+  chosenYear: number;
+  chosenSem: string;
+  type: string;
+  creditPoint: number;
+  difficulty: string;
 };
