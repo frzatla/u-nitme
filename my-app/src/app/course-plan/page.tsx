@@ -11,8 +11,9 @@ import { Plan, Profile } from "@/lib/types";
 export default async function CoursePlanPage({
   searchParams,
 }: {
-  searchParams: { planId?: string };
+  searchParams: Promise<{ planId?: string }>;
 }) {
+  const { planId } = await searchParams;
   const user = await currentUser();
   const email: string = user?.primaryEmailAddress?.emailAddress;
 
@@ -22,7 +23,7 @@ export default async function CoursePlanPage({
   const plans: Plan[] = profile?.plans ?? [];
 
   // Find by planId from URL, or fall back to most recent plan
-  const plan = plans.find((p) => p.id === searchParams.planId) ?? plans[plans.length - 1];
+  const plan = plans.find((p) => p.id === planId) ?? plans[plans.length - 1];
 
   if (!plan) redirect("/profile");
   if (!plan.schedule) redirect("/profile");
