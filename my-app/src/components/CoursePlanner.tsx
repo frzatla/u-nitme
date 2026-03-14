@@ -14,6 +14,7 @@ import {
 } from "lucide-react";
 import { Schedule, UnitCategory } from "@/lib/types";
 import UnitReviewModal from "./UnitReviewModal";
+import UnitHandbookCard from "./UnitHandbookCard";
 
 type Unit = {
   code: string;
@@ -124,11 +125,9 @@ function groupSemestersByYear(semesters: Semester[]): YearGroup[] {
 function getSummary(semesters: Semester[], schedule: Schedule): Summary {
   const totalPlannedUnits = schedule.summary.total_units;
   const totalCredits = schedule.summary.total_cp;
-  // Total slots across all semesters (required + free elective placeholders) = full degree length
-  const completedTarget = semesters.reduce((n, s) => n + s.units.length, 0);
-  const progress = completedTarget > 0
-    ? Math.min(100, Math.round((totalPlannedUnits / completedTarget) * 100))
-    : 0;
+  const completedTarget = totalPlannedUnits;
+  const scheduledUnits = semesters.reduce((n, s) => n + s.units.length, 0);
+  const progress = Math.min(100, Math.round((scheduledUnits / totalPlannedUnits) * 100));
 
   const breakdown: Record<UnitCategory, number> = {
     Core: 0, Major: 0, Minor: 0, Elective: 0, Specialisation: 0,
@@ -235,7 +234,7 @@ export default function CoursePlanner({
               </h1>
 
               <div className="mt-5 flex flex-wrap gap-2.5">
-                {[schedule.course_title, schedule.specialisation, schedule.major, schedule.minor, schedule.campus]
+                {[schedule.course_title, schedule.specialisation, schedule.major, schedule.campus]
                   .filter(Boolean)
                   .map((tag, i) => (
                     <span
@@ -398,6 +397,11 @@ export default function CoursePlanner({
       </section>
 
       <UnitReviewModal
+        unit={selectedUnit}
+        onClose={() => setSelectedUnit(null)}
+      />
+
+      <UnitHandbookCard
         unit={selectedUnit}
         onClose={() => setSelectedUnit(null)}
       />
