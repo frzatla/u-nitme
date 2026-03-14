@@ -197,7 +197,7 @@ function buildSemesterPlan(studentDetails: StudentDetails): Semester[] {
         if (unit) {
           units.push({
             ...unit,
-            category: normalizeCategory(unit.category, degree),
+            category: normalizeCategory(unit.category, areaOfStudy),
           });
         } else {
           const primaryTrack =
