@@ -20,7 +20,7 @@ export default async function CoursePlanPage() {
   const studentDetails: Plan | undefined = profile?.plans?.[0];
 
   if (!studentDetails) {
-    redirect("/dashboard/new");
+    redirect("/profile");
   }
 
   const infoPills = [
@@ -34,7 +34,7 @@ export default async function CoursePlanPage() {
 
   const handleRegenerate = () => {
     localStorage.removeItem("currentPlanId");
-    redirect("/dashboard/new");
+    redirect("/profile");
   };
 
   const handleExport = () => {
@@ -94,7 +94,7 @@ export default async function CoursePlanPage() {
 
             <div className="flex items-center gap-3">
               <Link
-                href="/dashboard/new"
+                href="/profile"
                 className="flex items-center gap-2 rounded-lg border border-white/15 px-4 py-2 text-xs text-white/50 transition-all hover:border-white/30 hover:text-white"
               >
                 <RefreshCw className="h-3.5 w-3.5" />

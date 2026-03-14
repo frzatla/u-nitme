@@ -3,7 +3,7 @@ import Link from "next/link";
 import { currentUser } from "@clerk/nextjs/server";
 import { UserButton } from "@clerk/nextjs";
 import { ArrowLeft } from "lucide-react";
-import StudentDetailsForm from "../../../components/StudentDetailsForm";
+import StudentDetailsForm from "../../components/StudentDetailsForm";
 import { redirect } from "next/navigation";
 import { updateProfile } from "@/lib/profile";
 import { Plan, Profile } from "@/lib/types";
