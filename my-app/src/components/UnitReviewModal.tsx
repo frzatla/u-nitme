@@ -80,7 +80,7 @@ export default function UnitReviewModal({ unit, onClose }: Props) {
         {/* Body */}
         <div className="max-h-[60vh] overflow-y-auto px-6 py-5">
           <p className="mb-4 text-[12px] font-medium uppercase tracking-[0.12em] text-black/30">
-            r/Monash discussions
+            <span style={{ color: "#FF4500" }}>r/Monash</span> discussions
           </p>
 
           {loading && (
