@@ -2,7 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { UserButton } from "@clerk/nextjs";
 import { currentUser } from "@clerk/nextjs/server";
-import { ArrowLeft, RefreshCw, Sparkles, BookmarkCheck } from "lucide-react";
+import { ArrowLeft, RefreshCw, Save, Sparkles, BookmarkCheck } from "lucide-react";
 import { redirect } from "next/navigation";
 import CoursePlanner from "../../components/CoursePlanner";
 import { getProfileByEmail, updateProfile } from "../../lib/profile";
@@ -36,14 +36,17 @@ export default async function CoursePlanPage({
     await updateProfile(email, { plans: updated });
     redirect("/dashboard");
   }
+  
+  const coursePlanName = plan.planName;
 
   const infoPills = [
-    plan.planName,
     plan.university,
     plan.schedule.course_title,
     plan.schedule.specialisation,
+    plan.schedule.major,
+    plan.schedule.minor,
     plan.semesterOffering,
-    `${plan.yearStart}–${plan.yearEnd}`,
+    `${plan.yearStart}-${plan.yearEnd}`,
   ].filter(Boolean);
 
   return (
@@ -71,13 +74,9 @@ export default async function CoursePlanPage({
         <div className="mx-auto max-w-7xl">
           <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
             <div>
-              <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-white/15 px-3 py-1">
-                <Sparkles className="h-3.5 w-3.5 text-white/50" />
-                <span className="text-xs text-white/50">AI Generated</span>
-              </div>
 
               <h1 className="text-3xl font-semibold tracking-tight md:text-4xl">
-                {plan.planName}
+                {coursePlanName}
               </h1>
 
               <div className="mt-4 flex flex-wrap gap-2">
@@ -93,6 +92,13 @@ export default async function CoursePlanPage({
             </div>
 
             <div className="flex items-center gap-3">
+              <button
+                type="button"
+                className="flex items-center gap-2 rounded-lg border border-white/60 px-4 py-2 text-xs text-white/80 transition-all hover:border-white/30 hover:text-white"
+              >
+                <Save className="h-3.5 w-3.5" />
+                Save Plan
+              </button>
               <Link
                 href="/profile"
                 className="flex items-center gap-2 rounded-lg border border-white/15 px-4 py-2 text-xs text-white/50 transition-all hover:border-white/30 hover:text-white"
