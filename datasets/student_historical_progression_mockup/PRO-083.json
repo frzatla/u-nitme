@@ -1,0 +1,68 @@
+{
+  "pro_id": "PRO-083",
+  "student_id": "STU-2021-0483",
+  "pro_year": "2021",
+  "pro_course_duration": "3",
+  "pro_course_spec": "Software development major",
+  "pro_aos": "SFTWRDEV08",
+  "pro_creds_total": "144",
+  "pro_status": "graduated",
+  "noise_type": ["early_unit_enrolment"],
+  "noise_notes": "Took FIT2081 (Software engineering practice) in Y1S2 (Sem2 2021) via early enrolment with special permission; completed Sem2 2023",
+  "semesters": [
+    {
+      "year": 1, "semester": "First", "calendar_year": "2021",
+      "slots": [
+        { "slot": 1, "unit_code": "FIT1045", "unit_name": "Introduction to programming", "type": "required", "status": "passed" },
+        { "slot": 2, "unit_code": "FIT1047", "unit_name": "Introduction to computer systems, networks and security", "type": "required", "status": "passed" },
+        { "slot": 3, "unit_code": "FIT1050", "unit_name": "Web fundamentals", "type": "required", "status": "passed" },
+        { "slot": 4, "unit_code": "FIT1043", "unit_name": "Introduction to data science", "type": "elective", "status": "passed" }
+      ]
+    },
+    {
+      "year": 1, "semester": "Second", "calendar_year": "2021",
+      "slots": [
+        { "slot": 1, "unit_code": "FIT1049", "unit_name": "IT professional practice", "type": "required", "status": "passed" },
+        { "slot": 2, "unit_code": "FIT2081", "unit_name": "Software engineering practice", "type": "required", "status": "passed", "early_enrolment": true },
+        { "slot": 3, "unit_code": "FIT1051", "unit_name": "Programming fundamentals in java", "type": "required", "status": "passed" },
+        { "slot": 4, "unit_code": "FIT1060", "unit_name": "Human-centred design", "type": "elective", "status": "passed" }
+      ]
+    },
+    {
+      "year": 2, "semester": "First", "calendar_year": "2022",
+      "slots": [
+        { "slot": 1, "unit_code": "FIT2094", "unit_name": "Databases", "type": "required", "status": "passed" },
+        { "slot": 2, "unit_code": "FIT2175", "unit_name": "Usability", "type": "required", "status": "passed" },
+        { "slot": 3, "unit_code": "FIT2165", "unit_name": "Computer networks", "type": "elective", "status": "passed" },
+        { "slot": 4, "unit_code": "FIT2083", "unit_name": "Innovation and research in computer science", "type": "elective", "status": "passed" }
+      ]
+    },
+    {
+      "year": 2, "semester": "Second", "calendar_year": "2022",
+      "slots": [
+        { "slot": 1, "unit_code": "FIT2002", "unit_name": "IT project management", "type": "required", "status": "passed" },
+        { "slot": 2, "unit_code": "FIT2001", "unit_name": "Systems development", "type": "required", "status": "passed" },
+        { "slot": 3, "unit_code": "FIT2104", "unit_name": "Embedded systems and operating systems", "type": "required", "status": "passed" },
+        { "slot": 4, "unit_code": "FIT1006", "unit_name": "Business information analysis", "type": "elective", "status": "passed" }
+      ]
+    },
+    {
+      "year": 3, "semester": "First", "calendar_year": "2023",
+      "slots": [
+        { "slot": 1, "unit_code": "FIT3047", "unit_name": "Industry experience studio project 1", "type": "required", "status": "passed" },
+        { "slot": 2, "unit_code": "FIT3077", "unit_name": "Agile development practices", "type": "required", "status": "passed" },
+        { "slot": 3, "unit_code": "FIT3152", "unit_name": "Data analytics", "type": "elective", "status": "passed" },
+        { "slot": 4, "unit_code": "FIT3031", "unit_name": "Network security", "type": "elective", "status": "passed" }
+      ]
+    },
+    {
+      "year": 3, "semester": "Second", "calendar_year": "2023",
+      "slots": [
+        { "slot": 1, "unit_code": "FIT3048", "unit_name": "Industry experience studio project 2", "type": "required", "status": "passed" },
+        { "slot": 2, "unit_code": "FIT3184", "unit_name": "Cloud computing", "type": "required", "status": "passed" },
+        { "slot": 3, "unit_code": "FIT3178", "unit_name": "Software quality and testing", "type": "required", "status": "passed" },
+        { "slot": 4, "unit_code": "FIT3174", "unit_name": "Business information systems strategy and governance", "type": "elective", "status": "passed" }
+      ]
+    }
+  ]
+}

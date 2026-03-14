@@ -1,0 +1,68 @@
+{
+  "pro_id": "PRO-059",
+  "student_id": "STU-2022-0489",
+  "pro_year": "2022",
+  "pro_course_duration": "3",
+  "pro_course_spec": "Artificial intelligence",
+  "pro_aos": "ATINTELL02",
+  "pro_creds_total": "144",
+  "pro_status": "graduated",
+  "noise_type": ["semester_overload"],
+  "noise_notes": "Overloaded Y1S1 with 5 units to get ahead; lighter final semester of 3 units",
+  "semesters": [
+    {
+      "year": 1, "semester": "First", "calendar_year": "2022",
+      "slots": [
+        { "slot": 1, "unit_code": "FIT1045", "unit_name": "Introduction to programming", "type": "required", "status": "passed" },
+        { "slot": 2, "unit_code": "FIT1047", "unit_name": "Introduction to computer systems, networks and security", "type": "required", "status": "passed" },
+        { "slot": 3, "unit_code": "FIT1058", "unit_name": "Foundations of computing", "type": "required", "status": "passed" },
+        { "slot": 4, "unit_code": "FIT1006", "unit_name": "Business information analysis", "type": "elective", "status": "passed" },
+        { "slot": 5, "unit_code": "FIT1060", "unit_name": "Human-centred design", "type": "elective", "status": "passed" }
+      ]
+    },
+    {
+      "year": 1, "semester": "Second", "calendar_year": "2022",
+      "slots": [
+        { "slot": 1, "unit_code": "FIT1008", "unit_name": "Fundamentals of algorithms", "type": "required", "status": "passed" },
+        { "slot": 2, "unit_code": "FIT1049", "unit_name": "IT professional practice", "type": "required", "status": "passed" },
+        { "slot": 3, "unit_code": "FIT1061", "unit_name": "Introduction to artificial intelligence", "type": "required", "status": "passed" },
+        { "slot": 4, "unit_code": "FIT1043", "unit_name": "Introduction to data science", "type": "elective", "status": "passed" }
+      ]
+    },
+    {
+      "year": 2, "semester": "First", "calendar_year": "2023",
+      "slots": [
+        { "slot": 1, "unit_code": "FIT2004", "unit_name": "Algorithms and data structures", "type": "required", "status": "passed" },
+        { "slot": 2, "unit_code": "FIT2094", "unit_name": "Databases", "type": "required", "status": "passed" },
+        { "slot": 3, "unit_code": "FIT2111", "unit_name": "Symbolic artificial intelligence and machine learning", "type": "required", "status": "passed" },
+        { "slot": 4, "unit_code": "FIT2165", "unit_name": "Computer networks", "type": "elective", "status": "passed" }
+      ]
+    },
+    {
+      "year": 2, "semester": "Second", "calendar_year": "2023",
+      "slots": [
+        { "slot": 1, "unit_code": "FIT2014", "unit_name": "Theory of computation", "type": "required", "status": "passed" },
+        { "slot": 2, "unit_code": "FIT2175", "unit_name": "Usability", "type": "elective", "status": "passed" },
+        { "slot": 3, "unit_code": "FIT2112", "unit_name": "Deep learning", "type": "required", "status": "passed" },
+        { "slot": 4, "unit_code": "FIT2001", "unit_name": "Systems development", "type": "elective", "status": "passed" }
+      ]
+    },
+    {
+      "year": 3, "semester": "First", "calendar_year": "2024",
+      "slots": [
+        { "slot": 1, "unit_code": "FIT3193", "unit_name": "Artificial intelligence project 1", "type": "required", "status": "passed" },
+        { "slot": 2, "unit_code": "FIT3191", "unit_name": "Generative artificial intelligence", "type": "required", "status": "passed" },
+        { "slot": 3, "unit_code": "FIT3192", "unit_name": "Emerging and advanced topics in artificial intelligence", "type": "required", "status": "passed" },
+        { "slot": 4, "unit_code": "FIT3031", "unit_name": "Network security", "type": "elective", "status": "passed" }
+      ]
+    },
+    {
+      "year": 3, "semester": "Second", "calendar_year": "2024",
+      "slots": [
+        { "slot": 1, "unit_code": "FIT3194", "unit_name": "Artificial intelligence project 2", "type": "required", "status": "passed" },
+        { "slot": 2, "unit_code": "FIT3203", "unit_name": "Intelligent agents", "type": "required", "status": "passed" },
+        { "slot": 3, "unit_code": "FIT3152", "unit_name": "Data analytics", "type": "elective", "status": "passed" }
+      ]
+    }
+  ]
+}

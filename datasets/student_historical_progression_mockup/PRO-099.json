@@ -1,0 +1,87 @@
+{
+  "pro_id": "PRO-099",
+  "student_id": "STU-2019-1099",
+  "pro_year": "2019",
+  "pro_course_duration": "4",
+  "pro_course_spec": "Data science specialisation",
+  "pro_aos": "DATASCI11",
+  "pro_creds_total": "192",
+  "pro_status": "graduated",
+  "noise_type": ["unit_withdrawal", "cascading_delay"],
+  "noise_notes": "Withdrew from FIT3163 (Data science project 1) in Y3S1 (Sem1 2021) due to medical leave; FIT3163 retaken and FIT3164 (cascade dependency) completed in an overloaded Y3S2 (Sem2 2021); completed Sem2 2022",
+  "semesters": [
+    {
+      "year": 1, "semester": "First", "calendar_year": "2019",
+      "slots": [
+        { "slot": 1, "unit_code": "FIT1053", "unit_name": "Introduction to programming (advanced)", "type": "required", "status": "passed" },
+        { "slot": 2, "unit_code": "FIT1047", "unit_name": "Introduction to computer systems, networks and security", "type": "required", "status": "passed" },
+        { "slot": 3, "unit_code": "FIT1058", "unit_name": "Foundations of computing", "type": "required", "status": "passed" },
+        { "slot": 4, "unit_code": "FIT1006", "unit_name": "Business information analysis", "type": "elective", "status": "passed" }
+      ]
+    },
+    {
+      "year": 1, "semester": "Second", "calendar_year": "2019",
+      "slots": [
+        { "slot": 1, "unit_code": "FIT1054", "unit_name": "Fundamentals of algorithms (advanced)", "type": "required", "status": "passed" },
+        { "slot": 2, "unit_code": "FIT1049", "unit_name": "IT professional practice", "type": "required", "status": "passed" },
+        { "slot": 3, "unit_code": "FIT1043", "unit_name": "Introduction to data science", "type": "required", "status": "passed" },
+        { "slot": 4, "unit_code": "FIT1060", "unit_name": "Human-centred design", "type": "elective", "status": "passed" }
+      ]
+    },
+    {
+      "year": 2, "semester": "First", "calendar_year": "2020",
+      "slots": [
+        { "slot": 1, "unit_code": "FIT2004", "unit_name": "Algorithms and data structures", "type": "required", "status": "passed" },
+        { "slot": 2, "unit_code": "FIT2094", "unit_name": "Databases", "type": "required", "status": "passed" },
+        { "slot": 3, "unit_code": "FIT2179", "unit_name": "Applied data analysis", "type": "required", "status": "passed" },
+        { "slot": 4, "unit_code": "FIT2083", "unit_name": "Innovation and research in computer science", "type": "required", "status": "passed" }
+      ]
+    },
+    {
+      "year": 2, "semester": "Second", "calendar_year": "2020",
+      "slots": [
+        { "slot": 1, "unit_code": "FIT2014", "unit_name": "Theory of computation", "type": "required", "status": "passed" },
+        { "slot": 2, "unit_code": "FIT2175", "unit_name": "Usability", "type": "elective", "status": "passed" },
+        { "slot": 3, "unit_code": "FIT2086", "unit_name": "Statistical machine learning", "type": "required", "status": "passed" },
+        { "slot": 4, "unit_code": "FIT2082", "unit_name": "Computer science research project", "type": "required", "status": "passed" }
+      ]
+    },
+    {
+      "year": 3, "semester": "First", "calendar_year": "2021",
+      "slots": [
+        { "slot": 1, "unit_code": "FIT3163", "unit_name": "Data science project 1", "type": "required", "status": "withdrawn" },
+        { "slot": 2, "unit_code": "FIT3152", "unit_name": "Data analytics", "type": "required", "status": "passed" },
+        { "slot": 3, "unit_code": "FIT3181", "unit_name": "Big data management", "type": "level 3 discipline elective", "status": "passed" },
+        { "slot": 4, "unit_code": "FIT3031", "unit_name": "Network security", "type": "elective", "status": "passed" }
+      ]
+    },
+    {
+      "year": 3, "semester": "Second", "calendar_year": "2021",
+      "slots": [
+        { "slot": 1, "unit_code": "FIT3163", "unit_name": "Data science project 1", "type": "required", "status": "passed" },
+        { "slot": 2, "unit_code": "FIT3164", "unit_name": "Data science project 2", "type": "required", "status": "passed" },
+        { "slot": 3, "unit_code": "FIT3183", "unit_name": "Advanced topics in data science", "type": "level 3 discipline elective", "status": "passed" },
+        { "slot": 4, "unit_code": "FIT3174", "unit_name": "Business information systems strategy and governance", "type": "elective", "status": "passed" },
+        { "slot": 5, "unit_code": "FIT3168", "unit_name": "IT forensics", "type": "elective", "status": "passed" }
+      ]
+    },
+    {
+      "year": 4, "semester": "First", "calendar_year": "2022",
+      "slots": [
+        { "slot": 1, "unit_code": "FIT4441", "unit_name": "Honours thesis - part 1", "type": "required", "status": "passed" },
+        { "slot": 2, "unit_code": "FIT4442", "unit_name": "Honours thesis - part 2", "type": "required", "status": "passed" },
+        { "slot": 3, "unit_code": "FIT4001", "unit_name": "Special studies in engineering 1", "type": "level 4/5 faculty elective", "status": "passed" },
+        { "slot": 4, "unit_code": "FIT3184", "unit_name": "Cloud computing", "type": "elective", "status": "passed" }
+      ]
+    },
+    {
+      "year": 4, "semester": "Second", "calendar_year": "2022",
+      "slots": [
+        { "slot": 1, "unit_code": "FIT4443", "unit_name": "Honours thesis - part 3", "type": "required", "status": "passed" },
+        { "slot": 2, "unit_code": "FIT4444", "unit_name": "Honours thesis - final", "type": "required", "status": "passed" },
+        { "slot": 3, "unit_code": "FIT4002", "unit_name": "Special studies in engineering 2", "type": "level 4/5 faculty elective", "status": "passed" },
+        { "slot": 4, "unit_code": "FIT3158", "unit_name": "Business decision modelling", "type": "elective", "status": "passed" }
+      ]
+    }
+  ]
+}

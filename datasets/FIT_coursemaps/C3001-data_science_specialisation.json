@@ -1,0 +1,258 @@
+{
+  "course_code": "C3001",
+  "course_name": "Bachelor of Computer Science Advanced",
+  "major": "Data science specialisation",
+  "year": "2026",
+  "pdf_url": "https://www.monash.edu/__data/assets/pdf_file/0017/4150241/2026-C3001-BCompScAdvHons-DS.pdf",
+  "semesters": [
+    {
+      "year": 1,
+      "semester": "First",
+      "slots": [
+        {
+          "slot": 1,
+          "unit_code": "FIT1053",
+          "unit_name": "Introduction to programming (advanced)",
+          "type": "required"
+        },
+        {
+          "slot": 2,
+          "unit_code": "FIT1047",
+          "unit_name": "Introduction to computer systems, networks and security",
+          "type": "required"
+        },
+        {
+          "slot": 3,
+          "unit_code": "FIT1058",
+          "unit_name": "Foundations of computing",
+          "type": "required"
+        },
+        {
+          "slot": 4,
+          "unit_code": "Elective",
+          "unit_name": "",
+          "type": "elective"
+        }
+      ]
+    },
+    {
+      "year": 1,
+      "semester": "Second",
+      "slots": [
+        {
+          "slot": 1,
+          "unit_code": "FIT1054",
+          "unit_name": "Fundamentals of algorithms (advanced)",
+          "type": "required"
+        },
+        {
+          "slot": 2,
+          "unit_code": "FIT1049",
+          "unit_name": "IT professional practice",
+          "type": "required"
+        },
+        {
+          "slot": 3,
+          "unit_code": "FIT1043",
+          "unit_name": "Introduction to data science",
+          "type": "required"
+        },
+        {
+          "slot": 4,
+          "unit_code": "Elective",
+          "unit_name": "",
+          "type": "elective"
+        }
+      ]
+    },
+    {
+      "year": 2,
+      "semester": "First",
+      "slots": [
+        {
+          "slot": 1,
+          "unit_code": "FIT2004",
+          "unit_name": "Algorithms and data structures",
+          "type": "required"
+        },
+        {
+          "slot": 2,
+          "unit_code": "FIT2094",
+          "unit_name": "Databases",
+          "type": "required"
+        },
+        {
+          "slot": 3,
+          "unit_code": "FIT2179",
+          "unit_name": "Data visualisation",
+          "type": "required"
+        },
+        {
+          "slot": 4,
+          "unit_code": "FIT2083",
+          "unit_name": "Innovation and research in computer science",
+          "type": "required"
+        }
+      ]
+    },
+    {
+      "year": 2,
+      "semester": "Second",
+      "slots": [
+        {
+          "slot": 1,
+          "unit_code": "FIT2014",
+          "unit_name": "Theory of computation",
+          "type": "required"
+        },
+        {
+          "slot": 2,
+          "unit_code": "Elective",
+          "unit_name": "",
+          "type": "elective"
+        },
+        {
+          "slot": 3,
+          "unit_code": "FIT2086",
+          "unit_name": "Modelling for data science",
+          "type": "required"
+        },
+        {
+          "slot": 4,
+          "unit_code": "FIT2082",
+          "unit_name": "Computer science research project",
+          "type": "required"
+        }
+      ]
+    },
+    {
+      "year": 3,
+      "semester": "First",
+      "slots": [
+        {
+          "slot": 1,
+          "unit_code": "FIT3163",
+          "unit_name": "Data science project 1",
+          "type": "required"
+        },
+        {
+          "slot": 2,
+          "unit_code": "FIT3152",
+          "unit_name": "Data analytics",
+          "type": "required"
+        },
+        {
+          "slot": 3,
+          "unit_code": "Level 3 discipline approved elective",
+          "unit_name": "",
+          "type": "level 3 discipline elective"
+        },
+        {
+          "slot": 4,
+          "unit_code": "Elective",
+          "unit_name": "",
+          "type": "elective"
+        }
+      ]
+    },
+    {
+      "year": 3,
+      "semester": "Second",
+      "slots": [
+        {
+          "slot": 1,
+          "unit_code": "FIT3164",
+          "unit_name": "Data science project 2",
+          "type": "required"
+        },
+        {
+          "slot": 2,
+          "unit_code": "Level 3 discipline approved elective",
+          "unit_name": "",
+          "type": "level 3 discipline elective"
+        },
+        {
+          "slot": 3,
+          "unit_code": "Elective",
+          "unit_name": "",
+          "type": "elective"
+        },
+        {
+          "slot": 4,
+          "unit_code": "Elective",
+          "unit_name": "",
+          "type": "elective"
+        }
+      ]
+    },
+    {
+      "year": 4,
+      "semester": "First",
+      "slots": [
+        {
+          "slot": 1,
+          "unit_code": "FIT4441",
+          "unit_name": "Honours thesis - part 1",
+          "type": "required"
+        },
+        {
+          "slot": 2,
+          "unit_code": "FIT4442",
+          "unit_name": "Honours thesis - part 2",
+          "type": "required"
+        },
+        {
+          "slot": 3,
+          "unit_code": "Faculty Elective",
+          "unit_name": "Level 4/5 Computer science approved elective",
+          "type": "level 4/5 faculty elective"
+        },
+        {
+          "slot": 4,
+          "unit_code": "Elective",
+          "unit_name": "",
+          "type": "elective"
+        }
+      ]
+    },
+    {
+      "year": 4,
+      "semester": "Second",
+      "slots": [
+        {
+          "slot": 1,
+          "unit_code": "FIT4443",
+          "unit_name": "Honours thesis - part 3",
+          "type": "required"
+        },
+        {
+          "slot": 2,
+          "unit_code": "FIT4444",
+          "unit_name": "Honours thesis - final",
+          "type": "required"
+        },
+        {
+          "slot": 3,
+          "unit_code": "Faculty Elective",
+          "unit_name": "Level 4/5 Computer science approved elective",
+          "type": "level 4/5 faculty elective"
+        },
+        {
+          "slot": 4,
+          "unit_code": "Elective",
+          "unit_name": "",
+          "type": "elective"
+        }
+      ]
+    }
+  ],
+  "notes": {
+    "Credit points": "Unless specified, all units are worth 6 credit points Bachelor of Computer Science Advanced (Honours): 32 units x 6 credit points = Total of 192 credit points",
+    "Year Level Requirements": "1) Normally 48 points, and a maximum of 60 points, of first year level units will be counted; 2) At least 36 points must be completed at third year level.",
+    "Unit requisites": "All pre-requisite and co-requisite requirements must be undertaken to be able to enrol into a specific unit",
+    "Duration of degree": "4 years full-time, 8 years part-time",
+    "Time limit": "Time limit = 10 years. Students have ten years in which to complete this award from the time they commence first year. Periods of intermission are counted as part of the ten years.",
+    "Monash University handbook": "Students should follow the course requirements for the year the course was commenced https://handbook.monash.edu/browse/By%20Faculty/FacultyofInformationTechnology"
+  },
+  "ibl_note": "* Industry Based Learning (IBL)"
+}

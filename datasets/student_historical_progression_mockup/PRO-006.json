@@ -1,0 +1,80 @@
+{
+  "pro_id": "PRO-006",
+  "student_id": "STU-2024-0033",
+  "pro_year": "2024",
+  "pro_course_duration": "3",
+  "pro_course_spec": "Data science specialisation",
+  "pro_aos": "DATASCI11",
+  "pro_creds_total": "144",
+  "pro_status": "enrolled",
+  "noise_type": ["semester_underload", "semester_overload"],
+  "noise_notes": "Underloaded Y1S1 (3 units / 18 cp) due to late enrolment. Compensated with 5 units in Y1S2 (30 cp) to stay on track for Y2. Total credit load across Y1 remains 48 cp.",
+  "semesters": [
+    {
+      "year": 1,
+      "semester": "First",
+      "calendar_year": "2024",
+      "slots": [
+        { "slot": 1, "unit_code": "FIT1045", "unit_name": "Introduction to programming", "type": "required", "status": "passed" },
+        { "slot": 2, "unit_code": "FIT1047", "unit_name": "Introduction to computer systems, networks and security", "type": "required", "status": "passed" },
+        { "slot": 3, "unit_code": "FIT1058", "unit_name": "Foundations of computing", "type": "required", "status": "passed" }
+      ]
+    },
+    {
+      "year": 1,
+      "semester": "Second",
+      "calendar_year": "2024",
+      "slots": [
+        { "slot": 1, "unit_code": "FIT1008", "unit_name": "Fundamentals of algorithms", "type": "required", "status": "passed" },
+        { "slot": 2, "unit_code": "FIT1049", "unit_name": "IT professional practice", "type": "required", "status": "passed" },
+        { "slot": 3, "unit_code": "FIT1043", "unit_name": "Introduction to data science", "type": "required", "status": "passed" },
+        { "slot": 4, "unit_code": "FIT1006", "unit_name": "Business information analysis", "type": "elective", "status": "passed" },
+        { "slot": 5, "unit_code": "FIT1033", "unit_name": "Foundations of 3D", "type": "elective", "status": "passed" }
+      ]
+    },
+    {
+      "year": 2,
+      "semester": "First",
+      "calendar_year": "2025",
+      "slots": [
+        { "slot": 1, "unit_code": "FIT2004", "unit_name": "Algorithms and data structures", "type": "required", "status": "passed" },
+        { "slot": 2, "unit_code": "FIT2094", "unit_name": "Databases", "type": "required", "status": "passed" },
+        { "slot": 3, "unit_code": "FIT2179", "unit_name": "Data visualisation", "type": "required", "status": "passed" },
+        { "slot": 4, "unit_code": "FIT2165", "unit_name": "Computer networks", "type": "elective", "status": "passed" }
+      ]
+    },
+    {
+      "year": 2,
+      "semester": "Second",
+      "calendar_year": "2025",
+      "slots": [
+        { "slot": 1, "unit_code": "FIT2014", "unit_name": "Theory of computation", "type": "required", "status": "passed" },
+        { "slot": 2, "unit_code": "FIT2086", "unit_name": "Modelling for data analysis", "type": "required", "status": "passed" },
+        { "slot": 3, "unit_code": "FIT2001", "unit_name": "Systems development", "type": "elective", "status": "passed" },
+        { "slot": 4, "unit_code": "FIT2175", "unit_name": "Usability", "type": "elective", "status": "passed" }
+      ]
+    },
+    {
+      "year": 3,
+      "semester": "First",
+      "calendar_year": "2026",
+      "slots": [
+        { "slot": 1, "unit_code": "FIT3163", "unit_name": "Data science project 1", "type": "required", "status": "in-progress" },
+        { "slot": 2, "unit_code": "FIT3152", "unit_name": "Data analytics", "type": "required", "status": "in-progress" },
+        { "slot": 3, "unit_code": "FIT3183", "unit_name": "Computational linguistics", "type": "level 3 discipline elective", "status": "in-progress" },
+        { "slot": 4, "unit_code": "FIT3031", "unit_name": "Network security", "type": "elective", "status": "in-progress" }
+      ]
+    },
+    {
+      "year": 3,
+      "semester": "Second",
+      "calendar_year": "2026",
+      "slots": [
+        { "slot": 1, "unit_code": "FIT3164", "unit_name": "Data science project 2", "type": "required", "status": "" },
+        { "slot": 2, "unit_code": "FIT3181", "unit_name": "Data science in industry", "type": "level 3 discipline elective", "status": "" },
+        { "slot": 3, "unit_code": "FIT3154", "unit_name": "Data science research methods", "type": "elective", "status": "" },
+        { "slot": 4, "unit_code": "FIT3174", "unit_name": "Business information systems strategy and governance", "type": "elective", "status": "" }
+      ]
+    }
+  ]
+}
