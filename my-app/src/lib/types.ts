@@ -15,13 +15,25 @@ export type Profile = {
   plans: Plan[];
 };
 
+export type YearGroup = {
+  year: number;
+  yearLabel: string;
+  semesters: Semester[];
+};
+
+export type Semester = {
+  id: string;
+  title: string;
+  year: number;
+  units: ChosenUnit[]; // each semester only have 4 units
+};
+
 export type ChosenUnit = {
   chosenId: number;
-  unitId: number;
+  unitCode: number;
   unitName: string;
+  category: string;
+  cp: number;
   chosenYear: number;
   chosenSem: string;
-  type: string;
-  creditPoint: number;
-  difficulty: string;
 };
