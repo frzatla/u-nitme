@@ -7,6 +7,26 @@ export default function StudentDetailsFormContent() {
   return (
     <>
       <section>
+        <div className="grid grid-cols-1 gap-4">
+          <div>
+            <label
+              htmlFor="planName"
+              className="mb-2 block text-sm font-medium text-black/75"
+            >
+              Plan Name <span className="text-black/30">*</span>
+            </label>
+            <input
+              id="planName"
+              name="planName"
+              required
+              placeholder="e.g., My 2026 Course Plan"
+              className={inputClass}
+            />
+          </div>
+        </div>
+      </section>
+
+      <section>
         <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
           <div>
             <label

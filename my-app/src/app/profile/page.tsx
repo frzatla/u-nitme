@@ -3,10 +3,10 @@ import Link from "next/link";
 import { currentUser } from "@clerk/nextjs/server";
 import { UserButton } from "@clerk/nextjs";
 import { ArrowLeft } from "lucide-react";
-import StudentDetailsForm from "../../../components/StudentDetailsForm";
-import { POST as postProfile } from "@/app/api/profiles/route";
+import StudentDetailsForm from "../../components/StudentDetailsForm";
 import { redirect } from "next/navigation";
 import { updateProfile } from "@/lib/profile";
+import { Plan, Profile } from "@/lib/types";
 
 export default async function NewPlanPage() {
   const user = await currentUser();
@@ -14,30 +14,25 @@ export default async function NewPlanPage() {
   async function handleSubmit(formData: FormData) {
     "use server";
 
-    const selectedDegree = String(formData.get("degree") || "");
+    console.log(Object.fromEntries(formData.entries()));
+
     const email = user?.primaryEmailAddress?.emailAddress;
 
     if (!email) {
       redirect("/sign-in");
     }
 
-    const payload = {
-      email,
-      plan: {
-        course: String(formData.get("course") || ""),
-        university: String(formData.get("university") || ""),
-        degree: selectedDegree,
-        semesterOffering: String(formData.get("semesterOffering") || ""),
-        yearStart: Number(formData.get("yearStart")),
-        yearEnd: Number(formData.get("yearEnd")),
-      },
+    const newPlan: Plan = {
+      planName: String(formData.get("planName") || ""),
+      courses: String(formData.get("courses") || ""),
+      university: String(formData.get("university") || ""),
+      degree: String(formData.get("degree") || ""),
+      semesterOffering: String(formData.get("semesterOffering") || ""),
+      yearStart: Number(formData.get("yearStart")),
+      yearEnd: Number(formData.get("yearEnd")),
     };
 
-    const plan = {
-      plan: { ...payload.plan },
-    };
-
-    await updateProfile(email, plan);
+    await updateProfile(email, newPlan);
 
     redirect("/course-plan");
   }

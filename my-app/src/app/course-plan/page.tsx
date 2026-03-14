@@ -6,33 +6,35 @@ import { ArrowLeft, RefreshCw, Sparkles } from "lucide-react";
 import { redirect } from "next/navigation";
 import CoursePlanner from "../../components/CoursePlanner";
 import { getProfileByEmail } from "../../lib/profile";
+import { Plan, Profile } from "@/lib/types";
 
 export default async function CoursePlanPage() {
   const user = await currentUser();
-  const email = user?.primaryEmailAddress?.emailAddress;
+  const email: string = user?.primaryEmailAddress?.emailAddress;
 
   if (!email) {
     redirect("/sign-in");
   }
 
-  const profile = await getProfileByEmail(email);
-  const studentDetails = profile?.plan;
+  const profile: Profile = await getProfileByEmail(email);
+  const studentDetails: Plan | undefined = profile?.plans?.[0];
 
   if (!studentDetails) {
-    redirect("/dashboard/new");
+    redirect("/profile");
   }
 
   const infoPills = [
     studentDetails.planName,
-    studentDetails.course,
+    studentDetails.university,
+    studentDetails.courses,
     studentDetails.degree,
     studentDetails.semesterOffering,
-    studentDetails.university,
+    `${studentDetails.yearStart}–${studentDetails.yearEnd}`,
   ].filter(Boolean);
 
   const handleRegenerate = () => {
     localStorage.removeItem("currentPlanId");
-    redirect("/dashboard/new");
+    redirect("/profile");
   };
 
   const handleExport = () => {
@@ -92,7 +94,7 @@ export default async function CoursePlanPage() {
 
             <div className="flex items-center gap-3">
               <Link
-                href="/dashboard/new"
+                href="/profile"
                 className="flex items-center gap-2 rounded-lg border border-white/15 px-4 py-2 text-xs text-white/50 transition-all hover:border-white/30 hover:text-white"
               >
                 <RefreshCw className="h-3.5 w-3.5" />
