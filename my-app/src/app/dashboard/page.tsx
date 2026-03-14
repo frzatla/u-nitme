@@ -13,7 +13,11 @@ import {
   Plus,
   Sparkles,
 } from "lucide-react";
-import { getProfileByEmail } from "../../lib/profile";
+import {
+  createNewProfile,
+  createProfile,
+  getProfileByEmail,
+} from "../../lib/profile";
 
 function getGreeting() {
   const hour = new Date().getHours();
@@ -52,6 +56,15 @@ export default async function DashboardPage() {
 
   if (!email) {
     redirect("/sign-in");
+  }
+
+  if (email) {
+    try {
+      const existing = await getProfileByEmail(email);
+      if (!existing) {
+        await createNewProfile(email);
+      }
+    } catch {}
   }
 
   const profile = await getProfileByEmail(email);
@@ -171,14 +184,21 @@ export default async function DashboardPage() {
               <div className="flex flex-col gap-7 lg:flex-row lg:items-end lg:justify-between">
                 <div>
                   <h2 className="text-[42px] font-semibold leading-none tracking-[-0.06em] text-black">
-                    {plan.course || plan.degree || "Course Plan"}
+                    {plan.specialisation ||
+                      plan.major ||
+                      plan.degree ||
+                      "Course Plan"}
                   </h2>
 
                   <div className="mt-5 flex flex-wrap gap-3">
                     {[
-                      plan.course,
                       plan.university,
+                      plan.faculty,
                       plan.degree,
+                      plan.minor ? `Minor: ${plan.minor}` : null,
+                      plan.specialisation
+                        ? `Spec: ${plan.specialisation}`
+                        : null,
                       plan.semesterOffering,
                       plan.yearStart && plan.yearEnd
                         ? `${plan.yearStart}-${plan.yearEnd}`
@@ -238,7 +258,7 @@ export default async function DashboardPage() {
                 </p>
 
                 <Link
-                  href="/dashboard/new"
+                  href="/dashboard/profile"
                   className="mt-12 inline-flex items-center gap-3 rounded-full bg-black px-8 py-4 text-[15px] font-medium text-white transition-colors hover:bg-black/90"
                 >
                   <Plus className="h-5 w-5" />
