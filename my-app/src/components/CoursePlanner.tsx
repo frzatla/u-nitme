@@ -100,25 +100,37 @@ const foundationUnits = [
 ];
 
 const categoryPillStyles = {
-  Core: "bg-black text-white border-black",
-  Major: "bg-black/70 text-white border-black/70",
-  Elective: "bg-white text-black/70 border-black/20",
-  Minor: "bg-black/8 text-black/55 border-black/10",
+  Core: "border-[#719DEE] bg-[#719DEE] text-white",
+  Major: "border-[#79B98B] bg-[#79B98B] text-white",
+  Minor: "border-[#F5DF8E] bg-[#F5DF8E] text-black/80",
+  Elective: "border-[#DD8255] bg-[#DD8255] text-white",
+  Specialisation: "border-[#DD8255] bg-[#DD8255] text-white",
 };
 
 const categoryDotStyles = {
-  Core: "bg-black",
-  Major: "bg-black/70",
-  Elective: "bg-black/30",
-  Minor: "bg-black/15",
+  Core: "bg-[#719DEE]",
+  Major: "bg-[#79B98B]",
+  Minor: "bg-[#F5DF8E]",
+  Elective: "bg-[#DD8255]",
+  Specialisation: "bg-[#DD8255]",
 };
+
+function normalizeCategory(category, degree) {
+  if (degree === "COMPSCI" && (category === "Major" || category === "Minor")) {
+    return "Specialisation";
+  }
+
+  return category;
+}
 
 function buildSemesterPlan(studentDetails) {
   const start = Number(studentDetails?.yearStart);
   const end = Number(studentDetails?.yearEnd);
-  const majorLabel =
-    studentDetails?.major || studentDetails?.specialisation || "Specialisation";
+  const degree = studentDetails?.degree;
+  const focusLabel =
+    studentDetails?.specialisation || studentDetails?.major || "Specialisation";
   const facultyLabel = studentDetails?.faculty || "Faculty";
+  const minorLabel = studentDetails?.minor || "Elective";
 
   if (!Number.isFinite(start) || !Number.isFinite(end) || end < start) {
     return [];
@@ -135,15 +147,38 @@ function buildSemesterPlan(studentDetails) {
         const unit = foundationUnits[unitIndex];
 
         if (unit) {
-          units.push(unit);
-        } else {
-          const isMajor = slot % 2 === 0;
           units.push({
-            code: `${isMajor ? majorLabel.slice(0, 2).toUpperCase() || "SP" : facultyLabel.slice(0, 2).toUpperCase() || "FA"}${400 + unitIndex}`,
-            name: isMajor
-              ? `${majorLabel} Elective ${unitIndex - foundationUnits.length + 1}`
-              : `${facultyLabel} Breadth ${unitIndex - foundationUnits.length + 1}`,
-            category: isMajor ? "Elective" : "Minor",
+            ...unit,
+            category: normalizeCategory(unit.category, degree),
+          });
+        } else {
+          const primaryTrack = degree === "COMPSCI" ? "Specialisation" : "Major";
+          const secondaryTrack =
+            degree === "COMPSCI"
+              ? "Elective"
+              : studentDetails?.minor
+                ? "Minor"
+                : "Elective";
+          const category = slot % 2 === 0 ? primaryTrack : secondaryTrack;
+          const prefixSource =
+            category === "Specialisation" || category === "Major"
+              ? focusLabel
+              : category === "Minor"
+                ? minorLabel
+                : facultyLabel;
+          const unitLabel =
+            category === "Specialisation"
+              ? `${focusLabel} Specialisation ${unitIndex - foundationUnits.length + 1}`
+              : category === "Major"
+                ? `${focusLabel} Major ${unitIndex - foundationUnits.length + 1}`
+                : category === "Minor"
+                  ? `${minorLabel} Minor ${unitIndex - foundationUnits.length + 1}`
+                  : `${facultyLabel} Elective ${unitIndex - foundationUnits.length + 1}`;
+
+          units.push({
+            code: `${prefixSource.slice(0, 2).toUpperCase() || "SP"}${400 + unitIndex}`,
+            name: unitLabel,
+            category,
             level: year === start ? "INTRO" : year === end ? "ADV" : "MID",
             cp: 6,
           });
@@ -180,6 +215,13 @@ function groupSemestersByYear(semesters) {
 }
 
 function getSummary(semesters) {
+  const categories = Array.from(
+    new Set(
+      semesters.flatMap((semester) =>
+        semester.units.map((unit) => unit.category),
+      ),
+    ),
+  );
   const totalPlannedUnits = semesters.reduce(
     (sum, semester) => sum + semester.units.filter(Boolean).length,
     0,
@@ -191,7 +233,10 @@ function getSummary(semesters) {
     Math.round((totalPlannedUnits / completedTarget) * 100),
   );
 
-  const breakdown = { Core: 0, Major: 0, Elective: 0, Minor: 0 };
+  const breakdown = categories.reduce((acc, category) => {
+    acc[category] = 0;
+    return acc;
+  }, {});
 
   semesters.forEach((semester) => {
     semester.units.forEach((unit) => {

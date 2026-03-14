@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useMemo, useRef, useState } from "react";
 import {
@@ -173,12 +174,12 @@ const valueCards = [
 
 function RevealLine({ children, delay = 0, className = "" }) {
   return (
-    <div className={`overflow-hidden pb-[0.12em] ${className}`}>
+    <div className={`overflow-hidden pb-[0.18em] ${className}`}>
       <motion.div
-        initial={{ y: "110%", opacity: 0 }}
+        initial={{ y: "100%", opacity: 0 }}
         whileInView={{ y: "0%", opacity: 1 }}
-        viewport={{ once: true, amount: 0.6 }}
-        transition={{ duration: 0.9, delay, ease: [0.22, 1, 0.36, 1] }}
+        viewport={{ once: true, amount: 0.15 }}
+        transition={{ duration: 0.8, delay, ease: [0.22, 1, 0.36, 1] }}
       >
         {children}
       </motion.div>
@@ -349,8 +350,15 @@ export default function Home() {
             onClick={() => router.push("/")}
             className="flex items-center gap-3 transition-opacity hover:opacity-80"
           >
-            <span className="flex h-10 w-10 items-center justify-center rounded-xl border border-white/20 bg-white/[0.04] text-sm font-semibold text-white">
-              U
+            <span className="relative h-[42px] w-[42px] overflow-hidden rounded-xl">
+              <Image
+                src="/U-NIT ME-2.png"
+                alt="U-NIT ME logo"
+                fill
+                sizes="42px"
+                className="object-contain"
+                priority
+              />
             </span>
             <span className="text-sm font-medium uppercase tracking-[0.18em] text-white/82">
               U-NIT ME
@@ -465,19 +473,26 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="px-6 py-16 md:px-10 md:py-20">
+      <section className="px-6 py-28 md:px-10 md:py-40">
         <div className="mx-auto max-w-7xl">
-          <div className="max-w-5xl">
-            <RevealLine>
-              <p className="text-3xl font-semibold leading-[1.08] tracking-[-0.05em] text-white md:text-5xl lg:text-6xl">
-                The smarter way to plan university.
+          <div className="max-w-4xl space-y-3">
+            <FadeUp>
+              <p className="text-3xl font-semibold leading-[1.15] tracking-[-0.04em] text-white md:text-5xl lg:text-6xl">
+                The smartest way to
               </p>
-            </RevealLine>
-            <RevealLine delay={0.08}>
-              <p className="mt-2 text-3xl font-semibold leading-[1.08] tracking-[-0.05em] text-white md:text-5xl lg:text-6xl">
-                Built for students who are done with handbook chaos.
+            </FadeUp>
+
+            <FadeUp delay={0.12}>
+              <p className="text-3xl font-semibold leading-[1.15] tracking-[-0.04em] text-white/60 md:text-5xl lg:text-6xl">
+                plan university — powered
               </p>
-            </RevealLine>
+            </FadeUp>
+
+            <FadeUp delay={0.24}>
+              <p className="text-3xl font-semibold leading-[1.15] tracking-[-0.04em] text-white/60 md:text-5xl lg:text-6xl">
+                by AI that actually works.
+              </p>
+            </FadeUp>
           </div>
         </div>
       </section>
@@ -668,9 +683,7 @@ export default function Home() {
                       <div className="text-sm font-medium text-white">
                         {review.name}
                       </div>
-                      <div className="text-xs text-white">
-                        {review.course}
-                      </div>
+                      <div className="text-xs text-white">{review.course}</div>
                     </div>
 
                     <div className="flex gap-0.5">
@@ -797,12 +810,12 @@ export default function Home() {
             <StaggerGrid className="grid grid-cols-2 gap-5">
               {valueCards.map(({ title, description, icon: Icon }) => (
                 <StaggerItem key={title}>
-                  <div className="rounded-3xl border border-white/[0.18] bg-white/[0.03] p-6 text-center transition hover:-translate-y-1 hover:border-white/[0.28] hover:bg-white/[0.045]">
+                  <div className="flex h-full min-h-[220px] flex-col items-center justify-center rounded-3xl border border-white/[0.18] bg-white/[0.03] p-6 text-center transition hover:-translate-y-1 hover:border-white/[0.28] hover:bg-white/[0.045]">
                     <Icon className="mx-auto mb-4 h-6 w-6 text-white" />
                     <div className="text-lg font-semibold text-white">
                       {title}
                     </div>
-                    <p className="mt-2 text-sm leading-7 text-white">
+                    <p className="mt-2 max-w-[18rem] text-sm leading-7 text-white">
                       {description}
                     </p>
                   </div>
@@ -878,8 +891,14 @@ export default function Home() {
       <footer className="border-t border-white/[0.18] px-6 py-10 md:px-10">
         <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-4 md:flex-row">
           <div className="flex items-center gap-3">
-            <span className="flex h-5 w-5 items-center justify-center rounded-sm border border-white/24 text-[8px] text-white/60">
-              U
+            <span className="relative h-5 w-5 overflow-hidden rounded-sm">
+              <Image
+                src="/U-NIT ME-2.png"
+                alt="U-NIT ME logo"
+                fill
+                sizes="20px"
+                className="object-contain"
+              />
             </span>
             <span className="text-xs uppercase tracking-[0.18em] text-white">
               U-NIT ME

@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { UserButton } from "@clerk/nextjs";
@@ -21,7 +22,7 @@ export default function CoursePlanPage() {
     const storedDetails = localStorage.getItem("studentDetails");
 
     if (!storedDetails) {
-      router.replace("/dashboard");
+      router.replace("/dashboard/new");
       return;
     }
 
@@ -29,24 +30,74 @@ export default function CoursePlanPage() {
       setStudentDetails(JSON.parse(storedDetails));
     } catch {
       localStorage.removeItem("studentDetails");
-      router.replace("/dashboard");
+      router.replace("/dashboard/new");
     }
   }, [router]);
+
+  useEffect(() => {
+    if (!studentDetails) {
+      return;
+    }
+
+    const start = Number(studentDetails.yearStart);
+    const end = Number(studentDetails.yearEnd);
+    const yearSpan =
+      Number.isFinite(start) && Number.isFinite(end) && end >= start
+        ? end - start + 1
+        : 0;
+    const unitCount = yearSpan * 8;
+    const totalCredits = unitCount * 6;
+    const currentPlanId = localStorage.getItem("currentPlanId");
+
+    let savedPlans = [];
+
+    try {
+      savedPlans = JSON.parse(localStorage.getItem("savedPlans") || "[]");
+      if (!Array.isArray(savedPlans)) {
+        savedPlans = [];
+      }
+    } catch {
+      savedPlans = [];
+    }
+
+    const nextPlan = {
+      id: currentPlanId || crypto.randomUUID(),
+      studentDetails,
+      savedAt: new Date().toISOString(),
+      unitCount,
+      totalCredits,
+    };
+
+    const existingIndex = savedPlans.findIndex((plan) => plan.id === nextPlan.id);
+
+    if (existingIndex >= 0) {
+      savedPlans[existingIndex] = nextPlan;
+    } else {
+      savedPlans.unshift(nextPlan);
+    }
+
+    localStorage.setItem("savedPlans", JSON.stringify(savedPlans));
+    localStorage.setItem("currentPlanId", nextPlan.id);
+  }, [studentDetails]);
 
   if (!studentDetails) {
     return null;
   }
 
   const infoPills = [
+    studentDetails.planName,
+    studentDetails.degree,
     studentDetails.major,
     studentDetails.minor && `Minor: ${studentDetails.minor}`,
     studentDetails.specialisation && `Spec: ${studentDetails.specialisation}`,
     studentDetails.faculty,
+    studentDetails.semesterOffering,
     studentDetails.university,
   ].filter(Boolean);
 
   const handleRegenerate = () => {
-    router.push("/dashboard");
+    localStorage.removeItem("currentPlanId");
+    router.push("/dashboard/new");
   };
 
   const handleExport = () => {
@@ -58,19 +109,16 @@ export default function CoursePlanPage() {
       <header className="border-b border-black/10 bg-[#f5f5f2]">
         <div className="mx-auto flex h-20 max-w-7xl items-center justify-between px-6 md:px-8">
           <div className="flex items-center gap-4">
-            <button
-              onClick={() => router.push("/dashboard")}
-              className="flex items-center gap-2 text-sm text-black/40 transition-colors hover:text-black"
-            >
-              <ArrowLeft className="h-4 w-4" />
-              Back
-            </button>
-
-            <div className="h-5 w-px bg-black/10" />
-
             <div className="flex items-center gap-3">
-              <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-black text-sm font-semibold text-white">
-                U
+              <div className="relative h-8 w-8 overflow-hidden rounded-lg">
+                <Image
+                  src="/U-NIT ME-3.png"
+                  alt="U-NIT ME logo"
+                  fill
+                  sizes="32px"
+                  className="object-contain"
+                  priority
+                />
               </div>
               <span className="text-sm font-medium tracking-tight">U-NIT ME</span>
             </div>
@@ -127,6 +175,14 @@ export default function CoursePlanPage() {
 
       <section className="px-6 py-8 md:px-8 md:py-10">
         <div className="mx-auto max-w-7xl">
+          <button
+            onClick={() => router.push("/dashboard")}
+            className="mb-6 inline-flex items-center gap-2 text-sm text-black/40 transition-colors hover:text-black"
+          >
+            <ArrowLeft className="h-4 w-4" />
+            Back to Dashboard
+          </button>
+
           <CoursePlanner
             studentDetails={studentDetails}
             showHeader={false}
@@ -142,7 +198,8 @@ export default function CoursePlanPage() {
             official handbook
           </p>
           <p className="text-xs text-black/20">
-            {studentDetails.yearStart}–{studentDetails.yearEnd}
+            {studentDetails.semesterOffering} • {studentDetails.yearStart}–
+            {studentDetails.yearEnd}
           </p>
         </div>
       </footer>
