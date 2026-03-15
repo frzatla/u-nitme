@@ -420,7 +420,7 @@ export default function StudentDetailsFormContent({
           className="flex w-full items-center justify-center gap-2 rounded-xl bg-black px-4 py-3.5 text-sm font-medium text-white transition-colors hover:bg-black/90"
         >
           <Sparkles className="h-4 w-4" />
-          Generate AI Course Plan
+          Generate Course Plan
         </button>
       </div>
     </>
