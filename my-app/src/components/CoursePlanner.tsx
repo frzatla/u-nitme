@@ -10,6 +10,7 @@ import {
   useSensors,
   type DragStartEvent,
   type DragEndEvent,
+  type DragOverEvent,
 } from "@dnd-kit/core";
 import { useDraggable, useDroppable } from "@dnd-kit/core";
 import { CSS } from "@dnd-kit/utilities";
@@ -30,7 +31,7 @@ import UnitDetailPanel from "./UnitDetailPanel";
 
 // ── Types ─────────────────────────────────────────────────────────────────────
 
-type Unit = {
+export type Unit = {
   code: string;
   name: string;
   category: UnitCategory;
@@ -38,9 +39,9 @@ type Unit = {
   cp: number;
 };
 
-type Slot = Unit | null;
+export type Slot = Unit | null;
 
-type Semester = {
+export type Semester = {
   id: string;
   title: string;
   year: number;
@@ -72,6 +73,7 @@ type CoursePlannerProps = {
   schedule: Schedule;
   studentDetails: StudentDetails;
   showHeader?: boolean;
+  onSemestersChange?: (semesters: Semester[]) => void;
 };
 
 // ── Styles ────────────────────────────────────────────────────────────────────
@@ -161,6 +163,69 @@ function getSummary(semesters: Semester[], schedule: Schedule): Summary {
   );
 
   return { totalPlannedUnits, totalCredits, progress, completedTarget, breakdown };
+}
+
+// ── Requisite types (matches handbook API response) ──────────────────────────
+
+type RequisiteGroup = { connector: string; codes: string[] };
+type Requisite = { type: string; groups: RequisiteGroup[] };
+
+function computeValidSemesters(
+  semesters: Semester[],
+  requisites: Requisite[]
+): Set<string> {
+  // Build map: unitCode → its current semester index
+  const unitSemIdx = new Map<string, number>();
+  semesters.forEach((sem, idx) => {
+    sem.units.forEach((unit) => {
+      if (unit && unit.code !== "ELECTIVE") unitSemIdx.set(unit.code, idx);
+    });
+  });
+
+  const validIds = new Set<string>();
+
+  semesters.forEach((sem, targetIdx) => {
+    let valid = true;
+
+    for (const req of requisites) {
+      const type = req.type.toLowerCase();
+
+      if (type.includes("prerequisite")) {
+        // Each group: at least one scheduled code must appear before targetIdx
+        for (const group of req.groups) {
+          const inSchedule = group.codes.filter((c) => unitSemIdx.has(c));
+          if (inSchedule.length === 0) continue; // can't validate, skip
+          const satisfied = inSchedule.some((c) => unitSemIdx.get(c)! < targetIdx);
+          if (!satisfied) { valid = false; break; }
+        }
+      } else if (type.includes("corequisite")) {
+        // Each group: at least one scheduled code must appear in same or earlier semester
+        for (const group of req.groups) {
+          const inSchedule = group.codes.filter((c) => unitSemIdx.has(c));
+          if (inSchedule.length === 0) continue;
+          const satisfied = inSchedule.some((c) => unitSemIdx.get(c)! <= targetIdx);
+          if (!satisfied) { valid = false; break; }
+        }
+      } else if (type.includes("prohibit") || type.includes("incompatible")) {
+        // If any prohibited unit is scheduled before this semester, invalid
+        for (const group of req.groups) {
+          for (const code of group.codes) {
+            const codeIdx = unitSemIdx.get(code);
+            if (codeIdx !== undefined && codeIdx < targetIdx) {
+              valid = false; break;
+            }
+          }
+          if (!valid) break;
+        }
+      }
+
+      if (!valid) break;
+    }
+
+    if (valid) validIds.add(sem.id);
+  });
+
+  return validIds;
 }
 
 // Slot ID format: "semId||slotIdx" — double pipe avoids conflicts with semId content
@@ -265,11 +330,9 @@ function DraggableUnitCard({
 function DroppableSlot({
   slotId,
   children,
-  isActiveOver,
 }: {
   slotId: string;
   children: React.ReactNode;
-  isActiveOver: boolean;
 }) {
   const { setNodeRef, isOver } = useDroppable({ id: slotId });
 
@@ -277,7 +340,7 @@ function DroppableSlot({
     <div
       ref={setNodeRef}
       className={`border-r-0 border-b border-black/[0.05] p-4 last:border-b-0 md:border-r xl:border-b-0 xl:last:border-r-0 rounded-[4px] transition-colors ${
-        (isOver || isActiveOver) ? "bg-black/[0.04] outline outline-2 outline-offset-[-2px] outline-black/10" : ""
+        isOver ? "bg-black/[0.03]" : ""
       }`}
     >
       {children}
@@ -304,12 +367,15 @@ export default function CoursePlanner({
   schedule,
   studentDetails,
   showHeader = true,
+  onSemestersChange,
 }: CoursePlannerProps) {
   const yearStart = Number(studentDetails?.yearStart) || new Date().getFullYear();
   const [semesters, setSemesters] = useState(() =>
     buildFromSchedule(schedule, yearStart)
   );
   const [activeSlotId, setActiveSlotId] = useState<string | null>(null);
+  const [overSemId, setOverSemId] = useState<string | null>(null);
+  const [validSemIds, setValidSemIds] = useState<Set<string> | null>(null);
   const [selectedUnit, setSelectedUnit] = useState<Unit | null>(null);
 
   const sensors = useSensors(
@@ -317,19 +383,59 @@ export default function CoursePlanner({
   );
 
   function handleDragStart(event: DragStartEvent) {
-    setActiveSlotId(String(event.active.id));
+    const slotId = String(event.active.id);
+    setActiveSlotId(slotId);
+    setValidSemIds(null); // null = loading, all semesters neutral
+
+    const { semId, idx } = parseSlotId(slotId);
+    const unit = semesters.find((s) => s.id === semId)?.units[idx];
+    if (!unit || unit.code === "ELECTIVE") {
+      // ELECTIVEs can go anywhere
+      setValidSemIds(new Set(semesters.map((s) => s.id)));
+      return;
+    }
+
+    fetch(`/api/units/${unit.code}/handbook`)
+      .then((r) => r.json())
+      .then((data) => {
+        const requisites: Requisite[] = data.requisites ?? [];
+        setValidSemIds(computeValidSemesters(semesters, requisites));
+      })
+      .catch(() => {
+        setValidSemIds(new Set(semesters.map((s) => s.id)));
+      });
+  }
+
+  function handleDragOver(event: DragOverEvent) {
+    setOverSemId(event.over ? parseSlotId(String(event.over.id)).semId : null);
   }
 
   function handleDragEnd(event: DragEndEvent) {
     const { active, over } = event;
+
     if (over && active.id !== over.id) {
-      setSemesters((prev) => swapSlots(prev, String(active.id), String(over.id)));
+      const { semId: targetSemId } = parseSlotId(String(over.id));
+      // Block drop on invalid semesters
+      if (validSemIds !== null && !validSemIds.has(targetSemId)) {
+        setActiveSlotId(null);
+        setOverSemId(null);
+        setValidSemIds(null);
+        return;
+      }
+      const next = swapSlots(semesters, String(active.id), String(over.id));
+      setSemesters(next);
+      onSemestersChange?.(next);
     }
+
     setActiveSlotId(null);
+    setOverSemId(null);
+    setValidSemIds(null);
   }
 
   function handleDragCancel() {
     setActiveSlotId(null);
+    setOverSemId(null);
+    setValidSemIds(null);
   }
 
   // Find the unit being dragged (for DragOverlay)
@@ -361,6 +467,7 @@ export default function CoursePlanner({
       sensors={sensors}
       collisionDetection={closestCenter}
       onDragStart={handleDragStart}
+      onDragOver={handleDragOver}
       onDragEnd={handleDragEnd}
       onDragCancel={handleDragCancel}
     >
@@ -482,10 +589,31 @@ export default function CoursePlanner({
                     const semesterCredits = semester.units.reduce((sum, u) => sum + (u?.cp ?? 0), 0);
                     const semUnitCount = semester.units.filter(Boolean).length;
 
+                    const isDragging = activeSlotId !== null;
+                    const draggedSemId = activeSlotId ? parseSlotId(activeSlotId).semId : null;
+                    const isSource = draggedSemId === semester.id;
+                    const isHovered = overSemId === semester.id;
+                    const isValid = !isDragging || validSemIds === null || validSemIds.has(semester.id);
+
+                    let semCardClass = "overflow-hidden rounded-[24px] border transition-all duration-150 ";
+                    if (!isDragging || validSemIds === null) {
+                      semCardClass += "border-black/10 bg-[#fafaf9]";
+                    } else if (isSource) {
+                      semCardClass += "border-black/10 bg-[#fafaf9] opacity-60";
+                    } else if (isHovered && isValid) {
+                      semCardClass += "border-emerald-400/80 bg-emerald-50/40 shadow-[0_0_0_4px_rgba(52,211,153,0.12)]";
+                    } else if (isHovered && !isValid) {
+                      semCardClass += "border-red-400/80 bg-red-50/40 shadow-[0_0_0_4px_rgba(239,68,68,0.12)]";
+                    } else if (isValid) {
+                      semCardClass += "border-emerald-300/50 bg-[#fafaf9]";
+                    } else {
+                      semCardClass += "border-black/5 bg-[#fafaf9] opacity-40";
+                    }
+
                     return (
                       <section
                         key={semester.id}
-                        className="overflow-hidden rounded-[24px] border border-black/10 bg-[#fafaf9]"
+                        className={semCardClass}
                       >
                         <div className="flex flex-col gap-3 border-b border-black/[0.06] px-6 py-5 md:flex-row md:items-center md:justify-between">
                           <div className="flex items-center gap-4">
@@ -512,7 +640,6 @@ export default function CoursePlanner({
                               <DroppableSlot
                                 key={slotId}
                                 slotId={slotId}
-                                isActiveOver={false}
                               >
                                 {unit ? (
                                   <DraggableUnitCard
