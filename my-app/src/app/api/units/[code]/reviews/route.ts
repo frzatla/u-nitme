@@ -24,10 +24,10 @@ export async function GET(request, { params }) {
   try {
     const res = await fetch(url, {
       headers: { "User-Agent": USER_AGENT },
-      next: { revalidate: 3600 },
     });
 
     if (!res.ok) {
+      console.log(res.json())
       return NextResponse.json(
         { error: "Reddit request failed", status: res.status },
         { status: 502 }
