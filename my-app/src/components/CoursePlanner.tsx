@@ -172,34 +172,37 @@ type Requisite = { type: string; groups: RequisiteGroup[] };
 
 function computeValidSemesters(
   semesters: Semester[],
-  requisites: Requisite[]
+  draggedCode: string,
+  draggedRequisites: Requisite[],
+  allRequisites: Map<string, Requisite[]>
 ): Set<string> {
-  // Build map: unitCode → its current semester index
+  // Map: code → current semester index, excluding the dragged unit
   const unitSemIdx = new Map<string, number>();
   semesters.forEach((sem, idx) => {
     sem.units.forEach((unit) => {
-      if (unit && unit.code !== "ELECTIVE") unitSemIdx.set(unit.code, idx);
+      if (unit && unit.code !== "ELECTIVE" && unit.code !== draggedCode)
+        unitSemIdx.set(unit.code, idx);
     });
   });
 
   const validIds = new Set<string>();
 
-  semesters.forEach((sem, targetIdx) => {
+  for (let targetIdx = 0; targetIdx < semesters.length; targetIdx++) {
+    const sem = semesters[targetIdx];
     let valid = true;
 
-    for (const req of requisites) {
+    // ── Step 1: dragged unit's own requisites ────────────────────────────────
+    for (const req of draggedRequisites) {
       const type = req.type.toLowerCase();
 
       if (type.includes("prerequisite")) {
-        // Each group: at least one scheduled code must appear before targetIdx
         for (const group of req.groups) {
           const inSchedule = group.codes.filter((c) => unitSemIdx.has(c));
-          if (inSchedule.length === 0) continue; // can't validate, skip
+          if (inSchedule.length === 0) continue;
           const satisfied = inSchedule.some((c) => unitSemIdx.get(c)! < targetIdx);
           if (!satisfied) { valid = false; break; }
         }
       } else if (type.includes("corequisite")) {
-        // Each group: at least one scheduled code must appear in same or earlier semester
         for (const group of req.groups) {
           const inSchedule = group.codes.filter((c) => unitSemIdx.has(c));
           if (inSchedule.length === 0) continue;
@@ -207,7 +210,6 @@ function computeValidSemesters(
           if (!satisfied) { valid = false; break; }
         }
       } else if (type.includes("prohibit") || type.includes("incompatible")) {
-        // If any prohibited unit is scheduled before this semester, invalid
         for (const group of req.groups) {
           for (const code of group.codes) {
             const codeIdx = unitSemIdx.get(code);
@@ -222,8 +224,32 @@ function computeValidSemesters(
       if (!valid) break;
     }
 
+    // ── Step 2: units at or before targetIdx that depend on draggedCode ───────
+    // If unit Y (at semester si ≤ targetIdx) lists draggedCode as a prereq or
+    // coreq, placing dragged unit at targetIdx may violate Y's constraint.
+    if (valid) {
+      outer: for (let si = 0; si <= targetIdx; si++) {
+        for (const unit of semesters[si].units) {
+          if (!unit || unit.code === "ELECTIVE" || unit.code === draggedCode) continue;
+          for (const req of allRequisites.get(unit.code) ?? []) {
+            const type = req.type.toLowerCase();
+            for (const group of req.groups) {
+              if (!group.codes.includes(draggedCode)) continue;
+              if (type.includes("prerequisite")) {
+                // draggedCode is a prereq of unit at si → must be strictly before si
+                if (targetIdx >= si) { valid = false; break outer; }
+              } else if (type.includes("corequisite")) {
+                // draggedCode is a coreq of unit at si → must be at ≤ si
+                if (targetIdx > si) { valid = false; break outer; }
+              }
+            }
+          }
+        }
+      }
+    }
+
     if (valid) validIds.add(sem.id);
-  });
+  }
 
   return validIds;
 }
@@ -395,15 +421,28 @@ export default function CoursePlanner({
       return;
     }
 
-    fetch(`/api/units/${unit.code}/handbook`)
-      .then((r) => r.json())
-      .then((data) => {
-        const requisites: Requisite[] = data.requisites ?? [];
-        setValidSemIds(computeValidSemesters(semesters, requisites));
-      })
-      .catch(() => {
-        setValidSemIds(new Set(semesters.map((s) => s.id)));
-      });
+    // Fetch handbook data for ALL non-ELECTIVE units in parallel
+    const allCodes = [
+      ...new Set(
+        semesters
+          .flatMap((s) => s.units)
+          .filter((u): u is Unit => u !== null && u.code !== "ELECTIVE")
+          .map((u) => u.code)
+      ),
+    ];
+
+    Promise.all(
+      allCodes.map((code) =>
+        fetch(`/api/units/${code}/handbook`)
+          .then((r) => r.json())
+          .then((data) => ({ code, requisites: (data.requisites ?? []) as Requisite[] }))
+          .catch(() => ({ code, requisites: [] as Requisite[] }))
+      )
+    ).then((results) => {
+      const allReqs = new Map(results.map((r) => [r.code, r.requisites]));
+      const draggedReqs = allReqs.get(unit.code) ?? [];
+      setValidSemIds(computeValidSemesters(semesters, unit.code, draggedReqs, allReqs));
+    });
   }
 
   function handleDragOver(event: DragOverEvent) {
