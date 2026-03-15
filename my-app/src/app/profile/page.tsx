@@ -116,7 +116,7 @@ export default async function NewPlanPage() {
     if (!email) redirect("/sign-in");
 
     const planId = crypto.randomUUID();
-    const courseCode = String(formData.get("courses") || "");
+    const courseCode = String(formData.get("courseCode") || "");
     const aosCode = String(formData.get("areaOfStudy") || "");
     const minorMajorType = String(formData.get("minorMajorType") || "");
     const minorMajorCode = String(formData.get("minorMajorCode") || "");
@@ -124,7 +124,7 @@ export default async function NewPlanPage() {
     const newPlan: Plan = {
       id: planId,
       planName: String(formData.get("planName") || ""),
-      courses: courseCode,
+      courseCode: courseCode,
       university: String(formData.get("university") || ""),
       areaOfStudy: aosCode,
       semesterOffering: String(formData.get("semesterOffering") || ""),

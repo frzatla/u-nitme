@@ -1,7 +1,9 @@
+// --- Temporary plan before officially putting it on database
+// Using the same type but using different table
 export type Plan = {
   id: string;
   planName: string;
-  courses: string;
+  courseCode: string;
   university: string;
   areaOfStudy: string;
   semesterOffering: string;
@@ -42,7 +44,12 @@ export type ChosenUnit = {
 
 // ── algo1.py output types ─────────────────────────────────────────────────────
 
-export type UnitCategory = "Core" | "Major" | "Minor" | "Elective" | "Specialisation";
+export type UnitCategory =
+  | "Core"
+  | "Major"
+  | "Minor"
+  | "Elective"
+  | "Specialisation";
 
 export type ScheduledUnit = {
   code: string;
@@ -55,8 +62,8 @@ export type ScheduledUnit = {
 };
 
 export type ScheduledSemester = {
-  semester: string;        // e.g. "Year 1, Semester 1"
-  period: string | null;   // "S1" | "S2" | null (null = unscheduled bucket)
+  semester: string; // e.g. "Year 1, Semester 1"
+  period: string | null; // "S1" | "S2" | null (null = unscheduled bucket)
   semester_index: number;
   extended: boolean | null;
   units: ScheduledUnit[];

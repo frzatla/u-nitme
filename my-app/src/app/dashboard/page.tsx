@@ -48,7 +48,7 @@ export default async function DashboardPage() {
   const userName = email.split("@")[0];
   const lastPlan = plans[plans.length - 1] ?? null;
   const universityName = lastPlan?.university || "—";
-  const lastPlanName = lastPlan?.planName || lastPlan?.courses || "—";
+  const lastPlanName = lastPlan?.planName || lastPlan?.courseCode || "—";
 
   async function handleDeletePlan(formData: FormData) {
     "use server";
@@ -172,18 +172,18 @@ export default async function DashboardPage() {
 
                 return (
                   <div
-                    key={`${plan.planName || plan.courses || "plan"}-${index}`}
+                    key={`${plan.planName || plan.courseCode || "plan"}-${index}`}
                     className="rounded-[28px] border border-black/[0.08] bg-white p-8 shadow-[0_1px_2px_rgba(0,0,0,0.02)]"
                   >
                     <div className="flex flex-col gap-7 lg:flex-row lg:items-end lg:justify-between">
                       <div>
                         <h2 className="text-[42px] font-semibold leading-none tracking-[-0.06em] text-black">
-                          {plan.planName || plan.courses || "Course Plan"}
+                          {plan.planName || plan.courseCode || "Course Plan"}
                         </h2>
 
                         <div className="mt-5 flex flex-wrap gap-3">
                           {[
-                            plan.courses,
+                            plan.courseCode,
                             plan.university,
                             plan.areaOfStudy,
                             plan.semesterOffering,
