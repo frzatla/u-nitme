@@ -55,13 +55,26 @@ function runAlgo(courseCode: string, aosCode: string, outputFile: string, minorM
   }
 }
 
-function enrichCategories(schedule: Schedule, aosCode: string): Schedule {
+function enrichCategories(
+  schedule: Schedule,
+  aosCode: string,
+  minorMajorType?: string,
+  minorMajorCode?: string
+): Schedule {
   let aosUnits = new Set<string>();
+  let minorMajorUnits = new Set<string>();
+
   try {
     const aosRaw = JSON.parse(readFileSync(AOS_PATH, "utf-8"));
-    const entry = aosRaw[aosCode];
-    if (entry?.all_units) {
-      aosUnits = new Set(Object.keys(entry.all_units));
+    const aosEntry = aosRaw[aosCode];
+    if (aosEntry?.all_units) {
+      aosUnits = new Set(Object.keys(aosEntry.all_units));
+    }
+    if (minorMajorCode) {
+      const mmEntry = aosRaw[minorMajorCode];
+      if (mmEntry?.all_units) {
+        minorMajorUnits = new Set(Object.keys(mmEntry.all_units));
+      }
     }
   } catch (_) {}
 
@@ -71,6 +84,8 @@ function enrichCategories(schedule: Schedule, aosCode: string): Schedule {
       let category: UnitCategory = "Core";
       if (unit.code === "ELECTIVE") {
         category = "Elective";
+      } else if (minorMajorUnits.has(unit.code)) {
+        category = minorMajorType === "minor" ? "Minor" : "Major";
       } else if (aosUnits.has(unit.code)) {
         category = "Specialisation";
       }
@@ -111,7 +126,7 @@ export default async function NewPlanPage() {
     const outputFile = `schedule_${planId}.json`;
     const rawSchedule = runAlgo(courseCode, aosCode, outputFile, minorMajorType || undefined, minorMajorCode || undefined);
     if (rawSchedule) {
-      newPlan.schedule = enrichCategories(rawSchedule, aosCode);
+      newPlan.schedule = enrichCategories(rawSchedule, aosCode, minorMajorType || undefined, minorMajorCode || undefined);
     }
 
     const profile = await getProfileByEmail(email);
