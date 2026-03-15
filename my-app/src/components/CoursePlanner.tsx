@@ -1,6 +1,3 @@
-"use client";
-
-import { useState } from "react";
 import {
   Sparkles,
   RotateCcw,
@@ -8,13 +5,11 @@ import {
   BookOpen,
   TrendingUp,
   Plus,
+  Ellipsis,
   ChevronRight,
   GraduationCap,
-  MessageSquare,
 } from "lucide-react";
 import { Schedule, UnitCategory } from "@/lib/types";
-import UnitReviewModal from "./UnitReviewModal";
-import UnitHandbookCard from "./UnitHandbookCard";
 
 type Unit = {
   code: string;
@@ -125,9 +120,11 @@ function groupSemestersByYear(semesters: Semester[]): YearGroup[] {
 function getSummary(semesters: Semester[], schedule: Schedule): Summary {
   const totalPlannedUnits = schedule.summary.total_units;
   const totalCredits = schedule.summary.total_cp;
-  const completedTarget = totalPlannedUnits;
-  const scheduledUnits = semesters.reduce((n, s) => n + s.units.length, 0);
-  const progress = Math.min(100, Math.round((scheduledUnits / totalPlannedUnits) * 100));
+  // Total slots across all semesters (required + free elective placeholders) = full degree length
+  const completedTarget = semesters.reduce((n, s) => n + s.units.length, 0);
+  const progress = completedTarget > 0
+    ? Math.min(100, Math.round((totalPlannedUnits / completedTarget) * 100))
+    : 0;
 
   const breakdown: Record<UnitCategory, number> = {
     Core: 0, Major: 0, Minor: 0, Elective: 0, Specialisation: 0,
@@ -139,16 +136,11 @@ function getSummary(semesters: Semester[], schedule: Schedule): Summary {
   return { totalPlannedUnits, totalCredits, progress, completedTarget, breakdown };
 }
 
-function UnitCard({ unit, onClick }: { unit: Unit; onClick: () => void }) {
+function UnitCard({ unit }: { unit: Unit }) {
   const pillStyle = categoryPillStyles[unit.category];
-  const isElective = unit.code === "ELECTIVE";
 
   return (
-    <button
-      onClick={onClick}
-      disabled={isElective}
-      className="w-full rounded-[18px] border border-black/10 bg-white p-4 shadow-[0_1px_2px_rgba(0,0,0,0.04)] text-left transition hover:border-black/20 hover:shadow-[0_2px_8px_rgba(0,0,0,0.08)] disabled:cursor-default disabled:hover:border-black/10 disabled:hover:shadow-[0_1px_2px_rgba(0,0,0,0.04)]"
-    >
+    <div className="w-full rounded-[18px] border border-black/10 bg-white p-4 shadow-[0_1px_2px_rgba(0,0,0,0.04)]">
       <div className="flex items-start justify-between gap-3">
         <span
           className={`inline-flex rounded-full border px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.08em] ${pillStyle}`}
@@ -171,11 +163,9 @@ function UnitCard({ unit, onClick }: { unit: Unit; onClick: () => void }) {
         <span className="text-[13px] font-medium text-black/25">
           {unit.cp} CP
         </span>
-        {!isElective && (
-          <MessageSquare className="h-4 w-4 text-black/18" />
-        )}
+        <Ellipsis className="h-4 w-4 text-black/18" />
       </div>
-    </button>
+    </div>
   );
 }
 
@@ -197,7 +187,6 @@ export default function CoursePlanner({
   studentDetails,
   showHeader = true,
 }: CoursePlannerProps) {
-  const [selectedUnit, setSelectedUnit] = useState<Unit | null>(null);
   const yearStart = Number(studentDetails?.yearStart) || new Date().getFullYear();
   const semesters = buildFromSchedule(schedule, yearStart);
 
@@ -234,7 +223,7 @@ export default function CoursePlanner({
               </h1>
 
               <div className="mt-5 flex flex-wrap gap-2.5">
-                {[schedule.course_title, schedule.specialisation, schedule.major, schedule.campus]
+                {[schedule.course_title, schedule.specialisation, schedule.major, schedule.minor, schedule.campus]
                   .filter(Boolean)
                   .map((tag, i) => (
                     <span
@@ -382,7 +371,7 @@ export default function CoursePlanner({
                               key={`${semester.id}-${slotIndex}`}
                               className="border-r-0 border-b border-black/[0.05] p-4 last:border-b-0 md:border-r xl:border-b-0 xl:last:border-r-0"
                             >
-                              {unit ? <UnitCard unit={unit} onClick={() => setSelectedUnit(unit)} /> : <EmptyUnitCard />}
+                              {unit ? <UnitCard unit={unit} /> : <EmptyUnitCard />}
                             </div>
                           );
                         })}
@@ -395,16 +384,6 @@ export default function CoursePlanner({
           ))}
         </div>
       </section>
-
-      <UnitReviewModal
-        unit={selectedUnit}
-        onClose={() => setSelectedUnit(null)}
-      />
-
-      <UnitHandbookCard
-        unit={selectedUnit}
-        onClose={() => setSelectedUnit(null)}
-      />
     </div>
   );
 }
