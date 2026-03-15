@@ -26,6 +26,7 @@ import {
   GripVertical,
 } from "lucide-react";
 import { Schedule, UnitCategory } from "@/lib/types";
+import UnitDetailPanel from "./UnitDetailPanel";
 
 // ── Types ─────────────────────────────────────────────────────────────────────
 
@@ -228,7 +229,15 @@ function UnitCardContent({ unit, isDragging = false }: { unit: Unit; isDragging?
   );
 }
 
-function DraggableUnitCard({ unit, slotId }: { unit: Unit; slotId: string }) {
+function DraggableUnitCard({
+  unit,
+  slotId,
+  onCardClick,
+}: {
+  unit: Unit;
+  slotId: string;
+  onCardClick: (unit: Unit) => void;
+}) {
   const { attributes, listeners, setNodeRef, transform, isDragging } =
     useDraggable({ id: slotId });
 
@@ -239,7 +248,15 @@ function DraggableUnitCard({ unit, slotId }: { unit: Unit; slotId: string }) {
   };
 
   return (
-    <div ref={setNodeRef} style={style} {...listeners} {...attributes}>
+    <div
+      ref={setNodeRef}
+      style={style}
+      {...listeners}
+      {...attributes}
+      onClick={() => {
+        if (unit.code !== "ELECTIVE") onCardClick(unit);
+      }}
+    >
       <UnitCardContent unit={unit} isDragging={isDragging} />
     </div>
   );
@@ -293,6 +310,7 @@ export default function CoursePlanner({
     buildFromSchedule(schedule, yearStart)
   );
   const [activeSlotId, setActiveSlotId] = useState<string | null>(null);
+  const [selectedUnit, setSelectedUnit] = useState<Unit | null>(null);
 
   const sensors = useSensors(
     useSensor(PointerSensor, { activationConstraint: { distance: 5 } })
@@ -500,6 +518,7 @@ export default function CoursePlanner({
                                   <DraggableUnitCard
                                     unit={unit}
                                     slotId={slotId}
+                                    onCardClick={setSelectedUnit}
                                   />
                                 ) : (
                                   <EmptyUnitCard />
@@ -526,6 +545,12 @@ export default function CoursePlanner({
           </div>
         ) : null}
       </DragOverlay>
+
+      {/* Unit detail side panel */}
+      <UnitDetailPanel
+        unit={selectedUnit}
+        onClose={() => setSelectedUnit(null)}
+      />
     </DndContext>
   );
 }
