@@ -10,18 +10,24 @@ import { Plan, Profile, Schedule, UnitCategory } from "@/lib/types";
 import { spawnSync } from "child_process";
 import { readFileSync, unlinkSync } from "fs";
 import path from "path";
+import { savePendingPlan } from "@/lib/pendingPlan";
 
 const ALGO_DIR = path.join(process.cwd(), "src/algo");
 const AOS_PATH = path.join(process.cwd(), "public/data/final_aos.json");
 
 // On Windows try "py" first (Python Launcher); on other platforms try "python3" first
-const PYTHON_COMMANDS = process.platform === "win32"
-  ? ["py", "python", "python3"]
-  : ["python3", "python", "py"];
+const PYTHON_COMMANDS =
+  process.platform === "win32"
+    ? ["py", "python", "python3"]
+    : ["python3", "python", "py"];
 
 function spawnPython(args: string[]): ReturnType<typeof spawnSync> {
   for (const cmd of PYTHON_COMMANDS) {
-    const result = spawnSync(cmd, args, { cwd: ALGO_DIR, encoding: "utf-8", timeout: 60000 });
+    const result = spawnSync(cmd, args, {
+      cwd: ALGO_DIR,
+      encoding: "utf-8",
+      timeout: 60000,
+    });
     // ENOENT = command not found on Unix
     if (result.error && (result.error as any).code === "ENOENT") continue;
     // 9009 = "command not recognized" on Windows
@@ -29,15 +35,40 @@ function spawnPython(args: string[]): ReturnType<typeof spawnSync> {
     return result;
   }
   // All commands exhausted — return last result so the caller can log the error
-  return spawnSync(PYTHON_COMMANDS[PYTHON_COMMANDS.length - 1], args, { cwd: ALGO_DIR, encoding: "utf-8", timeout: 60000 });
+  return spawnSync(PYTHON_COMMANDS[PYTHON_COMMANDS.length - 1], args, {
+    cwd: ALGO_DIR,
+    encoding: "utf-8",
+    timeout: 60000,
+  });
 }
 
-function runAlgo(courseCode: string, aosCode: string, outputFile: string, minorMajorType?: string, minorMajorCode?: string): Schedule | null {
-  const args = ["algo1.py", "--course", courseCode, "--specialisation", aosCode, "--campus", "Clayton", "--output", outputFile];
+function runAlgo(
+  courseCode: string,
+  aosCode: string,
+  outputFile: string,
+  minorMajorType?: string,
+  minorMajorCode?: string,
+): Schedule | null {
+  const args = [
+    "algo1.py",
+    "--course",
+    courseCode,
+    "--specialisation",
+    aosCode,
+    "--campus",
+    "Clayton",
+    "--output",
+    outputFile,
+  ];
   if (minorMajorType && minorMajorCode) {
     args.push(`--${minorMajorType}`, minorMajorCode);
   }
   const result = spawnPython(args);
+
+  console.log("algo status:", result.status);
+  console.log("algo stdout:", result.stdout);
+  console.log("algo stderr:", result.stderr);
+  console.log("algo error:", result.error);
 
   if (result.status !== 0) {
     console.error("algo1.py stderr:", result.stderr);
@@ -106,7 +137,7 @@ export default async function NewPlanPage() {
     if (!email) redirect("/sign-in");
 
     const planId = crypto.randomUUID();
-    const courseCode = String(formData.get("courses") || "");
+    const courseCode = String(formData.get("courseCode") || "");
     const aosCode = String(formData.get("areaOfStudy") || "");
     const minorMajorType = String(formData.get("minorMajorType") || "");
     const minorMajorCode = String(formData.get("minorMajorCode") || "");
@@ -114,26 +145,37 @@ export default async function NewPlanPage() {
     const newPlan: Plan = {
       id: planId,
       planName: String(formData.get("planName") || ""),
-      courses: courseCode,
+      courseCode: courseCode,
       university: String(formData.get("university") || ""),
       areaOfStudy: aosCode,
       semesterOffering: String(formData.get("semesterOffering") || ""),
       yearStart: Number(formData.get("yearStart")),
       yearEnd: Number(formData.get("yearEnd")),
-      saved: false,
     };
 
     const outputFile = `schedule_${planId}.json`;
-    const rawSchedule = runAlgo(courseCode, aosCode, outputFile, minorMajorType || undefined, minorMajorCode || undefined);
+    const rawSchedule = runAlgo(
+      courseCode,
+      aosCode,
+      outputFile,
+      minorMajorType || undefined,
+      minorMajorCode || undefined,
+    );
+
     if (rawSchedule) {
       newPlan.schedule = enrichCategories(rawSchedule, aosCode, minorMajorType || undefined, minorMajorCode || undefined);
     }
 
-    const profile = await getProfileByEmail(email);
-    const existingPlans: Plan[] = profile?.plans ?? [];
-    await updateProfile(email, { plans: [...existingPlans, newPlan] });
+    console.log("raw sched", rawSchedule, newPlan.schedule);
 
-    redirect(`/course-plan?planId=${planId}`);
+    // Not directly save to the database
+
+    // const profile = await getProfileByEmail(email);
+    // const existingPlans: Plan[] = profile?.plans ?? [];
+    // await updateProfile(email, { plans: [...existingPlans, newPlan] });
+
+    await savePendingPlan(email, newPlan);
+    redirect(`/course-plan/${planId}?pending=true`);
   }
 
   return (

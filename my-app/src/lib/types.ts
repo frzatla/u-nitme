@@ -1,7 +1,9 @@
+// --- Temporary plan before officially putting it on database
+// Using the same type but using different table
 export type Plan = {
   id: string;
   planName: string;
-  courses: string;
+  courseCode: string;
   university: string;
   areaOfStudy: string;
   semesterOffering: string;
@@ -11,26 +13,48 @@ export type Plan = {
   saved?: boolean;
 };
 
+export type PendingPlan = {
+  email: string;
+  plan: Plan;
+};
+
 export type Profile = {
   id?: string;
   email: string;
   plans: Plan[];
 };
 
+export type YearGroup = {
+  year: number;
+  yearLabel: string;
+  semesters: Semester[];
+};
+
+export type Semester = {
+  id: string;
+  title: string;
+  year: number;
+  units: ChosenUnit[]; // each semester only have 4 units
+};
+
 export type ChosenUnit = {
   chosenId: number;
-  unitId: number;
+  unitCode: number;
   unitName: string;
+  category: string;
+  cp: number;
   chosenYear: number;
   chosenSem: string;
-  type: string;
-  creditPoint: number;
-  difficulty: string;
 };
 
 // ── algo1.py output types ─────────────────────────────────────────────────────
 
-export type UnitCategory = "Core" | "Major" | "Minor" | "Elective" | "Specialisation";
+export type UnitCategory =
+  | "Core"
+  | "Major"
+  | "Minor"
+  | "Elective"
+  | "Specialisation";
 
 export type ScheduledUnit = {
   code: string;
@@ -43,8 +67,8 @@ export type ScheduledUnit = {
 };
 
 export type ScheduledSemester = {
-  semester: string;        // e.g. "Year 1, Semester 1"
-  period: string | null;   // "S1" | "S2" | null (null = unscheduled bucket)
+  semester: string; // e.g. "Year 1, Semester 1"
+  period: string | null; // "S1" | "S2" | null (null = unscheduled bucket)
   semester_index: number;
   extended: boolean | null;
   units: ScheduledUnit[];
@@ -54,7 +78,7 @@ export type ScheduledSemester = {
 };
 
 export type Schedule = {
-  course_code: string;
+  courseCode: string;
   course_title: string;
   specialisation: string | null;
   major: string | null;

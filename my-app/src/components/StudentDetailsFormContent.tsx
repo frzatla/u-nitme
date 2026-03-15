@@ -136,13 +136,13 @@ function SearchableSelect({
 }
 
 export default function StudentDetailsFormContent({
-  courses,
+  courseCode,
   aosList,
   minorAosList,
   majorAosList,
   courseToAos,
 }: {
-  courses: CourseOption[];
+  courseCode: CourseOption[];
   aosList: AosOption[];
   minorAosList: AosOption[];
   majorAosList: AosOption[];
@@ -245,12 +245,12 @@ export default function StudentDetailsFormContent({
 
           <div>
             <SearchableSelect
-              id="courses"
+              id="courseCode"
               name="courses"
               label="Courses"
               placeholder="Select course"
               emptyLabel="No courses found"
-              options={courses}
+              options={courseCode}
               value={selectedCourse}
               required
               onChange={setSelectedCourse}
