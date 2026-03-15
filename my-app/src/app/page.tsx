@@ -28,6 +28,7 @@ import {
   Target,
   Minus,
   Plus,
+  Trophy,
 } from "lucide-react";
 import { SignInButton } from "@clerk/nextjs";
 
@@ -600,9 +601,9 @@ export default function Home() {
         <div className="mx-auto max-w-7xl py-28 md:py-36">
           <StaggerGrid className="grid grid-cols-2 gap-10 md:grid-cols-4">
             {[
-              { value: "2.4k+", label: "Plans Generated" },
-              { value: "12", label: "Universities" },
-              { value: "<30s", label: "Avg Plan Time" },
+              { value: "450+", label: "Areas of Study" },
+              { value: "#1", label: "Top Uni", icon: Trophy },
+              { value: "<10s", label: "Avg Plan Time" },
               { value: "4.9", label: "Student Rating" },
             ].map((stat) => (
               <StaggerItem key={stat.label}>
@@ -610,33 +611,15 @@ export default function Home() {
                   <div className="text-5xl font-semibold tracking-[-0.08em] text-white md:text-7xl lg:text-8xl">
                     {stat.value}
                   </div>
-                  <div className="mt-3 text-xs uppercase tracking-[0.2em] text-white">
-                    {stat.label}
+
+                  <div className="mt-3 flex items-center gap-2 text-xs uppercase tracking-[0.2em] text-white">
+                    {stat.icon && <stat.icon className="h-3.5 w-3.5" />}
+                    <span>{stat.label}</span>
                   </div>
                 </div>
               </StaggerItem>
             ))}
           </StaggerGrid>
-        </div>
-      </section>
-
-      <section className="relative h-[70vh] overflow-hidden">
-        <motion.img
-          initial={{ scale: 1.12 }}
-          whileInView={{ scale: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 1.5, ease: [0.22, 1, 0.36, 1] }}
-          src="https://images.unsplash.com/photo-1704748082614-8163a88e56b8?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHx1bml2ZXJzaXR5JTIwc3R1ZGVudHMlMjBzdHVkeWluZyUyMGxhcHRvcHxlbnwxfHx8fDE3NzMzOTAzNjR8MA&ixlib=rb-4.1.0&q=80&w=1080"
-          alt="Students studying"
-          className="h-full w-full object-cover grayscale"
-        />
-        <div className="absolute inset-0 bg-black/45" />
-        <div className="absolute inset-0 flex items-center justify-center px-6">
-          <FadeUp>
-            <p className="max-w-3xl text-center text-2xl font-medium leading-snug tracking-tight text-white md:text-4xl">
-              “We spent more time reading the handbook than actually studying.”
-            </p>
-          </FadeUp>
         </div>
       </section>
 
@@ -730,7 +713,7 @@ export default function Home() {
                   whileInView={{ scale: 1 }}
                   viewport={{ once: true }}
                   transition={{ duration: 1.3, ease: [0.22, 1, 0.36, 1] }}
-                  src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=1200&q=80"
+                  src="/startup-2.png"
                   alt="Team"
                   className="h-[420px] w-full object-cover grayscale opacity-72 transition duration-700 hover:opacity-90 hover:grayscale-0 md:h-[520px]"
                 />
