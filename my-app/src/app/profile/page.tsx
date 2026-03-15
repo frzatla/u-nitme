@@ -43,44 +43,27 @@ function spawnPython(args: string[]): ReturnType<typeof spawnSync> {
   });
 }
 
-function runAlgo(
+async function runAlgo(
   courseCode: string,
   aosCode: string,
   outputFile: string,
   minorMajorType?: string,
   minorMajorCode?: string,
-): Schedule | null {
-  const args = [
-    "algo1.py",
-    "--course",
-    courseCode,
-    "--specialisation",
-    aosCode,
-    "--campus",
-    "Clayton",
-    "--output",
-    outputFile,
-  ];
-  if (minorMajorType && minorMajorCode) {
-    args.push(`--${minorMajorType}`, minorMajorCode);
-  }
-  const result = spawnPython(args);
+): Promise<Schedule | null> {
 
-  console.log("algo status:", result.status);
-  console.log("algo stdout:", result.stdout);
-  console.log("algo stderr:", result.stderr);
-  console.log("algo error:", result.error);
-
-  if (result.status !== 0) {
-    console.error("algo1.py stderr:", result.stderr);
-    return null;
-  }
-
-  const outputPath = path.join(ALGO_DIR, outputFile);
   try {
-    const raw: Schedule = JSON.parse(readFileSync(outputPath, "utf-8"));
-    unlinkSync(outputPath);
-    return raw;
+    const response = await fetch(process.env.ALGO_URL ?? "https://u-nitme-algo.vercel.app/", {
+      method: "POST",
+      body: JSON.stringify({
+        course: courseCode,
+        specialisation: aosCode,
+        campus: "Clayton"
+      })
+    })
+    if (!response.ok) throw new Error()
+
+    const schedule = (await response.json()) as Schedule
+    return schedule
   } catch (e) {
     console.error("Failed to read schedule output:", e);
     return null;
@@ -108,7 +91,7 @@ function enrichCategories(
         minorMajorUnits = new Set(Object.keys(mmEntry.all_units));
       }
     }
-  } catch (_) {}
+  } catch (_) { }
 
   const enriched = schedule.schedule.map((sem) => ({
     ...sem,
@@ -157,7 +140,7 @@ export default async function NewPlanPage() {
     };
 
     const outputFile = `schedule_${planId}.json`;
-    const rawSchedule = runAlgo(
+    const rawSchedule = await runAlgo(
       courseCode,
       aosCode,
       outputFile,
