@@ -13,36 +13,64 @@ import { redirect } from "next/navigation";
 import CoursePlanner from "@/components/CoursePlanner";
 import { getProfileByEmail, updateProfile } from "@/lib/profile";
 import { Plan, Profile } from "@/lib/types";
+import { deletePendingPlan, getPendingPlan } from "@/lib/pendingPlan";
 
 export default async function CoursePlanPage({
   params,
+  searchParams,
 }: {
   params: Promise<{ planId: string }>;
+  searchParams: Promise<{ pending?: string }>;
 }) {
   const { planId } = await params;
+  const { pending } = await searchParams;
+
+  console.log("pending:", pending);
 
   const user = await currentUser();
   const email: string = user?.primaryEmailAddress?.emailAddress;
 
   if (!email) redirect("/sign-in");
 
-  const profile: Profile = await getProfileByEmail(email);
-  const plans: Plan[] = profile?.plans ?? [];
+  let plan: Plan | null = null;
 
-  // Find by planId from URL, or fall back to most recent plan
-  const plan = plans.find((p) => p.id === planId) ?? plans[plans.length - 1];
+  if (pending === "true") {
+    // Load from pendingPlan
+    plan = await getPendingPlan(email);
+  } else {
+    // Load from saved plans
+    const profile = await getProfileByEmail(email);
+    plan = profile?.plans?.find((p) => p.id === planId) ?? null;
+  }
 
-  if (!plan) redirect("/dashboard");
-  if (!plan.schedule) redirect("/profile");
+  console.log("plan:", plan.schedule);
+
+  if (!plan || !plan.schedule) redirect("/profile");
 
   async function handleSave() {
     "use server";
-    const updated = plans.map((p) =>
-      p.id === planId ? { ...p, saved: true } : p,
-    );
-    await updateProfile(email, { plans: updated });
-    redirect("/dashboard");
+
+    const savedPlan: Plan = {
+      ...plan,
+      id: crypto.randomUUID(), // fresh ID
+      saved: true,
+    };
+    const profile = await getProfileByEmail(email);
+    const existingPlans = profile?.plans ?? [];
+
+    await updateProfile(email, { plans: [...existingPlans, savedPlan] });
+    await deletePendingPlan(email);
+
+    redirect(`/course-plan/${savedPlan.id}`);
   }
+
+  async function handleDiscard() {
+    "use server";
+    await deletePendingPlan(email);
+    redirect("/profile");
+  }
+
+  const isPending = pending === "true";
 
   const coursePlanName = plan.planName;
 
@@ -98,29 +126,41 @@ export default async function CoursePlanPage({
             </div>
 
             <div className="flex items-center gap-3">
-              <Link
-                href="/profile"
-                className="flex items-center gap-2 rounded-lg border border-white/15 px-4 py-2 text-xs text-white/50 transition-all hover:border-white/30 hover:text-white"
-              >
-                <RefreshCw className="h-3.5 w-3.5" />
-                Regenerate
-              </Link>
-
-              {!plan.saved ? (
-                <form action={handleSave}>
-                  <button
-                    type="submit"
-                    className="flex items-center gap-2 rounded-lg bg-white px-4 py-2 text-xs font-medium text-black transition-all hover:bg-white/90"
-                  >
-                    <BookmarkCheck className="h-3.5 w-3.5" />
-                    Save Plan
-                  </button>
-                </form>
+              {isPending ? (
+                <>
+                  <form action={handleSave}>
+                    <button
+                      type="submit"
+                      className="flex items-center gap-2 rounded-lg bg-white px-4 py-2 text-xs font-medium text-black transition-all hover:bg-white/90"
+                    >
+                      <BookmarkCheck className="h-3.5 w-3.5" />
+                      Save Plan
+                    </button>
+                  </form>
+                  <form action={handleDiscard}>
+                    <button
+                      type="submit"
+                      className="flex items-center gap-2 rounded-lg border border-white/15 px-4 py-2 text-xs text-white/50 transition-all hover:border-white/30 hover:text-white"
+                    >
+                      <RefreshCw className="h-3.5 w-3.5" />
+                      Regenerate
+                    </button>
+                  </form>
+                </>
               ) : (
-                <span className="flex items-center gap-2 rounded-lg border border-white/15 px-4 py-2 text-xs text-white/40">
-                  <BookmarkCheck className="h-3.5 w-3.5" />
-                  Saved
-                </span>
+                <>
+                  <Link
+                    href="/profile"
+                    className="flex items-center gap-2 rounded-lg border border-white/15 px-4 py-2 text-xs text-white/50 transition-all hover:border-white/30 hover:text-white"
+                  >
+                    <RefreshCw className="h-3.5 w-3.5" />
+                    Regenerate
+                  </Link>
+                  <span className="flex items-center gap-2 rounded-lg border border-white/15 px-4 py-2 text-xs text-white/40">
+                    <BookmarkCheck className="h-3.5 w-3.5" />
+                    Saved
+                  </span>
+                </>
               )}
             </div>
           </div>

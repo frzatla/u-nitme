@@ -10,6 +10,7 @@ import { Plan, Profile, Schedule, UnitCategory } from "@/lib/types";
 import { spawnSync } from "child_process";
 import { readFileSync, unlinkSync } from "fs";
 import path from "path";
+import { savePendingPlan } from "@/lib/pendingPlan";
 
 const ALGO_DIR = path.join(process.cwd(), "src/algo");
 const AOS_PATH = path.join(process.cwd(), "public/data/final_aos.json");
@@ -63,6 +64,11 @@ function runAlgo(
     args.push(`--${minorMajorType}`, minorMajorCode);
   }
   const result = spawnPython(args);
+
+  console.log("algo status:", result.status);
+  console.log("algo stdout:", result.stdout);
+  console.log("algo stderr:", result.stderr);
+  console.log("algo error:", result.error);
 
   if (result.status !== 0) {
     console.error("algo1.py stderr:", result.stderr);
@@ -130,7 +136,6 @@ export default async function NewPlanPage() {
       semesterOffering: String(formData.get("semesterOffering") || ""),
       yearStart: Number(formData.get("yearStart")),
       yearEnd: Number(formData.get("yearEnd")),
-      saved: false,
     };
 
     const outputFile = `schedule_${planId}.json`;
@@ -141,15 +146,21 @@ export default async function NewPlanPage() {
       minorMajorType || undefined,
       minorMajorCode || undefined,
     );
+
     if (rawSchedule) {
       newPlan.schedule = enrichCategories(rawSchedule, aosCode);
     }
 
-    const profile = await getProfileByEmail(email);
-    const existingPlans: Plan[] = profile?.plans ?? [];
-    await updateProfile(email, { plans: [...existingPlans, newPlan] });
+    console.log("raw sched", rawSchedule, newPlan.schedule);
 
-    redirect(`/course-plan/${planId}`);
+    // Not directly save to the database
+
+    // const profile = await getProfileByEmail(email);
+    // const existingPlans: Plan[] = profile?.plans ?? [];
+    // await updateProfile(email, { plans: [...existingPlans, newPlan] });
+
+    await savePendingPlan(email, newPlan);
+    redirect(`/course-plan/${planId}?pending=true`);
   }
 
   return (

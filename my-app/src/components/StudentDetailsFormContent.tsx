@@ -10,13 +10,13 @@ const inputClass =
   "w-full rounded-xl border border-black/10 bg-black/[0.03] px-4 py-3 text-sm text-black placeholder:text-black/30 outline-none transition-all focus:border-black/20 focus:bg-white focus:ring-4 focus:ring-black/[0.03]";
 
 export default function StudentDetailsFormContent({
-  courses,
+  courseCode,
   aosList,
   minorAosList,
   majorAosList,
   courseToAos,
 }: {
-  courses: CourseOption[];
+  courseCode: CourseOption[];
   aosList: AosOption[];
   minorAosList: AosOption[];
   majorAosList: AosOption[];
@@ -25,9 +25,10 @@ export default function StudentDetailsFormContent({
   const [selectedCourse, setSelectedCourse] = useState("");
   const [minorMajorType, setMinorMajorType] = useState("");
 
-  const filteredAos = selectedCourse && courseToAos[selectedCourse]
-    ? aosList.filter((a) => courseToAos[selectedCourse].includes(a.code))
-    : [];
+  const filteredAos =
+    selectedCourse && courseToAos[selectedCourse]
+      ? aosList.filter((a) => courseToAos[selectedCourse].includes(a.code))
+      : [];
 
   return (
     <>
@@ -79,15 +80,15 @@ export default function StudentDetailsFormContent({
 
           <div>
             <label
-              htmlFor="courses"
+              htmlFor="courseCode"
               className="mb-2 block text-sm font-medium text-black/75"
             >
-              Courses <span className="text-black/30">*</span>
+              courseCode <span className="text-black/30">*</span>
             </label>
             <div className="relative">
               <select
-                id="courses"
-                name="courses"
+                id="courseCode"
+                name="courseCode"
                 required
                 value={selectedCourse}
                 onChange={(e) => setSelectedCourse(e.target.value)}
@@ -96,17 +97,15 @@ export default function StudentDetailsFormContent({
                 <option value="" disabled>
                   Select course
                 </option>
-                {courses.map((c) => (
+                {courseCode.map((c) => (
                   <option key={c.code} value={c.code}>
-                     {c.code}: {c.title}
+                    {c.code}: {c.title}
                   </option>
                 ))}
               </select>
               <ChevronDown className="pointer-events-none absolute right-4 top-1/2 h-4 w-4 -translate-y-1/2 text-black/35" />
             </div>
           </div>
-
-          
         </div>
       </section>
 
@@ -129,7 +128,9 @@ export default function StudentDetailsFormContent({
                 className={`${inputClass} appearance-none pr-10 disabled:cursor-not-allowed disabled:opacity-50`}
               >
                 <option value="" disabled>
-                  {selectedCourse ? "Select area of study" : "Select a course first"}
+                  {selectedCourse
+                    ? "Select area of study"
+                    : "Select a course first"}
                 </option>
                 {filteredAos.map((a) => (
                   <option key={a.code} value={a.code}>
@@ -173,7 +174,12 @@ export default function StudentDetailsFormContent({
               htmlFor="minorMajorCode"
               className="mb-2 block text-sm font-medium text-black/75"
             >
-              Select {minorMajorType === "major" ? "Major" : minorMajorType === "minor" ? "Minor" : "Minor/Major"}
+              Select{" "}
+              {minorMajorType === "major"
+                ? "Major"
+                : minorMajorType === "minor"
+                  ? "Minor"
+                  : "Minor/Major"}
             </label>
             <div className="relative">
               <select
@@ -184,9 +190,16 @@ export default function StudentDetailsFormContent({
                 className={`${inputClass} appearance-none pr-10 disabled:cursor-not-allowed disabled:opacity-50`}
               >
                 <option value="">
-                  {minorMajorType ? `Select ${minorMajorType}` : "Select type first"}
+                  {minorMajorType
+                    ? `Select ${minorMajorType}`
+                    : "Select type first"}
                 </option>
-                {(minorMajorType === "minor" ? minorAosList : minorMajorType === "major" ? majorAosList : aosList).map((a) => (
+                {(minorMajorType === "minor"
+                  ? minorAosList
+                  : minorMajorType === "major"
+                    ? majorAosList
+                    : aosList
+                ).map((a) => (
                   <option key={a.code} value={a.code}>
                     {a.code}: {a.title}
                   </option>

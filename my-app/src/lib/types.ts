@@ -13,6 +13,11 @@ export type Plan = {
   saved?: boolean;
 };
 
+export type PendingPlan = {
+  email: string;
+  plan: Plan;
+};
+
 export type Profile = {
   id?: string;
   email: string;
@@ -73,7 +78,7 @@ export type ScheduledSemester = {
 };
 
 export type Schedule = {
-  course_code: string;
+  courseCode: string;
   course_title: string;
   specialisation: string | null;
   major: string | null;
