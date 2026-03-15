@@ -11,9 +11,11 @@ import {
   Plus,
   Sparkles,
 } from "lucide-react";
+import DeletePlanButton from "../../components/DeletePlanButton";
 import {
   createNewProfile,
   getProfileByEmail,
+  updateProfile,
 } from "../../lib/profile";
 
 function getGreeting() {
@@ -47,6 +49,24 @@ export default async function DashboardPage() {
   const lastPlan = plans[plans.length - 1] ?? null;
   const universityName = lastPlan?.university || "—";
   const lastPlanName = lastPlan?.planName || lastPlan?.courses || "—";
+
+  async function handleDeletePlan(formData: FormData) {
+    "use server";
+
+    const planId = String(formData.get("planId") || "");
+    if (!planId) return;
+
+    const current = await getProfileByEmail(email);
+    const currentPlans = current?.plans ?? [];
+    const nextPlans = [...currentPlans];
+    const planIndex = nextPlans.findIndex((plan) => plan.id === planId);
+
+    if (planIndex === -1) return;
+
+    nextPlans.splice(planIndex, 1);
+
+    await updateProfile(email, { plans: nextPlans });
+  }
 
   return (
     <main className="min-h-screen bg-white font-[var(--font-geist-sans)] text-black">
@@ -140,12 +160,15 @@ export default async function DashboardPage() {
               {plans.map((plan, index) => {
                 const start = Number(plan?.yearStart);
                 const end = Number(plan?.yearEnd);
-                const unitCount = plan.schedule?.summary.total_units
-                  ?? (Number.isFinite(start) && Number.isFinite(end) && end >= start
+                const unitCount =
+                  plan.schedule?.summary.total_units ??
+                  (Number.isFinite(start) &&
+                  Number.isFinite(end) &&
+                  end >= start
                     ? (end - start + 1) * 8
                     : 0);
-                const totalCredits = plan.schedule?.summary.total_cp
-                  ?? unitCount * 6;
+                const totalCredits =
+                  plan.schedule?.summary.total_cp ?? unitCount * 6;
 
                 return (
                   <div
@@ -195,13 +218,20 @@ export default async function DashboardPage() {
                           </div>
                         </div>
 
-                        <Link
-                          href={`/course-plan?planId=${plan.id}`}
-                          className="inline-flex items-center gap-3 rounded-full border border-black/[0.1] bg-white px-8 py-4 text-[15px] font-medium text-black transition-colors hover:border-black/20 hover:bg-black/[0.02]"
-                        >
-                          View Plan
-                          <ArrowRight className="h-5 w-5" />
-                        </Link>
+                        <div className="flex flex-wrap items-center gap-3">
+                          <Link
+                            href={`/course-plan?planId=${plan.id}`}
+                            className="inline-flex items-center gap-3 rounded-full border border-black/[0.1] bg-white px-8 py-4 text-[15px] font-medium text-black transition-colors hover:border-black/20 hover:bg-black/[0.02]"
+                          >
+                            View Plan
+                            <ArrowRight className="h-5 w-5" />
+                          </Link>
+
+                          <DeletePlanButton
+                            planId={plan.id}
+                            action={handleDeletePlan}
+                          />
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -226,7 +256,7 @@ export default async function DashboardPage() {
 
                 <Link
                   href="/dashboard/profile"
-                  className="mt-12 inline-flex items-center gap-3 rounded-full bg-black px-8 py-4 text-[15px] font-medium text-white transition-colors hover:bg-black/90"
+                  className="inline-flex items-center gap-3 rounded-full border border-black/[0.12] bg-white px-8 py-4 text-[15px] font-medium text-black transition-colors hover:border-black/20 hover:bg-black/[0.02]"
                 >
                   <Plus className="h-5 w-5" />
                   Create First Plan
