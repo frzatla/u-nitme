@@ -92,13 +92,6 @@ export default async function CoursePlanPage({
             </div>
 
             <div className="flex items-center gap-3">
-              <button
-                type="button"
-                className="flex items-center gap-2 rounded-lg border border-white/60 px-4 py-2 text-xs text-white/80 transition-all hover:border-white/30 hover:text-white"
-              >
-                <Save className="h-3.5 w-3.5" />
-                Save Plan
-              </button>
               <Link
                 href="/profile"
                 className="flex items-center gap-2 rounded-lg border border-white/15 px-4 py-2 text-xs text-white/50 transition-all hover:border-white/30 hover:text-white"
