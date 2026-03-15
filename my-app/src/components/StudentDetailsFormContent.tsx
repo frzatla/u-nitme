@@ -12,13 +12,18 @@ const inputClass =
 export default function StudentDetailsFormContent({
   courses,
   aosList,
+  minorAosList,
+  majorAosList,
   courseToAos,
 }: {
   courses: CourseOption[];
   aosList: AosOption[];
+  minorAosList: AosOption[];
+  majorAosList: AosOption[];
   courseToAos: Record<string, string[]>;
 }) {
   const [selectedCourse, setSelectedCourse] = useState("");
+  const [minorMajorType, setMinorMajorType] = useState("");
 
   const filteredAos = selectedCourse && courseToAos[selectedCourse]
     ? aosList.filter((a) => courseToAos[selectedCourse].includes(a.code))
@@ -50,6 +55,30 @@ export default function StudentDetailsFormContent({
         <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
           <div>
             <label
+              htmlFor="university"
+              className="mb-2 block text-sm font-medium text-black/75"
+            >
+              University <span className="text-black/30">*</span>
+            </label>
+            <div className="relative">
+              <select
+                id="university"
+                name="university"
+                required
+                defaultValue=""
+                className={`${inputClass} appearance-none pr-10`}
+              >
+                <option value="" disabled>
+                  Select university
+                </option>
+                <option value="Monash University">Monash University</option>
+              </select>
+              <ChevronDown className="pointer-events-none absolute right-4 top-1/2 h-4 w-4 -translate-y-1/2 text-black/35" />
+            </div>
+          </div>
+
+          <div>
+            <label
               htmlFor="courses"
               className="mb-2 block text-sm font-medium text-black/75"
             >
@@ -69,7 +98,7 @@ export default function StudentDetailsFormContent({
                 </option>
                 {courses.map((c) => (
                   <option key={c.code} value={c.code}>
-                    {c.title}
+                     {c.code}: {c.title}
                   </option>
                 ))}
               </select>
@@ -77,29 +106,7 @@ export default function StudentDetailsFormContent({
             </div>
           </div>
 
-          <div>
-            <label
-              htmlFor="university"
-              className="mb-2 block text-sm font-medium text-black/75"
-            >
-              University
-            </label>
-            <div className="relative">
-              <select
-                id="university"
-                name="university"
-                required
-                defaultValue=""
-                className={`${inputClass} appearance-none pr-10`}
-              >
-                <option value="" disabled>
-                  Select university
-                </option>
-                <option value="Monash University">Monash University</option>
-              </select>
-              <ChevronDown className="pointer-events-none absolute right-4 top-1/2 h-4 w-4 -translate-y-1/2 text-black/35" />
-            </div>
-          </div>
+          
         </div>
       </section>
 
@@ -127,6 +134,61 @@ export default function StudentDetailsFormContent({
                 {filteredAos.map((a) => (
                   <option key={a.code} value={a.code}>
                     {a.title}
+                  </option>
+                ))}
+              </select>
+              <ChevronDown className="pointer-events-none absolute right-4 top-1/2 h-4 w-4 -translate-y-1/2 text-black/35" />
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+          <div>
+            <label
+              htmlFor="minorMajorType"
+              className="mb-2 block text-sm font-medium text-black/75"
+            >
+              Minor / Major <span className="text-black/30">Optional</span>
+            </label>
+            <div className="relative">
+              <select
+                id="minorMajorType"
+                name="minorMajorType"
+                value={minorMajorType}
+                onChange={(e) => setMinorMajorType(e.target.value)}
+                className={`${inputClass} appearance-none pr-10`}
+              >
+                <option value="">None</option>
+                <option value="major">Major</option>
+                <option value="minor">Minor</option>
+              </select>
+              <ChevronDown className="pointer-events-none absolute right-4 top-1/2 h-4 w-4 -translate-y-1/2 text-black/35" />
+            </div>
+          </div>
+
+          <div>
+            <label
+              htmlFor="minorMajorCode"
+              className="mb-2 block text-sm font-medium text-black/75"
+            >
+              Select {minorMajorType === "major" ? "Major" : minorMajorType === "minor" ? "Minor" : "Minor/Major"}
+            </label>
+            <div className="relative">
+              <select
+                id="minorMajorCode"
+                name="minorMajorCode"
+                defaultValue=""
+                disabled={!minorMajorType}
+                className={`${inputClass} appearance-none pr-10 disabled:cursor-not-allowed disabled:opacity-50`}
+              >
+                <option value="">
+                  {minorMajorType ? `Select ${minorMajorType}` : "Select type first"}
+                </option>
+                {(minorMajorType === "minor" ? minorAosList : minorMajorType === "major" ? majorAosList : aosList).map((a) => (
+                  <option key={a.code} value={a.code}>
+                    {a.code}: {a.title}
                   </option>
                 ))}
               </select>

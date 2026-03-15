@@ -17,10 +17,16 @@ import { Plan, Profile } from "@/lib/types";
 export default async function CoursePlanPage({
   params,
 }: {
+<<<<<<< HEAD:my-app/src/app/course-plan/[planId]/page.tsx
   params: Promise<{ planId: string }>;
 }) {
   const { planId } = await params;
 
+=======
+  searchParams: Promise<{ planId?: string }>;
+}) {
+  const { planId } = await searchParams;
+>>>>>>> main:my-app/src/app/course-plan/page.tsx
   const user = await currentUser();
   const email: string = user?.primaryEmailAddress?.emailAddress;
 
@@ -29,7 +35,12 @@ export default async function CoursePlanPage({
   const profile: Profile = await getProfileByEmail(email);
   const plans: Plan[] = profile?.plans ?? [];
 
+<<<<<<< HEAD:my-app/src/app/course-plan/[planId]/page.tsx
   const plan = plans.find((p) => p.id === planId);
+=======
+  // Find by planId from URL, or fall back to most recent plan
+  const plan = plans.find((p) => p.id === planId) ?? plans[plans.length - 1];
+>>>>>>> main:my-app/src/app/course-plan/page.tsx
 
   if (!plan) redirect("/dashboard");
   if (!plan.schedule) redirect("/profile");
@@ -42,14 +53,17 @@ export default async function CoursePlanPage({
     await updateProfile(email, { plans: updated });
     redirect("/dashboard");
   }
+  
+  const coursePlanName = plan.planName;
 
   const infoPills = [
-    plan.planName,
     plan.university,
     plan.schedule.course_title,
     plan.schedule.specialisation,
+    plan.schedule.major,
+    plan.schedule.minor,
     plan.semesterOffering,
-    `${plan.yearStart}–${plan.yearEnd}`,
+    `${plan.yearStart}-${plan.yearEnd}`,
   ].filter(Boolean);
 
   return (
@@ -77,13 +91,9 @@ export default async function CoursePlanPage({
         <div className="mx-auto max-w-7xl">
           <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
             <div>
-              <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-white/15 px-3 py-1">
-                <Sparkles className="h-3.5 w-3.5 text-white/50" />
-                <span className="text-xs text-white/50">AI Generated</span>
-              </div>
 
               <h1 className="text-3xl font-semibold tracking-tight md:text-4xl">
-                {plan.planName}
+                {coursePlanName}
               </h1>
 
               <div className="mt-4 flex flex-wrap gap-2">

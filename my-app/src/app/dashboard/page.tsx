@@ -7,8 +7,6 @@ import {
   ArrowRight,
   BookOpen,
   Calendar,
-  Clock,
-  GraduationCap,
   Layers,
   Plus,
   Sparkles,
@@ -21,29 +19,6 @@ function getGreeting() {
   if (hour < 12) return "Good morning";
   if (hour < 18) return "Good afternoon";
   return "Good evening";
-}
-
-function getTimeAgo(dateStr?: string | null) {
-  if (!dateStr) return "—";
-
-  const now = Date.now();
-  const then = new Date(dateStr).getTime();
-  const diffMins = Math.floor((now - then) / 60000);
-
-  if (diffMins < 1) return "Just now";
-  if (diffMins < 60) return `${diffMins}m ago`;
-
-  const diffHours = Math.floor(diffMins / 60);
-  if (diffHours < 24) return `${diffHours}h ago`;
-
-  const diffDays = Math.floor(diffHours / 24);
-  if (diffDays < 30) return `${diffDays}d ago`;
-
-  return new Date(dateStr).toLocaleDateString("en-AU", {
-    day: "numeric",
-    month: "short",
-    year: "numeric",
-  });
 }
 
 export default async function DashboardPage() {
@@ -66,20 +41,9 @@ export default async function DashboardPage() {
   const profile = await getProfileByEmail(email);
   const plans = profile?.plans ?? [];
   const userName = email.split("@")[0];
-  const lastSaved = getTimeAgo(
-    profile?.updated_at || profile?.created_at || null,
-  );
-  const totalUnits = plans.reduce((sum, plan) => {
-    const start = Number(plan?.yearStart);
-    const end = Number(plan?.yearEnd);
-    const unitCount =
-      Number.isFinite(start) && Number.isFinite(end) && end >= start
-        ? (end - start + 1) * 8
-        : 0;
-
-    return sum + unitCount;
-  }, 0);
-  const totalCredits = totalUnits * 6;
+  const lastPlan = plans[plans.length - 1] ?? null;
+  const universityName = lastPlan?.university || "—";
+  const lastPlanName = lastPlan?.planName || lastPlan?.courses || "—";
 
   return (
     <main className="min-h-screen bg-white font-[var(--font-geist-sans)] text-black">
@@ -123,7 +87,7 @@ export default async function DashboardPage() {
             </h1>
           </div>
 
-          <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-4">
+          <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
             <div className="rounded-[24px] bg-black px-8 py-7 text-white">
               <div className="flex items-center gap-3 text-[11px] uppercase tracking-[0.24em] text-white/35">
                 <Layers className="h-5 w-5" />
@@ -137,31 +101,20 @@ export default async function DashboardPage() {
             <div className="rounded-[24px] border border-black/[0.08] bg-white px-8 py-7 shadow-[0_1px_2px_rgba(0,0,0,0.02)]">
               <div className="flex items-center gap-3 text-[11px] uppercase tracking-[0.24em] text-black/22">
                 <BookOpen className="h-5 w-5" />
-                <span>Total Units</span>
+                <span>University</span>
               </div>
-              <div className="mt-8 text-[56px] font-semibold leading-none tracking-[-0.08em] text-black">
-                {totalUnits}
-              </div>
-            </div>
-
-            <div className="rounded-[24px] border border-black/[0.08] bg-white px-8 py-7 shadow-[0_1px_2px_rgba(0,0,0,0.02)]">
-              <div className="flex items-center gap-3 text-[11px] uppercase tracking-[0.24em] text-black/22">
-                <GraduationCap className="h-5 w-5" />
-                <span>Total Credits</span>
-              </div>
-              <div className="mt-8 text-[56px] font-semibold leading-none tracking-[-0.08em] text-black">
-                {totalCredits}
-                <span className="ml-1 text-[20px] text-black/15">CP</span>
+              <div className="mt-8 text-[34px] font-medium leading-[1] tracking-[-0.05em] text-black">
+                {universityName}
               </div>
             </div>
 
             <div className="rounded-[24px] border border-black/[0.08] bg-white px-8 py-7 shadow-[0_1px_2px_rgba(0,0,0,0.02)]">
               <div className="flex items-center gap-3 text-[11px] uppercase tracking-[0.24em] text-black/22">
-                <Clock className="h-5 w-5" />
-                <span>Last Saved</span>
+                <Calendar className="h-5 w-5" />
+                <span>Last Plan</span>
               </div>
               <div className="mt-8 text-[34px] font-medium leading-[1] tracking-[-0.05em] text-black/42">
-                {lastSaved}
+                {lastPlanName}
               </div>
             </div>
           </div>
@@ -184,11 +137,12 @@ export default async function DashboardPage() {
               {plans.map((plan, index) => {
                 const start = Number(plan?.yearStart);
                 const end = Number(plan?.yearEnd);
-                const unitCount =
-                  Number.isFinite(start) && Number.isFinite(end) && end >= start
+                const unitCount = plan.schedule?.summary.total_units
+                  ?? (Number.isFinite(start) && Number.isFinite(end) && end >= start
                     ? (end - start + 1) * 8
-                    : 0;
-                const totalCredits = unitCount * 6;
+                    : 0);
+                const totalCredits = plan.schedule?.summary.total_cp
+                  ?? unitCount * 6;
 
                 return (
                   <div
@@ -203,7 +157,6 @@ export default async function DashboardPage() {
 
                         <div className="mt-5 flex flex-wrap gap-3">
                           {[
-                            plan.planName,
                             plan.courses,
                             plan.university,
                             plan.areaOfStudy,
@@ -240,7 +193,11 @@ export default async function DashboardPage() {
                         </div>
 
                         <Link
+<<<<<<< HEAD
                           href={`/course-plan/${plan.id}`}
+=======
+                          href={`/course-plan?planId=${plan.id}`}
+>>>>>>> main
                           className="inline-flex items-center gap-3 rounded-full border border-black/[0.1] bg-white px-8 py-4 text-[15px] font-medium text-black transition-colors hover:border-black/20 hover:bg-black/[0.02]"
                         >
                           View Plan
