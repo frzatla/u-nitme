@@ -2,7 +2,13 @@ import Image from "next/image";
 import Link from "next/link";
 import { UserButton } from "@clerk/nextjs";
 import { currentUser } from "@clerk/nextjs/server";
-import { ArrowLeft, RefreshCw, Save, Sparkles, BookmarkCheck } from "lucide-react";
+import {
+  ArrowLeft,
+  RefreshCw,
+  Save,
+  Sparkles,
+  BookmarkCheck,
+} from "lucide-react";
 import { redirect } from "next/navigation";
 import CoursePlanner from "../../components/CoursePlanner";
 import { getProfileByEmail, updateProfile } from "../../lib/profile";
@@ -31,20 +37,20 @@ export default async function CoursePlanPage({
   async function handleSave() {
     "use server";
     const updated = plans.map((p) =>
-      p.id === plan.id ? { ...p, saved: true } : p
+      p.id === plan.id ? { ...p, saved: true } : p,
     );
     await updateProfile(email, { plans: updated });
     redirect("/dashboard");
   }
-  
+
   const coursePlanName = plan.planName;
 
   const infoPills = [
     plan.university,
     plan.schedule.course_title,
-    plan.schedule.specialisation,
-    plan.schedule.major,
-    plan.schedule.minor,
+    "Specialization: " + plan.schedule.specialisation,
+    "Major: " + plan.schedule.major,
+    "Minor: " + plan.schedule.minor,
     plan.semesterOffering,
     `${plan.yearStart}-${plan.yearEnd}`,
   ].filter(Boolean);
@@ -74,7 +80,6 @@ export default async function CoursePlanPage({
         <div className="mx-auto max-w-7xl">
           <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
             <div>
-
               <h1 className="text-3xl font-semibold tracking-tight md:text-4xl">
                 {coursePlanName}
               </h1>
