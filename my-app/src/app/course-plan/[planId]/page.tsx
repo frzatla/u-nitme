@@ -49,9 +49,9 @@ export default async function CoursePlanPage({
   const infoPills = [
     plan.university,
     plan.schedule.course_title,
-    plan.schedule.specialisation,
-    plan.schedule.major,
-    plan.schedule.minor,
+    "Specialization: " + plan.schedule.specialisation,
+    "Major: " + plan.schedule.major,
+    "Minor: " + plan.schedule.minor,
     plan.semesterOffering,
     `${plan.yearStart}-${plan.yearEnd}`,
   ].filter(Boolean);
