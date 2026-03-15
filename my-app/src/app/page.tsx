@@ -431,17 +431,20 @@ export default function Home() {
 
               <FadeUp delay={0.35}>
                 <div className="flex items-center gap-5">
-                  <button
-                    onClick={() => router.push("/sign-in")}
-                    className="group inline-flex items-center gap-4"
+                  <SignInButton
+                    mode="redirect"
+                    forceRedirectUrl="/dashboard"
+                    fallbackRedirectUrl="/dashboard"
                   >
-                    <span className="flex h-16 w-16 items-center justify-center rounded-full border border-white/18 transition duration-500 group-hover:scale-105 group-hover:bg-white">
-                      <ArrowRight className="h-5 w-5 text-white/75 transition duration-500 group-hover:text-black" />
-                    </span>
-                    <span className="text-xs uppercase tracking-[0.18em] text-white transition duration-500 group-hover:text-white">
-                      Get Started
-                    </span>
-                  </button>
+                    <button className="group inline-flex items-center gap-4">
+                      <span className="flex h-16 w-16 items-center justify-center rounded-full border border-white/18 transition duration-500 group-hover:scale-105 group-hover:bg-white">
+                        <ArrowRight className="h-5 w-5 text-white/75 transition duration-500 group-hover:text-black" />
+                      </span>
+                      <span className="text-xs uppercase tracking-[0.18em] text-white transition duration-500 group-hover:text-white">
+                        Get Started
+                      </span>
+                    </button>
+                  </SignInButton>
 
                   <button
                     onClick={() =>
@@ -914,17 +917,20 @@ export default function Home() {
           </FadeUp>
 
           <FadeUp delay={0.32}>
-            <button
-              onClick={() => router.push("/sign-in")}
-              className="group mt-12 inline-flex items-center gap-4"
+            <SignInButton
+              mode="redirect"
+              forceRedirectUrl="/dashboard"
+              fallbackRedirectUrl="/dashboard"
             >
-              <span className="flex h-16 w-16 items-center justify-center rounded-full border border-white/18 transition duration-500 group-hover:scale-105 group-hover:bg-white">
-                <ArrowRight className="h-5 w-5 text-white/75 transition duration-500 group-hover:text-black" />
-              </span>
-              <span className="text-xs uppercase tracking-[0.18em] text-white transition duration-500 group-hover:text-white">
-                Plan My Degree
-              </span>
-            </button>
+              <button className="group mt-12 inline-flex items-center gap-4">
+                <span className="flex h-16 w-16 items-center justify-center rounded-full border border-white/18 transition duration-500 group-hover:scale-105 group-hover:bg-white">
+                  <ArrowRight className="h-5 w-5 text-white/75 transition duration-500 group-hover:text-black" />
+                </span>
+                <span className="text-xs uppercase tracking-[0.18em] text-white transition duration-500 group-hover:text-white">
+                  Plan My Degree
+                </span>
+              </button>
+            </SignInButton>
           </FadeUp>
         </div>
       </section>
