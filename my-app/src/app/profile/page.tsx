@@ -46,7 +46,6 @@ function spawnPython(args: string[]): ReturnType<typeof spawnSync> {
 async function runAlgo(
   courseCode: string,
   aosCode: string,
-  outputFile: string,
   minorMajorType?: string,
   minorMajorCode?: string,
 ): Promise<Schedule | null> {
@@ -57,10 +56,11 @@ async function runAlgo(
       body: JSON.stringify({
         course: courseCode,
         specialisation: aosCode,
-        campus: "Clayton"
+        campus: "Clayton",
+        ...(minorMajorType && minorMajorCode) ? { [minorMajorType]: minorMajorCode } : {}
       })
     })
-    if (!response.ok) throw new Error()
+    if (!response.ok) throw new Error(await response.text())
 
     const schedule = (await response.json()) as Schedule
     return schedule
@@ -139,11 +139,9 @@ export default async function NewPlanPage() {
       yearEnd: Number(formData.get("yearEnd")),
     };
 
-    const outputFile = `schedule_${planId}.json`;
     const rawSchedule = await runAlgo(
       courseCode,
       aosCode,
-      outputFile,
       minorMajorType || undefined,
       minorMajorCode || undefined,
     );
