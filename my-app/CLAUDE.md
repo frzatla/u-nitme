@@ -11,13 +11,14 @@
 | Layer | Technology |
 |---|---|
 | Framework | Next.js 16.1.6 (App Router) |
-| Language | TypeScript |
+| Language | TypeScript + Python |
 | Styling | Tailwind CSS v4 |
 | Animations | Framer Motion |
 | Icons | Lucide React |
 | Auth | Clerk (`@clerk/nextjs`) |
 | Database | Supabase (PostgreSQL) |
 | Algorithm | Python (`src/algo/algo1.py`) |
+| Drag & Drop | @dnd-kit (core, sortable, utilities) |
 
 ---
 
@@ -27,35 +28,46 @@
 my-app/
 ├── src/
 │   ├── app/
-│   │   ├── page.tsx                  # Landing page (hero, features, FAQ, team)
-│   │   ├── layout.tsx                # Root layout — ClerkProvider + Geist fonts
-│   │   ├── dashboard/page.tsx        # User dashboard (saved plans + stats)
-│   │   ├── profile/page.tsx          # Create new plan form + algo1.py execution
-│   │   ├── course-plan/page.tsx      # View generated plan + Save button
-│   │   ├── sign-in/                  # Clerk sign-in page
-│   │   └── api/
-│       └── units/[code]/reviews/ # GET — fetches r/Monash Reddit posts for a unit code
+│   │   ├── page.tsx                        # Landing page (hero, features, FAQ, team)
+│   │   ├── layout.tsx                      # Root layout — ClerkProvider + Geist fonts
+│   │   ├── loading.tsx                     # Global loading state
+│   │   ├── dashboard/page.tsx              # User dashboard (saved plans + stats)
+│   │   ├── profile/page.tsx                # Create new plan form + algo1.py execution
+│   │   ├── course-plan/
+│   │   │   ├── CoursePlanClient.tsx        # Client wrapper — Save/Refresh logic
+│   │   │   └── [planId]/page.tsx           # Dynamic route — view/edit plan by ID
+│   │   ├── sign-in/[[...sign-in]]/page.tsx # Clerk sign-in page
+│   │   └── api/units/[code]/
+│   │       ├── handbook/route.ts           # GET — scrapes Monash handbook (24h cache)
+│   │       └── reviews/route.ts            # GET — fetches r/Monash Reddit posts (1h cache)
 │   ├── components/
-│   │   ├── CoursePlanner.tsx         # Schedule visualizer — renders real algo output (client component)
-│   │   ├── UnitReviewModal.tsx       # Right-side panel showing r/Monash Reddit discussions per unit
-│   │   ├── StudentDetailsForm.tsx    # Server component — loads JSON data, passes props
-│   │   └── StudentDetailsFormContent.tsx  # Client component — form UI with dependent dropdowns
+│   │   ├── CoursePlanner.tsx               # Schedule visualizer — drag-and-drop grid (client)
+│   │   ├── CoursePlanClient.tsx            # Save/load wrapper (client)
+│   │   ├── UnitDetailPanel.tsx             # Unit info display panel
+│   │   ├── UnitHandbookCard.tsx            # Handbook details card (offerings, assessments, requisites)
+│   │   ├── UnitReviewModal.tsx             # Right-side drawer — r/Monash Reddit discussions
+│   │   ├── StudentDetailsForm.tsx          # Server component — loads JSON data, passes props
+│   │   ├── StudentDetailsFormContent.tsx   # Client component — form UI with dependent dropdowns
+│   │   └── DeletePlanButton.tsx            # Delete plan server action button
 │   ├── lib/
-│   │   ├── supabase.ts               # Supabase client
-│   │   ├── profile.ts                # Profile CRUD (Supabase)
-│   │   └── types.ts                  # All TypeScript types
+│   │   ├── supabase.ts                     # Supabase client
+│   │   ├── profile.ts                      # Profile CRUD (Supabase server actions)
+│   │   ├── pendingPlan.ts                  # Temporary plan storage during generation
+│   │   └── types.ts                        # All TypeScript types
 │   ├── algo/
-│   │   └── algo1.py                  # DAG critical-path unit scheduler
-│   └── proxy.ts                      # Clerk auth middleware
+│   │   ├── algo1.py                        # DAG critical-path unit scheduler (1,303 lines)
+│   │   └── schedule.json                   # Sample algo output
+│   └── proxy.ts                            # Clerk auth middleware
 ├── public/
 │   ├── data/
-│   │   ├── final_courses.json        # All Monash courses (keyed by course_code)
-│   │   ├── final_aos.json            # All areas of study (keyed by AOS code)
-│   │   └── final_units.json          # All individual units (used by algo1.py)
-│   └── U-NIT ME-*.png               # Branding assets
-├── .env.local                        # Clerk + Supabase env vars (not committed)
+│   │   ├── final_courses.json              # All Monash courses (keyed by course_code)
+│   │   ├── final_aos.json                  # All areas of study (keyed by AOS code)
+│   │   ├── final_units.json                # All individual units (used by algo1.py)
+│   │   └── cleanup.js                      # Data processing utility
+│   └── images/                             # Branding assets (U-NIT ME-2.png, U-NIT ME-3.png)
+├── .env.local                              # Clerk + Supabase env vars (not committed)
 ├── next.config.mjs
-├── postcss.config.mjs                # Tailwind CSS v4 config
+├── postcss.config.mjs                      # Tailwind CSS v4 config
 └── tsconfig.json
 ```
 
@@ -75,9 +87,10 @@ my-app/
    - Enriches each unit with a `category` field (`Specialisation` if in AOS `all_units`, `Elective` if code=`ELECTIVE`, else `Core`)
    - Saves plan with `schedule` and `saved: false` to Supabase
    - Redirects to `/course-plan?planId=<uuid>`
-6. Course plan page loads plan by `planId` query param, renders real schedule via `CoursePlanner`
-7. User clicks a unit card → `UnitReviewModal` side panel slides in from the right, fetches `/api/units/[code]/reviews`, shows r/Monash Reddit threads with score + comment count as clickable links. `ELECTIVE` placeholder cards are not clickable.
-8. User clicks **Save Plan** → server action marks `saved: true` → redirect to dashboard
+6. Course plan page loads plan by `planId` **route param** (`/course-plan/[planId]`), renders real schedule via `CoursePlanner`
+7. User clicks a unit card → `UnitDetailPanel` opens; `UnitHandbookCard` shows handbook info (fetched from `/api/units/[code]/handbook`); `UnitReviewModal` side panel slides in from the right (fetched from `/api/units/[code]/reviews`), shows r/Monash Reddit threads with score + comment count as clickable links. `ELECTIVE` placeholder cards are not clickable.
+8. User can drag-and-drop units within the schedule grid to reorder them
+9. User clicks **Save Plan** → server action marks `saved: true` → redirect to dashboard
 
 ---
 
@@ -191,8 +204,10 @@ All in `public/data/`:
 
 - **Clerk** handles all auth. Server components use `await currentUser()`.
 - **Supabase** `profiles` table: one row per user, keyed by `email`. `plans` column is a JSONB array of `Plan` objects.
+- **Supabase** `pendingPlan` table: temporary storage for in-progress plan generation (written before algo runs, read after redirect).
 - Profile auto-created on first dashboard visit.
 - `searchParams` in Next.js 15+ is a **Promise** — must `await searchParams` before accessing properties.
+- Plan routes use **dynamic route params** (`/course-plan/[planId]`), not query strings.
 
 ---
 
@@ -235,6 +250,16 @@ npm run lint     # ESLint
 - Fetches `GET /api/units/[code]/reviews` on mount
 - Shows loading spinner → list of Reddit posts (title, upvotes, comment count, external link) → empty state if none found
 - Close via ✕ button, clicking the backdrop, or pressing Escape
+
+**`UnitHandbookCard.tsx`** (client component):
+- Fetches `GET /api/units/[code]/handbook` to display unit details
+- Shows offerings, assessments, and requisites from the Monash handbook
+
+**`/api/units/[code]/handbook/route.ts`**:
+- Scrapes Monash handbook (`handbook.monash.edu`) for unit info
+- Parses offerings, assessments, and requisites
+- Cached for 24 hours (`revalidate: 86400`)
+- Returns structured unit metadata
 
 **`/api/units/[code]/reviews/route.ts`**:
 - Searches `r/Monash` via Reddit's public JSON API (`reddit.com/r/Monash/search.json`)
