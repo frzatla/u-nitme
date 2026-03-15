@@ -555,21 +555,21 @@ export default function Home() {
                 </div>
               </FadeUp>
 
-              <RevealLine>
-                <h2
+              <HeroRevealLine>
+                <h1
                   className={`${instrumentSerif.className} text-6xl leading-[0.92] tracking-[-0.05em] text-black md:text-7xl lg:text-8xl`}
                 >
                   Three steps.
-                </h2>
-              </RevealLine>
+                </h1>
+              </HeroRevealLine>
 
-              <RevealLine delay={0.08}>
-                <h2
+              <HeroRevealLine delay={0.08}>
+                <h1
                   className={`${instrumentSerif.className} text-6xl leading-[0.92] tracking-[-0.05em] text-black/18 md:text-7xl lg:text-8xl`}
                 >
-                  That&apos;s it.
-                </h2>
-              </RevealLine>
+                  <span className="italic">That&apos;s it.</span>
+                </h1>
+              </HeroRevealLine>
             </div>
 
             <FadeUp delay={0.18} className="md:pt-8">
@@ -678,16 +678,22 @@ export default function Home() {
                   Reviews
                 </div>
               </FadeUp>
-              <RevealLine>
-                <h2 className="text-4xl font-semibold leading-[0.95] tracking-[-0.06em] text-white md:text-6xl">
+
+              <HeroRevealLine>
+                <h2
+                  className={`${instrumentSerif.className} text-6xl leading-[0.95] tracking-[-0.04em] text-white md:text-6xl`}
+                >
                   Don&apos;t take
                 </h2>
-              </RevealLine>
-              <RevealLine delay={0.08}>
-                <h2 className="text-4xl font-semibold leading-[0.95] tracking-[-0.06em] text-white md:text-6xl">
+              </HeroRevealLine>
+
+              <HeroRevealLine delay={0.08}>
+                <h2
+                  className={`${instrumentSerif.className} text-6xl leading-[0.95] tracking-[-0.04em] text-white md:text-6xl`}
+                >
                   our word for it.
                 </h2>
-              </RevealLine>
+              </HeroRevealLine>
             </div>
 
             <FadeUp delay={0.18}>
@@ -739,16 +745,20 @@ export default function Home() {
                 About
               </div>
             </FadeUp>
-            <RevealLine>
-              <h2 className="text-5xl font-semibold leading-[0.94] tracking-[-0.06em] text-white md:text-7xl">
+            <HeroRevealLine>
+              <h2
+                className={`${instrumentSerif.className} text-5xl leading-[0.94] tracking-[-0.04em] text-white md:text-7xl`}
+              >
                 Built by students,
               </h2>
-            </RevealLine>
-            <RevealLine delay={0.08}>
-              <h2 className="text-5xl font-semibold leading-[0.94] tracking-[-0.06em] text-white md:text-7xl">
+            </HeroRevealLine>
+            <HeroRevealLine delay={0.08}>
+              <h2
+                className={`${instrumentSerif.className} text-5xl leading-[0.94] tracking-[-0.04em] text-white md:text-7xl`}
+              >
                 for students.
               </h2>
-            </RevealLine>
+            </HeroRevealLine>
           </div>
 
           <div className="mb-20 grid gap-4 md:grid-cols-12">
@@ -863,11 +873,13 @@ export default function Home() {
                 FAQ
               </div>
             </FadeUp>
-            <RevealLine>
-              <h2 className="text-5xl font-semibold leading-[0.94] tracking-[-0.06em] text-white md:text-7xl">
+            <HeroRevealLine>
+              <h2
+                className={`${instrumentSerif.className} text-7xl leading-[0.94] tracking-[-0.04em] text-white md:text-7xl`}
+              >
                 Yeah but...
               </h2>
-            </RevealLine>
+            </HeroRevealLine>
           </div>
 
           <div>
