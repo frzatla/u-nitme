@@ -70,7 +70,8 @@ export default async function CoursePlanPage({
   const infoPills = [
     plan.university,
     plan.schedule.course_title,
-    plan.schedule.specialisation && `Specialisation: ${plan.schedule.specialisation}`,
+    plan.schedule.specialisation &&
+      `Specialisation: ${plan.schedule.specialisation}`,
     plan.schedule.major && `Major: ${plan.schedule.major}`,
     plan.schedule.minor && `Minor: ${plan.schedule.minor}`,
     plan.semesterOffering,
@@ -98,7 +99,14 @@ export default async function CoursePlanPage({
         </div>
       </header>
 
-      <CoursePlanClient plan={plan} email={email} infoPills={infoPills} />
+      <CoursePlanClient
+        plan={plan}
+        email={email}
+        infoPills={infoPills}
+        isPending={isPending} // ← add this
+        handleSave={handleSave} // ← add this
+        handleDiscard={handleDiscard} // ← add this
+      />
 
       <footer className="border-t border-black/10 px-6 py-5 md:px-8">
         <div className="mx-auto flex max-w-7xl items-center justify-between gap-4">

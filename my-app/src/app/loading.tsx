@@ -8,7 +8,7 @@ export default function Loading() {
             U-NIT ME
           </p>
           <p className="mt-2 text-lg font-medium tracking-[-0.03em]">
-            I&apos;m thinking
+            I&apos;m thinking...
           </p>
         </div>
       </div>
