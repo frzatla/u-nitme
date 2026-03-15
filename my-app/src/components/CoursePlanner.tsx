@@ -25,9 +25,11 @@ import {
   ChevronRight,
   GraduationCap,
   GripVertical,
+  Search,
 } from "lucide-react";
 import { Schedule, UnitCategory } from "@/lib/types";
 import UnitDetailPanel from "./UnitDetailPanel";
+import ElectiveSearch from "./ElectiveSearch";
 
 // ── Types ─────────────────────────────────────────────────────────────────────
 
@@ -285,6 +287,38 @@ function swapSlots(
 
 function UnitCardContent({ unit, isDragging = false }: { unit: Unit; isDragging?: boolean }) {
   const pillStyle = categoryPillStyles[unit.category];
+  const isElective = unit.code === "ELECTIVE";
+
+  if (isElective) {
+    return (
+      <div
+        className={`w-full rounded-[18px] border border-dashed border-[#DD8255]/40 bg-[#DD8255]/[0.04] p-4 transition-all hover:border-[#DD8255]/70 hover:bg-[#DD8255]/[0.07] ${
+          isDragging ? "opacity-0" : "opacity-100"
+        }`}
+      >
+        <div className="flex items-start justify-between gap-3">
+          <span
+            className={`inline-flex rounded-full border px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.08em] ${pillStyle}`}
+          >
+            {unit.category}
+          </span>
+          <GripVertical className="h-4 w-4 text-black/20" />
+        </div>
+        <div className="mt-5 flex flex-col items-start gap-1">
+          <Search className="h-5 w-5 text-[#DD8255]/60" />
+          <p className="text-[15px] font-medium tracking-[-0.03em] text-black/60">
+            Free Elective
+          </p>
+          <p className="text-[12px] text-black/35">Click to search for a unit</p>
+        </div>
+        <div className="mt-5 flex items-center justify-between border-t border-black/[0.06] pt-3">
+          <span className="text-[13px] font-medium text-black/25">{unit.cp} CP</span>
+          <Search className="h-4 w-4 text-[#DD8255]/40" />
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div
       className={`w-full rounded-[18px] border border-black/10 bg-white p-4 shadow-[0_1px_2px_rgba(0,0,0,0.04)] transition-opacity ${
@@ -324,10 +358,12 @@ function DraggableUnitCard({
   unit,
   slotId,
   onCardClick,
+  onElectiveClick,
 }: {
   unit: Unit;
   slotId: string;
   onCardClick: (unit: Unit) => void;
+  onElectiveClick?: (slotId: string) => void;
 }) {
   const { attributes, listeners, setNodeRef, transform, isDragging } =
     useDraggable({ id: slotId });
@@ -345,7 +381,11 @@ function DraggableUnitCard({
       {...listeners}
       {...attributes}
       onClick={() => {
-        if (unit.code !== "ELECTIVE") onCardClick(unit);
+        if (unit.code === "ELECTIVE") {
+          onElectiveClick?.(slotId);
+        } else {
+          onCardClick(unit);
+        }
       }}
     >
       <UnitCardContent unit={unit} isDragging={isDragging} />
@@ -403,6 +443,7 @@ export default function CoursePlanner({
   const [overSemId, setOverSemId] = useState<string | null>(null);
   const [validSemIds, setValidSemIds] = useState<Set<string> | null>(null);
   const [selectedUnit, setSelectedUnit] = useState<Unit | null>(null);
+  const [electiveSlotId, setElectiveSlotId] = useState<string | null>(null);
 
   const sensors = useSensors(
     useSensor(PointerSensor, { activationConstraint: { distance: 5 } })
@@ -475,6 +516,20 @@ export default function CoursePlanner({
     setActiveSlotId(null);
     setOverSemId(null);
     setValidSemIds(null);
+  }
+
+  function handleElectiveSelected(unit: Unit) {
+    if (!electiveSlotId) return;
+    const { semId, idx } = parseSlotId(electiveSlotId);
+    const next = semesters.map((s) => {
+      if (s.id !== semId) return s;
+      const units = [...s.units] as Slot[];
+      units[idx] = unit;
+      return { ...s, units };
+    });
+    setSemesters(next);
+    onSemestersChange?.(next);
+    setElectiveSlotId(null);
   }
 
   // Find the unit being dragged (for DragOverlay)
@@ -685,6 +740,7 @@ export default function CoursePlanner({
                                     unit={unit}
                                     slotId={slotId}
                                     onCardClick={setSelectedUnit}
+                                    onElectiveClick={setElectiveSlotId}
                                   />
                                 ) : (
                                   <EmptyUnitCard />
@@ -716,6 +772,13 @@ export default function CoursePlanner({
       <UnitDetailPanel
         unit={selectedUnit}
         onClose={() => setSelectedUnit(null)}
+      />
+
+      {/* Elective search modal */}
+      <ElectiveSearch
+        isOpen={electiveSlotId !== null}
+        onClose={() => setElectiveSlotId(null)}
+        onSelectUnit={handleElectiveSelected}
       />
     </DndContext>
   );

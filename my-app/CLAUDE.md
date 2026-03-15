@@ -203,6 +203,13 @@ NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=
 CLERK_SECRET_KEY=
 NEXT_PUBLIC_SUPABASE_URL=
 NEXT_PUBLIC_SUPABASE_PUBLISHABLE_DEFAULT_KEY=
+
+# Elasticsearch (Elastic Cloud)
+ELASTICSEARCH_CLOUD_ID=U-NITME_AI_Agent:<base64-encoded-cluster-info>
+ELASTICSEARCH_API_KEY=<create in Kibana → Stack Management → API Keys>
+
+# Anthropic (Claude AI chatbot)
+ANTHROPIC_API_KEY=<your Anthropic API key>
 ```
 
 ---
@@ -213,6 +220,9 @@ NEXT_PUBLIC_SUPABASE_PUBLISHABLE_DEFAULT_KEY=
 npm run dev      # Start dev server
 npm run build    # Production build
 npm run lint     # ESLint
+
+# Index Elasticsearch (run once after setting env vars)
+ELASTICSEARCH_CLOUD_ID=... ELASTICSEARCH_API_KEY=... node scripts/index-units.js
 ```
 
 ---
