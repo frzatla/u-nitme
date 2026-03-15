@@ -14,36 +14,19 @@ import path from "path";
 const ALGO_DIR = path.join(process.cwd(), "src/algo");
 const AOS_PATH = path.join(process.cwd(), "public/data/final_aos.json");
 
-<<<<<<< HEAD
-function runAlgo(
-  courseCode: string,
-  aosCode: string,
-  outputFile: string,
-): Schedule | null {
-  const result = spawnSync(
-    "python3",
-    [
-      "algo1.py",
-      "--course",
-      courseCode,
-      "--specialisation",
-      aosCode,
-      "--campus",
-      "Clayton",
-      "--output",
-      outputFile,
-    ],
-    { cwd: ALGO_DIR, encoding: "utf-8", timeout: 60000 },
-  );
-=======
 // On Windows try "py" first (Python Launcher); on other platforms try "python3" first
-const PYTHON_COMMANDS = process.platform === "win32"
-  ? ["py", "python", "python3"]
-  : ["python3", "python", "py"];
+const PYTHON_COMMANDS =
+  process.platform === "win32"
+    ? ["py", "python", "python3"]
+    : ["python3", "python", "py"];
 
 function spawnPython(args: string[]): ReturnType<typeof spawnSync> {
   for (const cmd of PYTHON_COMMANDS) {
-    const result = spawnSync(cmd, args, { cwd: ALGO_DIR, encoding: "utf-8", timeout: 60000 });
+    const result = spawnSync(cmd, args, {
+      cwd: ALGO_DIR,
+      encoding: "utf-8",
+      timeout: 60000,
+    });
     // ENOENT = command not found on Unix
     if (result.error && (result.error as any).code === "ENOENT") continue;
     // 9009 = "command not recognized" on Windows
@@ -51,16 +34,35 @@ function spawnPython(args: string[]): ReturnType<typeof spawnSync> {
     return result;
   }
   // All commands exhausted — return last result so the caller can log the error
-  return spawnSync(PYTHON_COMMANDS[PYTHON_COMMANDS.length - 1], args, { cwd: ALGO_DIR, encoding: "utf-8", timeout: 60000 });
+  return spawnSync(PYTHON_COMMANDS[PYTHON_COMMANDS.length - 1], args, {
+    cwd: ALGO_DIR,
+    encoding: "utf-8",
+    timeout: 60000,
+  });
 }
 
-function runAlgo(courseCode: string, aosCode: string, outputFile: string, minorMajorType?: string, minorMajorCode?: string): Schedule | null {
-  const args = ["algo1.py", "--course", courseCode, "--specialisation", aosCode, "--campus", "Clayton", "--output", outputFile];
+function runAlgo(
+  courseCode: string,
+  aosCode: string,
+  outputFile: string,
+  minorMajorType?: string,
+  minorMajorCode?: string,
+): Schedule | null {
+  const args = [
+    "algo1.py",
+    "--course",
+    courseCode,
+    "--specialisation",
+    aosCode,
+    "--campus",
+    "Clayton",
+    "--output",
+    outputFile,
+  ];
   if (minorMajorType && minorMajorCode) {
     args.push(`--${minorMajorType}`, minorMajorCode);
   }
   const result = spawnPython(args);
->>>>>>> main
 
   if (result.status !== 0) {
     console.error("algo1.py stderr:", result.stderr);
@@ -132,7 +134,13 @@ export default async function NewPlanPage() {
     };
 
     const outputFile = `schedule_${planId}.json`;
-    const rawSchedule = runAlgo(courseCode, aosCode, outputFile, minorMajorType || undefined, minorMajorCode || undefined);
+    const rawSchedule = runAlgo(
+      courseCode,
+      aosCode,
+      outputFile,
+      minorMajorType || undefined,
+      minorMajorCode || undefined,
+    );
     if (rawSchedule) {
       newPlan.schedule = enrichCategories(rawSchedule, aosCode);
     }

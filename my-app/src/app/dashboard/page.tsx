@@ -137,12 +137,15 @@ export default async function DashboardPage() {
               {plans.map((plan, index) => {
                 const start = Number(plan?.yearStart);
                 const end = Number(plan?.yearEnd);
-                const unitCount = plan.schedule?.summary.total_units
-                  ?? (Number.isFinite(start) && Number.isFinite(end) && end >= start
+                const unitCount =
+                  plan.schedule?.summary.total_units ??
+                  (Number.isFinite(start) &&
+                  Number.isFinite(end) &&
+                  end >= start
                     ? (end - start + 1) * 8
                     : 0);
-                const totalCredits = plan.schedule?.summary.total_cp
-                  ?? unitCount * 6;
+                const totalCredits =
+                  plan.schedule?.summary.total_cp ?? unitCount * 6;
 
                 return (
                   <div
@@ -193,11 +196,7 @@ export default async function DashboardPage() {
                         </div>
 
                         <Link
-<<<<<<< HEAD
-                          href={`/course-plan/${plan.id}`}
-=======
                           href={`/course-plan?planId=${plan.id}`}
->>>>>>> main
                           className="inline-flex items-center gap-3 rounded-full border border-black/[0.1] bg-white px-8 py-4 text-[15px] font-medium text-black transition-colors hover:border-black/20 hover:bg-black/[0.02]"
                         >
                           View Plan
