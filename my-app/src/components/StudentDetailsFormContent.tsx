@@ -246,7 +246,7 @@ export default function StudentDetailsFormContent({
           <div>
             <SearchableSelect
               id="courseCode"
-              name="courses"
+              name="courseCode"
               label="Courses"
               placeholder="Select course"
               emptyLabel="No courses found"

@@ -149,20 +149,31 @@ function getSummary(semesters: Semester[], schedule: Schedule): Summary {
   const totalPlannedUnits = schedule.summary.total_units;
   const totalCredits = schedule.summary.total_cp;
   const completedTarget = semesters.length * 4;
-  const progress = completedTarget > 0
-    ? Math.min(100, Math.round((totalPlannedUnits / completedTarget) * 100))
-    : 0;
+  const progress =
+    completedTarget > 0
+      ? Math.min(100, Math.round((totalPlannedUnits / completedTarget) * 100))
+      : 0;
 
   const breakdown: Record<UnitCategory, number> = {
-    Core: 0, Major: 0, Minor: 0, Elective: 0, Specialisation: 0,
+    Core: 0,
+    Major: 0,
+    Minor: 0,
+    Elective: 0,
+    Specialisation: 0,
   };
   semesters.forEach((sem) =>
     sem.units.forEach((u) => {
       if (u) breakdown[u.category] = (breakdown[u.category] ?? 0) + 1;
-    })
+    }),
   );
 
-  return { totalPlannedUnits, totalCredits, progress, completedTarget, breakdown };
+  return {
+    totalPlannedUnits,
+    totalCredits,
+    progress,
+    completedTarget,
+    breakdown,
+  };
 }
 
 // ── Requisite types (matches handbook API response) ──────────────────────────
@@ -174,7 +185,7 @@ function computeValidSemesters(
   semesters: Semester[],
   draggedCode: string,
   draggedRequisites: Requisite[],
-  allRequisites: Map<string, Requisite[]>
+  allRequisites: Map<string, Requisite[]>,
 ): Set<string> {
   // Map: code → current semester index, excluding the dragged unit
   const unitSemIdx = new Map<string, number>();
@@ -199,22 +210,33 @@ function computeValidSemesters(
         for (const group of req.groups) {
           const inSchedule = group.codes.filter((c) => unitSemIdx.has(c));
           if (inSchedule.length === 0) continue;
-          const satisfied = inSchedule.some((c) => unitSemIdx.get(c)! < targetIdx);
-          if (!satisfied) { valid = false; break; }
+          const satisfied = inSchedule.some(
+            (c) => unitSemIdx.get(c)! < targetIdx,
+          );
+          if (!satisfied) {
+            valid = false;
+            break;
+          }
         }
       } else if (type.includes("corequisite")) {
         for (const group of req.groups) {
           const inSchedule = group.codes.filter((c) => unitSemIdx.has(c));
           if (inSchedule.length === 0) continue;
-          const satisfied = inSchedule.some((c) => unitSemIdx.get(c)! <= targetIdx);
-          if (!satisfied) { valid = false; break; }
+          const satisfied = inSchedule.some(
+            (c) => unitSemIdx.get(c)! <= targetIdx,
+          );
+          if (!satisfied) {
+            valid = false;
+            break;
+          }
         }
       } else if (type.includes("prohibit") || type.includes("incompatible")) {
         for (const group of req.groups) {
           for (const code of group.codes) {
             const codeIdx = unitSemIdx.get(code);
             if (codeIdx !== undefined && codeIdx < targetIdx) {
-              valid = false; break;
+              valid = false;
+              break;
             }
           }
           if (!valid) break;
@@ -230,17 +252,24 @@ function computeValidSemesters(
     if (valid) {
       outer: for (let si = 0; si <= targetIdx; si++) {
         for (const unit of semesters[si].units) {
-          if (!unit || unit.code === "ELECTIVE" || unit.code === draggedCode) continue;
+          if (!unit || unit.code === "ELECTIVE" || unit.code === draggedCode)
+            continue;
           for (const req of allRequisites.get(unit.code) ?? []) {
             const type = req.type.toLowerCase();
             for (const group of req.groups) {
               if (!group.codes.includes(draggedCode)) continue;
               if (type.includes("prerequisite")) {
                 // draggedCode is a prereq of unit at si → must be strictly before si
-                if (targetIdx >= si) { valid = false; break outer; }
+                if (targetIdx >= si) {
+                  valid = false;
+                  break outer;
+                }
               } else if (type.includes("corequisite")) {
                 // draggedCode is a coreq of unit at si → must be at ≤ si
-                if (targetIdx > si) { valid = false; break outer; }
+                if (targetIdx > si) {
+                  valid = false;
+                  break outer;
+                }
               }
             }
           }
@@ -267,7 +296,7 @@ function parseSlotId(id: string): { semId: string; idx: number } {
 function swapSlots(
   semesters: Semester[],
   srcId: string,
-  tgtId: string
+  tgtId: string,
 ): Semester[] {
   if (srcId === tgtId) return semesters;
   const src = parseSlotId(srcId);
@@ -283,7 +312,13 @@ function swapSlots(
 
 // ── DnD sub-components ────────────────────────────────────────────────────────
 
-function UnitCardContent({ unit, isDragging = false }: { unit: Unit; isDragging?: boolean }) {
+function UnitCardContent({
+  unit,
+  isDragging = false,
+}: {
+  unit: Unit;
+  isDragging?: boolean;
+}) {
   const pillStyle = categoryPillStyles[unit.category];
   return (
     <div
@@ -313,7 +348,9 @@ function UnitCardContent({ unit, isDragging = false }: { unit: Unit; isDragging?
       </div>
 
       <div className="mt-5 flex items-center justify-between border-t border-black/[0.06] pt-3">
-        <span className="text-[13px] font-medium text-black/25">{unit.cp} CP</span>
+        <span className="text-[13px] font-medium text-black/25">
+          {unit.cp} CP
+        </span>
         <Ellipsis className="h-4 w-4 text-black/18" />
       </div>
     </div>
@@ -395,9 +432,10 @@ export default function CoursePlanner({
   showHeader = true,
   onSemestersChange,
 }: CoursePlannerProps) {
-  const yearStart = Number(studentDetails?.yearStart) || new Date().getFullYear();
+  const yearStart =
+    Number(studentDetails?.yearStart) || new Date().getFullYear();
   const [semesters, setSemesters] = useState(() =>
-    buildFromSchedule(schedule, yearStart)
+    buildFromSchedule(schedule, yearStart),
   );
   const [activeSlotId, setActiveSlotId] = useState<string | null>(null);
   const [overSemId, setOverSemId] = useState<string | null>(null);
@@ -405,7 +443,7 @@ export default function CoursePlanner({
   const [selectedUnit, setSelectedUnit] = useState<Unit | null>(null);
 
   const sensors = useSensors(
-    useSensor(PointerSensor, { activationConstraint: { distance: 5 } })
+    useSensor(PointerSensor, { activationConstraint: { distance: 5 } }),
   );
 
   function handleDragStart(event: DragStartEvent) {
@@ -427,7 +465,7 @@ export default function CoursePlanner({
         semesters
           .flatMap((s) => s.units)
           .filter((u): u is Unit => u !== null && u.code !== "ELECTIVE")
-          .map((u) => u.code)
+          .map((u) => u.code),
       ),
     ];
 
@@ -435,13 +473,18 @@ export default function CoursePlanner({
       allCodes.map((code) =>
         fetch(`/api/units/${code}/handbook`)
           .then((r) => r.json())
-          .then((data) => ({ code, requisites: (data.requisites ?? []) as Requisite[] }))
-          .catch(() => ({ code, requisites: [] as Requisite[] }))
-      )
+          .then((data) => ({
+            code,
+            requisites: (data.requisites ?? []) as Requisite[],
+          }))
+          .catch(() => ({ code, requisites: [] as Requisite[] })),
+      ),
     ).then((results) => {
       const allReqs = new Map(results.map((r) => [r.code, r.requisites]));
       const draggedReqs = allReqs.get(unit.code) ?? [];
-      setValidSemIds(computeValidSemesters(semesters, unit.code, draggedReqs, allReqs));
+      setValidSemIds(
+        computeValidSemesters(semesters, unit.code, draggedReqs, allReqs),
+      );
     });
   }
 
@@ -525,7 +568,13 @@ export default function CoursePlanner({
                 </h1>
 
                 <div className="mt-5 flex flex-wrap gap-2.5">
-                  {[schedule.course_title, schedule.specialisation, schedule.major, schedule.minor, schedule.campus]
+                  {[
+                    schedule.course_title,
+                    schedule.specialisation,
+                    schedule.major,
+                    schedule.minor,
+                    schedule.campus,
+                  ]
                     .filter(Boolean)
                     .map((tag, i) => (
                       <span
@@ -577,7 +626,9 @@ export default function CoursePlanner({
               </div>
               <div className="mt-6 text-[46px] font-semibold tracking-[-0.05em] text-black">
                 {summary.totalPlannedUnits}
-                <span className="ml-1 text-black/20">/{summary.completedTarget}</span>
+                <span className="ml-1 text-black/20">
+                  /{summary.completedTarget}
+                </span>
               </div>
             </div>
 
@@ -600,12 +651,19 @@ export default function CoursePlanner({
                 {(Object.entries(summary.breakdown) as [UnitCategory, number][])
                   .filter(([, count]) => count > 0)
                   .map(([key, value]) => (
-                    <div key={key} className="flex items-center justify-between">
+                    <div
+                      key={key}
+                      className="flex items-center justify-between"
+                    >
                       <div className="flex items-center gap-3 text-[14px] text-black/55">
-                        <span className={`h-2.5 w-2.5 rounded-full ${categoryDotStyles[key]}`} />
+                        <span
+                          className={`h-2.5 w-2.5 rounded-full ${categoryDotStyles[key]}`}
+                        />
                         {key}
                       </div>
-                      <span className="text-[14px] font-medium text-black/55">{value}</span>
+                      <span className="text-[14px] font-medium text-black/55">
+                        {value}
+                      </span>
                     </div>
                   ))}
               </div>
@@ -620,29 +678,42 @@ export default function CoursePlanner({
                     {yearGroup.year}
                   </span>
                   <div className="h-px flex-1 bg-black/10" />
-                  <span className="text-[14px] text-black/25">{yearGroup.yearLabel}</span>
+                  <span className="text-[14px] text-black/25">
+                    {yearGroup.yearLabel}
+                  </span>
                 </div>
 
                 <div className="space-y-5">
                   {yearGroup.semesters.map((semester) => {
-                    const semesterCredits = semester.units.reduce((sum, u) => sum + (u?.cp ?? 0), 0);
+                    const semesterCredits = semester.units.reduce(
+                      (sum, u) => sum + (u?.cp ?? 0),
+                      0,
+                    );
                     const semUnitCount = semester.units.filter(Boolean).length;
 
                     const isDragging = activeSlotId !== null;
-                    const draggedSemId = activeSlotId ? parseSlotId(activeSlotId).semId : null;
+                    const draggedSemId = activeSlotId
+                      ? parseSlotId(activeSlotId).semId
+                      : null;
                     const isSource = draggedSemId === semester.id;
                     const isHovered = overSemId === semester.id;
-                    const isValid = !isDragging || validSemIds === null || validSemIds.has(semester.id);
+                    const isValid =
+                      !isDragging ||
+                      validSemIds === null ||
+                      validSemIds.has(semester.id);
 
-                    let semCardClass = "overflow-hidden rounded-[24px] border transition-all duration-150 ";
+                    let semCardClass =
+                      "overflow-hidden rounded-[24px] border transition-all duration-150 ";
                     if (!isDragging || validSemIds === null) {
                       semCardClass += "border-black/10 bg-[#fafaf9]";
                     } else if (isSource) {
                       semCardClass += "border-black/10 bg-[#fafaf9] opacity-60";
                     } else if (isHovered && isValid) {
-                      semCardClass += "border-emerald-400/80 bg-emerald-50/40 shadow-[0_0_0_4px_rgba(52,211,153,0.12)]";
+                      semCardClass +=
+                        "border-emerald-400/80 bg-emerald-50/40 shadow-[0_0_0_4px_rgba(52,211,153,0.12)]";
                     } else if (isHovered && !isValid) {
-                      semCardClass += "border-red-400/80 bg-red-50/40 shadow-[0_0_0_4px_rgba(239,68,68,0.12)]";
+                      semCardClass +=
+                        "border-red-400/80 bg-red-50/40 shadow-[0_0_0_4px_rgba(239,68,68,0.12)]";
                     } else if (isValid) {
                       semCardClass += "border-emerald-300/50 bg-[#fafaf9]";
                     } else {
@@ -650,20 +721,21 @@ export default function CoursePlanner({
                     }
 
                     return (
-                      <section
-                        key={semester.id}
-                        className={semCardClass}
-                      >
+                      <section key={semester.id} className={semCardClass}>
                         <div className="flex flex-col gap-3 border-b border-black/[0.06] px-6 py-5 md:flex-row md:items-center md:justify-between">
                           <div className="flex items-center gap-4">
                             <h2 className="text-[18px] font-medium tracking-[-0.03em] text-black">
                               {semester.title}
                             </h2>
                             <ChevronRight className="h-4 w-4 text-black/15" />
-                            <span className="text-[15px] text-black/28">{semester.year}</span>
+                            <span className="text-[15px] text-black/28">
+                              {semester.year}
+                            </span>
                           </div>
                           <div className="flex items-center gap-4">
-                            <span className="text-[15px] text-black/32">{semUnitCount} units</span>
+                            <span className="text-[15px] text-black/32">
+                              {semUnitCount} units
+                            </span>
                             <span className="rounded-full bg-black/[0.04] px-3 py-1 text-[13px] font-medium text-black/30">
                               {semesterCredits} CP
                             </span>
@@ -676,10 +748,7 @@ export default function CoursePlanner({
                             const isBeingDragged = activeSlotId === slotId;
 
                             return (
-                              <DroppableSlot
-                                key={slotId}
-                                slotId={slotId}
-                              >
+                              <DroppableSlot key={slotId} slotId={slotId}>
                                 {unit ? (
                                   <DraggableUnitCard
                                     unit={unit}
