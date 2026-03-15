@@ -27,7 +27,7 @@ export async function GET(request, { params }) {
     });
 
     if (!res.ok) {
-      console.log(res.json())
+      console.log("Reddit request failed", await res.json())
       return NextResponse.json(
         { error: "Reddit request failed", status: res.status },
         { status: 502 }
