@@ -1,13 +1,139 @@
 "use client";
 
-import { useState } from "react";
-import { ChevronDown, Sparkles } from "lucide-react";
+import { useEffect, useState } from "react";
+import { Check, ChevronDown, Search, Sparkles } from "lucide-react";
 
 type CourseOption = { code: string; title: string };
 type AosOption = { code: string; title: string };
 
 const inputClass =
   "w-full rounded-xl border border-black/10 bg-black/[0.03] px-4 py-3 text-sm text-black placeholder:text-black/30 outline-none transition-all focus:border-black/20 focus:bg-white focus:ring-4 focus:ring-black/[0.03]";
+
+function SearchableSelect({
+  id,
+  name,
+  label,
+  placeholder,
+  emptyLabel,
+  options,
+  value,
+  disabled = false,
+  required = false,
+  onChange,
+}: {
+  id: string;
+  name: string;
+  label: string;
+  placeholder: string;
+  emptyLabel: string;
+  options: { code: string; title: string }[];
+  value: string;
+  disabled?: boolean;
+  required?: boolean;
+  onChange: (value: string) => void;
+}) {
+  const [open, setOpen] = useState(false);
+  const [query, setQuery] = useState("");
+
+  const selectedOption = options.find((option) => option.code === value);
+  const visibleOptions = options.filter((option) => {
+    const search = query.trim().toLowerCase();
+    if (!search) return true;
+
+    return (
+      option.code.toLowerCase().includes(search) ||
+      option.title.toLowerCase().includes(search)
+    );
+  });
+
+  useEffect(() => {
+    if (!open) {
+      setQuery("");
+    }
+  }, [open]);
+
+  return (
+    <div>
+      <label
+        htmlFor={id}
+        className="mb-2 block text-sm font-medium text-black/75"
+      >
+        {label} {required && <span className="text-black/30">*</span>}
+      </label>
+
+      <div className="relative">
+        <input type="hidden" id={id} name={name} value={value} />
+
+        <button
+          type="button"
+          disabled={disabled}
+          onClick={() => setOpen((current) => !current)}
+          className={`${inputClass} flex items-center justify-between pr-10 text-left disabled:cursor-not-allowed disabled:opacity-50`}
+        >
+          <span className={selectedOption ? "text-black" : "text-black/30"}>
+            {selectedOption
+              ? `${selectedOption.code}: ${selectedOption.title}`
+              : placeholder}
+          </span>
+        </button>
+
+        <ChevronDown className="pointer-events-none absolute right-4 top-1/2 h-4 w-4 -translate-y-1/2 text-black/35" />
+
+        {open && !disabled && (
+          <div className="absolute left-0 right-0 top-[calc(100%+8px)] z-20 rounded-2xl border border-black/10 bg-white p-3 shadow-[0_12px_40px_rgba(0,0,0,0.08)]">
+            <div className="relative">
+              <Search className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-black/30" />
+              <input
+                autoFocus
+                value={query}
+                onChange={(event) => setQuery(event.target.value)}
+                placeholder={`Search ${label.toLowerCase()}`}
+                className={`${inputClass} pl-10`}
+              />
+            </div>
+
+            <div className="mt-3 max-h-64 space-y-1 overflow-y-auto">
+              {visibleOptions.length > 0 ? (
+                visibleOptions.map((option) => {
+                  const isSelected = option.code === value;
+
+                  return (
+                    <button
+                      key={option.code}
+                      type="button"
+                      onClick={() => {
+                        onChange(option.code);
+                        setOpen(false);
+                      }}
+                      className="flex w-full items-start justify-between rounded-xl px-4 py-3 text-left transition-colors hover:bg-black/[0.04]"
+                    >
+                      <div>
+                        <div className="text-sm font-medium text-black">
+                          {option.code}
+                        </div>
+                        <div className="mt-1 text-sm text-black/45">
+                          {option.title}
+                        </div>
+                      </div>
+
+                      {isSelected && (
+                        <Check className="mt-0.5 h-4 w-4 text-black/50" />
+                      )}
+                    </button>
+                  );
+                })
+              ) : (
+                <div className="rounded-xl px-4 py-3 text-sm text-black/40">
+                  {emptyLabel}
+                </div>
+              )}
+            </div>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
 
 export default function StudentDetailsFormContent({
   courses,
@@ -23,11 +149,51 @@ export default function StudentDetailsFormContent({
   courseToAos: Record<string, string[]>;
 }) {
   const [selectedCourse, setSelectedCourse] = useState("");
+  const [selectedAos, setSelectedAos] = useState("");
   const [minorMajorType, setMinorMajorType] = useState("");
+  const [selectedMinorMajorCode, setSelectedMinorMajorCode] = useState("");
+  const [yearStart, setYearStart] = useState("");
+  const [yearEnd, setYearEnd] = useState("");
 
-  const filteredAos = selectedCourse && courseToAos[selectedCourse]
-    ? aosList.filter((a) => courseToAos[selectedCourse].includes(a.code))
-    : [];
+  const filteredAos =
+    selectedCourse && courseToAos[selectedCourse]
+      ? aosList.filter((a) => courseToAos[selectedCourse].includes(a.code))
+      : [];
+  const minorMajorOptions =
+    minorMajorType === "minor"
+      ? minorAosList
+      : minorMajorType === "major"
+        ? majorAosList
+        : [];
+
+  useEffect(() => {
+    setSelectedAos("");
+  }, [selectedCourse]);
+
+  useEffect(() => {
+    setSelectedMinorMajorCode("");
+  }, [minorMajorType]);
+
+  function clampEndYear(nextStart: string, nextEnd: string) {
+    if (!nextEnd) return "";
+
+    const start = Number(nextStart);
+    const end = Number(nextEnd);
+
+    if (!Number.isFinite(start) || !Number.isFinite(end)) {
+      return nextEnd;
+    }
+
+    if (end < start + 2) {
+      return String(start + 2);
+    }
+
+    if (end > start + 7) {
+      return String(start + 7);
+    }
+
+    return nextEnd;
+  }
 
   return (
     <>
@@ -78,67 +244,44 @@ export default function StudentDetailsFormContent({
           </div>
 
           <div>
-            <label
-              htmlFor="courses"
-              className="mb-2 block text-sm font-medium text-black/75"
-            >
-              Courses <span className="text-black/30">*</span>
-            </label>
-            <div className="relative">
-              <select
-                id="courses"
-                name="courses"
-                required
-                value={selectedCourse}
-                onChange={(e) => setSelectedCourse(e.target.value)}
-                className={`${inputClass} appearance-none pr-10`}
-              >
-                <option value="" disabled>
-                  Select course
-                </option>
-                {courses.map((c) => (
-                  <option key={c.code} value={c.code}>
-                     {c.code}: {c.title}
-                  </option>
-                ))}
-              </select>
-              <ChevronDown className="pointer-events-none absolute right-4 top-1/2 h-4 w-4 -translate-y-1/2 text-black/35" />
-            </div>
+            <SearchableSelect
+              id="courses"
+              name="courses"
+              label="Courses"
+              placeholder="Select course"
+              emptyLabel="No courses found"
+              options={courses}
+              value={selectedCourse}
+              required
+              onChange={setSelectedCourse}
+            />
           </div>
-
-          
         </div>
       </section>
 
       <section>
         <div className="grid grid-cols-1 gap-4">
           <div>
-            <label
-              htmlFor="areaOfStudy"
-              className="mb-2 block text-sm font-medium text-black/75"
-            >
-              Area of Study <span className="text-black/30">*</span>
-            </label>
-            <div className="relative">
-              <select
-                id="areaOfStudy"
-                name="areaOfStudy"
-                required
-                defaultValue=""
-                disabled={!selectedCourse}
-                className={`${inputClass} appearance-none pr-10 disabled:cursor-not-allowed disabled:opacity-50`}
-              >
-                <option value="" disabled>
-                  {selectedCourse ? "Select area of study" : "Select a course first"}
-                </option>
-                {filteredAos.map((a) => (
-                  <option key={a.code} value={a.code}>
-                    {a.title}
-                  </option>
-                ))}
-              </select>
-              <ChevronDown className="pointer-events-none absolute right-4 top-1/2 h-4 w-4 -translate-y-1/2 text-black/35" />
-            </div>
+            <SearchableSelect
+              id="areaOfStudy"
+              name="areaOfStudy"
+              label="Area of Study"
+              placeholder={
+                selectedCourse
+                  ? "Select area of study"
+                  : "Select a course first"
+              }
+              emptyLabel={
+                selectedCourse
+                  ? "No areas of study found"
+                  : "Select a course first"
+              }
+              options={filteredAos}
+              value={selectedAos}
+              disabled={!selectedCourse}
+              required
+              onChange={setSelectedAos}
+            />
           </div>
         </div>
       </section>
@@ -169,31 +312,25 @@ export default function StudentDetailsFormContent({
           </div>
 
           <div>
-            <label
-              htmlFor="minorMajorCode"
-              className="mb-2 block text-sm font-medium text-black/75"
-            >
-              Select {minorMajorType === "major" ? "Major" : minorMajorType === "minor" ? "Minor" : "Minor/Major"}
-            </label>
-            <div className="relative">
-              <select
-                id="minorMajorCode"
-                name="minorMajorCode"
-                defaultValue=""
-                disabled={!minorMajorType}
-                className={`${inputClass} appearance-none pr-10 disabled:cursor-not-allowed disabled:opacity-50`}
-              >
-                <option value="">
-                  {minorMajorType ? `Select ${minorMajorType}` : "Select type first"}
-                </option>
-                {(minorMajorType === "minor" ? minorAosList : minorMajorType === "major" ? majorAosList : aosList).map((a) => (
-                  <option key={a.code} value={a.code}>
-                    {a.code}: {a.title}
-                  </option>
-                ))}
-              </select>
-              <ChevronDown className="pointer-events-none absolute right-4 top-1/2 h-4 w-4 -translate-y-1/2 text-black/35" />
-            </div>
+            <SearchableSelect
+              id="minorMajorCode"
+              name="minorMajorCode"
+              label={`Select ${minorMajorType === "major" ? "Major" : minorMajorType === "minor" ? "Minor" : "Minor/Major"}`}
+              placeholder={
+                minorMajorType
+                  ? `Select ${minorMajorType}`
+                  : "Select type first"
+              }
+              emptyLabel={
+                minorMajorType
+                  ? `No ${minorMajorType} options found`
+                  : "Select type first"
+              }
+              options={minorMajorOptions}
+              value={selectedMinorMajorCode}
+              disabled={!minorMajorType}
+              onChange={setSelectedMinorMajorCode}
+            />
           </div>
         </div>
       </section>
@@ -239,6 +376,12 @@ export default function StudentDetailsFormContent({
               min="2020"
               max="2035"
               required
+              value={yearStart}
+              onChange={(event) => {
+                const nextStart = event.target.value;
+                setYearStart(nextStart);
+                setYearEnd((current) => clampEndYear(nextStart, current));
+              }}
               className={inputClass}
             />
           </div>
@@ -255,11 +398,18 @@ export default function StudentDetailsFormContent({
               name="yearEnd"
               type="number"
               placeholder="2027"
-              min="2020"
-              max="2040"
+              min={yearStart ? String(Number(yearStart) + 2) : "2022"}
+              max={yearStart ? String(Number(yearStart) + 7) : "2040"}
               required
+              value={yearEnd}
+              onChange={(event) => {
+                setYearEnd(clampEndYear(yearStart, event.target.value));
+              }}
               className={inputClass}
             />
+            <p className="mt-2 text-xs text-black/40">
+              Course end must be between 2 and 7 years after course start.
+            </p>
           </div>
         </div>
       </section>
