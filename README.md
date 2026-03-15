@@ -14,6 +14,8 @@ Built for the **UniHack** hackathon.
 - **Unit details** — view offerings, assessments, and requisites pulled from the Monash Handbook
 - **Student reviews** — see real r/Monash Reddit discussions for any unit
 - **Save & manage plans** — authenticated dashboard to store and revisit plans
+- **Elective search** — search 5,000+ Monash units by keyword, code, or level to fill free elective slots
+- **AI unit advisor** — chat with "Ask ChatJKW" (powered by Groq + Llama 3.3) to get personalised unit recommendations
 
 ---
 
@@ -26,6 +28,8 @@ Built for the **UniHack** hackathon.
 | Styling | Tailwind CSS v4 + Framer Motion |
 | Auth | Clerk |
 | Database | Supabase (PostgreSQL) |
+| Search | Elasticsearch (Elastic Cloud) |
+| AI Chatbot | Groq API (Llama 3.3 70B) |
 | Drag & Drop | @dnd-kit |
 | Algorithm | Python (`algo1.py`) |
 
@@ -37,8 +41,9 @@ Built for the **UniHack** hackathon.
 2. Choose your **course**, **area of study**, and optional **major/minor**
 3. The server runs `algo1.py` — a 1,300-line Python scheduler that maps out your full degree
 4. Your plan is saved to Supabase and displayed as an interactive semester grid
-5. Click any unit to view handbook details and Reddit reviews
-6. Drag and drop to reorder, then save your plan
+5. Click any **Free Elective** slot to search 5,000+ units or ask the AI chatbot for suggestions
+6. Click any unit to view handbook details and Reddit reviews
+7. Drag and drop to reorder, then save your plan
 
 ---
 
@@ -50,6 +55,8 @@ Built for the **UniHack** hackathon.
 - Python 3 (for the scheduling algorithm)
 - A [Clerk](https://clerk.com) account
 - A [Supabase](https://supabase.com) project
+- An [Elastic Cloud](https://cloud.elastic.co) deployment
+- A [Groq](https://console.groq.com) API key (free)
 
 ### Installation
 
@@ -68,7 +75,21 @@ NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=
 CLERK_SECRET_KEY=
 NEXT_PUBLIC_SUPABASE_URL=
 NEXT_PUBLIC_SUPABASE_PUBLISHABLE_DEFAULT_KEY=
+ELASTICSEARCH_CLOUD_ID=
+ELASTICSEARCH_API_KEY=
+GROQ_API_KEY=
 ```
+
+### Index Units (one-time setup)
+
+After setting your Elasticsearch env vars, index the unit database:
+
+```bash
+cd my-app
+node scripts/index-units.js
+```
+
+This bulk-indexes 5,237 Monash units into your Elastic Cloud cluster. Only needs to be run once.
 
 ### Run
 
@@ -85,18 +106,32 @@ Open [http://localhost:3000](http://localhost:3000).
 
 ```
 u-nitme/
-├── my-app/                         # Next.js application
+├── my-app/                             # Next.js application
 │   ├── src/
-│   │   ├── app/                    # Pages and API routes
-│   │   ├── components/             # React components
-│   │   ├── lib/                    # Supabase client, server actions, types
-│   │   └── algo/
-│   │       └── algo1.py            # Python scheduling algorithm
+│   │   ├── app/                        # Pages and API routes
+│   │   │   └── api/units/
+│   │   │       ├── search/route.ts     # GET — Elasticsearch unit search
+│   │   │       └── chat/route.ts       # POST — Groq AI chatbot (RAG)
+│   │   ├── components/
+│   │   │   ├── CoursePlanner.tsx       # Drag-and-drop schedule grid
+│   │   │   ├── ElectiveSearch.tsx      # Elective search modal + AI chat
+│   │   │   └── ...                     # Other components
+│   │   └── lib/
+│   │       ├── elasticsearch.ts        # Elastic Cloud client singleton
+│   │       └── ...                     # Supabase, types, etc.
+│   ├── scripts/
+│   │   └── index-units.js              # One-time unit indexing script
 │   └── public/data/
-│       ├── final_courses.json      # Monash course database
-│       ├── final_aos.json          # Areas of study database
-│       └── final_units.json        # Individual unit database
-└── datasets/                       # Raw source data
+│       ├── final_courses.json          # Monash course database
+│       ├── final_aos.json              # Areas of study database
+│       ├── final_units.json            # Unit database (used by algo1.py)
+│       └── final_units.ndjson          # Unit database (used by Elasticsearch indexer)
+├── algo/
+│   ├── src/
+│   │   └── algo1.py                    # Python scheduling algorithm
+│   └── api/
+│       └── index.py                    # Vercel Python API endpoint for algo1.py
+└── datasets/                           # Raw source data
 ```
 
 ---

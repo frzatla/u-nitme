@@ -2,8 +2,6 @@ import { NextResponse } from "next/server";
 
 const USER_AGENT = "u-nitme/1.0 (hackathon project)";
 
-export const revalidate = 3600; // cache for 1 hour
-
 export async function GET(request, { params }) {
   const { code } = await params;
 
@@ -24,7 +22,7 @@ export async function GET(request, { params }) {
   url.searchParams.set("limit", "15");
 
   try {
-    const res = await fetch(url.toString(), {
+    const res = await fetch(url, {
       headers: { "User-Agent": USER_AGENT },
       next: { revalidate: 3600 },
     });
