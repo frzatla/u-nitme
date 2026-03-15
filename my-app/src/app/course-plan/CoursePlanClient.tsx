@@ -2,6 +2,7 @@
 
 import { useState, useTransition } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { RefreshCw, BookmarkCheck, Loader2, ArrowLeft } from "lucide-react";
 import CoursePlanner, { type Semester } from "../../components/CoursePlanner";
 import { savePlanWithSchedule } from "../actions";
@@ -71,6 +72,7 @@ export default function CoursePlanClient({
   handleSave,
   handleDiscard,
 }: Props) {
+  const router = useRouter();
   const [plan, setPlan] = useState(initialPlan);
 
   const [modifiedSemesters, setModifiedSemesters] = useState<Semester[] | null>(
@@ -92,6 +94,22 @@ export default function CoursePlanClient({
     startTransition(async () => {
       await handleDiscard();
     });
+  }
+
+  function onBackToDashboard() {
+    const shouldConfirm = isNewPlan || !plan.saved;
+    if (!shouldConfirm) {
+      router.push("/dashboard");
+      return;
+    }
+
+    const message = isNewPlan
+      ? "This plan has not been saved yet. Do you want to leave and go back to the dashboard?"
+      : "You have unsaved changes to this plan. Do you want to leave and go back to the dashboard?";
+
+    if (window.confirm(message)) {
+      router.push("/dashboard");
+    }
   }
 
   return (
@@ -176,13 +194,14 @@ export default function CoursePlanClient({
 
       <section className="px-6 py-8 md:px-8 md:py-10">
         <div className="mx-auto max-w-7xl">
-          <Link
-            href="/dashboard"
+          <button
+            type="button"
+            onClick={onBackToDashboard}
             className="mb-6 inline-flex items-center gap-2 text-sm text-black/40 transition-colors hover:text-black"
           >
             <ArrowLeft className="h-4 w-4" />
             Back to Dashboard
-          </Link>
+          </button>
 
           <CoursePlanner
             schedule={plan.schedule!}
