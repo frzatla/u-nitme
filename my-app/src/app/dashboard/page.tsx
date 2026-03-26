@@ -3,6 +3,7 @@ import Image from "next/image";
 import { UserButton } from "@clerk/nextjs";
 import { currentUser } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
+import { revalidatePath } from "next/cache";
 import {
   ArrowRight,
   BookOpen,
@@ -40,7 +41,7 @@ export default async function DashboardPage() {
       if (!existing) {
         await createNewProfile(email);
       }
-    } catch {}
+    } catch { }
   }
 
   const profile = await getProfileByEmail(email);
@@ -66,6 +67,7 @@ export default async function DashboardPage() {
     nextPlans.splice(planIndex, 1);
 
     await updateProfile(email, { plans: nextPlans });
+    revalidatePath("/dashboard");
   }
 
   return (
@@ -163,8 +165,8 @@ export default async function DashboardPage() {
                 const unitCount =
                   plan.schedule?.summary.total_units ??
                   (Number.isFinite(start) &&
-                  Number.isFinite(end) &&
-                  end >= start
+                    Number.isFinite(end) &&
+                    end >= start
                     ? (end - start + 1) * 8
                     : 0);
                 const totalCredits =
