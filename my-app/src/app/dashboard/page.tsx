@@ -19,6 +19,7 @@ import {
   getProfileByEmail,
   updateProfile,
 } from "../../lib/profile";
+import { isAdminUser } from "../../lib/auth";
 
 function getGreeting() {
   const hour = new Date().getHours();
@@ -34,6 +35,10 @@ export default async function DashboardPage() {
 
   if (!email) {
     redirect("/sign-in");
+  }
+
+  if (isAdminUser(user)) {
+    redirect("/admin");
   }
 
   if (email) {
