@@ -350,30 +350,40 @@ export default function AboutPage() {
   );
 
   return (
-    <main className="min-h-screen overflow-x-hidden bg-black text-white">
+    <main className="relative min-h-screen overflow-x-hidden bg-[#090909] text-[#f3f1eb]">
+      <div className="pointer-events-none absolute inset-0">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_16%_18%,rgba(255,255,255,0.14),transparent_24%),radial-gradient(circle_at_82%_20%,rgba(255,255,255,0.08),transparent_24%),radial-gradient(circle_at_50%_100%,rgba(255,255,255,0.08),transparent_28%)]" />
+        <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.035)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.035)_1px,transparent_1px)] bg-[size:72px_72px] opacity-25" />
+        <div className="absolute left-1/2 top-0 h-[42rem] w-[42rem] -translate-x-1/2 rounded-full bg-white/8 blur-3xl" />
+      </div>
       <header className="sticky top-0 z-40 border-b border-white/[0.18] bg-black/80 backdrop-blur-xl">
         <div className="mx-auto flex h-24 max-w-7xl items-center justify-between px-6 md:px-10">
           <button
             onClick={() => router.push("/")}
             className="flex items-center gap-3 transition-opacity hover:opacity-80"
           >
-            <span className="relative h-[42px] w-[42px] overflow-hidden rounded-xl">
+            <span className="relative h-11 w-11 overflow-hidden rounded-2xl border border-white/12 bg-white/6 shadow-[0_10px_30px_rgba(0,0,0,0.2)]">
               <Image
                 src="/U-NIT ME-2.png"
                 alt="U-NIT ME logo"
                 fill
-                sizes="42px"
+                sizes="44px"
                 className="object-contain"
                 priority
               />
             </span>
-            <span className="text-sm font-medium uppercase tracking-[0.18em] text-white/82">
-              U-NIT ME
-            </span>
+            <div className="text-left">
+              <div className="text-xs uppercase tracking-[0.3em] text-[#f3f1eb]/58">
+                U-NIT ME
+              </div>
+              <div className="text-[11px] uppercase tracking-[0.22em] text-[#f3f1eb]/32">
+                Monash Planner
+              </div>
+            </div>
           </button>
 
           <div className="flex items-center gap-5">
-            <span className="text-xs uppercase tracking-[0.18em] text-white/45">
+            <span className="text-xs uppercase tracking-[0.18em] text-[#f3f1eb]/45">
               About Us
             </span>
             <SignInButton
@@ -381,7 +391,7 @@ export default function AboutPage() {
               forceRedirectUrl="/dashboard"
               fallbackRedirectUrl="/dashboard"
             >
-              <button className="inline-flex items-center gap-2 text-xs uppercase tracking-[0.18em] text-white/65 transition hover:text-white">
+              <button className="inline-flex items-center gap-2 rounded-full border border-white/12 bg-white/[0.03] px-5 py-2.5 text-xs uppercase tracking-[0.18em] text-[#f3f1eb]/72 transition hover:border-white/25 hover:bg-white/[0.05] hover:text-[#f3f1eb]">
                 Sign In
                 <ArrowUpRight className="h-3.5 w-3.5" />
               </button>
@@ -406,20 +416,20 @@ export default function AboutPage() {
         >
           <div className="w-full">
             <FadeUp delay={0.1}>
-              <div className="mb-8 text-xs uppercase tracking-[0.3em] text-white">
+              <div className="mb-8 text-xs uppercase tracking-[0.3em] text-[#f3f1eb]/58">
                 About U-NIT ME
               </div>
             </FadeUp>
 
             <div className="max-w-6xl">
               <HeroRevealLine>
-                <h1 className="text-[clamp(3.5rem,10vw,8.5rem)] font-semibold leading-[0.88] tracking-[-0.08em] text-white">
+                <h1 className="text-[clamp(3.5rem,10vw,8.5rem)] font-semibold leading-[0.88] tracking-[-0.08em] text-[#f3f1eb]">
                   Plan your
                 </h1>
               </HeroRevealLine>
 
               <HeroRevealLine delay={0.08}>
-                <h1 className="text-[clamp(3.5rem,10vw,8.5rem)] font-semibold leading-[0.88] tracking-[-0.08em] text-white">
+                <h1 className="text-[clamp(3.5rem,10vw,8.5rem)] font-semibold leading-[0.88] tracking-[-0.08em] text-[#f3f1eb]">
                   entire degree.
                 </h1>
               </HeroRevealLine>
@@ -427,7 +437,7 @@ export default function AboutPage() {
 
             <div className="mt-12 flex flex-col justify-between gap-10 md:flex-row md:items-end">
               <FadeUp delay={0.25}>
-                <p className="max-w-md text-base leading-8 text-white md:text-lg">
+                <p className="max-w-md text-base leading-8 text-[#f3f1eb]/66 md:text-lg">
                   Reading in 2026??? Hell nahhh — just drop your details and let
                   AI sort your entire degree out. Semester-by-semester, no
                   stress.
@@ -445,7 +455,7 @@ export default function AboutPage() {
                       <span className="flex h-16 w-16 items-center justify-center rounded-full border border-white/18 transition duration-500 group-hover:scale-105 group-hover:bg-white">
                         <ArrowRight className="h-5 w-5 text-white/75 transition duration-500 group-hover:text-black" />
                       </span>
-                      <span className="text-xs uppercase tracking-[0.18em] text-white transition duration-500 group-hover:text-white">
+                      <span className="text-xs uppercase tracking-[0.18em] text-[#f3f1eb]/72 transition duration-500 group-hover:text-[#f3f1eb]">
                         Get Started
                       </span>
                     </button>
@@ -457,7 +467,7 @@ export default function AboutPage() {
                         .getElementById("process")
                         ?.scrollIntoView({ behavior: "smooth" })
                     }
-                    className="rounded-full border border-white/[0.12] px-5 py-3 text-xs uppercase tracking-[0.18em] text-white transition hover:border-white/[0.25] hover:text-white"
+                    className="rounded-full border border-white/[0.12] bg-white/[0.03] px-5 py-3 text-xs uppercase tracking-[0.18em] text-[#f3f1eb]/72 transition hover:border-white/[0.25] hover:bg-white/[0.05] hover:text-[#f3f1eb]"
                   >
                     Explore
                   </button>
@@ -553,19 +563,19 @@ export default function AboutPage() {
         </div>
       </section>
 
-      <section id="process" className="bg-white px-6 text-black md:px-10">
+      <section id="process" className="border-t border-white/[0.18] bg-[#090909] px-6 text-[#f3f1eb] md:px-10">
         <div className="mx-auto max-w-7xl py-32 md:py-40">
           <div className="mb-24 grid gap-16 md:grid-cols-2 md:items-start">
             <div>
               <FadeUp>
-                <div className="mb-6 text-xs uppercase tracking-[0.3em] text-black/32">
+                <div className="mb-6 text-xs uppercase tracking-[0.3em] text-white/42">
                   Process
                 </div>
               </FadeUp>
 
               <HeroRevealLine>
                 <h1
-                  className={`${instrumentSerif.className} text-6xl leading-[0.92] tracking-[-0.05em] text-black md:text-7xl lg:text-8xl`}
+                  className={`${instrumentSerif.className} text-6xl leading-[0.92] tracking-[-0.05em] text-white md:text-7xl lg:text-8xl`}
                 >
                   Three steps.
                 </h1>
@@ -573,7 +583,7 @@ export default function AboutPage() {
 
               <HeroRevealLine delay={0.08}>
                 <h1
-                  className={`${instrumentSerif.className} text-6xl leading-[0.92] tracking-[-0.05em] text-black/18 md:text-7xl lg:text-8xl`}
+                  className={`${instrumentSerif.className} text-6xl leading-[0.92] tracking-[-0.05em] text-white/18 md:text-7xl lg:text-8xl`}
                 >
                   <span className="italic">That&apos;s it.</span>
                 </h1>
@@ -581,7 +591,7 @@ export default function AboutPage() {
             </div>
 
             <FadeUp delay={0.18} className="md:pt-8">
-              <p className="max-w-md text-lg leading-9 text-black/45">
+              <p className="max-w-md text-lg leading-9 text-white/55">
                 No signup forms longer than your thesis. No tutorials. No
                 learning curve. Just three steps between you and a sorted
                 degree.
@@ -589,27 +599,27 @@ export default function AboutPage() {
             </FadeUp>
           </div>
 
-          <div className="border-t border-black/[0.07]">
+          <div className="border-t border-white/[0.12]">
             {steps.map(({ num, title, desc, icon: Icon }, i) => (
               <FadeUp key={num} delay={i * 0.06}>
-                <div className="grid grid-cols-12 gap-y-6 border-b border-black/[0.07] py-14 md:gap-8 md:py-20">
+                <div className="grid grid-cols-12 gap-y-6 border-b border-white/[0.12] py-14 md:gap-8 md:py-20">
                   <div className="col-span-12 md:col-span-2">
-                    <span className="block text-7xl font-semibold tracking-[-0.08em] text-black/[0.06] md:text-8xl lg:text-9xl">
+                    <span className="block text-7xl font-semibold tracking-[-0.08em] text-white/[0.08] md:text-8xl lg:text-9xl">
                       {num}
                     </span>
                   </div>
 
                   <div className="col-span-12 md:col-span-4">
                     <div className="flex items-center gap-3">
-                      <Icon className="h-5 w-5 text-black/22" />
-                      <h3 className="text-2xl font-semibold tracking-tight text-black md:text-[2rem]">
+                      <Icon className="h-5 w-5 text-white/28" />
+                      <h3 className="text-2xl font-semibold tracking-tight text-white md:text-[2rem]">
                         {title}
                       </h3>
                     </div>
                   </div>
 
                   <div className="col-span-12 md:col-span-5 md:col-start-8">
-                    <p className="max-w-xl text-lg leading-9 text-black/45">
+                    <p className="max-w-xl text-lg leading-9 text-white/55">
                       {desc}
                     </p>
                   </div>
