@@ -31,6 +31,12 @@ import {
   Trophy,
 } from "lucide-react";
 import { SignInButton } from "@clerk/nextjs";
+import { Instrument_Serif } from "next/font/google";
+
+const instrumentSerif = Instrument_Serif({
+  subsets: ["latin"],
+  weight: "400",
+});
 
 const capabilities = [
   {
@@ -425,17 +431,20 @@ export default function Home() {
 
               <FadeUp delay={0.35}>
                 <div className="flex items-center gap-5">
-                  <button
-                    onClick={() => router.push("/sign-in")}
-                    className="group inline-flex items-center gap-4"
+                  <SignInButton
+                    mode="redirect"
+                    forceRedirectUrl="/dashboard"
+                    fallbackRedirectUrl="/dashboard"
                   >
-                    <span className="flex h-16 w-16 items-center justify-center rounded-full border border-white/18 transition duration-500 group-hover:scale-105 group-hover:bg-white">
-                      <ArrowRight className="h-5 w-5 text-white/75 transition duration-500 group-hover:text-black" />
-                    </span>
-                    <span className="text-xs uppercase tracking-[0.18em] text-white transition duration-500 group-hover:text-white">
-                      Get Started
-                    </span>
-                  </button>
+                    <button className="group inline-flex items-center gap-4">
+                      <span className="flex h-16 w-16 items-center justify-center rounded-full border border-white/18 transition duration-500 group-hover:scale-105 group-hover:bg-white">
+                        <ArrowRight className="h-5 w-5 text-white/75 transition duration-500 group-hover:text-black" />
+                      </span>
+                      <span className="text-xs uppercase tracking-[0.18em] text-white transition duration-500 group-hover:text-white">
+                        Get Started
+                      </span>
+                    </button>
+                  </SignInButton>
 
                   <button
                     onClick={() =>
@@ -540,60 +549,69 @@ export default function Home() {
       </section>
 
       <section id="process" className="bg-white px-6 text-black md:px-10">
-        <div className="mx-auto max-w-7xl py-28 md:py-36">
-          <div className="mb-20 grid gap-12 md:grid-cols-2 md:items-end">
+        <div className="mx-auto max-w-7xl py-32 md:py-40">
+          <div className="mb-24 grid gap-16 md:grid-cols-2 md:items-start">
             <div>
               <FadeUp>
-                <div className="mb-5 text-xs uppercase tracking-[0.3em] text-black/60">
+                <div className="mb-6 text-xs uppercase tracking-[0.3em] text-black/32">
                   Process
                 </div>
               </FadeUp>
-              <RevealLine>
-                <h2 className="text-5xl font-semibold leading-[0.92] tracking-[-0.06em] md:text-7xl">
+
+              <HeroRevealLine>
+                <h1
+                  className={`${instrumentSerif.className} text-6xl leading-[0.92] tracking-[-0.05em] text-black md:text-7xl lg:text-8xl`}
+                >
                   Three steps.
-                </h2>
-              </RevealLine>
-              <RevealLine delay={0.08}>
-                <h2 className="text-5xl font-semibold leading-[0.92] tracking-[-0.06em] text-black/32 md:text-7xl">
-                  That&apos;s it.
-                </h2>
-              </RevealLine>
+                </h1>
+              </HeroRevealLine>
+
+              <HeroRevealLine delay={0.08}>
+                <h1
+                  className={`${instrumentSerif.className} text-6xl leading-[0.92] tracking-[-0.05em] text-black/18 md:text-7xl lg:text-8xl`}
+                >
+                  <span className="italic">That&apos;s it.</span>
+                </h1>
+              </HeroRevealLine>
             </div>
 
-            <FadeUp delay={0.18}>
-              <p className="max-w-sm text-base leading-8 text-black/58">
-                No handbook rabbit holes. No course-planning spreadsheet
-                nightmares. Just a cleaner path from confusion to clarity.
+            <FadeUp delay={0.18} className="md:pt-8">
+              <p className="max-w-md text-lg leading-9 text-black/45">
+                No signup forms longer than your thesis. No tutorials. No
+                learning curve. Just three steps between you and a sorted
+                degree.
               </p>
             </FadeUp>
           </div>
 
-          {steps.map(({ num, title, desc, icon: Icon }, i) => (
-            <FadeUp key={num} delay={i * 0.06}>
-              <div className="grid grid-cols-12 gap-8 border-t border-black/[0.07] py-12 md:py-16">
-                <div className="col-span-3 md:col-span-2">
-                  <span className="text-6xl font-semibold tracking-[-0.08em] text-black/[0.08] md:text-8xl">
-                    {num}
-                  </span>
-                </div>
+          <div className="border-t border-black/[0.07]">
+            {steps.map(({ num, title, desc, icon: Icon }, i) => (
+              <FadeUp key={num} delay={i * 0.06}>
+                <div className="grid grid-cols-12 gap-y-6 border-b border-black/[0.07] py-14 md:gap-8 md:py-20">
+                  <div className="col-span-12 md:col-span-2">
+                    <span className="block text-7xl font-semibold tracking-[-0.08em] text-black/[0.06] md:text-8xl lg:text-9xl">
+                      {num}
+                    </span>
+                  </div>
 
-                <div className="col-span-9 md:col-span-3">
-                  <div className="flex items-center gap-3">
-                    <Icon className="h-5 w-5 text-black/38" />
-                    <h3 className="text-xl font-semibold tracking-tight md:text-2xl">
-                      {title}
-                    </h3>
+                  <div className="col-span-12 md:col-span-4">
+                    <div className="flex items-center gap-3">
+                      <Icon className="h-5 w-5 text-black/22" />
+                      <h3 className="text-2xl font-semibold tracking-tight text-black md:text-[2rem]">
+                        {title}
+                      </h3>
+                    </div>
+                  </div>
+
+                  <div className="col-span-12 md:col-span-5 md:col-start-8">
+                    <p className="max-w-xl text-lg leading-9 text-black/45">
+                      {desc}
+                    </p>
                   </div>
                 </div>
-
-                <div className="col-span-9 col-start-4 md:col-span-5 md:col-start-7">
-                  <p className="text-sm leading-8 text-black/58 md:text-base">
-                    {desc}
-                  </p>
-                </div>
-              </div>
-            </FadeUp>
-          ))}
+              </FadeUp>
+            ))}
+          </div>
         </div>
       </section>
 
@@ -623,6 +641,37 @@ export default function Home() {
         </div>
       </section>
 
+      <section className="bg-black px-6 pb-20 md:px-10 md:pb-28">
+        <div className="mx-auto max-w-7xl">
+          <FadeUp>
+            <div className="relative overflow-hidden rounded-[32px]">
+              <motion.img
+                initial={{ scale: 1.04 }}
+                whileInView={{ scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
+                src="/hero-mumtaz.webp"
+                alt="Student planning experience"
+                className="h-[360px] w-full object-cover grayscale md:h-[520px]"
+              />
+
+              <div className="absolute inset-0 bg-black/45" />
+
+              <div className="absolute inset-0 flex items-center justify-center px-8 text-center">
+                <p
+                  className={`${instrumentSerif.className} max-w-5xl text-4xl leading-[1.15] tracking-[-0.03em] text-white/92 md:text-6xl text-balance`}
+                >
+                  We spent more time{" "}
+                  <span className="italic me-2">reading</span> the{" "}
+                  <span className="italic me-2">handbook</span> than actually{" "}
+                  <span className="italic">studying</span>.
+                </p>
+              </div>
+            </div>
+          </FadeUp>
+        </div>
+      </section>
+
       <section className="border-t border-white/[0.18] bg-black px-6 md:px-10">
         <div className="mx-auto max-w-7xl py-28 md:py-36">
           <div className="mb-20 grid gap-12 md:grid-cols-2 md:items-end">
@@ -632,16 +681,22 @@ export default function Home() {
                   Reviews
                 </div>
               </FadeUp>
-              <RevealLine>
-                <h2 className="text-4xl font-semibold leading-[0.95] tracking-[-0.06em] text-white md:text-6xl">
+
+              <HeroRevealLine>
+                <h2
+                  className={`${instrumentSerif.className} text-6xl leading-[0.95] tracking-[-0.04em] text-white md:text-6xl`}
+                >
                   Don&apos;t take
                 </h2>
-              </RevealLine>
-              <RevealLine delay={0.08}>
-                <h2 className="text-4xl font-semibold leading-[0.95] tracking-[-0.06em] text-white md:text-6xl">
+              </HeroRevealLine>
+
+              <HeroRevealLine delay={0.08}>
+                <h2
+                  className={`${instrumentSerif.className} text-6xl leading-[0.95] tracking-[-0.04em] text-white md:text-6xl`}
+                >
                   our word for it.
                 </h2>
-              </RevealLine>
+              </HeroRevealLine>
             </div>
 
             <FadeUp delay={0.18}>
@@ -693,16 +748,20 @@ export default function Home() {
                 About
               </div>
             </FadeUp>
-            <RevealLine>
-              <h2 className="text-5xl font-semibold leading-[0.94] tracking-[-0.06em] text-white md:text-7xl">
+            <HeroRevealLine>
+              <h2
+                className={`${instrumentSerif.className} text-5xl leading-[0.94] tracking-[-0.04em] text-white md:text-7xl`}
+              >
                 Built by students,
               </h2>
-            </RevealLine>
-            <RevealLine delay={0.08}>
-              <h2 className="text-5xl font-semibold leading-[0.94] tracking-[-0.06em] text-white md:text-7xl">
+            </HeroRevealLine>
+            <HeroRevealLine delay={0.08}>
+              <h2
+                className={`${instrumentSerif.className} text-5xl leading-[0.94] tracking-[-0.04em] text-white md:text-7xl`}
+              >
                 for students.
               </h2>
-            </RevealLine>
+            </HeroRevealLine>
           </div>
 
           <div className="mb-20 grid gap-4 md:grid-cols-12">
@@ -817,11 +876,13 @@ export default function Home() {
                 FAQ
               </div>
             </FadeUp>
-            <RevealLine>
-              <h2 className="text-5xl font-semibold leading-[0.94] tracking-[-0.06em] text-white md:text-7xl">
+            <HeroRevealLine>
+              <h2
+                className={`${instrumentSerif.className} text-7xl leading-[0.94] tracking-[-0.04em] text-white md:text-7xl`}
+              >
                 Yeah but...
               </h2>
-            </RevealLine>
+            </HeroRevealLine>
           </div>
 
           <div>
@@ -856,17 +917,20 @@ export default function Home() {
           </FadeUp>
 
           <FadeUp delay={0.32}>
-            <button
-              onClick={() => router.push("/sign-in")}
-              className="group mt-12 inline-flex items-center gap-4"
+            <SignInButton
+              mode="redirect"
+              forceRedirectUrl="/dashboard"
+              fallbackRedirectUrl="/dashboard"
             >
-              <span className="flex h-16 w-16 items-center justify-center rounded-full border border-white/18 transition duration-500 group-hover:scale-105 group-hover:bg-white">
-                <ArrowRight className="h-5 w-5 text-white/75 transition duration-500 group-hover:text-black" />
-              </span>
-              <span className="text-xs uppercase tracking-[0.18em] text-white transition duration-500 group-hover:text-white">
-                Plan My Degree
-              </span>
-            </button>
+              <button className="group mt-12 inline-flex items-center gap-4">
+                <span className="flex h-16 w-16 items-center justify-center rounded-full border border-white/18 transition duration-500 group-hover:scale-105 group-hover:bg-white">
+                  <ArrowRight className="h-5 w-5 text-white/75 transition duration-500 group-hover:text-black" />
+                </span>
+                <span className="text-xs uppercase tracking-[0.18em] text-white transition duration-500 group-hover:text-white">
+                  Plan My Degree
+                </span>
+              </button>
+            </SignInButton>
           </FadeUp>
         </div>
       </section>

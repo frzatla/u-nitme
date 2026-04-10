@@ -4,13 +4,13 @@ import path from "path";
 import StudentDetailsFormContent from "./StudentDetailsFormContent";
 
 type CourseOption = { code: string; title: string };
-type AosOption   = { code: string; title: string };
+type AosOption = { code: string; title: string };
 
 // ── data loading ──────────────────────────────────────────────────────────────
 
 function readJson(filename: string) {
   return JSON.parse(
-    readFileSync(path.join(process.cwd(), "public/data", filename), "utf-8")
+    readFileSync(path.join(process.cwd(), "public/data", filename), "utf-8"),
   );
 }
 
@@ -22,13 +22,13 @@ function loadData(): {
   courseToAos: Record<string, string[]>;
 } {
   const coursesRaw = readJson("final_courses.json");
-  const aosRaw     = readJson("final_aos.json");
+  const aosRaw = readJson("final_aos.json");
 
   // Valid AOS = present in final_aos.json with non-zero credit points
   const validAosCodes = new Set<string>(
     Object.values(aosRaw)
       .filter((a: any) => a.total_credit_points > 0)
-      .map((a: any) => a.course_code)
+      .map((a: any) => a.course_code),
   );
 
   const aosList: AosOption[] = Object.values(aosRaw)
@@ -74,14 +74,17 @@ function loadData(): {
 
 // ── component ─────────────────────────────────────────────────────────────────
 
-export default async function StudentDetailsForm({ action }: HTMLProps<"form">) {
-  const { courses, aosList, minorAosList, majorAosList, courseToAos } = loadData();
+export default async function StudentDetailsForm({
+  action,
+}: HTMLProps<"form">) {
+  const { courses, aosList, minorAosList, majorAosList, courseToAos } =
+    loadData();
 
   return (
     <div className="rounded-3xl border border-black/10 bg-white px-7 py-8 shadow-[0_1px_2px_rgba(0,0,0,0.02)] md:px-8 md:py-9">
       <form action={action} className="space-y-7">
         <StudentDetailsFormContent
-          courses={courses}
+          courseCode={courses}
           aosList={aosList}
           minorAosList={minorAosList}
           majorAosList={majorAosList}

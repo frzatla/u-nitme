@@ -6,6 +6,8 @@ import { Check, ChevronDown, Search, Sparkles } from "lucide-react";
 type CourseOption = { code: string; title: string };
 type AosOption = { code: string; title: string };
 
+const NO_AREA_OF_STUDY_VALUE = "__NO_AREA_OF_STUDY__";
+
 const inputClass =
   "w-full rounded-xl border border-black/10 bg-black/[0.03] px-4 py-3 text-sm text-black placeholder:text-black/30 outline-none transition-all focus:border-black/20 focus:bg-white focus:ring-4 focus:ring-black/[0.03]";
 
@@ -136,13 +138,13 @@ function SearchableSelect({
 }
 
 export default function StudentDetailsFormContent({
-  courses,
+  courseCode,
   aosList,
   minorAosList,
   majorAosList,
   courseToAos,
 }: {
-  courses: CourseOption[];
+  courseCode: CourseOption[];
   aosList: AosOption[];
   minorAosList: AosOption[];
   majorAosList: AosOption[];
@@ -159,6 +161,15 @@ export default function StudentDetailsFormContent({
     selectedCourse && courseToAos[selectedCourse]
       ? aosList.filter((a) => courseToAos[selectedCourse].includes(a.code))
       : [];
+  const areaOfStudyOptions =
+    selectedCourse && filteredAos.length === 0
+      ? [
+          {
+            code: NO_AREA_OF_STUDY_VALUE,
+            title: "No area of study",
+          },
+        ]
+      : filteredAos;
   const minorMajorOptions =
     minorMajorType === "minor"
       ? minorAosList
@@ -245,12 +256,12 @@ export default function StudentDetailsFormContent({
 
           <div>
             <SearchableSelect
-              id="courses"
-              name="courses"
+              id="courseCode"
+              name="courseCode"
               label="Courses"
               placeholder="Select course"
               emptyLabel="No courses found"
-              options={courses}
+              options={courseCode}
               value={selectedCourse}
               required
               onChange={setSelectedCourse}
@@ -276,7 +287,7 @@ export default function StudentDetailsFormContent({
                   ? "No areas of study found"
                   : "Select a course first"
               }
-              options={filteredAos}
+              options={areaOfStudyOptions}
               value={selectedAos}
               disabled={!selectedCourse}
               required
@@ -420,7 +431,7 @@ export default function StudentDetailsFormContent({
           className="flex w-full items-center justify-center gap-2 rounded-xl bg-black px-4 py-3.5 text-sm font-medium text-white transition-colors hover:bg-black/90"
         >
           <Sparkles className="h-4 w-4" />
-          Generate AI Course Plan
+          Generate Course Plan
         </button>
       </div>
     </>
