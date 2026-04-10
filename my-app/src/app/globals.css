@@ -6,8 +6,8 @@ body {
   padding: 0;
   min-height: 100%;
   width: 100%;
-  background: #f5f5f4;
-  color: #111111;
+  background: #000000;
+  color: #ffffff;
   scroll-behavior: smooth;
 }
 
@@ -28,4 +28,6 @@ a {
 
 img {
   display: block;
+  user-select: none;
+  -webkit-user-drag: none;
 }
