@@ -1,12 +1,32 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Check, ChevronDown, Search, Sparkles } from "lucide-react";
 
 type CourseOption = { code: string; title: string };
 type AosOption = { code: string; title: string };
 
 const NO_AREA_OF_STUDY_VALUE = "__NO_AREA_OF_STUDY__";
+const MAX_INTERESTS = 3;
+
+const interestOptions = [
+  "AI",
+  "Problem Solving",
+  "Cybersecurity",
+  "Data",
+  "Software",
+  "Design",
+  "Business",
+  "Pitching",
+  "Leadership",
+  "Communication",
+  "Finance",
+  "Health",
+  "Sustainability",
+  "Robotics",
+  "Games",
+  "Education",
+];
 
 const inputClass =
   "w-full rounded-xl border border-black/10 bg-black/[0.03] px-4 py-3 text-sm text-black placeholder:text-black/30 outline-none transition-all focus:border-black/20 focus:bg-white focus:ring-4 focus:ring-black/[0.03]";
@@ -48,12 +68,6 @@ function SearchableSelect({
     );
   });
 
-  useEffect(() => {
-    if (!open) {
-      setQuery("");
-    }
-  }, [open]);
-
   return (
     <div>
       <label
@@ -69,7 +83,12 @@ function SearchableSelect({
         <button
           type="button"
           disabled={disabled}
-          onClick={() => setOpen((current) => !current)}
+          onClick={() => {
+            if (open) {
+              setQuery("");
+            }
+            setOpen(!open);
+          }}
           className={`${inputClass} flex items-center justify-between pr-10 text-left disabled:cursor-not-allowed disabled:opacity-50`}
         >
           <span className={selectedOption ? "text-black" : "text-black/30"}>
@@ -105,6 +124,7 @@ function SearchableSelect({
                       type="button"
                       onClick={() => {
                         onChange(option.code);
+                        setQuery("");
                         setOpen(false);
                       }}
                       className="flex w-full items-start justify-between rounded-xl px-4 py-3 text-left transition-colors hover:bg-black/[0.04]"
@@ -154,6 +174,7 @@ export default function StudentDetailsFormContent({
   const [selectedAos, setSelectedAos] = useState("");
   const [minorMajorType, setMinorMajorType] = useState("");
   const [selectedMinorMajorCode, setSelectedMinorMajorCode] = useState("");
+  const [selectedInterests, setSelectedInterests] = useState<string[]>([]);
   const [yearStart, setYearStart] = useState("");
   const [yearEnd, setYearEnd] = useState("");
 
@@ -177,14 +198,6 @@ export default function StudentDetailsFormContent({
         ? majorAosList
         : [];
 
-  useEffect(() => {
-    setSelectedAos("");
-  }, [selectedCourse]);
-
-  useEffect(() => {
-    setSelectedMinorMajorCode("");
-  }, [minorMajorType]);
-
   function clampEndYear(nextStart: string, nextEnd: string) {
     if (!nextEnd) return "";
 
@@ -206,8 +219,26 @@ export default function StudentDetailsFormContent({
     return nextEnd;
   }
 
+  function toggleInterest(interest: string) {
+    setSelectedInterests((current) => {
+      if (current.includes(interest)) {
+        return current.filter((item) => item !== interest);
+      }
+
+      if (current.length >= MAX_INTERESTS) {
+        return current;
+      }
+
+      return [...current, interest];
+    });
+  }
+
   return (
     <>
+      {selectedInterests.map((interest) => (
+        <input key={interest} type="hidden" name="interests" value={interest} />
+      ))}
+
       <section>
         <div className="grid grid-cols-1 gap-4">
           <div>
@@ -225,6 +256,49 @@ export default function StudentDetailsFormContent({
               className={inputClass}
             />
           </div>
+        </div>
+      </section>
+
+      <section>
+        <div>
+          <div className="mb-3 flex items-center justify-between gap-4">
+            <label className="block text-sm font-medium text-black/75">
+              Interests <span className="text-black/30">*</span>
+            </label>
+            <span className="text-xs text-black/35">
+              {selectedInterests.length}/{MAX_INTERESTS} selected
+            </span>
+          </div>
+
+          <div className="flex flex-wrap gap-2">
+            {interestOptions.map((interest) => {
+              const isSelected = selectedInterests.includes(interest);
+              const isDisabled =
+                !isSelected && selectedInterests.length >= MAX_INTERESTS;
+
+              return (
+                <button
+                  key={interest}
+                  type="button"
+                  onClick={() => toggleInterest(interest)}
+                  disabled={isDisabled}
+                  className={`inline-flex items-center gap-1.5 rounded-full border px-3 py-2 text-sm transition-all ${
+                    isSelected
+                      ? "border-black bg-black text-white"
+                      : "border-black/10 bg-black/[0.03] text-black/55 hover:border-black/20 hover:bg-white"
+                  } ${isDisabled ? "cursor-not-allowed opacity-35" : ""}`}
+                  aria-pressed={isSelected}
+                >
+                  {isSelected && <Check className="h-3.5 w-3.5" />}
+                  {interest}
+                </button>
+              );
+            })}
+          </div>
+
+          <p className="mt-2 text-xs text-black/40">
+            Pick exactly 3 keywords to personalize elective recommendations.
+          </p>
         </div>
       </section>
 
@@ -264,7 +338,10 @@ export default function StudentDetailsFormContent({
               options={courseCode}
               value={selectedCourse}
               required
-              onChange={setSelectedCourse}
+              onChange={(value) => {
+                setSelectedCourse(value);
+                setSelectedAos("");
+              }}
             />
           </div>
         </div>
@@ -311,7 +388,10 @@ export default function StudentDetailsFormContent({
                 id="minorMajorType"
                 name="minorMajorType"
                 value={minorMajorType}
-                onChange={(e) => setMinorMajorType(e.target.value)}
+                onChange={(e) => {
+                  setMinorMajorType(e.target.value);
+                  setSelectedMinorMajorCode("");
+                }}
                 className={`${inputClass} appearance-none pr-10`}
               >
                 <option value="">None</option>
@@ -428,7 +508,8 @@ export default function StudentDetailsFormContent({
       <div className="pt-1">
         <button
           type="submit"
-          className="flex w-full items-center justify-center gap-2 rounded-xl bg-black px-4 py-3.5 text-sm font-medium text-white transition-colors hover:bg-black/90"
+          disabled={selectedInterests.length !== MAX_INTERESTS}
+          className="flex w-full items-center justify-center gap-2 rounded-xl bg-black px-4 py-3.5 text-sm font-medium text-white transition-colors hover:bg-black/90 disabled:cursor-not-allowed disabled:opacity-40"
         >
           <Sparkles className="h-4 w-4" />
           Generate Course Plan

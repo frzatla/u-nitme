@@ -25,6 +25,7 @@ export function buildCoursePlanInfoPills(plan: Plan): string[] {
       `Specialisation: ${plan.schedule.specialisation}`,
     plan.schedule.major && `Major: ${plan.schedule.major}`,
     plan.schedule.minor && `Minor: ${plan.schedule.minor}`,
+    plan.interests?.length && `Interests: ${plan.interests.join(", ")}`,
     plan.semesterOffering,
     `${plan.yearStart}-${plan.yearEnd}`,
   ].filter(Boolean) as string[];

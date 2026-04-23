@@ -132,6 +132,11 @@ export default async function NewPlanPage() {
       rawAosCode === NO_AREA_OF_STUDY_VALUE ? "" : rawAosCode;
     const minorMajorType = String(formData.get("minorMajorType") || "");
     const minorMajorCode = String(formData.get("minorMajorCode") || "");
+    const interests = formData
+      .getAll("interests")
+      .map((value) => String(value))
+      .filter(Boolean)
+      .slice(0, 3);
 
     const newPlan: Plan = {
       id: planId,
@@ -139,6 +144,7 @@ export default async function NewPlanPage() {
       courseCode: courseCode,
       university: String(formData.get("university") || ""),
       areaOfStudy: aosCode,
+      interests,
       semesterOffering: String(formData.get("semesterOffering") || ""),
       yearStart: Number(formData.get("yearStart")),
       yearEnd: Number(formData.get("yearEnd")),
