@@ -152,12 +152,20 @@ def extract_required_units(course_code, aos_selections, campus, courses_db, aos_
                 if u in aos_set:
                     collect_from_aos(u)
 
-            # Plain units: use CP heuristic to decide how many to take
-            # Exclude units with non-standard credit points (anything other than 6 CP)
+            # Plain units: use CP heuristic to decide how many to take.
+            # Non-standard CP units (12 CP capstones, full-year projects) are
+            # always required when listed — they cannot participate in the
+            # "pick N of M" elective heuristic, so they are added unconditionally
+            # and only standard 6-CP units go through the count heuristic.
+            nonstandard_units = [
+                u for u in plain_units
+                if int(units_db.get(u, {}).get("credit_points") or 6) != 6
+            ]
             standard_units = [
                 u for u in plain_units
                 if int(units_db.get(u, {}).get("credit_points") or 6) == 6
             ]
+            required.update(nonstandard_units)
             n_needed = _num_units_from_node(node, standard_units)
             # sort: prefer FIT math units, then shortest chain, then code
             plain_sorted = sorted(
@@ -637,7 +645,14 @@ def schedule_units(required, prereq_graph, chain_lengths, unlock_depths, units_d
             unit_data  = units_db.get(u, {})
             requisites = unit_data.get("requisites") or {}
             cp_needed  = requisites.get("cp_required", 0) or 0
-            if cumulative_cp < cp_needed:
+            # Level-based CP floor — prevents L2/L3 units from appearing in
+            # early semesters when prerequisite data is incomplete (cp_required=0,
+            # no prereqs listed). Mirrors Monash's standard progression policy:
+            #   L2 → need ≥ 24 CP done (after Year 1, Sem 1)
+            #   L3 → need ≥ 96 CP done (after Year 2, i.e. start of Year 3)
+            level = unit_data.get("level") or 1
+            level_cp_floor = {2: 24, 3: 96}.get(level, 0)
+            if cumulative_cp < max(cp_needed, level_cp_floor):
                 continue
             # offered this semester?
             offered = get_offered_semesters(u, units_db, campus)
@@ -935,6 +950,10 @@ def validate_schedule(schedule_json, units_db,
                             need = max(1, node_cp // 6)
                         else:
                             need = len(units_list)
+                        # Cap at pool size — avoids false failures when a node
+                        # contains a non-standard CP unit (e.g. a 12 CP capstone
+                        # makes node_cp // 6 exceed the actual unit count).
+                        need = min(need, len(units_list))
                         ok = len(present) >= need
                         if not ok and report:
                             missing = [u for u in units_list if u not in all_scheduled]
