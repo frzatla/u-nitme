@@ -662,10 +662,10 @@ def schedule_units(required, prereq_graph, chain_lengths, unlock_depths, units_d
             # Level-based CP floor — prevents L2/L3 units from appearing in
             # early semesters when prerequisite data is incomplete (cp_required=0,
             # no prereqs listed). Mirrors Monash's standard progression policy:
-            #   L2 → need ≥ 48 CP done (after Year 1, both semesters complete)
+            #   L2 → need ≥ 24 CP done (after Year 1, Sem 1)
             #   L3 → need ≥ 96 CP done (after Year 2, i.e. start of Year 3)
             level = unit_data.get("level") or 1
-            level_cp_floor = {2: 48, 3: 96}.get(level, 0)
+            level_cp_floor = {2: 24, 3: 96}.get(level, 0)
             if cumulative_cp < max(cp_needed, level_cp_floor):
                 continue
             # offered this semester?
