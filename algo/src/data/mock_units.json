@@ -1,5 +1,5 @@
 {
-"FIT1006": {
+    "FIT1006": {
         "academic_org": "Faculty of Information Technology",
         "assessments": [
             {
@@ -5340,8 +5340,7 @@
         "school": "Faculty of Information Technology",
         "title": "Work Integrated Learning: Industry experience"
     },
-
-"ATS1001": {
+    "ATS1001": {
         "academic_org": "Faculty of Arts",
         "assessments": [
             {
@@ -6426,9 +6425,7 @@
                 "ATS1001;ATS1006"
             ],
             "corequisites": [],
-            "prohibitions": [
-                "ATS2001"
-            ],
+            "prohibitions": [],
             "cp_required": 0
         },
         "sca_band": 0,
@@ -10427,9 +10424,7 @@
                 "ENG1006"
             ],
             "corequisites": [],
-            "prohibitions": [
-                "ENG2004"
-            ],
+            "prohibitions": [],
             "cp_required": 24
         },
         "sca_band": 0,
@@ -11600,5 +11595,4 @@
         "school": "Faculty of Engineering",
         "title": "Renewable energy systems"
     }
-
 }
