@@ -34,8 +34,8 @@ img {
 
 @media print {
   @page {
-    size: A4 portrait;
-    margin: 12mm;
+    size: A4 landscape;
+    margin: 5mm;
   }
 
   html,
