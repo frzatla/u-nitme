@@ -25,7 +25,7 @@ export default function DeletePlanButton({
       <input type="hidden" name="planId" value={planId} />
       <button
         type="submit"
-        className="inline-flex items-center gap-2 rounded-full border border-black/12 bg-white px-5 py-3 text-sm font-medium text-black/58 transition-colors hover:border-black/20 hover:bg-black/[0.02] hover:text-black"
+        className="inline-flex items-center gap-3 rounded-full border border-red-200 bg-white px-8 py-4 text-[15px] font-medium text-red-600 transition-colors hover:border-red-300 hover:bg-red-50"
       >
         Delete
       </button>
