@@ -37,7 +37,7 @@ def load_data():
         path = os.path.join(data_dir, name)
         with open(path, encoding="utf-8") as f:
             return json.load(f)
-    units_db = _load("final_units.json")
+    units_db = _load("mock_units.json")
     # Convert string requisites to group-dict format expected by the algorithm.
     #
     # String format uses:
@@ -89,8 +89,8 @@ def load_data():
         reqs["prohibitions"]  = _norm_groups(reqs.get("prohibitions"))
     return (
         units_db,
-        _load("final_courses.json"),
-        _load("final_aos.json"),
+        _load("mock_courses.json"),
+        _load("mock_aos.json"),
     )
 
 
