@@ -22,8 +22,9 @@ if sys.stderr.encoding != "utf-8":
     sys.stderr.reconfigure(encoding="utf-8")
 
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
-MAX_UNITS_PER_SEM = 4       # standard full-time load (24 CP/sem)
-MAX_SEMESTERS     = 24      # safety upper bound
+MAX_UNITS_PER_SEM    = 4    # standard full-time load (24 CP/sem)
+ELECTIVE_SLOTS_PER_SEM = 1  # reserved elective slots per semester
+MAX_SEMESTERS        = 24   # safety upper bound
 
 # Preferred math units for FIT students — chosen over other math alternatives
 FIT_PREFERRED_MATH = {"MAT1830", "MAT1841"}
@@ -648,10 +649,10 @@ def schedule_units(required, prereq_graph, chain_lengths, unlock_depths, units_d
             # Level-based CP floor — prevents L2/L3 units from appearing in
             # early semesters when prerequisite data is incomplete (cp_required=0,
             # no prereqs listed). Mirrors Monash's standard progression policy:
-            #   L2 → need ≥ 24 CP done (after Year 1, Sem 1)
+            #   L2 → need ≥ 48 CP done (after Year 1, both semesters complete)
             #   L3 → need ≥ 96 CP done (after Year 2, i.e. start of Year 3)
             level = unit_data.get("level") or 1
-            level_cp_floor = {2: 24, 3: 96}.get(level, 0)
+            level_cp_floor = {2: 48, 3: 96}.get(level, 0)
             if cumulative_cp < max(cp_needed, level_cp_floor):
                 continue
             # offered this semester?
@@ -669,7 +670,7 @@ def schedule_units(required, prereq_graph, chain_lengths, unlock_depths, units_d
                                       -chain_lengths.get(u, 0),
                                       len(get_offered_semesters(u, units_db, campus)),
                                       u))
-        chosen = available[:MAX_UNITS_PER_SEM]
+        chosen = available[:MAX_UNITS_PER_SEM - ELECTIVE_SLOTS_PER_SEM]
 
         if chosen or remaining:
             sem_number  = sem_idx + 1          # 1-based count of scheduled semesters
