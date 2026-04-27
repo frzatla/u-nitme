@@ -14,7 +14,7 @@ import { savePendingPlan } from "@/lib/pendingPlan";
 import { isAdminUser } from "@/lib/auth";
 
 const ALGO_DIR = path.join(process.cwd(), "src/algo");
-const AOS_PATH = path.join(process.cwd(), "public/data/final_aos.json");
+const AOS_PATH = path.join(process.cwd(), "public/data/mock_aos.json");
 const NO_AREA_OF_STUDY_VALUE = "__NO_AREA_OF_STUDY__";
 
 // On Windows try "py" first (Python Launcher); on other platforms try "python3" first
