@@ -90,7 +90,7 @@ def load_data():
         reqs["prohibitions"]  = _norm_groups(reqs.get("prohibitions"))
     return (
         units_db,
-        _load("mock_courses.json"),
+        _load("final_courses.json"),
         _load("mock_aos.json"),
     )
 
