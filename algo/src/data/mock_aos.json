@@ -289,7 +289,7 @@
                 "type": "AND",
                 "title": "Core units",
                 "description": "Complete all of the following mandatory core units.",
-                "credit_points": 72,
+                "credit_points": 84,
                 "num_required": null,
                 "units": [
                     "FIT1008",
@@ -303,7 +303,9 @@
                     "FIT3077",
                     "FIT3155",
                     "FIT3161",
-                    "FIT3162"
+                    "FIT3162",
+                    "FIT1058",
+                    "FIT2101"
                 ],
                 "children": [],
                 "level": 1
@@ -314,7 +316,7 @@
                 "type": "AND",
                 "title": "Elective study",
                 "description": "Complete 72 credit points of elective units from the approved pool.",
-                "credit_points": 72,
+                "credit_points": 24,
                 "num_required": null,
                 "units": [],
                 "children": [
@@ -328,11 +330,10 @@
                 "type": "AND",
                 "title": "Elective unit pool",
                 "description": "Select electives from this list to satisfy the required credit points.",
-                "credit_points": 72,
+                "credit_points": 24,
                 "num_required": null,
                 "units": [
                     "FIT2014",
-                    "FIT2085",
                     "FIT2095",
                     "FIT2102",
                     "FIT2165",
@@ -344,8 +345,6 @@
                     "FIT3152",
                     "FIT3159",
                     "FIT3165",
-                    "FIT3170",
-                    "FIT3171",
                     "FIT3176",
                     "FIT3181",
                     "FIT3184",
@@ -422,7 +421,7 @@
                 "type": "AND",
                 "title": "Core units",
                 "description": "Complete all of the following mandatory core units.",
-                "credit_points": 72,
+                "credit_points": 90,
                 "num_required": null,
                 "units": [
                     "FIT1043",
@@ -436,7 +435,10 @@
                     "FIT3152",
                     "FIT3154",
                     "FIT3163",
-                    "FIT3164"
+                    "FIT3164",
+                    "FIT1008",
+                    "FIT1049",
+                    "FIT1058"
                 ],
                 "children": [],
                 "level": 1
@@ -447,7 +449,7 @@
                 "type": "AND",
                 "title": "Elective study",
                 "description": "Complete 72 credit points of elective units from the approved pool.",
-                "credit_points": 72,
+                "credit_points": 18,
                 "num_required": null,
                 "units": [],
                 "children": [
@@ -461,7 +463,7 @@
                 "type": "AND",
                 "title": "Elective unit pool",
                 "description": "Select electives from this list to satisfy the required credit points.",
-                "credit_points": 72,
+                "credit_points": 18,
                 "num_required": null,
                 "units": [
                     "FIT2014",
@@ -555,7 +557,7 @@
                 "type": "AND",
                 "title": "Core units",
                 "description": "Complete all of the following mandatory core units.",
-                "credit_points": 72,
+                "credit_points": 102,
                 "num_required": null,
                 "units": [
                     "FIT1047",
@@ -569,7 +571,12 @@
                     "FIT3031",
                     "FIT3168",
                     "FIT3188",
-                    "FIT3189"
+                    "FIT3189",
+                    "FIT1008",
+                    "FIT1045",
+                    "FIT1055",
+                    "FIT1058",
+                    "FIT2004"
                 ],
                 "children": [],
                 "level": 1
@@ -580,7 +587,7 @@
                 "type": "AND",
                 "title": "Elective study",
                 "description": "Complete 72 credit points of elective units from the approved pool.",
-                "credit_points": 72,
+                "credit_points": 6,
                 "num_required": null,
                 "units": [],
                 "children": [
@@ -594,10 +601,9 @@
                 "type": "AND",
                 "title": "Elective unit pool",
                 "description": "Select electives from this list to satisfy the required credit points.",
-                "credit_points": 72,
+                "credit_points": 6,
                 "num_required": null,
                 "units": [
-                    "FIT2004",
                     "FIT2014",
                     "FIT2081",
                     "FIT2093",
@@ -614,8 +620,7 @@
                     "FIT3185",
                     "FIT3186",
                     "FIT3196",
-                    "FIT3197",
-                    "FIT3199"
+                    "FIT3197"
                 ],
                 "children": [],
                 "level": 2
@@ -686,7 +691,7 @@
                 "type": "AND",
                 "title": "Core units",
                 "description": "Complete all of the following mandatory core units.",
-                "credit_points": 72,
+                "credit_points": 96,
                 "num_required": null,
                 "units": [
                     "FIT1045",
@@ -700,7 +705,11 @@
                     "FIT3080",
                     "FIT3181",
                     "FIT3191",
-                    "FIT3193"
+                    "FIT3193",
+                    "FIT1008",
+                    "FIT1047",
+                    "FIT1049",
+                    "FIT1058"
                 ],
                 "children": [],
                 "level": 1
@@ -711,7 +720,7 @@
                 "type": "AND",
                 "title": "Elective study",
                 "description": "Complete 72 credit points of elective units from the approved pool.",
-                "credit_points": 72,
+                "credit_points": 12,
                 "num_required": null,
                 "units": [],
                 "children": [
@@ -725,7 +734,7 @@
                 "type": "AND",
                 "title": "Elective unit pool",
                 "description": "Select electives from this list to satisfy the required credit points.",
-                "credit_points": 72,
+                "credit_points": 12,
                 "num_required": null,
                 "units": [
                     "FIT2014",
@@ -815,7 +824,7 @@
                 "type": "AND",
                 "title": "Core units",
                 "description": "Complete all of the following mandatory core units.",
-                "credit_points": 72,
+                "credit_points": 78,
                 "num_required": null,
                 "units": [
                     "ATS1001",
@@ -828,7 +837,8 @@
                     "ATS2009",
                     "ATS3002",
                     "ATS3006",
-                    "ATS3007"
+                    "ATS3007",
+                    "ATS2007"
                 ],
                 "children": [],
                 "level": 1
@@ -839,7 +849,7 @@
                 "type": "AND",
                 "title": "Elective study",
                 "description": "Complete 60 credit points of elective units from the approved pool.",
-                "credit_points": 60,
+                "credit_points": 36,
                 "num_required": null,
                 "units": [],
                 "children": [
@@ -853,7 +863,7 @@
                 "type": "AND",
                 "title": "Elective unit pool",
                 "description": "Select electives from this list to satisfy the required credit points.",
-                "credit_points": 60,
+                "credit_points": 36,
                 "num_required": null,
                 "units": [
                     "ATS1005",
@@ -862,7 +872,6 @@
                     "ATS1015",
                     "ATS1017",
                     "ATS2005",
-                    "ATS2007",
                     "ATS2011",
                     "ATS2016",
                     "ATS2018",
@@ -936,7 +945,7 @@
                 "type": "AND",
                 "title": "Core units",
                 "description": "Complete all of the following mandatory core units.",
-                "credit_points": 78,
+                "credit_points": 96,
                 "num_required": null,
                 "units": [
                     "ATS1002",
@@ -950,7 +959,10 @@
                     "ATS3001",
                     "ATS3005",
                     "ATS3002",
-                    "ATS3008"
+                    "ATS3008",
+                    "ATS2003",
+                    "ATS2005",
+                    "ATS2001"
                 ],
                 "children": [],
                 "level": 1
@@ -961,7 +973,7 @@
                 "type": "AND",
                 "title": "Elective study",
                 "description": "Complete 60 credit points of elective units from the approved pool.",
-                "credit_points": 60,
+                "credit_points": 18,
                 "num_required": null,
                 "units": [],
                 "children": [
@@ -975,7 +987,7 @@
                 "type": "AND",
                 "title": "Elective unit pool",
                 "description": "Select electives from this list to satisfy the required credit points.",
-                "credit_points": 60,
+                "credit_points": 18,
                 "num_required": null,
                 "units": [
                     "ATS1001",
@@ -983,9 +995,6 @@
                     "ATS1005",
                     "ATS1007",
                     "ATS1009",
-                    "ATS2001",
-                    "ATS2003",
-                    "ATS2005",
                     "ATS2007",
                     "ATS2011",
                     "ATS3003",
@@ -1059,7 +1068,7 @@
                 "type": "AND",
                 "title": "Core units",
                 "description": "Complete all of the following mandatory core units.",
-                "credit_points": 72,
+                "credit_points": 78,
                 "num_required": null,
                 "units": [
                     "ATS1004",
@@ -1073,7 +1082,8 @@
                     "ATS3004",
                     "ATS3007",
                     "ATS3009",
-                    "ATS3014"
+                    "ATS3014",
+                    "ATS2015"
                 ],
                 "children": [],
                 "level": 1
@@ -1084,7 +1094,7 @@
                 "type": "AND",
                 "title": "Elective study",
                 "description": "Complete 60 credit points of elective units from the approved pool.",
-                "credit_points": 60,
+                "credit_points": 30,
                 "num_required": null,
                 "units": [],
                 "children": [
@@ -1098,7 +1108,7 @@
                 "type": "AND",
                 "title": "Elective unit pool",
                 "description": "Select electives from this list to satisfy the required credit points.",
-                "credit_points": 60,
+                "credit_points": 30,
                 "num_required": null,
                 "units": [
                     "ATS1001",
@@ -1109,7 +1119,6 @@
                     "ATS1017",
                     "ATS2005",
                     "ATS2011",
-                    "ATS2015",
                     "ATS2016",
                     "ATS3005",
                     "ATS3010",
@@ -1180,7 +1189,7 @@
                 "type": "AND",
                 "title": "Core units",
                 "description": "Complete all of the following mandatory core units.",
-                "credit_points": 72,
+                "credit_points": 78,
                 "num_required": null,
                 "units": [
                     "ATS1005",
@@ -1194,7 +1203,8 @@
                     "ATS3005",
                     "ATS3008",
                     "ATS3010",
-                    "ATS3013"
+                    "ATS3013",
+                    "ATS2014"
                 ],
                 "children": [],
                 "level": 1
@@ -1205,7 +1215,7 @@
                 "type": "AND",
                 "title": "Elective study",
                 "description": "Complete 60 credit points of elective units from the approved pool.",
-                "credit_points": 60,
+                "credit_points": 30,
                 "num_required": null,
                 "units": [],
                 "children": [
@@ -1219,7 +1229,7 @@
                 "type": "AND",
                 "title": "Elective unit pool",
                 "description": "Select electives from this list to satisfy the required credit points.",
-                "credit_points": 60,
+                "credit_points": 30,
                 "num_required": null,
                 "units": [
                     "ATS1001",
@@ -1303,7 +1313,7 @@
                 "type": "AND",
                 "title": "Core units",
                 "description": "Complete all of the following mandatory core units.",
-                "credit_points": 78,
+                "credit_points": 84,
                 "num_required": null,
                 "units": [
                     "BEX1001",
@@ -1317,7 +1327,8 @@
                     "BEX3001",
                     "BEX3003",
                     "BEX3009",
-                    "BEX3004"
+                    "BEX3004",
+                    "BEX2013"
                 ],
                 "children": [],
                 "level": 1
@@ -1328,7 +1339,7 @@
                 "type": "AND",
                 "title": "Elective study",
                 "description": "Complete 60 credit points of elective units from the approved pool.",
-                "credit_points": 60,
+                "credit_points": 30,
                 "num_required": null,
                 "units": [],
                 "children": [
@@ -1342,7 +1353,7 @@
                 "type": "AND",
                 "title": "Elective unit pool",
                 "description": "Select electives from this list to satisfy the required credit points.",
-                "credit_points": 60,
+                "credit_points": 30,
                 "num_required": null,
                 "units": [
                     "BEX1005",
@@ -1353,7 +1364,6 @@
                     "BEX2006",
                     "BEX2008",
                     "BEX2010",
-                    "BEX2013",
                     "BEX2017",
                     "BEX3008",
                     "BEX3012",
@@ -1422,7 +1432,7 @@
                 "type": "AND",
                 "title": "Core units",
                 "description": "Complete all of the following mandatory core units.",
-                "credit_points": 72,
+                "credit_points": 90,
                 "num_required": null,
                 "units": [
                     "BEX1002",
@@ -1436,7 +1446,10 @@
                     "BEX3002",
                     "BEX3006",
                     "BEX3011",
-                    "BEX3015"
+                    "BEX3015",
+                    "BEX1007",
+                    "BEX2018",
+                    "BEX1015"
                 ],
                 "children": [],
                 "level": 1
@@ -1447,7 +1460,7 @@
                 "type": "AND",
                 "title": "Elective study",
                 "description": "Complete 60 credit points of elective units from the approved pool.",
-                "credit_points": 60,
+                "credit_points": 18,
                 "num_required": null,
                 "units": [],
                 "children": [
@@ -1461,19 +1474,17 @@
                 "type": "AND",
                 "title": "Elective unit pool",
                 "description": "Select electives from this list to satisfy the required credit points.",
-                "credit_points": 60,
+                "credit_points": 18,
                 "num_required": null,
                 "units": [
                     "BEX1001",
                     "BEX1003",
                     "BEX1009",
                     "BEX1014",
-                    "BEX1015",
                     "BEX1017",
                     "BEX2005",
                     "BEX2009",
                     "BEX2016",
-                    "BEX2018",
                     "BEX3007",
                     "BEX3013"
                 ],
@@ -1539,7 +1550,7 @@
                 "type": "AND",
                 "title": "Core units",
                 "description": "Complete all of the following mandatory core units.",
-                "credit_points": 66,
+                "credit_points": 72,
                 "num_required": null,
                 "units": [
                     "BEX1001",
@@ -1551,7 +1562,8 @@
                     "BEX2008",
                     "BEX2013",
                     "BEX3003",
-                    "BEX3009"
+                    "BEX3009",
+                    "BEX2002"
                 ],
                 "children": [],
                 "level": 1
@@ -1562,7 +1574,7 @@
                 "type": "AND",
                 "title": "Elective study",
                 "description": "Complete 72 credit points of elective units from the approved pool.",
-                "credit_points": 72,
+                "credit_points": 42,
                 "num_required": null,
                 "units": [],
                 "children": [
@@ -1576,7 +1588,7 @@
                 "type": "AND",
                 "title": "Elective unit pool",
                 "description": "Select electives from this list to satisfy the required credit points.",
-                "credit_points": 72,
+                "credit_points": 42,
                 "num_required": null,
                 "units": [
                     "BEX1002",
@@ -1587,7 +1599,6 @@
                     "BEX1011",
                     "BEX1016",
                     "BEX1017",
-                    "BEX2002",
                     "BEX2004",
                     "BEX2005",
                     "BEX2007",
@@ -1688,7 +1699,7 @@
                 "type": "AND",
                 "title": "Elective study",
                 "description": "Complete 66 credit points of elective units from the approved pool.",
-                "credit_points": 66,
+                "credit_points": 42,
                 "num_required": null,
                 "units": [],
                 "children": [
@@ -1702,7 +1713,7 @@
                 "type": "AND",
                 "title": "Elective unit pool",
                 "description": "Select electives from this list to satisfy the required credit points.",
-                "credit_points": 66,
+                "credit_points": 42,
                 "num_required": null,
                 "units": [
                     "BEX1001",
@@ -1787,7 +1798,7 @@
                 "type": "AND",
                 "title": "Core units",
                 "description": "Complete all of the following mandatory core units.",
-                "credit_points": 72,
+                "credit_points": 84,
                 "num_required": null,
                 "units": [
                     "BEX1004",
@@ -1801,7 +1812,9 @@
                     "BEX3002",
                     "BEX3006",
                     "BEX3013",
-                    "BEX3015"
+                    "BEX3015",
+                    "BEX1015",
+                    "BEX2018"
                 ],
                 "children": [],
                 "level": 1
@@ -1812,7 +1825,7 @@
                 "type": "AND",
                 "title": "Elective study",
                 "description": "Complete 60 credit points of elective units from the approved pool.",
-                "credit_points": 60,
+                "credit_points": 24,
                 "num_required": null,
                 "units": [],
                 "children": [
@@ -1826,7 +1839,7 @@
                 "type": "AND",
                 "title": "Elective unit pool",
                 "description": "Select electives from this list to satisfy the required credit points.",
-                "credit_points": 60,
+                "credit_points": 24,
                 "num_required": null,
                 "units": [
                     "BEX1001",
@@ -1835,7 +1848,6 @@
                     "BEX1005",
                     "BEX1009",
                     "BEX1014",
-                    "BEX1015",
                     "BEX1017",
                     "BEX2001",
                     "BEX2002",
@@ -1843,7 +1855,6 @@
                     "BEX2008",
                     "BEX2012",
                     "BEX2014",
-                    "BEX2018",
                     "BEX3007",
                     "BEX3011"
                 ],
@@ -1914,7 +1925,7 @@
                 "type": "AND",
                 "title": "Core units",
                 "description": "Complete all of the following mandatory core units.",
-                "credit_points": 102,
+                "credit_points": 126,
                 "num_required": null,
                 "units": [
                     "ENG1001",
@@ -1932,7 +1943,11 @@
                     "ENG3003",
                     "ENG3005",
                     "ENG3009",
-                    "ENG3014"
+                    "ENG3014",
+                    "ENG2001",
+                    "ENG2002",
+                    "ENG2018",
+                    "ENG2011"
                 ],
                 "children": [],
                 "level": 1
@@ -1943,7 +1958,7 @@
                 "type": "AND",
                 "title": "Elective study",
                 "description": "Complete 96 credit points of elective units from the approved pool.",
-                "credit_points": 96,
+                "credit_points": 24,
                 "num_required": null,
                 "units": [],
                 "children": [
@@ -1957,7 +1972,7 @@
                 "type": "AND",
                 "title": "Elective unit pool",
                 "description": "Select electives from this list to satisfy the required credit points.",
-                "credit_points": 96,
+                "credit_points": 24,
                 "num_required": null,
                 "units": [
                     "ENG1002",
@@ -1967,9 +1982,7 @@
                     "ENG1017",
                     "ENG2009",
                     "ENG2010",
-                    "ENG2011",
                     "ENG2016",
-                    "ENG2018",
                     "ENG3002",
                     "ENG3007",
                     "ENG3008",
@@ -2045,7 +2058,7 @@
                 "type": "AND",
                 "title": "Core units",
                 "description": "Complete all of the following mandatory core units.",
-                "credit_points": 102,
+                "credit_points": 114,
                 "num_required": null,
                 "units": [
                     "ENG1001",
@@ -2063,7 +2076,9 @@
                     "ENG3003",
                     "ENG3004",
                     "ENG3007",
-                    "ENG3008"
+                    "ENG3008",
+                    "ENG2001",
+                    "ENG2017"
                 ],
                 "children": [],
                 "level": 1
@@ -2074,7 +2089,7 @@
                 "type": "AND",
                 "title": "Elective study",
                 "description": "Complete 96 credit points of elective units from the approved pool.",
-                "credit_points": 96,
+                "credit_points": 36,
                 "num_required": null,
                 "units": [],
                 "children": [
@@ -2088,7 +2103,7 @@
                 "type": "AND",
                 "title": "Elective unit pool",
                 "description": "Select electives from this list to satisfy the required credit points.",
-                "credit_points": 96,
+                "credit_points": 36,
                 "num_required": null,
                 "units": [
                     "ENG1002",
@@ -2101,7 +2116,6 @@
                     "ENG2010",
                     "ENG2011",
                     "ENG2016",
-                    "ENG2017",
                     "ENG2018",
                     "ENG3002",
                     "ENG3009",
@@ -2178,7 +2192,7 @@
                 "type": "AND",
                 "title": "Core units",
                 "description": "Complete all of the following mandatory core units.",
-                "credit_points": 102,
+                "credit_points": 120,
                 "num_required": null,
                 "units": [
                     "ENG1001",
@@ -2196,7 +2210,10 @@
                     "ENG3001",
                     "ENG3003",
                     "ENG3010",
-                    "ENG3014"
+                    "ENG3014",
+                    "ENG1006",
+                    "ENG2018",
+                    "ENG2002"
                 ],
                 "children": [],
                 "level": 1
@@ -2207,7 +2224,7 @@
                 "type": "AND",
                 "title": "Elective study",
                 "description": "Complete 96 credit points of elective units from the approved pool.",
-                "credit_points": 96,
+                "credit_points": 30,
                 "num_required": null,
                 "units": [],
                 "children": [
@@ -2221,7 +2238,7 @@
                 "type": "AND",
                 "title": "Elective unit pool",
                 "description": "Select electives from this list to satisfy the required credit points.",
-                "credit_points": 96,
+                "credit_points": 30,
                 "num_required": null,
                 "units": [
                     "ENG1002",
@@ -2230,12 +2247,10 @@
                     "ENG1011",
                     "ENG1012",
                     "ENG1015",
-                    "ENG2002",
                     "ENG2004",
                     "ENG2009",
                     "ENG2016",
                     "ENG2017",
-                    "ENG2018",
                     "ENG3002",
                     "ENG3006",
                     "ENG3011",
@@ -2340,7 +2355,7 @@
                 "type": "AND",
                 "title": "Elective study",
                 "description": "Complete 96 credit points of elective units from the approved pool.",
-                "credit_points": 96,
+                "credit_points": 48,
                 "num_required": null,
                 "units": [],
                 "children": [
@@ -2354,7 +2369,7 @@
                 "type": "AND",
                 "title": "Elective unit pool",
                 "description": "Select electives from this list to satisfy the required credit points.",
-                "credit_points": 96,
+                "credit_points": 48,
                 "num_required": null,
                 "units": [
                     "ENG1002",
