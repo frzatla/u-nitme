@@ -20,16 +20,17 @@ export async function GET(request: NextRequest) {
       size,
       query: {
         bool: {
-          must: [
-            {
-              multi_match: {
-                query: q,
-                fields: ["code^3", "title^2", "school"],
-                fuzziness: "AUTO",
-                operator: "or",
-              },
-            },
+          should: [
+            // Prefix on code keyword: "FIT" → FIT1008, FIT2004, etc.
+            { prefix: { code: { value: q.toUpperCase(), boost: 5 } } },
+            // Exact code match (e.g. "FIT1008")
+            { term:   { code: { value: q.toUpperCase(), boost: 6 } } },
+            // Full-text fuzzy search on title (e.g. "algorithms", "data science")
+            { match:  { title: { query: q, fuzziness: "AUTO", boost: 2 } } },
+            // Phrase prefix on title for partial words (e.g. "intro to prog")
+            { match_phrase_prefix: { title: { query: q, boost: 1 } } },
           ],
+          minimum_should_match: 1,
           filter,
         },
       },

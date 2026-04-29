@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { Search, X, Send, Bot, Sparkles, Plus, BookOpen } from "lucide-react";
 import { Unit } from "./CoursePlanner";
 
@@ -20,10 +20,13 @@ type ChatMessage = {
 
 type Tab = "search" | "chat";
 
+type PlanUnit = { code: string; name: string; level: string };
+
 type Props = {
   isOpen: boolean;
   onClose: () => void;
   onSelectUnit: (unit: Unit) => void;
+  planUnits?: PlanUnit[];
 };
 
 function toCoursePlannerUnit(u: EsUnit): Unit {
@@ -79,6 +82,55 @@ function UnitResultCard({
     </div>
   );
 }
+
+// ── Markdown renderer (handles **bold** and * bullet lists) ──────────────────
+
+function renderInline(text: string) {
+  return text.split(/(\*\*[^*]+\*\*)/).map((part, i) =>
+    part.startsWith("**") && part.endsWith("**")
+      ? <strong key={i} className="font-semibold">{part.slice(2, -2)}</strong>
+      : <span key={i}>{part}</span>
+  );
+}
+
+function MarkdownMessage({ content }: { content: string }) {
+  const lines = content.split("\n");
+  const elements: React.ReactNode[] = [];
+  let i = 0;
+
+  while (i < lines.length) {
+    const trimmed = lines[i].trim();
+
+    if (!trimmed) {
+      elements.push(<div key={i} className="h-1.5" />);
+      i++;
+    } else if (/^[*-]\s+/.test(trimmed)) {
+      // Collect consecutive bullet lines into one list
+      const bullets: string[] = [];
+      while (i < lines.length && /^[*-]\s+/.test(lines[i].trim())) {
+        bullets.push(lines[i].trim().replace(/^[*-]\s+/, ""));
+        i++;
+      }
+      elements.push(
+        <ul key={`ul-${i}`} className="space-y-1">
+          {bullets.map((b, bi) => (
+            <li key={bi} className="flex gap-2 items-start">
+              <span className="mt-[6px] flex-shrink-0 h-1 w-1 rounded-full bg-black/40" />
+              <span>{renderInline(b)}</span>
+            </li>
+          ))}
+        </ul>
+      );
+    } else {
+      elements.push(<p key={i}>{renderInline(trimmed)}</p>);
+      i++;
+    }
+  }
+
+  return <div className="space-y-1.5 text-[14px] leading-relaxed">{elements}</div>;
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
 
 function SearchTab({
   onSelectUnit,
@@ -187,7 +239,7 @@ function SearchTab({
   );
 }
 
-function ChatTab({ onSelectUnit }: { onSelectUnit: (unit: Unit) => void }) {
+function ChatTab({ onSelectUnit, planUnits = [] }: { onSelectUnit: (unit: Unit) => void; planUnits?: PlanUnit[] }) {
   const [messages, setMessages] = useState<ChatMessage[]>([
     {
       role: "assistant",
@@ -224,7 +276,7 @@ function ChatTab({ onSelectUnit }: { onSelectUnit: (unit: Unit) => void }) {
       const res = await fetch("/api/units/chat", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ messages: apiMessages }),
+        body: JSON.stringify({ messages: apiMessages, planUnits }),
       });
       const data = await res.json();
       setMessages((prev) => [
@@ -256,14 +308,15 @@ function ChatTab({ onSelectUnit }: { onSelectUnit: (unit: Unit) => void }) {
               </div>
             )}
             <div
-              className={`max-w-[85%] rounded-2xl px-4 py-3 text-[14px] leading-relaxed ${
+              className={`max-w-[85%] rounded-2xl px-4 py-3 ${
                 msg.role === "user"
-                  ? "bg-black text-white"
+                  ? "bg-black text-white text-[14px] leading-relaxed"
                   : "bg-[#f5f5f4] text-black"
               }`}
-              style={{ whiteSpace: "pre-wrap" }}
             >
-              {msg.content}
+              {msg.role === "assistant"
+                ? <MarkdownMessage content={msg.content} />
+                : msg.content}
             </div>
           </div>
         ))}
@@ -311,7 +364,7 @@ function ChatTab({ onSelectUnit }: { onSelectUnit: (unit: Unit) => void }) {
   );
 }
 
-export default function ElectiveSearch({ isOpen, onClose, onSelectUnit }: Props) {
+export default function ElectiveSearch({ isOpen, onClose, onSelectUnit, planUnits = [] }: Props) {
   const [tab, setTab] = useState<Tab>("search");
 
   // Reset to search tab when modal opens
@@ -398,7 +451,7 @@ export default function ElectiveSearch({ isOpen, onClose, onSelectUnit }: Props)
             </div>
           ) : (
             <div className="flex flex-col" style={{ height: "calc(85dvh - 170px)" }}>
-              <ChatTab onSelectUnit={handleSelect} />
+              <ChatTab onSelectUnit={handleSelect} planUnits={planUnits} />
             </div>
           )}
         </div>

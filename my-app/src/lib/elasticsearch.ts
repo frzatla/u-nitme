@@ -21,4 +21,6 @@ export function getElasticsearchClient(): Client {
   return esClient;
 }
 
-export const UNITS_INDEX = "units";
+export const UNITS_INDEX   = "units";
+export const AOS_INDEX     = "aos";
+export const COURSES_INDEX = "courses";
