@@ -2436,5 +2436,505 @@
             "total_units": 34,
             "max_depth": 2
         }
+    },
+    "APCYBSEC01": {
+        "course_code": "APCYBSEC01",
+        "course_title": "Applied cybersecurity",
+        "total_credit_points": 48,
+        "requirement_groups": [
+            {
+                "id": "root_1",
+                "parent_id": null,
+                "type": "AND",
+                "title": "APCYBSEC01 - Complete Requirements",
+                "description": "Complete all requirements for Applied cybersecurity",
+                "credit_points": 48,
+                "num_required": null,
+                "units": [],
+                "children": [
+                    "req_2"
+                ],
+                "level": 0
+            },
+            {
+                "id": "req_2",
+                "parent_id": "root_1",
+                "type": "OR",
+                "title": "Core units",
+                "description": "You must complete the following units.<br /><br />Note 1: If you are in the double degree course with the Bachelor of Engineering (Honours) completing a software engineering specialisation, you must replace FIT2100, FIT2165 and FIT2173 with three FIT-coded level 2 or level 3 electives.<br /><br />Note 2: If you are selected for the Industry Based Learning (IBL) program you will complete FIT3045. You will not complete FIT3031.",
+                "credit_points": 48,
+                "num_required": null,
+                "units": [
+                    "FIT2165",
+                    "FIT3031",
+                    "FIT3168",
+                    "FIT3186",
+                    "FIT2173",
+                    "FIT2100",
+                    "FIT1057",
+                    "FIT1093"
+                ],
+                "children": [],
+                "level": 1
+            }
+        ],
+        "all_units": {
+            "FIT2165": "Computer networks",
+            "FIT3031": "Network security",
+            "FIT3168": "IT forensics",
+            "FIT3186": "Vulnerability analysis, response and mitigation",
+            "FIT2173": "Software security",
+            "FIT2100": "Operating systems",
+            "FIT1057": "Introduction to cybersecurity",
+            "FIT1093": "Cybersecurity tools and techniques"
+        },
+        "statistics": {
+            "total_requirements": 2,
+            "total_units": 8,
+            "max_depth": 1
+        }
+    },
+    "GAMEIMMD01": {
+        "course_code": "GAMEIMMD01",
+        "course_title": "Games and immersive media",
+        "total_credit_points": 48,
+        "requirement_groups": [
+            {
+                "id": "root_1",
+                "parent_id": null,
+                "type": "AND",
+                "title": "GAMEIMMD01 - Complete Requirements",
+                "description": "Complete all requirements for Games and immersive media",
+                "credit_points": 48,
+                "num_required": null,
+                "units": [],
+                "children": [
+                    "req_2",
+                    "req_3",
+                    "req_4"
+                ],
+                "level": 0
+            },
+            {
+                "id": "req_2",
+                "parent_id": "root_1",
+                "type": "AND",
+                "title": "Level 2 unit",
+                "description": "Non-IT students undertaking this major as a stand-alone option need to complete FIT1045 to satisfy the prerequisites of FIT2096. If you are enrolled in C2000 Bachelor of Information Technology you will complete FIT1045 as part of your course.<br />You must complete one of the following units.",
+                "credit_points": 6,
+                "num_required": null,
+                "units": [
+                    "FIT2096",
+                    "FIT2169"
+                ],
+                "children": [],
+                "level": 1
+            },
+            {
+                "id": "req_3",
+                "parent_id": "root_1",
+                "type": "AND",
+                "title": "Level 3 units",
+                "description": "You must complete the following units.<br /><br />Note: If you are selected for the Industry Based Learning (IBL) program you will complete FIT3045 Industry-based learning. You will not complete FIT3172.",
+                "credit_points": 18,
+                "num_required": null,
+                "units": [
+                    "FIT3187",
+                    "FIT3097",
+                    "FIT3172"
+                ],
+                "children": [],
+                "level": 1
+            },
+            {
+                "id": "req_4",
+                "parent_id": "root_1",
+                "type": "AND",
+                "title": "Level 1 and 2 units",
+                "description": "You must complete the following units",
+                "credit_points": 24,
+                "num_required": null,
+                "units": [
+                    "FIT1033",
+                    "FIT2145",
+                    "FIT1073",
+                    "FIT2098"
+                ],
+                "children": [],
+                "level": 1
+            }
+        ],
+        "all_units": {
+            "FIT2096": "Games programming",
+            "FIT2169": "Immersive environments",
+            "FIT3187": "3D character animation",
+            "FIT3097": "Technical art",
+            "FIT3172": "Sonics",
+            "FIT1033": "Foundations of 3D",
+            "FIT2145": "Game prototyping",
+            "FIT1073": "Game design",
+            "FIT2098": "Virtual and augmented reality"
+        },
+        "statistics": {
+            "total_requirements": 4,
+            "total_units": 9,
+            "max_depth": 1
+        }
+    },
+    "SFTWRDEV08": {
+        "course_code": "SFTWRDEV08",
+        "course_title": "Software development",
+        "total_credit_points": 48,
+        "requirement_groups": [
+            {
+                "id": "root_1",
+                "parent_id": null,
+                "type": "AND",
+                "title": "SFTWRDEV08 - Complete Requirements",
+                "description": "Complete all requirements for Software development",
+                "credit_points": 48,
+                "num_required": null,
+                "units": [],
+                "children": [
+                    "req_2"
+                ],
+                "level": 0
+            },
+            {
+                "id": "req_2",
+                "parent_id": "root_1",
+                "type": "AND",
+                "title": "Core units",
+                "description": "You must complete the following units.<br /><br />Note 1: If you are enrolled in the double degree with the Bachelor of Engineering (Honours) and the Software Engineering specialisation, you must replace FIT3077 and FIT3184 with two electives: one FIT-coded Level 2 or Level 3 elective, and one FIT-coded Level 3 elective.<br /><br />Note 2: If you are selected for the Industry Based Learning (IBL) program you will complete FIT3045 Industry-based learning you will not complete FIT3184.<br />",
+                "credit_points": 48,
+                "num_required": null,
+                "units": [
+                    "FIT2081",
+                    "FIT3178",
+                    "FIT3077",
+                    "FIT1051",
+                    "FIT2175",
+                    "FIT1050",
+                    "FIT2104",
+                    "FIT3184"
+                ],
+                "children": [],
+                "level": 1
+            }
+        ],
+        "all_units": {
+            "FIT2081": "Mobile application development",
+            "FIT3178": "iOS app development",
+            "FIT3077": "Software engineering: Architecture and design",
+            "FIT1051": "Programming fundamentals in java",
+            "FIT2175": "Usability",
+            "FIT1050": "Web fundamentals",
+            "FIT2104": "Web database interface",
+            "FIT3184": "Cloud computing"
+        },
+        "statistics": {
+            "total_requirements": 2,
+            "total_units": 8,
+            "max_depth": 1
+        }
+    },
+    "3DMODANI03": {
+        "course_code": "3DMODANI03",
+        "course_title": "3D modelling and animation",
+        "total_credit_points": 24,
+        "requirement_groups": [
+            {
+                "id": "root_1",
+                "parent_id": null,
+                "type": "AND",
+                "title": "3DMODANI03 - Complete Requirements",
+                "description": "Complete all requirements for 3D modelling and animation",
+                "credit_points": 24,
+                "num_required": null,
+                "units": [],
+                "children": [
+                    "req_2"
+                ],
+                "level": 0
+            },
+            {
+                "id": "req_2",
+                "parent_id": "root_1",
+                "type": "AND",
+                "title": "Core units",
+                "description": "You must complete the following units",
+                "credit_points": 24,
+                "num_required": null,
+                "units": [
+                    "FIT1033",
+                    "FIT3187",
+                    "FIT2098",
+                    "FIT2169"
+                ],
+                "children": [],
+                "level": 1
+            }
+        ],
+        "all_units": {
+            "FIT1033": "Foundations of 3D",
+            "FIT3187": "3D character animation",
+            "FIT2098": "Virtual and augmented reality",
+            "FIT2169": "Immersive environments"
+        },
+        "statistics": {
+            "total_requirements": 2,
+            "total_units": 4,
+            "max_depth": 1
+        }
+    },
+    "COMPUTSC02": {
+        "course_code": "COMPUTSC02",
+        "course_title": "Computer science",
+        "total_credit_points": 24,
+        "requirement_groups": [
+            {
+                "id": "root_1",
+                "parent_id": null,
+                "type": "AND",
+                "title": "COMPUTSC02 - Complete Requirements",
+                "description": "Complete all requirements for Computer science",
+                "credit_points": 24,
+                "num_required": null,
+                "units": [],
+                "children": [
+                    "req_2",
+                    "req_3"
+                ],
+                "level": 0
+            },
+            {
+                "id": "req_2",
+                "parent_id": "root_1",
+                "type": "AND",
+                "title": "Additional Computer science unit",
+                "description": "You must complete one of the following units",
+                "credit_points": 6,
+                "num_required": null,
+                "units": [
+                    "FIT2014",
+                    "FIT3155"
+                ],
+                "children": [],
+                "level": 1
+            },
+            {
+                "id": "req_3",
+                "parent_id": "root_1",
+                "type": "AND",
+                "title": "Core units",
+                "description": "Non-IT students undertaking this minor need to complete FIT1058 or MAT1830 to satisfy the prerequisites for FIT2004 in this minor.<br />You must complete the following units.",
+                "credit_points": 18,
+                "num_required": null,
+                "units": [
+                    "FIT1045",
+                    "FIT2004",
+                    "FIT1008"
+                ],
+                "children": [],
+                "level": 1
+            }
+        ],
+        "all_units": {
+            "FIT2014": "Theory of computation",
+            "FIT3155": "Advanced data structures and algorithms",
+            "FIT1045": "Introduction to programming",
+            "FIT2004": "Algorithms and data structures",
+            "FIT1008": "Fundamentals of algorithms"
+        },
+        "statistics": {
+            "total_requirements": 3,
+            "total_units": 5,
+            "max_depth": 1
+        }
+    },
+    "CYBERSEC05": {
+        "course_code": "CYBERSEC05",
+        "course_title": "Cybersecurity",
+        "total_credit_points": 24,
+        "requirement_groups": [
+            {
+                "id": "root_1",
+                "parent_id": null,
+                "type": "AND",
+                "title": "CYBERSEC05 - Complete Requirements",
+                "description": "Complete all requirements for Cybersecurity",
+                "credit_points": 24,
+                "num_required": null,
+                "units": [],
+                "children": [
+                    "req_2",
+                    "req_3"
+                ],
+                "level": 0
+            },
+            {
+                "id": "req_2",
+                "parent_id": "root_1",
+                "type": "AND",
+                "title": "Elective unit",
+                "description": "You must complete one of the following units",
+                "credit_points": 6,
+                "num_required": null,
+                "units": [
+                    "FIT3168",
+                    "FIT3186",
+                    "FIT3031"
+                ],
+                "children": [],
+                "level": 1
+            },
+            {
+                "id": "req_3",
+                "parent_id": "root_1",
+                "type": "AND",
+                "title": "Core units",
+                "description": "Note: Non-IT students undertaking this minor need to complete FIT1045 and FIT1047 to satisfy the prerequisites of some of the units in the minor.<br />You must complete the following units.",
+                "credit_points": 18,
+                "num_required": null,
+                "units": [
+                    "FIT1057",
+                    "FIT1093",
+                    "FIT2173"
+                ],
+                "children": [],
+                "level": 1
+            }
+        ],
+        "all_units": {
+            "FIT3168": "IT forensics",
+            "FIT3186": "Vulnerability analysis, response and mitigation",
+            "FIT3031": "Network security",
+            "FIT1057": "Introduction to cybersecurity",
+            "FIT1093": "Cybersecurity tools and techniques",
+            "FIT2173": "Software security"
+        },
+        "statistics": {
+            "total_requirements": 3,
+            "total_units": 6,
+            "max_depth": 1
+        }
+    },
+    "DATASCI04": {
+        "course_code": "DATASCI04",
+        "course_title": "Data science",
+        "total_credit_points": 24,
+        "requirement_groups": [
+            {
+                "id": "root_1",
+                "parent_id": null,
+                "type": "AND",
+                "title": "DATASCI04 - Complete Requirements",
+                "description": "Complete all requirements for Data science",
+                "credit_points": 24,
+                "num_required": null,
+                "units": [],
+                "children": [
+                    "req_2"
+                ],
+                "level": 0
+            },
+            {
+                "id": "req_2",
+                "parent_id": "root_1",
+                "type": "AND",
+                "title": "Core units",
+                "description": "You must complete the following units. <br />Note: FIT1043 has a prerequisite of any Year 12 Mathematics or MTH1010 or equivalent.  If you wish to complete this minor you must also complete a Level 1 maths unit and an introductory programming unit.",
+                "credit_points": 24,
+                "num_required": null,
+                "units": [
+                    "FIT1043",
+                    "FIT3152",
+                    "FIT2086",
+                    "FIT2179"
+                ],
+                "children": [],
+                "level": 1
+            }
+        ],
+        "all_units": {
+            "FIT1043": "Introduction to data science",
+            "FIT3152": "Data analytics",
+            "FIT2086": "Modelling for data analysis",
+            "FIT2179": "Data visualisation"
+        },
+        "statistics": {
+            "total_requirements": 2,
+            "total_units": 4,
+            "max_depth": 1
+        }
+    },
+    "WEBDEVT03": {
+        "course_code": "WEBDEVT03",
+        "course_title": "Web development",
+        "total_credit_points": 24,
+        "requirement_groups": [
+            {
+                "id": "root_1",
+                "parent_id": null,
+                "type": "AND",
+                "title": "WEBDEVT03 - Complete Requirements",
+                "description": "Complete all requirements for Web development",
+                "credit_points": 24,
+                "num_required": null,
+                "units": [],
+                "children": [
+                    "req_2",
+                    "req_3"
+                ],
+                "level": 0
+            },
+            {
+                "id": "req_2",
+                "parent_id": "root_1",
+                "type": "AND",
+                "title": "Level 2 and 3 units",
+                "description": "You must complete 12 credit points from the following units",
+                "credit_points": 12,
+                "num_required": null,
+                "units": [
+                    "FIT2104",
+                    "FIT2175",
+                    "FIT2095",
+                    "FIT3157",
+                    "FIT2094"
+                ],
+                "children": [],
+                "level": 1
+            },
+            {
+                "id": "req_3",
+                "parent_id": "root_1",
+                "type": "AND",
+                "title": "Core unit",
+                "description": "You must complete the following units",
+                "credit_points": 12,
+                "num_required": null,
+                "units": [
+                    "FIT1045",
+                    "FIT1050"
+                ],
+                "children": [],
+                "level": 1
+            }
+        ],
+        "all_units": {
+            "FIT2104": "Web database interface",
+            "FIT2175": "Usability",
+            "FIT2095": "Full stack development",
+            "FIT3157": "Advanced web design",
+            "FIT2094": "Databases",
+            "FIT1045": "Introduction to programming",
+            "FIT1050": "Web fundamentals"
+        },
+        "statistics": {
+            "total_requirements": 3,
+            "total_units": 7,
+            "max_depth": 1
+        }
     }
 }
