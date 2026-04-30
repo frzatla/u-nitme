@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import { getElasticsearchClient, UNITS_INDEX } from "@/lib/elasticsearch";
+import { redis, chatKey, CHAT_TTL, StoredMessage } from "@/lib/redis";
 
 const genAI = new GoogleGenerativeAI(process.env.GOOGLE_AI_API_KEY!);
 
@@ -49,50 +50,63 @@ What you don't do:
 
 Format: use bold for unit codes and titles, bullet points for lists. Keep it readable.`;
 
-// ── Route handler ─────────────────────────────────────────────────────────────
+// ── GET — load session history ────────────────────────────────────────────────
 
-type ChatMessage = { role: "user" | "assistant"; content: string };
+export async function GET(request: NextRequest) {
+  const sessionId = new URL(request.url).searchParams.get("sessionId");
+  if (!sessionId) return NextResponse.json({ messages: [] });
+
+  try {
+    const raw = await redis.get(chatKey(sessionId));
+    const stored: StoredMessage[] | null = raw ? JSON.parse(raw) : null;
+    return NextResponse.json({ messages: stored ?? [] });
+  } catch {
+    return NextResponse.json({ messages: [] });
+  }
+}
+
+// ── POST — send message, get response, save to Redis ─────────────────────────
 
 export async function POST(request: NextRequest) {
-  const { messages, planUnits = [] } =
-    (await request.json()) as { messages: ChatMessage[]; planUnits?: PlanUnit[] };
+  const { sessionId, newMessage, planUnits = [] } = (await request.json()) as {
+    sessionId: string;
+    newMessage: string;
+    planUnits?: PlanUnit[];
+  };
 
-  if (!messages?.length) {
-    return NextResponse.json({ error: "No messages provided" }, { status: 400 });
+  if (!sessionId || !newMessage?.trim()) {
+    return NextResponse.json({ error: "Missing sessionId or newMessage" }, { status: 400 });
   }
 
   try {
-    const latestMessage = messages[messages.length - 1].content;
+    // 1. Load history from Redis (server is the source of truth)
+    const rawHistory = await redis.get(chatKey(sessionId));
+    const history: StoredMessage[] = rawHistory ? JSON.parse(rawHistory) : [];
 
-    // 1. Search for relevant elective units
-    const unitResults = await searchUnits(latestMessage);
+    // 2. Search for relevant elective units
+    const unitResults = await searchUnits(newMessage);
 
-    // 2. Build plan context block
+    // 3. Build context blocks
     const planBlock = planUnits.length
       ? `=== Student's Current Plan (do NOT recommend these) ===\n${planUnits
           .map((u) => `${u.code} (${u.level}): ${u.name}`)
           .join("\n")}`
       : "";
-
-    const unitsBlock = unitResults
-      ? `=== Available Elective Units ===\n${unitResults}`
-      : "";
-
+    const unitsBlock = unitResults ? `=== Available Elective Units ===\n${unitResults}` : "";
     const context = [planBlock, unitsBlock].filter(Boolean).join("\n\n");
 
-    // 3. Build enriched user message
     const enrichedMessage = context
-      ? `${context}\n\nStudent question: ${latestMessage}`
-      : latestMessage;
+      ? `${context}\n\nStudent question: ${newMessage}`
+      : newMessage;
 
-    // 4. Build conversation history with system prompt as first exchange
+    // 4. Build Gemma conversation — system turn + stored history + new message
     const systemTurn = [
       { role: "user"  as const, parts: [{ text: `Instructions:\n${SYSTEM_PROMPT}` }] },
       { role: "model" as const, parts: [{ text: "Got it! I'll keep it friendly and only suggest electives from the catalogue — nothing they've already got locked in." }] },
     ];
-    const history = [
+    const gemmaHistory = [
       ...systemTurn,
-      ...messages.slice(0, -1).map((m) => ({
+      ...history.map((m) => ({
         role: m.role === "assistant" ? ("model" as const) : ("user" as const),
         parts: [{ text: m.content }],
       })),
@@ -102,23 +116,26 @@ export async function POST(request: NextRequest) {
     const model = genAI.getGenerativeModel({
       model: "gemma-4-26b-a4b-it",
       generationConfig: {
-        temperature: 1.2,   // higher = more natural/conversational (default ~1.0)
-        topP: 0.95,         // nucleus sampling — keeps responses varied but coherent
-        maxOutputTokens: 512, // enough for a good recommendation, not an essay
+        temperature: 1.2,
+        topP: 0.95,
+        maxOutputTokens: 512,
       },
     });
-    const chat   = model.startChat({ history });
+    const chat   = model.startChat({ history: gemmaHistory });
     const result = await chat.sendMessage(enrichedMessage);
 
-    // Strip thought parts — only return the visible response
     const parts = result.response.candidates?.[0]?.content?.parts ?? [];
-    const text = parts.length
-      ? parts
-          .filter((p: any) => !p.thought)
-          .map((p: any) => p.text ?? "")
-          .join("")
-          .trim()
+    const text  = parts.length
+      ? parts.filter((p: any) => !p.thought).map((p: any) => p.text ?? "").join("").trim()
       : result.response.text();
+
+    // 6. Save updated history to Redis, refreshing the TTL
+    const updated: StoredMessage[] = [
+      ...history,
+      { role: "user",      content: newMessage },
+      { role: "assistant", content: text },
+    ];
+    await redis.setex(chatKey(sessionId), CHAT_TTL, JSON.stringify(updated));
 
     return NextResponse.json({ text });
   } catch (error) {

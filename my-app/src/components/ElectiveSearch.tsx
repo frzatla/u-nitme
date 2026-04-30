@@ -239,17 +239,40 @@ function SearchTab({
   );
 }
 
+const GREETING: ChatMessage = {
+  role: "assistant",
+  content:
+    "Hi! I can help you find the perfect free elective. Tell me about your interests, the skills you want to build, or what topics excite you — and I'll suggest some units you might love.",
+};
+
 function ChatTab({ onSelectUnit, planUnits = [] }: { onSelectUnit: (unit: Unit) => void; planUnits?: PlanUnit[] }) {
-  const [messages, setMessages] = useState<ChatMessage[]>([
-    {
-      role: "assistant",
-      content:
-        "Hi! I can help you find the perfect free elective. Tell me about your interests, the skills you want to build, or what topics excite you — and I'll suggest some units you might love.",
-    },
-  ]);
+  const [sessionId] = useState<string>(() => {
+    if (typeof window === "undefined") return crypto.randomUUID();
+    const stored = sessionStorage.getItem("elective-chat-session");
+    if (stored) return stored;
+    const id = crypto.randomUUID();
+    sessionStorage.setItem("elective-chat-session", id);
+    return id;
+  });
+
+  const [messages, setMessages] = useState<ChatMessage[]>([GREETING]);
+  const [historyLoaded, setHistoryLoaded] = useState(false);
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
   const bottomRef = useRef<HTMLDivElement>(null);
+
+  // Load existing history from Redis on mount
+  useEffect(() => {
+    fetch(`/api/units/chat?sessionId=${sessionId}`)
+      .then((r) => r.json())
+      .then((data) => {
+        if (data.messages && data.messages.length > 0) {
+          setMessages([GREETING, ...data.messages]);
+        }
+      })
+      .catch(() => {})
+      .finally(() => setHistoryLoaded(true));
+  }, [sessionId]);
 
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -259,24 +282,15 @@ function ChatTab({ onSelectUnit, planUnits = [] }: { onSelectUnit: (unit: Unit) 
     const text = input.trim();
     if (!text || loading) return;
 
-    const newMessages: ChatMessage[] = [
-      ...messages,
-      { role: "user", content: text },
-    ];
-    setMessages(newMessages);
+    setMessages((prev) => [...prev, { role: "user", content: text }]);
     setInput("");
     setLoading(true);
-
-    // Build API payload — exclude the initial greeting (assistant only, index 0)
-    const apiMessages = newMessages
-      .slice(1) // skip initial greeting
-      .map((m) => ({ role: m.role, content: m.content }));
 
     try {
       const res = await fetch("/api/units/chat", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ messages: apiMessages, planUnits }),
+        body: JSON.stringify({ sessionId, newMessage: text, planUnits }),
       });
       const data = await res.json();
       setMessages((prev) => [
