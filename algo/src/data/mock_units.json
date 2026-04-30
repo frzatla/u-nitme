@@ -39,7 +39,8 @@
         },
         "sca_band": 0,
         "school": "Faculty of Information Technology",
-        "title": "Business information analysis"
+        "title": "Business information analysis",
+        "overview": "Students will examine how businesses collect, manage, and utilize information to optimize organizational processes and decision-making. They will develop skills in requirements engineering, data modeling, and the use of analytical tools to bridge the gap between business needs and technical solutions."
     },
     "FIT1008": {
         "academic_org": "Faculty of Information Technology",
@@ -105,7 +106,8 @@
         },
         "sca_band": 0,
         "school": "Faculty of Information Technology",
-        "title": "Fundamentals of algorithms"
+        "title": "Fundamentals of algorithms",
+        "overview": "This unit covers the essential principles of computational logic, searching, sorting, and the efficiency of various data structures. Students will learn to design, implement, and analyze algorithmic solutions to solve complex problems with optimal time and space complexity."
     },
     "FIT1033": {
         "academic_org": "Faculty of Information Technology",
@@ -147,7 +149,8 @@
         },
         "sca_band": 0,
         "school": "Faculty of Information Technology",
-        "title": "Foundations of 3D"
+        "title": "Foundations of 3D",
+        "overview": "Students will explore the mathematical and technical principles behind three-dimensional computer graphics, including modeling, lighting, and rendering techniques. They will gain practical skills in creating 3D assets, manipulating spatial coordinates, and utilizing digital tools to produce immersive visual environments."
     },
     "FIT1043": {
         "academic_org": "Faculty of Information Technology",
@@ -201,7 +204,8 @@
         },
         "sca_band": 0,
         "school": "Faculty of Information Technology",
-        "title": " Introduction to data science "
+        "title": " Introduction to data science ",
+        "overview": "Students study statistical foundations, data manipulation techniques, and the basics of machine learning models. They will develop the ability to visualize complex datasets and extract actionable insights from information."
     },
     "FIT1045": {
         "academic_org": "Faculty of Information Technology",
@@ -271,7 +275,8 @@
         },
         "sca_band": 0,
         "school": "Faculty of Information Technology",
-        "title": "Introduction to programming"
+        "title": "Introduction to programming",
+        "overview": "Students learn the fundamentals of algorithmic logic, including control structures, data types, and basic software development principles. They will develop problem-solving skills and the ability to write efficient, functional code."
     },
     "FIT1047": {
         "academic_org": "Faculty of Information Technology",
@@ -349,7 +354,8 @@
         },
         "sca_band": 0,
         "school": "Faculty of Information Technology",
-        "title": "Introduction to computer systems, networks and security"
+        "title": "Introduction to computer systems, networks and security",
+        "overview": "Students investigate computer hardware architecture, network communication protocols, and the core concepts of information security. They will acquire skills in managing network configurations and identifying common cybersecurity threats."
     },
     "FIT1049": {
         "academic_org": "Faculty of Information Technology",
@@ -405,7 +411,8 @@
         },
         "sca_band": 0,
         "school": "Faculty of Information Technology",
-        "title": "IT professional practice"
+        "title": "IT professional practice",
+        "overview": "Students explore the ethical, legal, and social implications of information technology in professional contexts. They develop essential competencies in professional communication, teamwork, and ethical decision-making."
     },
     "FIT1050": {
         "academic_org": "Faculty of Information Technology",
@@ -463,7 +470,8 @@
         },
         "sca_band": 0,
         "school": "Faculty of Information Technology",
-        "title": "Web fundamentals"
+        "title": "Web fundamentals",
+        "overview": "Students learn the core technologies of the web, including HTML for structure and CSS for styling. They develop technical skills in creating responsive web pages and understanding web architecture."
     },
     "FIT1051": {
         "academic_org": "Faculty of Information Technology",
@@ -527,7 +535,8 @@
         },
         "sca_band": 0,
         "school": "Faculty of Information Technology",
-        "title": "Programming fundamentals in java"
+        "title": "Programming fundamentals in java",
+        "overview": "Students study the core concepts of Java programming, including syntax, data types, and object-oriented principles. They develop the ability to design, write, and debug algorithmic solutions to complex computational problems."
     },
     "FIT1053": {
         "academic_org": "Faculty of Information Technology",
@@ -561,7 +570,8 @@
         },
         "sca_band": 0,
         "school": "Faculty of Information Technology",
-        "title": "Introduction to programming (Advanced)"
+        "title": "Introduction to programming (Advanced)",
+        "overview": "Students will study fundamental programming concepts including control structures, data types, and the principles of object-oriented design. They will develop technical proficiency in writing, debugging, and testing robust software solutions."
     },
     "FIT1054": {
         "academic_org": "Faculty of Information Technology",
@@ -605,7 +615,8 @@
         },
         "sca_band": 0,
         "school": "Faculty of Information Technology",
-        "title": "Fundamentals of algorithms (Advanced)"
+        "title": "Fundamentals of algorithms (Advanced)",
+        "overview": "Students will study algorithmic design strategies, data structures, and the mathematical analysis of computational complexity. They will develop skills in evaluating efficiency and implementing optimized solutions for various sorting and searching problems."
     },
     "FIT1055": {
         "academic_org": "Faculty of Information Technology",
@@ -657,7 +668,8 @@
         },
         "sca_band": 0,
         "school": "Faculty of Information Technology",
-        "title": "IT professional practice and ethics"
+        "title": "IT professional practice and ethics",
+        "overview": "Students will study ethical frameworks, legal regulations, and professional standards governing the information technology industry. They will develop the ability to critically evaluate the social impacts of technology and apply moral reasoning to complex professional dilemmas."
     },
     "FIT1056": {
         "academic_org": "Faculty of Information Technology",
@@ -701,7 +713,8 @@
         },
         "sca_band": 0,
         "school": "Faculty of Information Technology",
-        "title": "Introduction to software engineering"
+        "title": "Introduction to software engineering",
+        "overview": "Students will study the software development lifecycle, including requirements engineering, system design, and testing methodologies. They will develop technical skills in designing robust software architectures and applying agile development practices to collaborative projects."
     },
     "FIT1057": {
         "academic_org": "Faculty of Information Technology",
@@ -743,7 +756,8 @@
         },
         "sca_band": 0,
         "school": "Faculty of Information Technology",
-        "title": "Introduction to cybersecurity"
+        "title": "Introduction to cybersecurity",
+        "overview": "Students will explore the principles of information security, focusing on cryptography, network security, and common cyber threats. They will develop the skills necessary to identify system vulnerabilities and implement defensive measures to protect data integrity."
     },
     "FIT1058": {
         "academic_org": "Faculty of Information Technology",
@@ -821,7 +835,8 @@
         },
         "sca_band": 0,
         "school": "Faculty of Information Technology",
-        "title": "Foundations of computing"
+        "title": "Foundations of computing",
+        "overview": "Students will examine the fundamental mathematical and logical foundations of computing, such as algorithms, data structures, and computational theory. They will develop analytical skills in problem-solving and the ability to design efficient computational processes."
     },
     "FIT1059": {
         "academic_org": "Faculty of Information Technology",
@@ -865,7 +880,8 @@
         },
         "sca_band": 0,
         "school": "Faculty of Information Technology",
-        "title": "AI for everyone"
+        "title": "AI for everyone",
+        "overview": "Students explore fundamental concepts of artificial intelligence and its diverse applications across various industries and daily life. They develop critical thinking skills to evaluate the ethical implications and societal impacts of AI technologies."
     },
     "FIT1060": {
         "academic_org": "Faculty of Information Technology",
@@ -907,7 +923,8 @@
         },
         "sca_band": 0,
         "school": "Faculty of Information Technology",
-        "title": "Pervasive computing"
+        "title": "Pervasive computing",
+        "overview": "This unit covers the principles of ubiquitous computing, focusing on how sensors and embedded systems integrate into everyday environments. Students gain practical skills in designing and implementing interconnected systems that enable seamless interaction between humans and technology."
     },
     "FIT1061": {
         "academic_org": "Faculty of Information Technology",
@@ -957,7 +974,8 @@
         },
         "sca_band": 0,
         "school": "Faculty of Information Technology",
-        "title": "Introduction to artificial intelligence"
+        "title": "Introduction to artificial intelligence",
+        "overview": "Students learn the core principles of AI, including search algorithms, machine learning techniques, and logic-based reasoning. They develop technical proficiency in implementing computational models to solve complex, intelligent-agent-driven problems."
     },
     "FIT1073": {
         "academic_org": "Faculty of Information Technology",
@@ -999,7 +1017,8 @@
         },
         "sca_band": 0,
         "school": "Faculty of Information Technology",
-        "title": "Game design"
+        "title": "Game design",
+        "overview": "Students will study the principles of game mechanics, narrative construction, and level design within digital environments. They will develop technical skills in prototyping interactive gameplay and applying player-focused design methodologies."
     },
     "FIT1093": {
         "academic_org": "Faculty of Information Technology",
@@ -1037,7 +1056,8 @@
         },
         "sca_band": 0,
         "school": "Faculty of Information Technology",
-        "title": "Cybersecurity tools and techniques"
+        "title": "Cybersecurity tools and techniques",
+        "overview": "Students will study various cybersecurity frameworks, common digital threats, and the tools used for network protection. They will develop practical skills in identifying system vulnerabilities and utilizing security software to mitigate cyber attacks."
     },
     "FIT1110": {
         "academic_org": "Faculty of Information Technology",
@@ -1071,7 +1091,8 @@
         },
         "sca_band": 0,
         "school": "Faculty of Information Technology",
-        "title": "Human-centred artificial intelligence"
+        "title": "Human-centred artificial intelligence",
+        "overview": "Students will study the integration of artificial intelligence with human psychology, emphasizing ethical frameworks and user experience principles. They will develop the skills to design AI-driven interfaces that are intuitive, transparent, and socially responsible."
     },
     "FIT2001": {
         "academic_org": "Faculty of Information Technology",
@@ -1123,7 +1144,8 @@
         },
         "sca_band": 0,
         "school": "Faculty of Information Technology",
-        "title": "Systems development"
+        "title": "Systems development",
+        "overview": "Students will explore the software development lifecycle, including requirements engineering, system design, and implementation strategies. They will develop skills in modeling system architectures and managing the iterative processes required to build robust software solutions."
     },
     "FIT2002": {
         "academic_org": "Faculty of Information Technology",
@@ -1169,7 +1191,8 @@
         },
         "sca_band": 0,
         "school": "Faculty of Information Technology",
-        "title": "IT project management"
+        "title": "IT project management",
+        "overview": "This unit covers IT project management methodologies, resource allocation, risk assessment, and project lifecycle planning. Students will learn to lead technical teams, manage project timelines, and implement effective risk mitigation strategies."
     },
     "FIT2004": {
         "academic_org": "Faculty of Information Technology",
@@ -1223,7 +1246,8 @@
         },
         "sca_band": 0,
         "school": "Faculty of Information Technology",
-        "title": "Algorithms and data structures"
+        "title": "Algorithms and data structures",
+        "overview": "Students will investigate fundamental data structures such as trees and graphs alongside the design and analysis of efficient algorithms. They will develop the ability to select optimal data structures and assess computational complexity to optimize software performance."
     },
     "FIT2014": {
         "academic_org": "Faculty of Information Technology",
@@ -1289,7 +1313,8 @@
         },
         "sca_band": 0,
         "school": "Faculty of Information Technology",
-        "title": "Theory of computation"
+        "title": "Theory of computation",
+        "overview": "Students will study formal models of computation, such as finite automata, context-free grammars, and Turing machines. They will develop mathematical reasoning skills to analyze the decidability and complexity of various computational problems."
     },
     "FIT2081": {
         "academic_org": "Faculty of Information Technology",
@@ -1339,7 +1364,8 @@
         },
         "sca_band": 0,
         "school": "Faculty of Information Technology",
-        "title": "Mobile application development"
+        "title": "Mobile application development",
+        "overview": "Students will explore mobile operating system architectures and the design patterns required to build intuitive user interfaces. They will develop skills in implementing application logic, managing device sensors, and integrating mobile-specific APIs."
     },
     "FIT2082": {
         "academic_org": "Faculty of Information Technology",
@@ -1383,7 +1409,8 @@
         },
         "sca_band": 0,
         "school": "Faculty of Information Technology",
-        "title": "Computer science research project"
+        "title": "Computer science research project",
+        "overview": "Students will engage with computer science research methodologies by conducting literature reviews and formulating investigative questions. They will develop professional skills in experimental design, technical writing, and the systematic analysis of computational data."
     },
     "FIT2083": {
         "academic_org": "Faculty of Information Technology",
@@ -1423,7 +1450,8 @@
         },
         "sca_band": 0,
         "school": "Faculty of Information Technology",
-        "title": "Innovation and research in computer science"
+        "title": "Innovation and research in computer science",
+        "overview": "Students explore modern research methodologies and the drivers of technological innovation within the computer science domain. They develop essential skills in conducting literature reviews, designing research projects, and communicating technical results."
     },
     "FIT2085": {
         "academic_org": "Faculty of Information Technology",
@@ -1489,7 +1517,8 @@
         },
         "sca_band": 0,
         "school": "Faculty of Information Technology",
-        "title": "Fundamentals of algorithms for engineers"
+        "title": "Fundamentals of algorithms for engineers",
+        "overview": "This unit focuses on the mathematical foundations of algorithms, complexity theory, and fundamental data structures. Students gain proficiency in designing efficient computational processes and analyzing algorithmic performance."
     },
     "FIT2086": {
         "academic_org": "Faculty of Information Technology",
@@ -1539,7 +1568,8 @@
         },
         "sca_band": 0,
         "school": "Faculty of Information Technology",
-        "title": "Modelling for data analysis"
+        "title": "Modelling for data analysis",
+        "overview": "Students examine mathematical and statistical modelling techniques used to represent and interpret complex data structures. They develop skills in model selection, quantitative analysis, and the extraction of meaningful patterns from large datasets."
     },
     "FIT2090": {
         "academic_org": "Faculty of Information Technology",
@@ -1585,7 +1615,8 @@
         },
         "sca_band": 0,
         "school": "Faculty of Information Technology",
-        "title": "Business information systems and processes"
+        "title": "Business information systems and processes",
+        "overview": "Students explore how information technology supports organizational goals and optimizes business operations. They will develop skills in modeling business processes and analyzing system requirements to solve organizational problems."
     },
     "FIT2093": {
         "academic_org": "Faculty of Information Technology",
@@ -1627,7 +1658,8 @@
         },
         "sca_band": 0,
         "school": "Faculty of Information Technology",
-        "title": "Cybersecurity tools and techniques"
+        "title": "Cybersecurity tools and techniques",
+        "overview": "This unit covers the methodologies and technologies used to protect digital infrastructure from evolving cyber threats. Students will learn to utilize defensive tools and perform vulnerability assessments to secure network environments."
     },
     "FIT2094": {
         "academic_org": "Faculty of Information Technology",
@@ -1689,7 +1721,8 @@
         },
         "sca_band": 0,
         "school": "Faculty of Information Technology",
-        "title": "Databases"
+        "title": "Databases",
+        "overview": "Students learn about relational database design, normalization, and the fundamental principles of data storage. They will develop proficiency in using SQL to design schemas and manipulate large datasets effectively."
     },
     "FIT2095": {
         "academic_org": "Faculty of Information Technology",
@@ -1729,7 +1762,8 @@
         },
         "sca_band": 0,
         "school": "Faculty of Information Technology",
-        "title": "Full stack development"
+        "title": "Full stack development",
+        "overview": "Students will study the architecture of web applications including front-end interfaces, back-end logic, and database integration. They will develop skills in building complete, end-to-end software solutions and managing data flow between the client and server."
     },
     "FIT2096": {
         "academic_org": "Faculty of Information Technology",
@@ -1761,7 +1795,8 @@
         },
         "sca_band": 0,
         "school": "Faculty of Information Technology",
-        "title": "Games programming "
+        "title": "Games programming ",
+        "overview": "Students will explore the principles of real-time rendering, game engine architecture, and physics-based simulations. They will develop technical skills in implementing interactive gameplay mechanics and optimizing code for high-performance gaming environments."
     },
     "FIT2098": {
         "academic_org": "Faculty of Information Technology",
@@ -1813,7 +1848,8 @@
         },
         "sca_band": 0,
         "school": "Faculty of Information Technology",
-        "title": "Virtual and augmented reality"
+        "title": "Virtual and augmented reality",
+        "overview": "Students will study the core concepts of immersive technology, such as 3D modeling, spatial computing, and computer graphics. They will develop the ability to design and program interactive experiences for both virtual and augmented reality platforms."
     },
     "FIT2099": {
         "academic_org": "Faculty of Information Technology",
@@ -1879,7 +1915,8 @@
         },
         "sca_band": 0,
         "school": "Faculty of Information Technology",
-        "title": "Object oriented design and implementation"
+        "title": "Object oriented design and implementation",
+        "overview": "Students study the core principles of object-oriented programming, focusing on design patterns, encapsulation, and inheritance. They will develop the ability to architect complex software structures and implement them through robust, modular code."
     },
     "FIT2100": {
         "academic_org": "Faculty of Information Technology",
@@ -1925,7 +1962,8 @@
         },
         "sca_band": 0,
         "school": "Faculty of Information Technology",
-        "title": "Operating systems"
+        "title": "Operating systems",
+        "overview": "The curriculum covers the fundamental mechanisms of operating systems, such as process management, memory allocation, and file system structures. Students will gain expertise in managing low-level system resources and implementing concurrency controls to optimize performance."
     },
     "FIT2101": {
         "academic_org": "Faculty of Information Technology",
@@ -1983,7 +2021,8 @@
         },
         "sca_band": 0,
         "school": "Faculty of Information Technology",
-        "title": "Software engineering process and management"
+        "title": "Software engineering process and management",
+        "overview": "This unit examines software development lifecycles, project management frameworks, and quality assurance methodologies. Students will develop the skills necessary to lead engineering teams and manage the systematic delivery of complex software projects."
     },
     "FIT2102": {
         "academic_org": "Faculty of Information Technology",
@@ -2033,7 +2072,8 @@
         },
         "sca_band": 0,
         "school": "Faculty of Information Technology",
-        "title": "Programming paradigms"
+        "title": "Programming paradigms",
+        "overview": "Students will explore diverse computational models including functional, object-oriented, and logic programming styles. They will develop the ability to select and apply the most effective programming paradigm to solve complex computational problems."
     },
     "FIT2104": {
         "academic_org": "Faculty of Information Technology",
@@ -2081,7 +2121,8 @@
         },
         "sca_band": 0,
         "school": "Faculty of Information Technology",
-        "title": "Web database interface"
+        "title": "Web database interface",
+        "overview": "Students will study the integration of database management systems with web-based technologies using server-side scripting and SQL. They will gain practical skills in designing and implementing dynamic web interfaces that facilitate secure data retrieval and manipulation."
     },
     "FIT2107": {
         "academic_org": "Faculty of Information Technology",
@@ -2123,7 +2164,8 @@
         },
         "sca_band": 0,
         "school": "Faculty of Information Technology",
-        "title": "Software quality and testing"
+        "title": "Software quality and testing",
+        "overview": "Students will examine rigorous software testing methodologies, including unit, integration, and system testing, alongside quality assurance principles. They will develop the expertise to design comprehensive test plans and implement automated testing tools to ensure software reliability."
     },
     "FIT2108": {
         "academic_org": "Faculty of Information Technology",
@@ -2153,7 +2195,8 @@
         },
         "sca_band": 0,
         "school": "Faculty of Information Technology",
-        "title": "Industry based learning seminar"
+        "title": "Industry based learning seminar",
+        "overview": "Students examine professional IT practices through engagement with real-world industry projects and collaborative workflows. They develop critical professional skills including teamwork, client communication, and project management."
     },
     "FIT2109": {
         "academic_org": "Faculty of Information Technology",
@@ -2195,7 +2238,8 @@
         },
         "sca_band": 0,
         "school": "Faculty of Information Technology",
-        "title": "Computer science workshop"
+        "title": "Computer science workshop",
+        "overview": "Students engage in the practical application of complex algorithms and advanced data structures. They build technical proficiency in algorithmic problem-solving and efficient computational implementation."
     },
     "FIT2110": {
         "academic_org": "Faculty of Information Technology",
@@ -2224,7 +2268,8 @@
         },
         "sca_band": 0,
         "school": "Faculty of Information Technology",
-        "title": "Human-centred artificial intelligence"
+        "title": "Human-centred artificial intelligence",
+        "overview": "Students explore the design of artificial intelligence systems that integrate human-centric principles and ethical considerations. They develop skills in user-experience design and the critical evaluation of AI transparency and bias."
     },
     "FIT2111": {
         "academic_org": "Faculty of Information Technology",
@@ -2244,7 +2289,8 @@
         },
         "sca_band": 0,
         "school": "Faculty of Information Technology",
-        "title": "Symbolic artificial intelligence and machine learning"
+        "title": "Symbolic artificial intelligence and machine learning",
+        "overview": "Students will investigate logic-based reasoning, heuristic search, and fundamental machine learning algorithms. They will develop the skills to design intelligent agents and implement automated decision-making systems."
     },
     "FIT2112": {
         "academic_org": "Faculty of Information Technology",
@@ -2264,7 +2310,8 @@
         },
         "sca_band": 0,
         "school": "Faculty of Information Technology",
-        "title": "Deep learning"
+        "title": "Deep learning",
+        "overview": "This unit explores the mathematical foundations and architectures of multi-layered neural networks, such as convolutional and recurrent models. Students will learn to build, train, and optimize deep learning models for complex pattern recognition tasks."
     },
     "FIT2114": {
         "academic_org": "Faculty of Information Technology",
@@ -2284,7 +2331,8 @@
         },
         "sca_band": 0,
         "school": "Faculty of Information Technology",
-        "title": "Business information systems design and innovation"
+        "title": "Business information systems design and innovation",
+        "overview": "Students will study the methodologies for designing business information systems and the integration of emerging technologies into corporate workflows. They will develop expertise in business process modeling and the creation of innovative digital solutions to meet organizational needs."
     },
     "FIT2145": {
         "academic_org": "Faculty of Information Technology",
@@ -2320,7 +2368,8 @@
         },
         "sca_band": 0,
         "school": "Faculty of Information Technology",
-        "title": "Game prototyping"
+        "title": "Game prototyping",
+        "overview": "Students will study the rapid development of interactive game mechanics and the iterative design processes used to create functional prototypes. They will develop skills in implementing core gameplay loops and using prototyping tools to quickly test and refine player experiences."
     },
     "FIT2165": {
         "academic_org": "Faculty of Information Technology",
@@ -2360,7 +2409,8 @@
         },
         "sca_band": 0,
         "school": "Faculty of Information Technology",
-        "title": "Computer networks"
+        "title": "Computer networks",
+        "overview": "Students will study the fundamental architecture of computer networks, including the OSI model, routing protocols, and data transmission technologies. They will develop technical skills in configuring network devices, managing traffic, and troubleshooting connectivity issues."
     },
     "FIT2169": {
         "academic_org": "Faculty of Information Technology",
@@ -2412,7 +2462,8 @@
         },
         "sca_band": 0,
         "school": "Faculty of Information Technology",
-        "title": "Immersive environments"
+        "title": "Immersive environments",
+        "overview": "Students will study the design principles and technological frameworks behind virtual, augmented, and mixed reality environments. They will develop skills in creating three-dimensional assets and implementing intuitive spatial interactions for immersive digital spaces."
     },
     "FIT2173": {
         "academic_org": "Faculty of Information Technology",
@@ -2452,7 +2503,8 @@
         },
         "sca_band": 0,
         "school": "Faculty of Information Technology",
-        "title": "Software security"
+        "title": "Software security",
+        "overview": "Students examine the principles of secure software development and investigate common vulnerabilities such as buffer overflows and injection attacks. They will develop skills in defensive programming and the ability to conduct security audits to mitigate software-based threats."
     },
     "FIT2175": {
         "academic_org": "Faculty of Information Technology",
@@ -2506,7 +2558,8 @@
         },
         "sca_band": 0,
         "school": "Faculty of Information Technology",
-        "title": "Usability"
+        "title": "Usability",
+        "overview": "Students explore the principles of human-computer interaction and the methodologies used to design intuitive user interfaces. They will develop practical skills in conducting user research, prototyping digital products, and performing usability testing to optimize user experience."
     },
     "FIT2179": {
         "academic_org": "Faculty of Information Technology",
@@ -2556,7 +2609,8 @@
         },
         "sca_band": 0,
         "school": "Faculty of Information Technology",
-        "title": "Data visualisation"
+        "title": "Data visualisation",
+        "overview": "Students study the principles of visual perception and the techniques used to represent complex datasets through effective graphical elements. They will develop skills in using data visualization tools to transform raw information into intuitive, interactive, and insightful visual narratives."
     },
     "FIT3003": {
         "academic_org": "Faculty of Information Technology",
@@ -2606,7 +2660,8 @@
         },
         "sca_band": 0,
         "school": "Faculty of Information Technology",
-        "title": "Business intelligence and data warehousing"
+        "title": "Business intelligence and data warehousing",
+        "overview": "Students will study data warehouse architectures, including ETL processes, data modeling, and multidimensional analysis. They will develop the ability to design and implement systems that transform raw data into actionable business intelligence."
     },
     "FIT3031": {
         "academic_org": "Faculty of Information Technology",
@@ -2646,7 +2701,8 @@
         },
         "sca_band": 0,
         "school": "Faculty of Information Technology",
-        "title": "Network security"
+        "title": "Network security",
+        "overview": "Students will explore network defense mechanisms, including cryptography, firewalls, and intrusion detection systems. They will develop skills in identifying network vulnerabilities and implementing security protocols to protect communication infrastructures."
     },
     "FIT3039": {
         "academic_org": "Faculty of Information Technology",
@@ -2697,7 +2753,8 @@
         },
         "sca_band": 0,
         "school": "Faculty of Information Technology",
-        "title": "Studio project 1"
+        "title": "Studio project 1",
+        "overview": "Students will undertake a collaborative software development project modeled after professional industry workflows. They will develop practical skills in agile methodologies, team coordination, and the full software development lifecycle."
     },
     "FIT3040": {
         "academic_org": "Faculty of Information Technology",
@@ -2747,7 +2804,8 @@
         },
         "sca_band": 0,
         "school": "Faculty of Information Technology",
-        "title": "Studio project 2"
+        "title": "Studio project 2",
+        "overview": "Students engage in the full-scale development and deployment of advanced software systems within a collaborative studio environment. They will refine their technical implementation, project management, and team leadership skills."
     },
     "FIT3045": {
         "academic_org": "Faculty of Information Technology",
@@ -2813,7 +2871,8 @@
         },
         "sca_band": 0,
         "school": "Faculty of Information Technology",
-        "title": "Industry-based learning"
+        "title": "Industry-based learning",
+        "overview": "Students apply theoretical information technology principles to solve authentic problems within a professional industry context. This unit fosters professional adaptability, workplace communication, and practical technical integration skills."
     },
     "FIT3047": {
         "academic_org": "Faculty of Information Technology",
@@ -2864,7 +2923,8 @@
         },
         "sca_band": 0,
         "school": "Faculty of Information Technology",
-        "title": "Industry experience studio project 1"
+        "title": "Industry experience studio project 1",
+        "overview": "Students explore the foundational stages of the project lifecycle by working with industry clients to define system requirements. They will develop expertise in requirements elicitation, stakeholder management, and professional technical design."
     },
     "FIT3048": {
         "academic_org": "Faculty of Information Technology",
@@ -2910,7 +2970,8 @@
         },
         "sca_band": 0,
         "school": "Faculty of Information Technology",
-        "title": "Industry experience studio project 2"
+        "title": "Industry experience studio project 2",
+        "overview": "Students participate in professional-grade studio projects to address real-world technological challenges provided by industry clients. They will develop professional competencies in collaborative development, stakeholder management, and end-to-end project delivery."
     },
     "FIT3077": {
         "academic_org": "Faculty of Information Technology",
@@ -2964,7 +3025,8 @@
         },
         "sca_band": 0,
         "school": "Faculty of Information Technology",
-        "title": "Software engineering: Architecture and design"
+        "title": "Software engineering: Architecture and design",
+        "overview": "Students study various software architectural styles and design patterns used to structure large-scale computing systems. They will develop the technical capacity to design maintainable, scalable, and robust software architectures using industry-standard methodologies."
     },
     "FIT3080": {
         "academic_org": "Faculty of Information Technology",
@@ -3014,7 +3076,8 @@
         },
         "sca_band": 0,
         "school": "Faculty of Information Technology",
-        "title": "Artificial intelligence"
+        "title": "Artificial intelligence",
+        "overview": "Students explore the theoretical foundations of intelligent agents, including search techniques, machine learning, and probabilistic logic. They will acquire the skills to design and implement algorithms capable of performing complex reasoning and pattern recognition tasks."
     },
     "FIT3097": {
         "academic_org": "Faculty of Information Technology",
@@ -3062,7 +3125,8 @@
         },
         "sca_band": 0,
         "school": "Faculty of Information Technology",
-        "title": "Technical art"
+        "title": "Technical art",
+        "overview": "Students explore the intersection of computer graphics and digital art, focusing on shader programming, procedural content generation, and animation pipelines. They will develop specialized skills in creating efficient real-time visual effects and building custom tools that optimize artistic workflows within game engines."
     },
     "FIT3134": {
         "academic_org": "Faculty of Information Technology",
@@ -3104,7 +3168,8 @@
         },
         "sca_band": 0,
         "school": "Faculty of Information Technology",
-        "title": "Entrepreneurship"
+        "title": "Entrepreneurship",
+        "overview": "This unit examines the fundamentals of launching and managing technology-driven ventures, covering business model canvases, market validation, and venture funding strategies. Students will hone their ability to identify market opportunities, pitch innovative product concepts, and apply lean startup methodologies to tech business development."
     },
     "FIT3138": {
         "academic_org": "Faculty of Information Technology",
@@ -3142,7 +3207,8 @@
         },
         "sca_band": 0,
         "school": "Faculty of Information Technology",
-        "title": "Real time enterprise systems"
+        "title": "Real time enterprise systems",
+        "overview": "Students investigate the architecture and implementation of large-scale enterprise software, focusing on real-time data processing, distributed systems, and integrated business workflows. They will develop proficiency in designing scalable, high-availability systems that manage complex organizational processes and real-time transactional data."
     },
     "FIT3139": {
         "academic_org": "Faculty of Information Technology",
@@ -3186,7 +3252,8 @@
         },
         "sca_band": 0,
         "school": "Faculty of Information Technology",
-        "title": "Computational modelling and simulation"
+        "title": "Computational modelling and simulation",
+        "overview": "Students study the mathematical representation of real-world systems through deterministic and stochastic models, emphasizing numerical methods for solving differential equations. They will develop expertise in implementing complex simulations and evaluating model accuracy and stability."
     },
     "FIT3143": {
         "academic_org": "Faculty of Information Technology",
@@ -3232,7 +3299,8 @@
         },
         "sca_band": 0,
         "school": "Faculty of Information Technology",
-        "title": "Parallel computing"
+        "title": "Parallel computing",
+        "overview": "This unit covers the theory and practice of concurrent execution and parallel architectures, including message passing and shared memory programming models. Students will learn to design and optimize high-performance algorithms that effectively scale across multi-core and distributed systems."
     },
     "FIT3144": {
         "academic_org": "Faculty of Information Technology",
@@ -3264,7 +3332,8 @@
         },
         "sca_band": 0,
         "school": "Faculty of Information Technology",
-        "title": "Advanced computer science research project"
+        "title": "Advanced computer science research project",
+        "overview": "Students conduct an independent, deep-dive investigation into a specific computer science domain using formal literature reviews and experimental methodologies. They will cultivate advanced skills in scientific research, technical writing, and the critical analysis of computational problems."
     },
     "FIT3146": {
         "academic_org": "Faculty of Information Technology",
@@ -3296,7 +3365,8 @@
         },
         "sca_band": 0,
         "school": "Faculty of Information Technology",
-        "title": "Maker lab"
+        "title": "Maker lab",
+        "overview": "Students explore physical computing, internet of things technologies, and rapid prototyping techniques to bring digital ideas into the physical world. They develop hands-on expertise in using microcontrollers, sensors, and fabrication tools to build interactive, tangible user interfaces."
     },
     "FIT3152": {
         "academic_org": "Faculty of Information Technology",
@@ -3352,7 +3422,8 @@
         },
         "sca_band": 0,
         "school": "Faculty of Information Technology",
-        "title": "Data analytics"
+        "title": "Data analytics",
+        "overview": "This unit covers statistical modeling, data mining techniques, and the application of algorithms to extract meaningful patterns from large datasets. Students gain proficiency in using data manipulation tools and visualization techniques to drive evidence-based decision-making."
     },
     "FIT3154": {
         "academic_org": "Faculty of Information Technology",
@@ -3402,7 +3473,8 @@
         },
         "sca_band": 0,
         "school": "Faculty of Information Technology",
-        "title": "Advanced data analysis"
+        "title": "Advanced data analysis",
+        "overview": "Students delve into complex machine learning algorithms, high-dimensional data structures, and advanced predictive modeling techniques. They develop the ability to implement sophisticated computational models and interpret nuanced statistical outputs in large-scale data environments."
     },
     "FIT3155": {
         "academic_org": "Faculty of Information Technology",
@@ -3460,7 +3532,8 @@
         },
         "sca_band": 0,
         "school": "Faculty of Information Technology",
-        "title": "Advanced data structures and algorithms"
+        "title": "Advanced data structures and algorithms",
+        "overview": "Students will investigate advanced data structures and complex algorithmic paradigms such as dynamic programming and graph theory. They will develop the ability to analyze computational efficiency and design optimal solutions for intricate computing problems."
     },
     "FIT3158": {
         "academic_org": "Faculty of Information Technology",
@@ -3504,7 +3577,8 @@
         },
         "sca_band": 0,
         "school": "Faculty of Information Technology",
-        "title": "Business decision modelling"
+        "title": "Business decision modelling",
+        "overview": "This unit explores the use of mathematical modeling and stochastic processes to address organizational challenges. Students will acquire skills in quantitative decision-making and optimization to improve business outcomes in uncertain environments."
     },
     "FIT3159": {
         "academic_org": "Faculty of Information Technology",
@@ -3550,7 +3624,8 @@
         },
         "sca_band": 0,
         "school": "Faculty of Information Technology",
-        "title": "Computer architecture"
+        "title": "Computer architecture",
+        "overview": "Students will study the internal organization of computers, including instruction sets, memory hierarchies, and pipeline architectures. They will gain the expertise to optimize code performance by leveraging deep knowledge of the hardware-software interface."
     },
     "FIT3161": {
         "academic_org": "Faculty of Information Technology",
@@ -3624,7 +3699,8 @@
         },
         "sca_band": 0,
         "school": "Faculty of Information Technology",
-        "title": "Computer science project 1"
+        "title": "Computer science project 1",
+        "overview": "Students study the initial stages of the software development lifecycle, specifically requirements engineering and system architecture. They will develop professional skills in project planning and collaborative software design."
     },
     "FIT3162": {
         "academic_org": "Faculty of Information Technology",
@@ -3704,7 +3780,8 @@
         },
         "sca_band": 0,
         "school": "Faculty of Information Technology",
-        "title": "Computer science project 2"
+        "title": "Computer science project 2",
+        "overview": "Students focus on the implementation, testing, and deployment of a complex software system. They will refine their technical expertise in code optimization, debugging, and software evaluation."
     },
     "FIT3163": {
         "academic_org": "Faculty of Information Technology",
@@ -3778,7 +3855,8 @@
         },
         "sca_band": 0,
         "school": "Faculty of Information Technology",
-        "title": "Data science project 1"
+        "title": "Data science project 1",
+        "overview": "Students investigate data collection, preprocessing, and exploratory data analysis to address research questions. They will gain proficiency in statistical modeling and the application of machine learning algorithms."
     },
     "FIT3164": {
         "academic_org": "Faculty of Information Technology",
@@ -3858,7 +3936,8 @@
         },
         "sca_band": 0,
         "school": "Faculty of Information Technology",
-        "title": "Data science project 2"
+        "title": "Data science project 2",
+        "overview": "Students will undertake an advanced, end-to-end data science project involving complex datasets and machine learning techniques. They will develop proficiency in data preprocessing, model evaluation, and communicating technical insights to stakeholders."
     },
     "FIT3165": {
         "academic_org": "Faculty of Information Technology",
@@ -3898,7 +3977,8 @@
         },
         "sca_band": 0,
         "school": "Faculty of Information Technology",
-        "title": "Computer networks"
+        "title": "Computer networks",
+        "overview": "This unit covers the fundamental principles of network architecture, including the OSI model, routing protocols, and transport layer mechanisms. Students will learn to configure network devices, troubleshoot connectivity issues, and analyze data traffic using various networking tools."
     },
     "FIT3168": {
         "academic_org": "Faculty of Information Technology",
@@ -3942,7 +4022,8 @@
         },
         "sca_band": 0,
         "school": "Faculty of Information Technology",
-        "title": "IT forensics"
+        "title": "IT forensics",
+        "overview": "Students will explore the methods and tools used to identify, preserve, and analyze digital evidence from various computing devices. They will develop technical expertise in filesystem analysis, data recovery, and the application of forensic protocols within legal frameworks."
     },
     "FIT3170": {
         "academic_org": "Faculty of Information Technology",
@@ -3998,7 +4079,8 @@
         },
         "sca_band": 0,
         "school": "Faculty of Information Technology",
-        "title": "Software engineering practice"
+        "title": "Software engineering practice",
+        "overview": "Students examine professional software development lifecycles, Agile methodologies, and rigorous testing frameworks. They develop practical abilities in collaborative version control, project management, and applying engineering principles to real-world software systems."
     },
     "FIT3171": {
         "academic_org": "Faculty of Information Technology",
@@ -4060,7 +4142,8 @@
         },
         "sca_band": 0,
         "school": "Faculty of Information Technology",
-        "title": "Databases"
+        "title": "Databases",
+        "overview": "This unit focuses on relational database theory, SQL programming, data normalization, and transaction management. Students gain expertise in designing efficient data schemas, optimizing complex queries, and managing large-scale database architectures."
     },
     "FIT3172": {
         "academic_org": "Faculty of Information Technology",
@@ -4102,7 +4185,8 @@
         },
         "sca_band": 0,
         "school": "Faculty of Information Technology",
-        "title": "Sonics"
+        "title": "Sonics",
+        "overview": "Students study the mathematical foundations of sound, digital signal processing, and various audio synthesis techniques. They develop skills in implementing audio algorithms, digital sound design, and manipulating sonic data through computational methods."
     },
     "FIT3173": {
         "academic_org": "Faculty of Information Technology",
@@ -4142,7 +4226,8 @@
         },
         "sca_band": 0,
         "school": "Faculty of Information Technology",
-        "title": "Software security"
+        "title": "Software security",
+        "overview": "Students will investigate software vulnerabilities, including buffer overflows and injection attacks, alongside secure development lifecycles. They will develop the ability to implement defensive programming techniques and perform rigorous security audits of complex software systems."
     },
     "FIT3174": {
         "academic_org": "Faculty of Information Technology",
@@ -4184,7 +4269,8 @@
         },
         "sca_band": 0,
         "school": "Faculty of Information Technology",
-        "title": "IT strategy and governance"
+        "title": "IT strategy and governance",
+        "overview": "This unit explores how to align information technology initiatives with organizational objectives using established governance frameworks and strategic planning models. Students will develop skills in managing IT risk, designing governance policies, and making data-driven strategic decisions for enterprise environments."
     },
     "FIT3175": {
         "academic_org": "Faculty of Information Technology",
@@ -4244,7 +4330,8 @@
         },
         "sca_band": 0,
         "school": "Faculty of Information Technology",
-        "title": "Usability"
+        "title": "Usability",
+        "overview": "Students will examine the principles of human-computer interaction, user-centered design processes, and the psychological factors influencing user experience. They will gain practical skills in conducting usability testing, prototyping interfaces, and evaluating system accessibility for diverse user groups."
     },
     "FIT3176": {
         "academic_org": "Faculty of Information Technology",
@@ -4288,7 +4375,8 @@
         },
         "sca_band": 0,
         "school": "Faculty of Information Technology",
-        "title": "Advanced database design"
+        "title": "Advanced database design",
+        "overview": "Students will explore advanced concepts in relational algebra, normalization, and distributed database architectures. They will develop professional expertise in designing scalable schemas and optimizing complex query performance."
     },
     "FIT3178": {
         "academic_org": "Faculty of Information Technology",
@@ -4336,7 +4424,8 @@
         },
         "sca_band": 0,
         "school": "Faculty of Information Technology",
-        "title": "iOS app development"
+        "title": "iOS app development",
+        "overview": "Students will master the Swift programming language and the core frameworks used to build native applications for the iOS platform. They will acquire the technical skills necessary to design responsive user interfaces and manage application lifecycles."
     },
     "FIT3179": {
         "academic_org": "Faculty of Information Technology",
@@ -4386,7 +4475,8 @@
         },
         "sca_band": 0,
         "school": "Faculty of Information Technology",
-        "title": "Data visualisation"
+        "title": "Data visualisation",
+        "overview": "Students will study the theoretical principles of visual perception and the mathematical foundations of graphical data representation. They will gain hands-on proficiency in using visualization tools to transform complex datasets into clear, interactive visual stories."
     },
     "FIT3181": {
         "academic_org": "Faculty of Information Technology",
@@ -4440,7 +4530,8 @@
         },
         "sca_band": 0,
         "school": "Faculty of Information Technology",
-        "title": "Deep learning"
+        "title": "Deep learning",
+        "overview": "Students will explore the theoretical foundations of artificial neural networks, including architectures such as convolutional and recurrent networks. They will develop practical skills in designing, training, and fine-tuning complex deep learning models for various computational tasks."
     },
     "FIT3182": {
         "academic_org": "Faculty of Information Technology",
@@ -4492,7 +4583,8 @@
         },
         "sca_band": 0,
         "school": "Faculty of Information Technology",
-        "title": "Big data management and processing"
+        "title": "Big data management and processing",
+        "overview": "Students will study the principles of distributed computing, large-scale data storage, and modern processing frameworks like Spark and Hadoop. They will develop expertise in managing massive datasets and building scalable architectures for efficient big data analytics."
     },
     "FIT3183": {
         "academic_org": "Faculty of Information Technology",
@@ -4540,7 +4632,8 @@
         },
         "sca_band": 0,
         "school": "Faculty of Information Technology",
-        "title": "Malicious AI and dark side security"
+        "title": "Malicious AI and dark side security",
+        "overview": "Students will investigate how artificial intelligence is used to conduct cyberattacks, including adversarial machine learning and automated malware generation. They will develop the skills necessary to identify AI-driven vulnerabilities and implement robust security defenses for machine learning systems."
     },
     "FIT3184": {
         "academic_org": "Faculty of Information Technology",
@@ -4584,7 +4677,8 @@
         },
         "sca_band": 0,
         "school": "Faculty of Information Technology",
-        "title": "Cloud computing"
+        "title": "Cloud computing",
+        "overview": "Students explore the architectural principles of distributed systems, virtualization technologies, and cloud service models such as IaaS and PaaS. They will develop the technical proficiency to deploy, manage, and scale containerized applications within cloud-native environments."
     },
     "FIT3185": {
         "academic_org": "Faculty of Information Technology",
@@ -4604,7 +4698,8 @@
         },
         "sca_band": 0,
         "school": "Faculty of Information Technology",
-        "title": "Privacy enhancing technologies"
+        "title": "Privacy enhancing technologies",
+        "overview": "Students examine advanced cryptographic techniques and statistical frameworks, including differential privacy, homomorphic encryption, and secure multi-party computation. They will acquire the skills to implement privacy-preserving data mining methods and design systems that protect sensitive information while maintaining data utility."
     },
     "FIT3186": {
         "academic_org": "Faculty of Information Technology",
@@ -4648,7 +4743,8 @@
         },
         "sca_band": 0,
         "school": "Faculty of Information Technology",
-        "title": "Vulnerability analysis, response and mitigation"
+        "title": "Vulnerability analysis, response and mitigation",
+        "overview": "Students study the identification of software vulnerabilities, threat modeling, and the formal processes involved in incident response and mitigation. They will develop practical expertise in performing vulnerability assessments and executing systematic recovery strategies during security breaches."
     },
     "FIT3187": {
         "academic_org": "Faculty of Information Technology",
@@ -4700,7 +4796,8 @@
         },
         "sca_band": 0,
         "school": "Faculty of Information Technology",
-        "title": "3D character animation"
+        "title": "3D character animation",
+        "overview": "Students study the principles of movement, rigging, and skinning to animate complex 3D character models. They will develop technical mastery of animation software and the artistic ability to produce expressive, lifelike character performances."
     },
     "FIT3188": {
         "academic_org": "Faculty of Information Technology",
@@ -4758,7 +4855,8 @@
         },
         "sca_band": 0,
         "school": "Faculty of Information Technology",
-        "title": "Cybersecurity project 1"
+        "title": "Cybersecurity project 1",
+        "overview": "Students research cybersecurity threats and perform initial vulnerability assessments as part of a structured project lifecycle. They will develop critical thinking skills and the ability to document security risks within a professional framework."
     },
     "FIT3189": {
         "academic_org": "Faculty of Information Technology",
@@ -4810,7 +4908,8 @@
         },
         "sca_band": 0,
         "school": "Faculty of Information Technology",
-        "title": "Cybersecurity project 2"
+        "title": "Cybersecurity project 2",
+        "overview": "Students implement advanced security measures and conduct rigorous penetration testing to evaluate system defenses. They will develop high-level technical expertise in incident response and the capacity to design robust remediation strategies."
     },
     "FIT3190": {
         "academic_org": "Faculty of Information Technology",
@@ -4872,7 +4971,8 @@
         },
         "sca_band": 0,
         "school": "Faculty of Information Technology",
-        "title": "Work Integrated Learning - Industry placement"
+        "title": "Work Integrated Learning - Industry placement",
+        "overview": "Students will participate in a professional industry placement to apply their information technology knowledge to real-world organizational challenges. They will develop core professional competencies including effective workplace communication, collaborative teamwork, and practical problem-solving."
     },
     "FIT3191": {
         "academic_org": "Faculty of Information Technology",
@@ -4892,7 +4992,8 @@
         },
         "sca_band": 0,
         "school": "Faculty of Information Technology",
-        "title": "Generative artificial intelligence "
+        "title": "Generative artificial intelligence ",
+        "overview": "The curriculum covers the principles of generative modeling, including transformer architectures, large language models, and diffusion models. Students will gain technical skills in prompt engineering, model fine-tuning, and the evaluation of generative outputs."
     },
     "FIT3192": {
         "academic_org": "Faculty of Information Technology",
@@ -4912,7 +5013,8 @@
         },
         "sca_band": 0,
         "school": "Faculty of Information Technology",
-        "title": "Emerging and advanced topics in artificial intelligence"
+        "title": "Emerging and advanced topics in artificial intelligence",
+        "overview": "Students will examine advanced topics in artificial intelligence such as reinforcement learning, explainable AI, and graph neural networks. They will develop the ability to critically analyze research literature and implement state-of-the-art algorithmic solutions."
     },
     "FIT3193": {
         "academic_org": "Faculty of Information Technology",
@@ -4932,7 +5034,8 @@
         },
         "sca_band": 0,
         "school": "Faculty of Information Technology",
-        "title": "Artificial intelligence project 1"
+        "title": "Artificial intelligence project 1",
+        "overview": "Students will explore advanced artificial intelligence methodologies to formulate a research-based project proposal. They will develop skills in literature review, problem definition, and the technical design of AI systems."
     },
     "FIT3194": {
         "academic_org": "Faculty of Information Technology",
@@ -4952,7 +5055,8 @@
         },
         "sca_band": 0,
         "school": "Faculty of Information Technology",
-        "title": "Artificial intelligence project 2"
+        "title": "Artificial intelligence project 2",
+        "overview": "Students will undertake the full-scale implementation and rigorous testing of an autonomous or intelligent software system. They will build expertise in complex coding, model evaluation, and the interpretation of empirical results."
     },
     "FIT3195": {
         "academic_org": "Faculty of Information Technology",
@@ -4998,7 +5102,8 @@
         },
         "sca_band": 0,
         "school": "Faculty of Information Technology",
-        "title": "Deep tech entrepreneurship"
+        "title": "Deep tech entrepreneurship",
+        "overview": "Students will examine the intersection of emerging technology and market commercialization strategies. They will develop skills in pitching technical concepts, assessing market viability, and building business models for deep tech startups."
     },
     "FIT3196": {
         "academic_org": "Faculty of Information Technology",
@@ -5016,7 +5121,8 @@
         },
         "sca_band": 0,
         "school": "Faculty of Information Technology",
-        "title": "Computer architecture and networks"
+        "title": "Computer architecture and networks",
+        "overview": "Students examine computer hardware design, instruction set architectures, and the fundamental protocols of network communication. They will develop the ability to analyze hardware-software interactions and optimize network performance."
     },
     "FIT3197": {
         "academic_org": "Faculty of Information Technology",
@@ -5043,7 +5149,8 @@
         },
         "sca_band": 0,
         "school": "Faculty of Information Technology",
-        "title": "Software quality and testing"
+        "title": "Software quality and testing",
+        "overview": "This unit focuses on software testing methodologies, quality assurance processes, and the application of automated testing frameworks. Students will gain expertise in identifying software defects and designing rigorous test suites to ensure system reliability."
     },
     "FIT3199": {
         "academic_org": "Faculty of Information Technology",
@@ -5099,7 +5206,8 @@
         },
         "sca_band": 0,
         "school": "Faculty of Information Technology",
-        "title": "Industry work experience"
+        "title": "Industry work experience",
+        "overview": "Students undertake professional placements to apply their technical computing skills to real-world industry projects and workflows. They will cultivate essential professional competencies such as workplace communication, collaborative problem-solving, and project management."
     },
     "FIT3201": {
         "academic_org": "Faculty of Information Technology",
@@ -5155,7 +5263,8 @@
         },
         "sca_band": 0,
         "school": "Faculty of Information Technology",
-        "title": "Industry-based learning onboarding (8 weeks)"
+        "title": "Industry-based learning onboarding (8 weeks)",
+        "overview": "Students will undertake an extensive professional immersion to study end-to-end software development lifecycles and industry-standard workflows. They will develop advanced professional skills including agile project management, collaborative teamwork, and complex stakeholder communication."
     },
     "FIT3202": {
         "academic_org": "Faculty of Information Technology",
@@ -5201,7 +5310,8 @@
         },
         "sca_band": 0,
         "school": "Faculty of Information Technology",
-        "title": " Industry-based learning onboarding (4 weeks)"
+        "title": " Industry-based learning onboarding (4 weeks)",
+        "overview": "Students will engage in a targeted professional orientation to study the transition from academic theory to practical industrial application. They will develop essential employability skills such as professional etiquette, technical documentation, and rapid task adaptation."
     },
     "FIT3203": {
         "academic_org": "Faculty of Information Technology",
@@ -5234,7 +5344,8 @@
         },
         "sca_band": 0,
         "school": "Faculty of Information Technology",
-        "title": "Intelligent agents "
+        "title": "Intelligent agents ",
+        "overview": "Students will study the design and implementation of autonomous software entities that perceive environments and take goal-oriented actions. They will develop technical expertise in modeling agent architectures, implementing heuristic search algorithms, and managing multi-agent coordination."
     },
     "FIT3204": {
         "academic_org": "Faculty of Information Technology",
@@ -5286,7 +5397,8 @@
         },
         "sca_band": 0,
         "school": "Faculty of Information Technology",
-        "title": "Work Integrated Learning: Industry experience"
+        "title": "Work Integrated Learning: Industry experience",
+        "overview": "Students apply their information technology knowledge to practical tasks during a professional placement within an industry organization. They cultivate professional expertise, including workplace communication, collaborative problem-solving, and project management skills."
     },
     "FIT3204\t": {
         "academic_org": "Faculty of Information Technology",
@@ -5338,7 +5450,8 @@
         },
         "sca_band": 0,
         "school": "Faculty of Information Technology",
-        "title": "Work Integrated Learning: Industry experience"
+        "title": "Work Integrated Learning: Industry experience",
+        "overview": "A work-integrated learning unit in which students apply IT knowledge and skills in a structured industry experience approved by the faculty. Students maintain a reflective log, set professional learning goals, and receive assessment from both academic and workplace supervisors."
     },
     "ATS1001": {
         "academic_org": "Faculty of Arts",
@@ -5382,7 +5495,8 @@
         },
         "sca_band": 0,
         "school": "Faculty of Arts",
-        "title": "Introduction to media studies"
+        "title": "Introduction to media studies",
+        "overview": "Students explore the history, theories, and diverse forms of media across different cultural and social landscapes. They build critical analytical abilities to evaluate how media content influences social identity and public discourse."
     },
     "ATS1002": {
         "academic_org": "Faculty of Arts",
@@ -5426,7 +5540,8 @@
         },
         "sca_band": 0,
         "school": "Faculty of Arts",
-        "title": "Creative writing fundamentals"
+        "title": "Creative writing fundamentals",
+        "overview": "Students will explore various literary techniques and genres, including fiction, poetry, and creative non-fiction. They will develop their narrative voice and learn to apply critical editing processes to their own written work."
     },
     "ATS1003": {
         "academic_org": "Faculty of Arts",
@@ -5464,7 +5579,8 @@
         },
         "sca_band": 0,
         "school": "Faculty of Arts",
-        "title": "History of visual culture"
+        "title": "History of visual culture",
+        "overview": "This unit covers the evolution of visual media and art forms from historical origins to contemporary digital imagery. Students will learn to analyze how visual representations shape cultural meaning and interpret the social contexts of various artworks."
     },
     "ATS1004": {
         "academic_org": "Faculty of Arts",
@@ -5508,7 +5624,8 @@
         },
         "sca_band": 0,
         "school": "Faculty of Arts",
-        "title": "Introduction to philosophy"
+        "title": "Introduction to philosophy",
+        "overview": "Students will examine foundational philosophical questions regarding existence, knowledge, ethics, and the nature of reality. They will hone their ability to construct logical arguments and critically evaluate complex theoretical frameworks."
     },
     "ATS1005": {
         "academic_org": "Faculty of Arts",
@@ -5552,7 +5669,8 @@
         },
         "sca_band": 0,
         "school": "Faculty of Arts",
-        "title": "Sociology foundations"
+        "title": "Sociology foundations",
+        "overview": "Students explore the fundamental concepts of sociology, including social structures, inequality, and the ways human behavior is shaped by social institutions. They will develop the ability to critically analyze social phenomena and apply theoretical frameworks to real-world societal patterns."
     },
     "ATS1006": {
         "academic_org": "Faculty of Arts",
@@ -5590,7 +5708,8 @@
         },
         "sca_band": 0,
         "school": "Faculty of Arts",
-        "title": "Introduction to linguistics"
+        "title": "Introduction to linguistics",
+        "overview": "Students investigate the scientific study of human language, focusing on its structural components such as phonetics, syntax, and semantics. They will develop analytical skills to examine the underlying rules governing different linguistic systems and communication processes."
     },
     "ATS1007": {
         "academic_org": "Faculty of Arts",
@@ -5634,7 +5753,8 @@
         },
         "sca_band": 0,
         "school": "Faculty of Arts",
-        "title": "World history and globalisation"
+        "title": "World history and globalisation",
+        "overview": "Students examine the historical processes that have shaped the modern interconnected world, focusing on themes of trade, empire, and cultural exchange. They will develop the ability to evaluate complex historical narratives and understand the long-term drivers of global integration."
     },
     "ATS1008": {
         "academic_org": "Faculty of Arts",
@@ -5678,7 +5798,8 @@
         },
         "sca_band": 0,
         "school": "Faculty of Arts",
-        "title": "Introduction to psychology"
+        "title": "Introduction to psychology",
+        "overview": "Students investigate the biological, cognitive, and social foundations of human behavior and mental processes. They will develop skills in scientific reasoning and the critical evaluation of empirical psychological data."
     },
     "ATS1009": {
         "academic_org": "Faculty of Arts",
@@ -5722,7 +5843,8 @@
         },
         "sca_band": 0,
         "school": "Faculty of Arts",
-        "title": "Introduction to political science"
+        "title": "Introduction to political science",
+        "overview": "This unit explores the dynamics of power, political institutions, and the ideologies that shape modern governance and international relations. Students will build analytical skills to interpret political systems and evaluate the complexities of public policy."
     },
     "ATS1010": {
         "academic_org": "Faculty of Arts",
@@ -5766,7 +5888,8 @@
         },
         "sca_band": 0,
         "school": "Faculty of Arts",
-        "title": "Anthropology: culture and society"
+        "title": "Anthropology: culture and society",
+        "overview": "Students examine the diverse ways human societies organize themselves through the study of cultural traditions, social structures, and evolutionary history. They will develop ethnographic observation skills and the capacity to apply cross-cultural perspectives to social phenomena."
     },
     "ATS1011": {
         "academic_org": "Faculty of Arts",
@@ -5804,7 +5927,8 @@
         },
         "sca_band": 0,
         "school": "Faculty of Arts",
-        "title": "Art history: ancient to renaissance"
+        "title": "Art history: ancient to renaissance",
+        "overview": "Students will examine the evolution of visual culture from ancient civilizations through the transformative period of the Renaissance. They will develop critical visual analysis skills and the ability to contextualize art within its historical and social frameworks."
     },
     "ATS1012": {
         "academic_org": "Faculty of Arts",
@@ -5842,7 +5966,8 @@
         },
         "sca_band": 0,
         "school": "Faculty of Arts",
-        "title": "Theatre and performance studies"
+        "title": "Theatre and performance studies",
+        "overview": "This unit explores the history, theory, and diverse practices of theatrical and performance arts. Students will learn to critically analyze live performances and apply theoretical frameworks to interpret dramatic texts and stagecraft."
     },
     "ATS1013": {
         "academic_org": "Faculty of Arts",
@@ -5886,7 +6011,8 @@
         },
         "sca_band": 0,
         "school": "Faculty of Arts",
-        "title": "Gender and identity in contemporary society"
+        "title": "Gender and identity in contemporary society",
+        "overview": "Students will investigate the social constructions of gender, sexuality, and identity within modern societal structures. They will develop the ability to critically analyze power dynamics and apply sociological perspectives to contemporary identity politics."
     },
     "ATS1014": {
         "academic_org": "Faculty of Arts",
@@ -5932,7 +6058,8 @@
         },
         "sca_band": 0,
         "school": "Faculty of Arts",
-        "title": "Introduction to ethics"
+        "title": "Introduction to ethics",
+        "overview": "Students examine foundational moral theories and ethical frameworks used to evaluate human conduct and societal values. They will develop critical reasoning skills to analyze complex dilemmas and construct persuasive ethical arguments."
     },
     "ATS1015": {
         "academic_org": "Faculty of Arts",
@@ -5970,7 +6097,8 @@
         },
         "sca_band": 0,
         "school": "Faculty of Arts",
-        "title": "Music and cultural identity"
+        "title": "Music and cultural identity",
+        "overview": "This unit explores how musical traditions and practices shape and reflect individual and collective cultural identities. Students will develop analytical listening skills and the ability to interpret music through sociological and anthropological lenses."
     },
     "ATS1016": {
         "academic_org": "Faculty of Arts",
@@ -6014,7 +6142,8 @@
         },
         "sca_band": 0,
         "school": "Faculty of Arts",
-        "title": "Indigenous histories and cultures"
+        "title": "Indigenous histories and cultures",
+        "overview": "Students investigate the diverse histories, social structures, and cultural traditions of Indigenous peoples within global and local contexts. They will develop critical historical inquiry skills and a nuanced understanding of Indigenous sovereignty and heritage."
     },
     "ATS1017": {
         "academic_org": "Faculty of Arts",
@@ -6052,7 +6181,8 @@
         },
         "sca_band": 0,
         "school": "Faculty of Arts",
-        "title": "Environmental humanities"
+        "title": "Environmental humanities",
+        "overview": "Students investigate the intersections of culture, ethics, and the environment to understand how human societies interact with the natural world. They will develop critical thinking skills to evaluate ecological crises through diverse philosophical and historical perspectives."
     },
     "ATS2001": {
         "academic_org": "Faculty of Arts",
@@ -6092,7 +6222,8 @@
         },
         "sca_band": 0,
         "school": "Faculty of Arts",
-        "title": "Media production"
+        "title": "Media production",
+        "overview": "This unit focuses on the technical and creative methodologies used to produce professional-grade content for digital and broadcast media. Students will master skills in video editing, audio production, and visual storytelling to communicate effectively across various platforms."
     },
     "ATS2002": {
         "academic_org": "Faculty of Arts",
@@ -6138,7 +6269,8 @@
         },
         "sca_band": 0,
         "school": "Faculty of Arts",
-        "title": "Literary theory and criticism"
+        "title": "Literary theory and criticism",
+        "overview": "Students explore influential theoretical frameworks and critical lenses used to interpret and decode literary works. They will develop advanced textual analysis skills and the ability to construct sophisticated academic arguments using complex theoretical models."
     },
     "ATS2003": {
         "academic_org": "Faculty of Arts",
@@ -6178,7 +6310,8 @@
         },
         "sca_band": 0,
         "school": "Faculty of Arts",
-        "title": "Documentary and film studies"
+        "title": "Documentary and film studies",
+        "overview": "Students explore the evolution of documentary forms and the theoretical frameworks underpinning cinematic representation. They develop skills in critical film analysis and the ability to evaluate non-fiction narratives."
     },
     "ATS2004": {
         "academic_org": "Faculty of Arts",
@@ -6218,7 +6351,8 @@
         },
         "sca_band": 0,
         "school": "Faculty of Arts",
-        "title": "Political philosophy and ethics"
+        "title": "Political philosophy and ethics",
+        "overview": "This unit examines foundational political theories, concepts of justice, and the ethical implications of power and governance. Students will refine their ability to construct rigorous logical arguments and critically evaluate diverse political ideologies."
     },
     "ATS2005": {
         "academic_org": "Faculty of Arts",
@@ -6264,7 +6398,8 @@
         },
         "sca_band": 0,
         "school": "Faculty of Arts",
-        "title": "Research methods in social sciences"
+        "title": "Research methods in social sciences",
+        "overview": "Students investigate various qualitative and quantitative methodologies used to conduct systematic social inquiry. They will gain proficiency in designing research studies and applying rigorous data collection and analysis techniques."
     },
     "ATS2006": {
         "academic_org": "Faculty of Arts",
@@ -6304,7 +6439,8 @@
         },
         "sca_band": 0,
         "school": "Faculty of Arts",
-        "title": "Applied linguistics"
+        "title": "Applied linguistics",
+        "overview": "Students investigate how language is used in diverse social contexts, including topics such as language acquisition and sociolinguistic variation. They will develop the ability to analyze discourse patterns and apply linguistic theories to solve practical communication issues."
     },
     "ATS2007": {
         "academic_org": "Faculty of Arts",
@@ -6344,7 +6480,8 @@
         },
         "sca_band": 0,
         "school": "Faculty of Arts",
-        "title": "Modern history: conflict and change"
+        "title": "Modern history: conflict and change",
+        "overview": "This unit explores the major political conflicts and social transformations that have defined the modern era. Students will hone their skills in evaluating historical evidence and constructing sophisticated arguments regarding the causes of societal change."
     },
     "ATS2008": {
         "academic_org": "Faculty of Arts",
@@ -6390,7 +6527,8 @@
         },
         "sca_band": 0,
         "school": "Faculty of Arts",
-        "title": "Social and developmental psychology"
+        "title": "Social and developmental psychology",
+        "overview": "Students examine the psychological processes underlying human development throughout the lifespan and the impact of social environments on behavior. They will develop expertise in applying developmental theories and analyzing the complex dynamics of social interaction."
     },
     "ATS2009": {
         "academic_org": "Faculty of Arts",
@@ -6430,7 +6568,8 @@
         },
         "sca_band": 0,
         "school": "Faculty of Arts",
-        "title": "Journalism and digital media"
+        "title": "Journalism and digital media",
+        "overview": "Students explore the intersection of traditional news values and emerging digital technologies in the modern media landscape. They will develop practical skills in multimedia reporting, ethical decision-making, and digital content creation."
     },
     "ATS2010": {
         "academic_org": "Faculty of Arts",
@@ -6476,7 +6615,8 @@
         },
         "sca_band": 0,
         "school": "Faculty of Arts",
-        "title": "Comparative politics"
+        "title": "Comparative politics",
+        "overview": "This unit examines the variation in political institutions, ideologies, and governance structures across global contexts. Students will hone their ability to conduct comparative analyses of political processes and evaluate the factors that shape state stability."
     },
     "ATS2011": {
         "academic_org": "Faculty of Arts",
@@ -6516,7 +6656,8 @@
         },
         "sca_band": 0,
         "school": "Faculty of Arts",
-        "title": "Cultural anthropology"
+        "title": "Cultural anthropology",
+        "overview": "Students investigate the complexities of human culture, including social organization, belief systems, and rituals. They will develop specialized skills in ethnographic fieldwork and the critical application of anthropological theory to social phenomena."
     },
     "ATS2012": {
         "academic_org": "Faculty of Arts",
@@ -6556,7 +6697,8 @@
         },
         "sca_band": 0,
         "school": "Faculty of Arts",
-        "title": "Art history: modern and contemporary"
+        "title": "Art history: modern and contemporary",
+        "overview": "Students examine the evolution of visual arts from the late 19th century through to contemporary practices and theoretical frameworks. They will develop skills in formal visual analysis and the ability to contextualize artworks within their specific historical and social environments."
     },
     "ATS2013": {
         "academic_org": "Faculty of Arts",
@@ -6596,7 +6738,8 @@
         },
         "sca_band": 0,
         "school": "Faculty of Arts",
-        "title": "Devised theatre and performance"
+        "title": "Devised theatre and performance",
+        "overview": "Students engage in the collaborative process of creating original performance work using improvisation and experimental theatrical techniques. They will develop essential skills in ensemble collaboration, physical expression, and creative dramaturgical development."
     },
     "ATS2014": {
         "academic_org": "Faculty of Arts",
@@ -6636,7 +6779,8 @@
         },
         "sca_band": 0,
         "school": "Faculty of Arts",
-        "title": "Gender, media and representation"
+        "title": "Gender, media and representation",
+        "overview": "Students explore the construction and mediation of gender identities through various forms of popular culture and digital media. They will develop critical media literacy and the capacity to deconstruct complex power dynamics within visual and textual representations."
     },
     "ATS2015": {
         "academic_org": "Faculty of Arts",
@@ -6682,7 +6826,8 @@
         },
         "sca_band": 0,
         "school": "Faculty of Arts",
-        "title": "Environmental politics and policy"
+        "title": "Environmental politics and policy",
+        "overview": "Students examine the political processes, governance frameworks, and policy instruments used to address global environmental challenges. They will develop the ability to critically analyze ecological crises and evaluate the effectiveness of different regulatory approaches."
     },
     "ATS2016": {
         "academic_org": "Faculty of Arts",
@@ -6722,7 +6867,8 @@
         },
         "sca_band": 0,
         "school": "Faculty of Arts",
-        "title": "Language, culture and society"
+        "title": "Language, culture and society",
+        "overview": "This unit explores the dynamic connections between language use, cultural identity, and the social structures that shape human communication. Students will develop sociolinguistic analytical skills and the capacity to examine how language influences social power dynamics."
     },
     "ATS2017": {
         "academic_org": "Faculty of Arts",
@@ -6762,7 +6908,8 @@
         },
         "sca_band": 0,
         "school": "Faculty of Arts",
-        "title": "Colonial and postcolonial histories"
+        "title": "Colonial and postcolonial histories",
+        "overview": "Students investigate the historical impacts of imperial expansion and the long-term socio-political legacies of colonial rule across the globe. They will develop critical historical inquiry skills and the ability to deconstruct dominant colonial narratives in various textual sources."
     },
     "ATS2018": {
         "academic_org": "Faculty of Arts",
@@ -6802,7 +6949,8 @@
         },
         "sca_band": 0,
         "school": "Faculty of Arts",
-        "title": "Music industry and digital culture"
+        "title": "Music industry and digital culture",
+        "overview": "Students examine how digital technologies transform music production, distribution, and consumer behavior within the contemporary music industry. They will develop critical analytical skills and strategic knowledge to navigate the evolving digital music landscape."
     },
     "ATS3001": {
         "academic_org": "Faculty of Arts",
@@ -6842,7 +6990,8 @@
         },
         "sca_band": 0,
         "school": "Faculty of Arts",
-        "title": "Advanced creative writing"
+        "title": "Advanced creative writing",
+        "overview": "Students explore sophisticated narrative techniques, stylistic experimentation, and complex character development across diverse literary genres. They will refine their unique authorial voice while mastering advanced techniques in creative drafting and professional-level peer critique."
     },
     "ATS3002": {
         "academic_org": "Faculty of Arts",
@@ -6886,7 +7035,8 @@
         },
         "sca_band": 0,
         "school": "Faculty of Arts",
-        "title": "Arts research project"
+        "title": "Arts research project",
+        "overview": "Students conduct an independent, in-depth investigation of a chosen topic within the arts using specialized research methodologies and theoretical frameworks. They will develop advanced skills in project management, critical inquiry, and formal academic writing."
     },
     "ATS3003": {
         "academic_org": "Faculty of Arts",
@@ -6928,7 +7078,8 @@
         },
         "sca_band": 0,
         "school": "Faculty of Arts",
-        "title": "Cultural studies capstone"
+        "title": "Cultural studies capstone",
+        "overview": "Students will engage in an advanced synthesis of cultural theories to address complex contemporary phenomena. They will refine their ability to construct sophisticated academic arguments and conduct independent critical research."
     },
     "ATS3004": {
         "academic_org": "Faculty of Arts",
@@ -6968,7 +7119,8 @@
         },
         "sca_band": 0,
         "school": "Faculty of Arts",
-        "title": "Ethics and contemporary political thought"
+        "title": "Ethics and contemporary political thought",
+        "overview": "This unit examines major ethical frameworks and their intersection with modern political philosophies. Students will develop the capacity for normative reasoning and the critical evaluation of global political discourse."
     },
     "ATS3005": {
         "academic_org": "Faculty of Arts",
@@ -7008,7 +7160,8 @@
         },
         "sca_band": 0,
         "school": "Faculty of Arts",
-        "title": "Qualitative research methods"
+        "title": "Qualitative research methods",
+        "overview": "Students will study diverse qualitative methodologies such as ethnography, case studies, and semi-structured interviewing. They will acquire practical expertise in data collection, thematic analysis, and the interpretation of social phenomena."
     },
     "ATS3006": {
         "academic_org": "Faculty of Arts",
@@ -7048,7 +7201,8 @@
         },
         "sca_band": 0,
         "school": "Faculty of Arts",
-        "title": "Discourse and language analysis"
+        "title": "Discourse and language analysis",
+        "overview": "Examines language in use through the lens of discourse analysis and linguistics, exploring how texts construct meaning, identity, and power. Students apply advanced analytical frameworks to political speeches, media texts, and institutional discourse."
     },
     "ATS3007": {
         "academic_org": "Faculty of Arts",
@@ -7088,7 +7242,8 @@
         },
         "sca_band": 0,
         "school": "Faculty of Arts",
-        "title": "Contemporary history: theory and practice"
+        "title": "Contemporary history: theory and practice",
+        "overview": "Engages with historiographical debates about how history is written, challenging students to reflect on the epistemological and ethical dimensions of historical practice. Students produce an original piece of historical research that engages with methodological complexity."
     },
     "ATS3008": {
         "academic_org": "Faculty of Arts",
@@ -7128,7 +7283,8 @@
         },
         "sca_band": 0,
         "school": "Faculty of Arts",
-        "title": "Cognitive and behavioural psychology"
+        "title": "Cognitive and behavioural psychology",
+        "overview": "Examines advanced theories and empirical research in cognitive and behavioural psychology, including cognitive architecture, learning, memory, decision-making, and behaviour change. Students critically evaluate experimental evidence and apply findings to real-world contexts."
     },
     "ATS3009": {
         "academic_org": "Faculty of Arts",
@@ -7168,7 +7324,8 @@
         },
         "sca_band": 0,
         "school": "Faculty of Arts",
-        "title": "Global governance and international relations"
+        "title": "Global governance and international relations",
+        "overview": "Analyses the institutions, actors, and processes of global governance — including the United Nations, international law, and regional organisations — and their responses to transnational challenges. Students engage with international relations theory and develop policy analysis skills."
     },
     "ATS3010": {
         "academic_org": "Faculty of Arts",
@@ -7208,7 +7365,8 @@
         },
         "sca_band": 0,
         "school": "Faculty of Arts",
-        "title": "Applied anthropology and community development"
+        "title": "Applied anthropology and community development",
+        "overview": "Explores the application of anthropological knowledge to development practice, policy-making, and community engagement. Students critically examine concepts such as participation, sustainability, and cultural sensitivity in the context of development interventions."
     },
     "ATS3011": {
         "academic_org": "Faculty of Arts",
@@ -7248,7 +7406,8 @@
         },
         "sca_band": 0,
         "school": "Faculty of Arts",
-        "title": "Curatorial practice and art theory"
+        "title": "Curatorial practice and art theory",
+        "overview": "Examines the theory and practice of curating, covering exhibition design, collection management, audience engagement, and the ethics of display. Students develop a curated exhibition concept, engaging critically with debates about representation and the museum's public role."
     },
     "ATS3012": {
         "academic_org": "Faculty of Arts",
@@ -7288,7 +7447,8 @@
         },
         "sca_band": 0,
         "school": "Faculty of Arts",
-        "title": "Advanced performance and dramaturgy"
+        "title": "Advanced performance and dramaturgy",
+        "overview": "An advanced studio unit in which students create ambitious, self-directed performance works drawing on dramaturgical research and contemporary devising practices. Students situate their creative practice within broader theoretical and professional contexts."
     },
     "ATS3013": {
         "academic_org": "Faculty of Arts",
@@ -7328,7 +7488,8 @@
         },
         "sca_band": 0,
         "school": "Faculty of Arts",
-        "title": "Feminist and queer theory"
+        "title": "Feminist and queer theory",
+        "overview": "Engages with foundational and contemporary texts in feminist and queer theory, examining how gender, sexuality, and embodiment intersect with race, class, and disability. Students apply theoretical frameworks to cultural, literary, and political analysis."
     },
     "ATS3014": {
         "academic_org": "Faculty of Arts",
@@ -7368,7 +7529,8 @@
         },
         "sca_band": 0,
         "school": "Faculty of Arts",
-        "title": "Climate change, society and politics"
+        "title": "Climate change, society and politics",
+        "overview": "Examines the politics and sociology of climate change, including debates about climate justice, policy frameworks, social movements, and the role of science in public discourse. Students develop an integrated understanding of the human dimensions of the climate crisis."
     },
     "ATS3015": {
         "academic_org": "Faculty of Arts",
@@ -7408,7 +7570,8 @@
         },
         "sca_band": 0,
         "school": "Faculty of Arts",
-        "title": "Sociolinguistics and language policy"
+        "title": "Sociolinguistics and language policy",
+        "overview": "Explores the social, political, and educational dimensions of language policy and planning at national and international levels. Students examine case studies of language revitalisation, official language policy, and the politics of multilingualism."
     },
     "BEX1001": {
         "academic_org": "Faculty of Business and Economics",
@@ -7452,7 +7615,8 @@
         },
         "sca_band": 0,
         "school": "Faculty of Business and Economics",
-        "title": "Principles of accounting"
+        "title": "Principles of accounting",
+        "overview": "Introduces the principles of financial and management accounting, covering the recording of business transactions, preparation of financial statements, and basic cost concepts. Students develop foundational skills in interpreting accounting information for business decision-making."
     },
     "BEX1002": {
         "academic_org": "Faculty of Business and Economics",
@@ -7496,7 +7660,8 @@
         },
         "sca_band": 0,
         "school": "Faculty of Business and Economics",
-        "title": "Introduction to economics"
+        "title": "Introduction to economics",
+        "overview": "Surveys the core concepts of microeconomics and macroeconomics, including supply and demand, market equilibrium, GDP, inflation, and monetary policy. Students develop economic reasoning skills and apply economic analysis to real-world business and policy questions."
     },
     "BEX1003": {
         "academic_org": "Faculty of Business and Economics",
@@ -7540,7 +7705,8 @@
         },
         "sca_band": 0,
         "school": "Faculty of Business and Economics",
-        "title": "Business statistics"
+        "title": "Business statistics",
+        "overview": "Introduces statistical methods used in business contexts, covering descriptive statistics, probability, sampling distributions, hypothesis testing, and regression. Students use statistical software to analyse business data and communicate findings clearly."
     },
     "BEX1004": {
         "academic_org": "Faculty of Business and Economics",
@@ -7584,7 +7750,8 @@
         },
         "sca_band": 0,
         "school": "Faculty of Business and Economics",
-        "title": "Introduction to management"
+        "title": "Introduction to management",
+        "overview": "Examines the principles of management in organisations, covering planning, organising, leading, and controlling across different types of firms. Students explore management theories and apply them to contemporary organisational challenges through case analysis."
     },
     "BEX1005": {
         "academic_org": "Faculty of Business and Economics",
@@ -7622,7 +7789,8 @@
         },
         "sca_band": 0,
         "school": "Faculty of Business and Economics",
-        "title": "Business law and ethics"
+        "title": "Business law and ethics",
+        "overview": "Introduces the Australian legal system and its application to business, covering contract law, business structures, consumer law, and corporate governance. Students also explore ethical frameworks and the ethical responsibilities of business actors."
     },
     "BEX1006": {
         "academic_org": "Faculty of Business and Economics",
@@ -7666,7 +7834,8 @@
         },
         "sca_band": 0,
         "school": "Faculty of Business and Economics",
-        "title": "Financial mathematics"
+        "title": "Financial mathematics",
+        "overview": "Covers the mathematical foundations of finance, including time value of money, annuities, loan amortisation, and investment valuation. Students develop proficiency in financial calculations and apply these skills to personal and corporate financial decisions."
     },
     "BEX1007": {
         "academic_org": "Faculty of Business and Economics",
@@ -7710,7 +7879,8 @@
         },
         "sca_band": 0,
         "school": "Faculty of Business and Economics",
-        "title": "Organisational behaviour"
+        "title": "Organisational behaviour",
+        "overview": "Examines individual and group behaviour in organisations, drawing on psychology, sociology, and management theory. Topics include motivation, personality, team dynamics, organisational culture, and leadership, analysed through both theoretical frameworks and practical case studies."
     },
     "BEX1008": {
         "academic_org": "Faculty of Business and Economics",
@@ -7754,7 +7924,8 @@
         },
         "sca_band": 0,
         "school": "Faculty of Business and Economics",
-        "title": "Introduction to marketing"
+        "title": "Introduction to marketing",
+        "overview": "Introduces the fundamental concepts of marketing, including market segmentation, the marketing mix, consumer behaviour, and branding. Students examine how organisations identify and respond to customer needs in competitive markets, using contemporary examples from digital and traditional marketing."
     },
     "BEX1009": {
         "academic_org": "Faculty of Business and Economics",
@@ -7798,7 +7969,8 @@
         },
         "sca_band": 0,
         "school": "Faculty of Business and Economics",
-        "title": "Quantitative methods for business"
+        "title": "Quantitative methods for business",
+        "overview": "Develops quantitative analytical skills for business applications, covering matrix algebra, linear programming, probability, and decision analysis. Students apply mathematical modelling techniques using software tools to support business planning and optimisation."
     },
     "BEX1010": {
         "academic_org": "Faculty of Business and Economics",
@@ -7842,7 +8014,8 @@
         },
         "sca_band": 0,
         "school": "Faculty of Business and Economics",
-        "title": "Business communication"
+        "title": "Business communication",
+        "overview": "Develops professional communication skills for business contexts, covering written communication, presentations, interpersonal communication, and digital correspondence. Students produce business documents and deliver presentations, receiving feedback on clarity, tone, and audience awareness."
     },
     "BEX1011": {
         "academic_org": "Faculty of Business and Economics",
@@ -7880,7 +8053,8 @@
         },
         "sca_band": 0,
         "school": "Faculty of Business and Economics",
-        "title": "Economic history"
+        "title": "Economic history",
+        "overview": "Traces the history of economic development, trade, and industrialisation from the pre-industrial era to the present. Students examine how historical processes — including colonialism, technological change, and financial crises — have shaped contemporary economic structures."
     },
     "BEX1012": {
         "academic_org": "Faculty of Business and Economics",
@@ -7926,7 +8100,8 @@
         },
         "sca_band": 0,
         "school": "Faculty of Business and Economics",
-        "title": "Introduction to finance"
+        "title": "Introduction to finance",
+        "overview": "Introduces the core concepts of financial management, covering financial markets, the time value of money, risk and return, capital budgeting, and basic valuation. Students develop an understanding of how financial decisions are made in corporate and investment contexts."
     },
     "BEX1013": {
         "academic_org": "Faculty of Business and Economics",
@@ -7964,7 +8139,8 @@
         },
         "sca_band": 0,
         "school": "Faculty of Business and Economics",
-        "title": "Supply chain and operations fundamentals"
+        "title": "Supply chain and operations fundamentals",
+        "overview": "Introduces supply chain management and operations, covering procurement, inventory management, logistics, and quality systems. Students examine how organisations design and manage supply chains to deliver value efficiently and responsively."
     },
     "BEX1014": {
         "academic_org": "Faculty of Business and Economics",
@@ -8002,7 +8178,8 @@
         },
         "sca_band": 0,
         "school": "Faculty of Business and Economics",
-        "title": "Digital business and e-commerce"
+        "title": "Digital business and e-commerce",
+        "overview": "Examines the principles and practices of doing business online, covering e-commerce models, digital payment systems, online marketing, and the strategic implications of digital transformation. Students analyse successful digital business cases and explore emerging trends in platform economics."
     },
     "BEX1015": {
         "academic_org": "Faculty of Business and Economics",
@@ -8046,7 +8223,8 @@
         },
         "sca_band": 0,
         "school": "Faculty of Business and Economics",
-        "title": "Introduction to entrepreneurship"
+        "title": "Introduction to entrepreneurship",
+        "overview": "Introduces entrepreneurship as a process of opportunity recognition, resource assembly, and new venture creation. Students learn to identify market gaps, develop business concepts, and evaluate the feasibility of entrepreneurial ideas through structured frameworks and case study analysis."
     },
     "BEX1016": {
         "academic_org": "Faculty of Business and Economics",
@@ -8086,7 +8264,8 @@
         },
         "sca_band": 0,
         "school": "Faculty of Business and Economics",
-        "title": "Accounting information systems"
+        "title": "Accounting information systems",
+        "overview": "Explores the role of information systems in accounting and business reporting, covering database fundamentals, enterprise systems, internal controls, and the impact of digital technology on accounting practice. Students gain hands-on experience with accounting software."
     },
     "BEX1017": {
         "academic_org": "Faculty of Business and Economics",
@@ -8130,7 +8309,8 @@
         },
         "sca_band": 0,
         "school": "Faculty of Business and Economics",
-        "title": "Global business environment"
+        "title": "Global business environment",
+        "overview": "Examines the economic, cultural, legal, and political dimensions of operating in international business environments. Students analyse the challenges and opportunities of globalisation, foreign entry strategies, and managing across different national contexts."
     },
     "BEX2001": {
         "academic_org": "Faculty of Business and Economics",
@@ -8176,7 +8356,8 @@
         },
         "sca_band": 0,
         "school": "Faculty of Business and Economics",
-        "title": "Financial accounting"
+        "title": "Financial accounting",
+        "overview": "Extends introductory accounting to cover advanced financial reporting topics including group accounting, financial instruments, and IFRS. Students develop skills in preparing and interpreting complex financial statements for a range of business entities."
     },
     "BEX2002": {
         "academic_org": "Faculty of Business and Economics",
@@ -8216,7 +8397,8 @@
         },
         "sca_band": 0,
         "school": "Faculty of Business and Economics",
-        "title": "Microeconomics"
+        "title": "Microeconomics",
+        "overview": "Examines microeconomic theory in depth, covering consumer theory, production and cost analysis, market structures, and game theory. Students apply formal economic models to business strategy, pricing decisions, and market outcomes."
     },
     "BEX2003": {
         "academic_org": "Faculty of Business and Economics",
@@ -8264,7 +8446,8 @@
         },
         "sca_band": 0,
         "school": "Faculty of Business and Economics",
-        "title": "Marketing management"
+        "title": "Marketing management",
+        "overview": "Develops a comprehensive understanding of marketing management, covering market analysis, strategic planning, the marketing mix, digital marketing, and performance measurement. Students apply marketing frameworks to real business cases, developing skills in creating and justifying marketing strategies."
     },
     "BEX2004": {
         "academic_org": "Faculty of Business and Economics",
@@ -8306,7 +8489,8 @@
         },
         "sca_band": 0,
         "school": "Faculty of Business and Economics",
-        "title": "Macroeconomics"
+        "title": "Macroeconomics",
+        "overview": "Covers macroeconomic theory and policy, including national income accounting, the Keynesian and monetarist models, fiscal and monetary policy, and international macroeconomics. Students develop skills in evaluating macroeconomic conditions and their implications for business."
     },
     "BEX2005": {
         "academic_org": "Faculty of Business and Economics",
@@ -8352,7 +8536,8 @@
         },
         "sca_band": 0,
         "school": "Faculty of Business and Economics",
-        "title": "Business analytics"
+        "title": "Business analytics",
+        "overview": "Applies data analysis techniques to business problems, covering data visualisation, regression modelling, predictive analytics, and data-driven decision-making. Students use business intelligence tools to extract insights from organisational datasets."
     },
     "BEX2006": {
         "academic_org": "Faculty of Business and Economics",
@@ -8394,7 +8579,8 @@
         },
         "sca_band": 0,
         "school": "Faculty of Business and Economics",
-        "title": "Management accounting"
+        "title": "Management accounting",
+        "overview": "Examines how management accounting information is used for planning, control, and decision-making within organisations, covering budgeting, variance analysis, cost-volume-profit analysis, and performance measurement systems. Students apply management accounting tools to case-based business scenarios."
     },
     "BEX2007": {
         "academic_org": "Faculty of Business and Economics",
@@ -8440,7 +8626,8 @@
         },
         "sca_band": 0,
         "school": "Faculty of Business and Economics",
-        "title": "Human resource management"
+        "title": "Human resource management",
+        "overview": "Covers the strategic and operational dimensions of human resource management, including recruitment, performance management, learning and development, and employment law. Students analyse how HRM practices contribute to organisational effectiveness and employee wellbeing."
     },
     "BEX2008": {
         "academic_org": "Faculty of Business and Economics",
@@ -8480,7 +8667,8 @@
         },
         "sca_band": 0,
         "school": "Faculty of Business and Economics",
-        "title": "Corporate law"
+        "title": "Corporate law",
+        "overview": "Examines the legal framework governing corporations and business organisations, including directors' duties, shareholder rights, insolvency, and securities regulation. Students develop skills in applying corporate law principles to complex business scenarios."
     },
     "BEX2009": {
         "academic_org": "Faculty of Business and Economics",
@@ -8520,7 +8708,8 @@
         },
         "sca_band": 0,
         "school": "Faculty of Business and Economics",
-        "title": "Operations management"
+        "title": "Operations management",
+        "overview": "Examines the design and management of operations in manufacturing and service organisations, covering capacity planning, process design, lean operations, quality management, and supply chain coordination. Students apply operations management frameworks through quantitative modelling and case analysis."
     },
     "BEX2010": {
         "academic_org": "Faculty of Business and Economics",
@@ -8560,7 +8749,8 @@
         },
         "sca_band": 0,
         "school": "Faculty of Business and Economics",
-        "title": "Econometrics"
+        "title": "Econometrics",
+        "overview": "Introduces econometric methods for analysing economic and business data, covering regression analysis, hypothesis testing, model specification, and the interpretation of results. Students estimate and critically evaluate econometric models using statistical software."
     },
     "BEX2011": {
         "academic_org": "Faculty of Business and Economics",
@@ -8606,7 +8796,8 @@
         },
         "sca_band": 0,
         "school": "Faculty of Business and Economics",
-        "title": "Corporate finance fundamentals"
+        "title": "Corporate finance fundamentals",
+        "overview": "Covers the theory and practice of corporate finance, including capital structure, dividend policy, the cost of capital, and financial risk management. Students apply valuation frameworks and financial analysis techniques to corporate decision-making."
     },
     "BEX2012": {
         "academic_org": "Faculty of Business and Economics",
@@ -8646,7 +8837,8 @@
         },
         "sca_band": 0,
         "school": "Faculty of Business and Economics",
-        "title": "Consumer behaviour"
+        "title": "Consumer behaviour",
+        "overview": "Examines the psychological and social factors that influence consumer decision-making, including perception, motivation, attitudes, and cultural influences. Students apply consumer behaviour frameworks to marketing strategy, segmentation, and product development."
     },
     "BEX2013": {
         "academic_org": "Faculty of Business and Economics",
@@ -8688,7 +8880,8 @@
         },
         "sca_band": 0,
         "school": "Faculty of Business and Economics",
-        "title": "Intermediate accounting"
+        "title": "Intermediate accounting",
+        "overview": "Extends foundational accounting to cover more complex measurement and reporting issues, including deferred tax, leases, intangibles, and financial instruments. Students develop advanced skills in preparing and interpreting financial statements under current accounting standards."
     },
     "BEX2014": {
         "academic_org": "Faculty of Business and Economics",
@@ -8728,7 +8921,8 @@
         },
         "sca_band": 0,
         "school": "Faculty of Business and Economics",
-        "title": "Digital marketing"
+        "title": "Digital marketing",
+        "overview": "Explores the tools, strategies, and analytics of digital marketing, covering search engine optimisation, social media marketing, content strategy, email marketing, and digital advertising. Students develop and evaluate digital marketing campaigns using real-world platforms and data."
     },
     "BEX2015": {
         "academic_org": "Faculty of Business and Economics",
@@ -8768,7 +8962,8 @@
         },
         "sca_band": 0,
         "school": "Faculty of Business and Economics",
-        "title": "Supply chain management"
+        "title": "Supply chain management",
+        "overview": "Examines the strategic design and management of supply chains, covering supplier relationships, demand forecasting, inventory optimisation, and supply chain risk. Students analyse global supply chain challenges through cases and develop skills in supply chain strategy."
     },
     "BEX2016": {
         "academic_org": "Faculty of Business and Economics",
@@ -8814,7 +9009,8 @@
         },
         "sca_band": 0,
         "school": "Faculty of Business and Economics",
-        "title": "Leadership and change management"
+        "title": "Leadership and change management",
+        "overview": "Examines theories and practices of leadership and organisational change, exploring how leaders diagnose, plan, and implement change initiatives. Students develop skills in stakeholder analysis, change communication, and leading people through uncertainty."
     },
     "BEX2017": {
         "academic_org": "Faculty of Business and Economics",
@@ -8854,7 +9050,8 @@
         },
         "sca_band": 0,
         "school": "Faculty of Business and Economics",
-        "title": "International trade and finance"
+        "title": "International trade and finance",
+        "overview": "Examines the theory and practice of international trade and finance, covering exchange rates, balance of payments, trade policy, and international investment. Students analyse real-world trade relationships and apply frameworks for evaluating international business opportunities."
     },
     "BEX2018": {
         "academic_org": "Faculty of Business and Economics",
@@ -8894,7 +9091,8 @@
         },
         "sca_band": 0,
         "school": "Faculty of Business and Economics",
-        "title": "Venture creation and design thinking"
+        "title": "Venture creation and design thinking",
+        "overview": "Combines design thinking methodology with the practical skills of new venture creation, guiding students through ideation, prototyping, testing, and business model development. Students work in teams to develop and pitch an entrepreneurial concept."
     },
     "BEX3001": {
         "academic_org": "Faculty of Business and Economics",
@@ -8934,7 +9132,8 @@
         },
         "sca_band": 0,
         "school": "Faculty of Business and Economics",
-        "title": "Corporate finance"
+        "title": "Corporate finance",
+        "overview": "Examines advanced topics in corporate finance including real options, capital structure theory, mergers and acquisitions, and financial distress. Students apply sophisticated valuation and financial analysis techniques to complex corporate finance decisions."
     },
     "BEX3002": {
         "academic_org": "Faculty of Business and Economics",
@@ -8980,7 +9179,8 @@
         },
         "sca_band": 0,
         "school": "Faculty of Business and Economics",
-        "title": "Strategic management"
+        "title": "Strategic management",
+        "overview": "Examines how organisations achieve and sustain competitive advantage through the analysis of industry structure, resources, capabilities, and dynamic strategy. Students apply strategic frameworks to real organisations through case analysis and strategic planning exercises."
     },
     "BEX3003": {
         "academic_org": "Faculty of Business and Economics",
@@ -9024,7 +9224,8 @@
         },
         "sca_band": 0,
         "school": "Faculty of Business and Economics",
-        "title": "Business research project"
+        "title": "Business research project",
+        "overview": "A capstone research project in which students design and conduct an original investigation into a business or economics topic. Students develop advanced research skills, work with real data or case material, and produce a substantial written report."
     },
     "BEX3004": {
         "academic_org": "Faculty of Business and Economics",
@@ -9066,7 +9267,8 @@
         },
         "sca_band": 0,
         "school": "Faculty of Business and Economics",
-        "title": "Investment and portfolio management"
+        "title": "Investment and portfolio management",
+        "overview": "Covers portfolio theory, asset pricing models such as CAPM and APT, equity and fixed-income valuation, and portfolio performance evaluation. Students develop quantitative skills in investment analysis and portfolio construction."
     },
     "BEX3005": {
         "academic_org": "Faculty of Business and Economics",
@@ -9106,7 +9308,8 @@
         },
         "sca_band": 0,
         "school": "Faculty of Business and Economics",
-        "title": "Advanced business analytics"
+        "title": "Advanced business analytics",
+        "overview": "Extends business analytics into advanced territory, covering machine learning for business prediction, optimisation modelling, text analytics, and the ethical dimensions of algorithmic decision-making. Students build and evaluate advanced analytical models using Python or R."
     },
     "BEX3006": {
         "academic_org": "Faculty of Business and Economics",
@@ -9152,7 +9355,8 @@
         },
         "sca_band": 0,
         "school": "Faculty of Business and Economics",
-        "title": "Entrepreneurship and innovation"
+        "title": "Entrepreneurship and innovation",
+        "overview": "Examines the process of entrepreneurship and innovation at the organisational and ecosystem level, covering corporate venturing, open innovation, intellectual property, and scaling strategies. Students develop an innovation strategy for an existing or new venture."
     },
     "BEX3007": {
         "academic_org": "Faculty of Business and Economics",
@@ -9194,7 +9398,8 @@
         },
         "sca_band": 0,
         "school": "Faculty of Business and Economics",
-        "title": "International business strategy"
+        "title": "International business strategy",
+        "overview": "Examines the strategic challenges of operating multinational businesses, including market entry, international HRM, political risk, cross-cultural management, and global value chains. Students develop and evaluate international strategies through case analysis."
     },
     "BEX3008": {
         "academic_org": "Faculty of Business and Economics",
@@ -9234,7 +9439,8 @@
         },
         "sca_band": 0,
         "school": "Faculty of Business and Economics",
-        "title": "Labour economics and policy"
+        "title": "Labour economics and policy",
+        "overview": "Analyses labour markets, employment relationships, and labour policy using microeconomic theory and empirical evidence. Topics include wage determination, labour market discrimination, unions, and the policy implications of technological change for employment."
     },
     "BEX3009": {
         "academic_org": "Faculty of Business and Economics",
@@ -9274,7 +9480,8 @@
         },
         "sca_band": 0,
         "school": "Faculty of Business and Economics",
-        "title": "Advanced financial accounting"
+        "title": "Advanced financial accounting",
+        "overview": "Covers advanced topics in financial accounting including consolidated financial reporting, foreign currency transactions, and segment reporting. Students develop expert-level skills in applying and critically evaluating current financial reporting standards."
     },
     "BEX3010": {
         "academic_org": "Faculty of Business and Economics",
@@ -9314,7 +9521,8 @@
         },
         "sca_band": 0,
         "school": "Faculty of Business and Economics",
-        "title": "Supply chain strategy and sustainability"
+        "title": "Supply chain strategy and sustainability",
+        "overview": "Examines sustainable supply chain management, covering sustainability reporting, circular economy principles, supplier auditing, and the strategic management of environmental and social risks in global supply chains. Students develop a supply chain sustainability assessment."
     },
     "BEX3011": {
         "academic_org": "Faculty of Business and Economics",
@@ -9354,7 +9562,8 @@
         },
         "sca_band": 0,
         "school": "Faculty of Business and Economics",
-        "title": "Consumer insights and brand strategy"
+        "title": "Consumer insights and brand strategy",
+        "overview": "Integrates consumer insights with brand strategy, examining how organisations build, manage, and measure brand equity across digital and traditional channels. Students develop a comprehensive brand strategy informed by consumer research."
     },
     "BEX3012": {
         "academic_org": "Faculty of Business and Economics",
@@ -9396,7 +9605,8 @@
         },
         "sca_band": 0,
         "school": "Faculty of Business and Economics",
-        "title": "Mergers, acquisitions and corporate restructuring"
+        "title": "Mergers, acquisitions and corporate restructuring",
+        "overview": "Examines the financial, legal, and strategic dimensions of mergers, acquisitions, and corporate restructurings. Students analyse deal valuation, due diligence processes, post-merger integration, and the governance challenges of major corporate transactions."
     },
     "BEX3013": {
         "academic_org": "Faculty of Business and Economics",
@@ -9436,7 +9646,8 @@
         },
         "sca_band": 0,
         "school": "Faculty of Business and Economics",
-        "title": "Organisational development and design"
+        "title": "Organisational development and design",
+        "overview": "Covers theories and practices of organisational development, including organisational diagnosis, culture change, team effectiveness, and the design of high-performance work systems. Students apply OD frameworks to real cases and develop consulting-style interventions."
     },
     "BEX3014": {
         "academic_org": "Faculty of Business and Economics",
@@ -9476,7 +9687,8 @@
         },
         "sca_band": 0,
         "school": "Faculty of Business and Economics",
-        "title": "Applied econometrics"
+        "title": "Applied econometrics",
+        "overview": "Covers advanced econometric methods including time series analysis, panel data models, instrumental variables, and limited dependent variable models. Students apply these techniques to economic and business data, developing skills in econometric modelling and results interpretation."
     },
     "BEX3015": {
         "academic_org": "Faculty of Business and Economics",
@@ -9522,7 +9734,8 @@
         },
         "sca_band": 0,
         "school": "Faculty of Business and Economics",
-        "title": "Digital transformation and business innovation"
+        "title": "Digital transformation and business innovation",
+        "overview": "Examines how digital technologies are transforming business models, operations, and competitive dynamics across industries. Students analyse digital transformation case studies and develop a digital innovation strategy for an organisation."
     },
     "ENG1001": {
         "academic_org": "Faculty of Engineering",
@@ -9566,7 +9779,8 @@
         },
         "sca_band": 0,
         "school": "Faculty of Engineering",
-        "title": "Engineering mathematics"
+        "title": "Engineering mathematics",
+        "overview": "Covers differential and integral calculus, linear algebra, and introductory differential equations as applied to engineering problems. Students develop mathematical fluency and problem-solving skills that underpin all subsequent engineering study."
     },
     "ENG1002": {
         "academic_org": "Faculty of Engineering",
@@ -9610,7 +9824,8 @@
         },
         "sca_band": 0,
         "school": "Faculty of Engineering",
-        "title": "Introduction to engineering design"
+        "title": "Introduction to engineering design",
+        "overview": "Introduces the engineering design process, covering problem definition, concept generation, prototyping, and communication of design solutions. Students work in teams to complete a design challenge, gaining experience with the iterative nature of engineering design."
     },
     "ENG1003": {
         "academic_org": "Faculty of Engineering",
@@ -9657,7 +9872,8 @@
         },
         "sca_band": 0,
         "school": "Faculty of Engineering",
-        "title": "Engineering computing"
+        "title": "Engineering computing",
+        "overview": "Introduces programming and computational thinking for engineers, covering algorithms, data structures, and programming in Python or MATLAB. Students solve engineering problems computationally, developing skills in debugging, modular programming, and numerical methods."
     },
     "ENG1004": {
         "academic_org": "Faculty of Engineering",
@@ -9695,7 +9911,8 @@
         },
         "sca_band": 0,
         "school": "Faculty of Engineering",
-        "title": "Engineering physics"
+        "title": "Engineering physics",
+        "overview": "Covers classical mechanics, electromagnetism, waves, and thermodynamics as the physical foundations of engineering. Students develop skills in applying physical principles to analyse and predict the behaviour of engineering systems."
     },
     "ENG1005": {
         "academic_org": "Faculty of Engineering",
@@ -9733,7 +9950,8 @@
         },
         "sca_band": 0,
         "school": "Faculty of Engineering",
-        "title": "Engineering chemistry"
+        "title": "Engineering chemistry",
+        "overview": "Introduces chemical principles relevant to engineering, including atomic structure, chemical bonding, thermochemistry, and materials chemistry. Students apply chemistry concepts to engineering contexts including materials selection, corrosion, and electrochemical systems."
     },
     "ENG1006": {
         "academic_org": "Faculty of Engineering",
@@ -9771,7 +9989,8 @@
         },
         "sca_band": 0,
         "school": "Faculty of Engineering",
-        "title": "Statics and mechanics"
+        "title": "Statics and mechanics",
+        "overview": "Covers the principles of statics — including equilibrium, free-body diagrams, internal forces, and truss analysis — alongside an introduction to mechanics of materials. Students develop skills in analysing structural systems and calculating stresses and deformations."
     },
     "ENG1007": {
         "academic_org": "Faculty of Engineering",
@@ -9815,7 +10034,8 @@
         },
         "sca_band": 0,
         "school": "Faculty of Engineering",
-        "title": "Engineering communication and ethics"
+        "title": "Engineering communication and ethics",
+        "overview": "Develops professional communication skills for engineers, covering technical writing, oral presentation, and visual communication alongside an introduction to engineering ethics. Students learn to produce technical reports and engage with ethical frameworks relevant to professional engineering practice."
     },
     "ENG1008": {
         "academic_org": "Faculty of Engineering",
@@ -9853,7 +10073,8 @@
         },
         "sca_band": 0,
         "school": "Faculty of Engineering",
-        "title": "Digital systems fundamentals"
+        "title": "Digital systems fundamentals",
+        "overview": "Introduces the fundamentals of digital logic, Boolean algebra, combinational and sequential circuits, and programmable logic devices. Students design and test digital systems in hardware description languages and simulation tools."
     },
     "ENG1009": {
         "academic_org": "Faculty of Engineering",
@@ -9899,7 +10120,8 @@
         },
         "sca_band": 0,
         "school": "Faculty of Engineering",
-        "title": "Linear algebra for engineers"
+        "title": "Linear algebra for engineers",
+        "overview": "Covers linear algebra topics essential to engineering, including vectors, matrices, systems of linear equations, eigenvalues, and transformations. Students apply linear algebra to analyse and solve engineering problems across multiple disciplines."
     },
     "ENG1010": {
         "academic_org": "Faculty of Engineering",
@@ -9937,7 +10159,8 @@
         },
         "sca_band": 0,
         "school": "Faculty of Engineering",
-        "title": "Environmental engineering principles"
+        "title": "Environmental engineering principles",
+        "overview": "Introduces environmental engineering principles, covering water and wastewater treatment, air quality, solid waste management, and environmental impact assessment. Students examine how engineering solutions can address environmental challenges and sustainability goals."
     },
     "ENG1011": {
         "academic_org": "Faculty of Engineering",
@@ -9975,7 +10198,8 @@
         },
         "sca_band": 0,
         "school": "Faculty of Engineering",
-        "title": "Engineering drawing and CAD"
+        "title": "Engineering drawing and CAD",
+        "overview": "Develops skills in engineering drawing conventions, orthographic projection, and computer-aided design using industry-standard software. Students produce and interpret technical drawings and 3D models for engineering components and assemblies."
     },
     "ENG1012": {
         "academic_org": "Faculty of Engineering",
@@ -10021,7 +10245,8 @@
         },
         "sca_band": 0,
         "school": "Faculty of Engineering",
-        "title": "Probability and statistics for engineers"
+        "title": "Probability and statistics for engineers",
+        "overview": "Introduces probability and statistics for engineering applications, covering probability distributions, statistical inference, regression, and reliability. Students apply statistical methods to quality control, experimental design, and engineering decision-making."
     },
     "ENG1013": {
         "academic_org": "Faculty of Engineering",
@@ -10059,7 +10284,8 @@
         },
         "sca_band": 0,
         "school": "Faculty of Engineering",
-        "title": "Introduction to electrical engineering"
+        "title": "Introduction to electrical engineering",
+        "overview": "Provides an introduction to electrical engineering, covering DC and AC circuits, Ohm's law, Kirchhoff's laws, power analysis, and basic electronic components. Students develop skills in circuit analysis and gain practical experience through laboratory exercises."
     },
     "ENG1014": {
         "academic_org": "Faculty of Engineering",
@@ -10103,7 +10329,8 @@
         },
         "sca_band": 0,
         "school": "Faculty of Engineering",
-        "title": "Engineering project fundamentals"
+        "title": "Engineering project fundamentals",
+        "overview": "Introduces students to the principles of engineering project management, including project scoping, scheduling, cost estimation, and team coordination. Students apply project management tools and techniques in the context of a small engineering project."
     },
     "ENG1015": {
         "academic_org": "Faculty of Engineering",
@@ -10141,7 +10368,8 @@
         },
         "sca_band": 0,
         "school": "Faculty of Engineering",
-        "title": "Introduction to mechatronics"
+        "title": "Introduction to mechatronics",
+        "overview": "Introduces the field of mechatronics, covering the integration of mechanical, electrical, and computing systems in automated devices. Students gain hands-on experience with sensors, actuators, microcontrollers, and feedback control through laboratory and project work."
     },
     "ENG1016": {
         "academic_org": "Faculty of Engineering",
@@ -10179,7 +10407,8 @@
         },
         "sca_band": 0,
         "school": "Faculty of Engineering",
-        "title": "Geotechnical engineering basics"
+        "title": "Geotechnical engineering basics",
+        "overview": "Covers the fundamental principles of geotechnical engineering, including soil classification, compaction, hydraulic conductivity, and effective stress. Students develop skills in basic geotechnical analysis for foundation design and earthworks."
     },
     "ENG1017": {
         "academic_org": "Faculty of Engineering",
@@ -10223,7 +10452,8 @@
         },
         "sca_band": 0,
         "school": "Faculty of Engineering",
-        "title": "Engineering professional practice"
+        "title": "Engineering professional practice",
+        "overview": "Introduces students to the expectations, ethics, and responsibilities of the engineering profession, covering professional codes of conduct, sustainability obligations, and engineering in a global context. Students reflect on their professional development and the societal role of engineers."
     },
     "ENG2001": {
         "academic_org": "Faculty of Engineering",
@@ -10269,7 +10499,8 @@
         },
         "sca_band": 0,
         "school": "Faculty of Engineering",
-        "title": "Circuit theory"
+        "title": "Circuit theory",
+        "overview": "Covers the analysis of linear circuits including AC analysis, phasors, frequency response, and two-port networks. Students develop advanced circuit analysis skills and apply them to the design and analysis of electronic systems."
     },
     "ENG2002": {
         "academic_org": "Faculty of Engineering",
@@ -10309,7 +10540,8 @@
         },
         "sca_band": 0,
         "school": "Faculty of Engineering",
-        "title": "Thermodynamics"
+        "title": "Thermodynamics",
+        "overview": "Examines the laws of thermodynamics and their application to engineering systems including heat engines, refrigeration cycles, and combustion. Students develop skills in energy analysis and apply thermodynamic principles to mechanical and chemical engineering problems."
     },
     "ENG2003": {
         "academic_org": "Faculty of Engineering",
@@ -10349,7 +10581,8 @@
         },
         "sca_band": 0,
         "school": "Faculty of Engineering",
-        "title": "Engineering materials"
+        "title": "Engineering materials",
+        "overview": "Introduces the structure, properties, and selection of engineering materials including metals, polymers, ceramics, and composites. Students learn how material microstructure influences mechanical, thermal, and electrical behaviour, and apply material selection frameworks to engineering design."
     },
     "ENG2004": {
         "academic_org": "Faculty of Engineering",
@@ -10389,7 +10622,8 @@
         },
         "sca_band": 0,
         "school": "Faculty of Engineering",
-        "title": "Fluid mechanics"
+        "title": "Fluid mechanics",
+        "overview": "Covers the principles of fluid statics, kinematics, and dynamics, including Bernoulli's equation, viscous flow, and turbomachinery. Students develop skills in fluid analysis and apply them to piping systems, hydraulic devices, and environmental flow problems."
     },
     "ENG2005": {
         "academic_org": "Faculty of Engineering",
@@ -10429,7 +10663,8 @@
         },
         "sca_band": 0,
         "school": "Faculty of Engineering",
-        "title": "Structural analysis"
+        "title": "Structural analysis",
+        "overview": "Examines structural analysis methods including force and displacement methods, influence lines, and matrix structural analysis. Students analyse statically determinate and indeterminate structures, developing skills in structural modelling and safety assessment."
     },
     "ENG2006": {
         "academic_org": "Faculty of Engineering",
@@ -10469,7 +10704,8 @@
         },
         "sca_band": 0,
         "school": "Faculty of Engineering",
-        "title": "Digital signal processing"
+        "title": "Digital signal processing",
+        "overview": "Covers the theory and applications of digital signal processing, including sampling, Fourier transforms, filter design, and spectral analysis. Students implement signal processing algorithms computationally and apply them to audio, image, and communications problems."
     },
     "ENG2007": {
         "academic_org": "Faculty of Engineering",
@@ -10511,7 +10747,8 @@
         },
         "sca_band": 0,
         "school": "Faculty of Engineering",
-        "title": "Software engineering for embedded systems"
+        "title": "Software engineering for embedded systems",
+        "overview": "Examines software engineering principles in the context of embedded and real-time systems, covering requirements analysis, software design patterns, testing, and real-time operating systems. Students develop firmware for embedded platforms through project-based learning."
     },
     "ENG2008": {
         "academic_org": "Faculty of Engineering",
@@ -10557,7 +10794,8 @@
         },
         "sca_band": 0,
         "school": "Faculty of Engineering",
-        "title": "Engineering project management"
+        "title": "Engineering project management",
+        "overview": "Covers the principles and practice of engineering project management, including project planning, risk management, cost control, and team leadership. Students apply project management frameworks to simulated engineering project scenarios."
     },
     "ENG2009": {
         "academic_org": "Faculty of Engineering",
@@ -10597,7 +10835,8 @@
         },
         "sca_band": 0,
         "school": "Faculty of Engineering",
-        "title": "Dynamics and vibrations"
+        "title": "Dynamics and vibrations",
+        "overview": "Examines the dynamics of mechanical systems including vibrations, rigid body motion, and rotational dynamics. Students develop skills in modelling and analysing dynamic systems, applying analytical and numerical methods to solve practical mechanical engineering problems."
     },
     "ENG2010": {
         "academic_org": "Faculty of Engineering",
@@ -10637,7 +10876,8 @@
         },
         "sca_band": 0,
         "school": "Faculty of Engineering",
-        "title": "Numerical methods for engineers"
+        "title": "Numerical methods for engineers",
+        "overview": "Covers numerical methods for solving engineering problems, including root finding, numerical integration, ordinary differential equations, and linear systems. Students implement algorithms in programming environments and apply them to realistic engineering computations."
     },
     "ENG2011": {
         "academic_org": "Faculty of Engineering",
@@ -10677,7 +10917,8 @@
         },
         "sca_band": 0,
         "school": "Faculty of Engineering",
-        "title": "Environmental systems engineering"
+        "title": "Environmental systems engineering",
+        "overview": "Examines the design and operation of environmental engineering systems including water treatment plants, stormwater management, and pollution control. Students apply mass balance, reaction kinetics, and systems thinking to environmental engineering design problems."
     },
     "ENG2012": {
         "academic_org": "Faculty of Engineering",
@@ -10717,7 +10958,8 @@
         },
         "sca_band": 0,
         "school": "Faculty of Engineering",
-        "title": "Mechanical design"
+        "title": "Mechanical design",
+        "overview": "Covers the principles of mechanical component design, including stress analysis, fatigue, failure theories, and the design of machine elements such as shafts, gears, and bearings. Students apply design methodology and safety factors to produce mechanical design solutions."
     },
     "ENG2013": {
         "academic_org": "Faculty of Engineering",
@@ -10759,7 +11001,8 @@
         },
         "sca_band": 0,
         "school": "Faculty of Engineering",
-        "title": "Power systems fundamentals"
+        "title": "Power systems fundamentals",
+        "overview": "Introduces the analysis and operation of electrical power systems, covering generation, transmission, distribution, and power system protection. Students develop skills in load flow analysis and examine the integration of renewable energy into power grids."
     },
     "ENG2014": {
         "academic_org": "Faculty of Engineering",
@@ -10799,7 +11042,8 @@
         },
         "sca_band": 0,
         "school": "Faculty of Engineering",
-        "title": "Geotechnical analysis"
+        "title": "Geotechnical analysis",
+        "overview": "Develops skills in geotechnical analysis for site investigation, shear strength, slope stability, and foundation design. Students apply theoretical and empirical methods to evaluate soil behaviour and design safe geotechnical solutions."
     },
     "ENG2015": {
         "academic_org": "Faculty of Engineering",
@@ -10839,7 +11083,8 @@
         },
         "sca_band": 0,
         "school": "Faculty of Engineering",
-        "title": "Sensors and measurement systems"
+        "title": "Sensors and measurement systems",
+        "overview": "Covers the principles and application of sensors and measurement systems, including sensor types, signal conditioning, data acquisition, and measurement uncertainty. Students design measurement systems for engineering applications through laboratory exercises."
     },
     "ENG2016": {
         "academic_org": "Faculty of Engineering",
@@ -10885,7 +11130,8 @@
         },
         "sca_band": 0,
         "school": "Faculty of Engineering",
-        "title": "Engineering ethics and sustainability"
+        "title": "Engineering ethics and sustainability",
+        "overview": "Examines sustainability frameworks, lifecycle assessment, and ethical decision-making in engineering practice. Students evaluate the environmental and social impacts of engineering projects and develop skills in responsible, sustainable engineering design."
     },
     "ENG2017": {
         "academic_org": "Faculty of Engineering",
@@ -10925,7 +11171,8 @@
         },
         "sca_band": 0,
         "school": "Faculty of Engineering",
-        "title": "Heat and mass transfer"
+        "title": "Heat and mass transfer",
+        "overview": "Covers the principles of heat conduction, convection, radiation, and mass transfer, with applications to heat exchangers, HVAC systems, and industrial processes. Students develop skills in thermal system analysis and design."
     },
     "ENG2018": {
         "academic_org": "Faculty of Engineering",
@@ -10965,7 +11212,8 @@
         },
         "sca_band": 0,
         "school": "Faculty of Engineering",
-        "title": "Probability and reliability in engineering"
+        "title": "Probability and reliability in engineering",
+        "overview": "Examines probabilistic methods for engineering reliability analysis, including probability distributions, failure rate modelling, fault tree analysis, and system reliability. Students apply reliability frameworks to evaluate the safety and dependability of engineered systems."
     },
     "ENG3001": {
         "academic_org": "Faculty of Engineering",
@@ -11011,7 +11259,8 @@
         },
         "sca_band": 0,
         "school": "Faculty of Engineering",
-        "title": "Control systems"
+        "title": "Control systems",
+        "overview": "Examines the analysis and design of feedback control systems, covering transfer functions, root locus, frequency response, and state-space methods. Students design controllers for engineering systems and evaluate stability, performance, and robustness."
     },
     "ENG3002": {
         "academic_org": "Faculty of Engineering",
@@ -11055,7 +11304,8 @@
         },
         "sca_band": 0,
         "school": "Faculty of Engineering",
-        "title": "Engineering project management advanced"
+        "title": "Engineering project management advanced",
+        "overview": "Covers advanced project management for large-scale engineering projects, including earned value management, procurement, stakeholder engagement, and project governance. Students apply advanced tools and develop a comprehensive project management plan."
     },
     "ENG3003": {
         "academic_org": "Faculty of Engineering",
@@ -11101,7 +11351,8 @@
         },
         "sca_band": 0,
         "school": "Faculty of Engineering",
-        "title": "Capstone engineering project"
+        "title": "Capstone engineering project",
+        "overview": "A major capstone project in which student teams undertake a significant engineering design challenge for an industry or community partner. Students integrate technical knowledge across disciplines to deliver a functional design solution with full documentation."
     },
     "ENG3004": {
         "academic_org": "Faculty of Engineering",
@@ -11141,7 +11392,8 @@
         },
         "sca_band": 0,
         "school": "Faculty of Engineering",
-        "title": "Advanced thermodynamics"
+        "title": "Advanced thermodynamics",
+        "overview": "Examines advanced topics in thermodynamics including exergy analysis, combustion thermochemistry, and thermodynamic optimisation of energy systems. Students apply advanced thermodynamic methods to the design of efficient energy conversion systems."
     },
     "ENG3005": {
         "academic_org": "Faculty of Engineering",
@@ -11181,7 +11433,8 @@
         },
         "sca_band": 0,
         "school": "Faculty of Engineering",
-        "title": "Structural design"
+        "title": "Structural design",
+        "overview": "Covers advanced structural design in steel, concrete, and timber, integrating load analysis with structural form selection and detailing. Students apply design standards and produce complete structural designs for building elements and systems."
     },
     "ENG3006": {
         "academic_org": "Faculty of Engineering",
@@ -11221,7 +11474,8 @@
         },
         "sca_band": 0,
         "school": "Faculty of Engineering",
-        "title": "Embedded systems design"
+        "title": "Embedded systems design",
+        "overview": "Covers the design and implementation of embedded systems, integrating hardware and software for real-time and safety-critical applications. Students design embedded systems using microcontrollers, FPGAs, and real-time operating systems, applying verification and validation techniques."
     },
     "ENG3007": {
         "academic_org": "Faculty of Engineering",
@@ -11261,7 +11515,8 @@
         },
         "sca_band": 0,
         "school": "Faculty of Engineering",
-        "title": "Advanced materials engineering"
+        "title": "Advanced materials engineering",
+        "overview": "Examines advanced topics in materials science including phase transformations, nanomaterials, biomaterials, and smart materials. Students investigate structure-property relationships and evaluate emerging materials for advanced engineering applications."
     },
     "ENG3008": {
         "academic_org": "Faculty of Engineering",
@@ -11303,7 +11558,8 @@
         },
         "sca_band": 0,
         "school": "Faculty of Engineering",
-        "title": "Engineering systems integration"
+        "title": "Engineering systems integration",
+        "overview": "Covers the integration of multiple engineering subsystems into complex engineered products or systems, addressing interface management, systems architecting, and integration testing. Students apply systems engineering methodology to a realistic multi-disciplinary project."
     },
     "ENG3009": {
         "academic_org": "Faculty of Engineering",
@@ -11343,7 +11599,8 @@
         },
         "sca_band": 0,
         "school": "Faculty of Engineering",
-        "title": "Environmental engineering design"
+        "title": "Environmental engineering design",
+        "overview": "Covers the design of environmental engineering infrastructure including water treatment, wastewater treatment, and solid waste facilities. Students apply regulatory frameworks, lifecycle assessment, and process design skills to develop environmentally sound engineering solutions."
     },
     "ENG3010": {
         "academic_org": "Faculty of Engineering",
@@ -11383,7 +11640,8 @@
         },
         "sca_band": 0,
         "school": "Faculty of Engineering",
-        "title": "Advanced power systems"
+        "title": "Advanced power systems",
+        "overview": "Examines advanced power systems topics including power electronics, power system stability, smart grids, and the integration of renewable energy sources. Students analyse power system dynamics and evaluate strategies for grid modernisation."
     },
     "ENG3011": {
         "academic_org": "Faculty of Engineering",
@@ -11431,7 +11689,8 @@
         },
         "sca_band": 0,
         "school": "Faculty of Engineering",
-        "title": "Machine learning for engineers"
+        "title": "Machine learning for engineers",
+        "overview": "Applies machine learning techniques to engineering problems, covering supervised and unsupervised learning, neural networks, and model deployment in engineering contexts. Students implement and evaluate machine learning pipelines for tasks such as fault detection, predictive maintenance, and signal classification."
     },
     "ENG3012": {
         "academic_org": "Faculty of Engineering",
@@ -11471,7 +11730,8 @@
         },
         "sca_band": 0,
         "school": "Faculty of Engineering",
-        "title": "Foundation engineering and geomechanics"
+        "title": "Foundation engineering and geomechanics",
+        "overview": "Examines advanced topics in foundation engineering and geomechanics, including deep foundations, retaining structures, consolidation, and seismic geotechnical analysis. Students apply advanced theoretical and computational methods to complex geotechnical design scenarios."
     },
     "ENG3013": {
         "academic_org": "Faculty of Engineering",
@@ -11511,7 +11771,8 @@
         },
         "sca_band": 0,
         "school": "Faculty of Engineering",
-        "title": "Advanced mechatronics"
+        "title": "Advanced mechatronics",
+        "overview": "Examines advanced mechatronic system design, integrating high-performance control, real-time sensing, and actuation for robotic and automated systems. Students design and implement a sophisticated mechatronic system incorporating feedback control and embedded intelligence."
     },
     "ENG3014": {
         "academic_org": "Faculty of Engineering",
@@ -11551,7 +11812,8 @@
         },
         "sca_band": 0,
         "school": "Faculty of Engineering",
-        "title": "Engineering risk and reliability"
+        "title": "Engineering risk and reliability",
+        "overview": "Examines risk analysis and reliability engineering methods including probabilistic risk assessment, Monte Carlo simulation, common cause failure analysis, and safety case development. Students apply these methods to evaluate and improve the safety of complex engineering systems."
     },
     "ENG3015": {
         "academic_org": "Faculty of Engineering",
@@ -11593,6 +11855,7 @@
         },
         "sca_band": 0,
         "school": "Faculty of Engineering",
-        "title": "Renewable energy systems"
+        "title": "Renewable energy systems",
+        "overview": "Covers the design, analysis, and integration of renewable energy systems including solar photovoltaic, wind, and energy storage technologies. Students assess resource availability, design grid-connected and off-grid systems, and evaluate economic and environmental performance."
     }
 }

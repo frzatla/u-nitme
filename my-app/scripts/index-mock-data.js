@@ -72,10 +72,13 @@ async function indexUnits() {
     properties: {
       code:          { type: "keyword" },
       title:         { type: "text", analyzer: "english" },
+      overview:      { type: "text", analyzer: "english" },
       credit_points: { type: "integer" },
       level:         { type: "integer" },
       school:        { type: "keyword" },
       academic_org:  { type: "keyword" },
+      assessments:   { type: "keyword" },
+      prerequisites: { type: "keyword" },
       offerings: {
         type: "nested",
         properties: {
@@ -88,22 +91,44 @@ async function indexUnits() {
   });
 
   const raw  = loadJson("mock_units.json");
-  const docs = Object.values(raw).map((u) => ({
-    _id:   u.code,
-    _body: {
-      code:          u.code,
-      title:         (u.title || "").trim(),
-      credit_points: parseInt(u.credit_points) || 6,
-      level:         u.level || 1,
-      school:        u.school || u.academic_org || "",
-      academic_org:  u.academic_org || "",
-      offerings:     (u.offerings || []).map((o) => ({
-        period:   o.period || "",
-        location: o.location || "",
-        mode:     o.mode || "",
-      })),
-    },
-  }));
+  const docs = Object.values(raw).map((u) => {
+    // Strip the leading "N - " from assessment names: "4 - Examination" → "Examination"
+    const assessments = (u.assessments || []).map(
+      (a) => a.name.replace(/^\d+\s*-\s*/, "").trim()
+    );
+
+    // Convert structured requisites into a human-readable string for the chatbot
+    // Format: ";" = OR, "&" = AND
+    const req = u.requisites || {};
+    const prereqParts = (req.prerequisites || []).filter(Boolean).map((p) =>
+      p.replace(/;/g, " OR ").replace(/&/g, " AND ")
+    );
+    const prohibParts = (req.prohibitions || []).filter(Boolean);
+    const prerequisites = [
+      prereqParts.length ? prereqParts.join("; ") : "None",
+      prohibParts.length ? `Cannot enrol if completed: ${prohibParts.join(", ")}` : "",
+    ].filter(Boolean).join(" | ");
+
+    return {
+      _id:   u.code,
+      _body: {
+        code:          u.code,
+        title:         (u.title || "").trim(),
+        overview:      (u.overview || "").trim(),
+        credit_points: parseInt(u.credit_points) || 6,
+        level:         u.level || 1,
+        school:        u.school || u.academic_org || "",
+        academic_org:  u.academic_org || "",
+        assessments,
+        prerequisites,
+        offerings:     (u.offerings || []).map((o) => ({
+          period:   o.period || "",
+          location: o.location || "",
+          mode:     o.mode || "",
+        })),
+      },
+    };
+  });
 
   await bulkIndex("units", docs);
 }

@@ -256,7 +256,6 @@ function ChatTab({ onSelectUnit, planUnits = [] }: { onSelectUnit: (unit: Unit) 
   });
 
   const [messages, setMessages] = useState<ChatMessage[]>([GREETING]);
-  const [historyLoaded, setHistoryLoaded] = useState(false);
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
   const bottomRef = useRef<HTMLDivElement>(null);
@@ -270,8 +269,7 @@ function ChatTab({ onSelectUnit, planUnits = [] }: { onSelectUnit: (unit: Unit) 
           setMessages([GREETING, ...data.messages]);
         }
       })
-      .catch(() => {})
-      .finally(() => setHistoryLoaded(true));
+      .catch(() => {});
   }, [sessionId]);
 
   useEffect(() => {
