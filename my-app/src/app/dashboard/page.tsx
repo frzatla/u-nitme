@@ -17,6 +17,7 @@ import {
   getProfileByEmail,
   updateProfile,
 } from "../../lib/profile";
+import FloatingChatbot from "../../components/FloatingChatbot";
 
 function getGreeting() {
   const hour = new Date().getHours();
@@ -49,6 +50,17 @@ export default async function DashboardPage() {
   const lastPlan = plans[plans.length - 1] ?? null;
   const universityName = lastPlan?.university || "—";
   const lastPlanName = lastPlan?.planName || lastPlan?.courseCode || "—";
+  const chatbotContext = [
+    "Page: user dashboard",
+    `Saved plans: ${plans.length}`,
+    `Latest plan: ${lastPlanName}`,
+    `Latest plan university: ${universityName}`,
+    plans.length
+      ? `Plan list: ${plans
+          .map((plan) => plan.planName || plan.courseCode || "Course Plan")
+          .join(", ")}`
+      : "Plan list: none yet",
+  ].join("\n");
 
   async function handleDeletePlan(formData: FormData) {
     "use server";
@@ -266,6 +278,7 @@ export default async function DashboardPage() {
           )}
         </div>
       </section>
+      <FloatingChatbot context={chatbotContext} />
     </main>
   );
 }
