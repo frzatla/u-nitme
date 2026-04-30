@@ -11,6 +11,7 @@ import {
   Download,
 } from "lucide-react";
 import CoursePlanner, { type Semester } from "../../components/CoursePlanner";
+import FloatingChatbot from "../../components/FloatingChatbot";
 import { savePlanWithSchedule } from "../actions";
 import { Plan, Schedule, ScheduledUnit } from "@/lib/types";
 
@@ -120,6 +121,16 @@ export default function CoursePlanClient({
   const exportHref = isNewPlan
     ? `/course-plan/${plan.id}/pdf?pending=true`
     : `/course-plan/${plan.id}/pdf`;
+  const chatbotContext = [
+    "Page: course plan",
+    `Plan name: ${plan.planName || "Course Plan"}`,
+    `Course code: ${plan.courseCode || "Unknown"}`,
+    `University: ${plan.university || "Unknown"}`,
+    `Area of study: ${plan.areaOfStudy || "Unknown"}`,
+    `Timeline: ${plan.semesterOffering || "Unknown"} ${plan.yearStart || "?"}-${plan.yearEnd || "?"}`,
+    `Status: ${plan.saved ? "saved" : "unsaved"}`,
+    `Summary: ${plan.schedule?.summary.total_units ?? 0} units, ${plan.schedule?.summary.total_cp ?? 0} credit points`,
+  ].join("\n");
 
   return (
     <>
@@ -238,6 +249,7 @@ export default function CoursePlanClient({
           />
         </div>
       </section>
+      <FloatingChatbot context={chatbotContext} />
     </>
   );
 }
