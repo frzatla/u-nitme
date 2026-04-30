@@ -3,7 +3,13 @@
 import { useState, useTransition } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { RefreshCw, BookmarkCheck, Loader2, ArrowLeft } from "lucide-react";
+import {
+  RefreshCw,
+  BookmarkCheck,
+  Loader2,
+  ArrowLeft,
+  Download,
+} from "lucide-react";
 import CoursePlanner, { type Semester } from "../../components/CoursePlanner";
 import { savePlanWithSchedule } from "../actions";
 import { Plan, Schedule, ScheduledUnit } from "@/lib/types";
@@ -111,6 +117,9 @@ export default function CoursePlanClient({
       router.push("/dashboard");
     }
   }
+  const exportHref = isNewPlan
+    ? `/course-plan/${plan.id}/pdf?pending=true`
+    : `/course-plan/${plan.id}/pdf`;
 
   return (
     <>
@@ -134,6 +143,16 @@ export default function CoursePlanClient({
             </div>
 
             <div className="flex items-center gap-3">
+              <Link
+                href={exportHref}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-2 rounded-lg border border-white/15 px-4 py-2 text-xs text-white/50 transition-all hover:border-white/30 hover:text-white"
+              >
+                <Download className="h-3.5 w-3.5" />
+                Export PDF
+              </Link>
+
               {isNewPlan ? (
                 <>
                   <button

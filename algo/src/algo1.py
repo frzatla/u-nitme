@@ -22,8 +22,9 @@ if sys.stderr.encoding != "utf-8":
     sys.stderr.reconfigure(encoding="utf-8")
 
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
-MAX_UNITS_PER_SEM = 4       # standard full-time load (24 CP/sem)
-MAX_SEMESTERS     = 24      # safety upper bound
+MAX_UNITS_PER_SEM    = 4    # standard full-time load (24 CP/sem)
+ELECTIVE_SLOTS_PER_SEM = 1  # reserved elective slots per semester
+MAX_SEMESTERS        = 24   # safety upper bound
 
 # Preferred math units for FIT students — chosen over other math alternatives
 FIT_PREFERRED_MATH = {"MAT1830", "MAT1841"}
@@ -31,13 +32,26 @@ FIT_PREFERRED_MATH = {"MAT1830", "MAT1841"}
 
 # ─── data loading ────────────────────────────────────────────────────────────
 
-def load_data():
-    data_dir = os.path.join(SCRIPT_DIR, "data")
+def load_data(data_dir: str | None = None):
+    # Two modes:
+    #   production (--data-dir supplied by web app) → load final_*.json
+    #   standalone dev (no --data-dir)              → load mock_*.json from local data/
+    if data_dir is None:
+        data_dir      = os.path.join(SCRIPT_DIR, "data")
+        units_file    = "mock_units.json"
+        courses_file  = "mock_courses.json"
+        aos_file      = "mock_aos.json"
+    else:
+        units_file    = "final_units.json"
+        courses_file  = "final_courses.json"
+        aos_file      = "final_aos.json"
+
     def _load(name):
-        path = os.path.join(data_dir, name)
-        with open(path, encoding="utf-8") as f:
+        fpath = os.path.join(data_dir, name)
+        with open(fpath, encoding="utf-8") as f:
             return json.load(f)
-    units_db = _load("final_units.json")
+
+    units_db = _load(units_file)
     # Convert string requisites to group-dict format expected by the algorithm.
     #
     # String format uses:
@@ -89,8 +103,8 @@ def load_data():
         reqs["prohibitions"]  = _norm_groups(reqs.get("prohibitions"))
     return (
         units_db,
-        _load("final_courses.json"),
-        _load("final_aos.json"),
+        _load(courses_file),
+        _load(aos_file),
     )
 
 
@@ -152,12 +166,20 @@ def extract_required_units(course_code, aos_selections, campus, courses_db, aos_
                 if u in aos_set:
                     collect_from_aos(u)
 
-            # Plain units: use CP heuristic to decide how many to take
-            # Exclude units with non-standard credit points (anything other than 6 CP)
+            # Plain units: use CP heuristic to decide how many to take.
+            # Non-standard CP units (12 CP capstones, full-year projects) are
+            # always required when listed — they cannot participate in the
+            # "pick N of M" elective heuristic, so they are added unconditionally
+            # and only standard 6-CP units go through the count heuristic.
+            nonstandard_units = [
+                u for u in plain_units
+                if int(units_db.get(u, {}).get("credit_points") or 6) != 6
+            ]
             standard_units = [
                 u for u in plain_units
                 if int(units_db.get(u, {}).get("credit_points") or 6) == 6
             ]
+            required.update(nonstandard_units)
             n_needed = _num_units_from_node(node, standard_units)
             # sort: prefer FIT math units, then shortest chain, then code
             plain_sorted = sorted(
@@ -637,7 +659,14 @@ def schedule_units(required, prereq_graph, chain_lengths, unlock_depths, units_d
             unit_data  = units_db.get(u, {})
             requisites = unit_data.get("requisites") or {}
             cp_needed  = requisites.get("cp_required", 0) or 0
-            if cumulative_cp < cp_needed:
+            # Level-based CP floor — prevents L2/L3 units from appearing in
+            # early semesters when prerequisite data is incomplete (cp_required=0,
+            # no prereqs listed). Mirrors Monash's standard progression policy:
+            #   L2 → need ≥ 48 CP done (after Year 1, both semesters complete)
+            #   L3 → need ≥ 96 CP done (after Year 2, i.e. start of Year 3)
+            level = unit_data.get("level") or 1
+            level_cp_floor = {2: 48, 3: 96}.get(level, 0)
+            if cumulative_cp < max(cp_needed, level_cp_floor):
                 continue
             # offered this semester?
             offered = get_offered_semesters(u, units_db, campus)
@@ -654,7 +683,7 @@ def schedule_units(required, prereq_graph, chain_lengths, unlock_depths, units_d
                                       -chain_lengths.get(u, 0),
                                       len(get_offered_semesters(u, units_db, campus)),
                                       u))
-        chosen = available[:MAX_UNITS_PER_SEM]
+        chosen = available[:MAX_UNITS_PER_SEM - ELECTIVE_SLOTS_PER_SEM]
 
         if chosen or remaining:
             sem_number  = sem_idx + 1          # 1-based count of scheduled semesters
@@ -935,6 +964,10 @@ def validate_schedule(schedule_json, units_db,
                             need = max(1, node_cp // 6)
                         else:
                             need = len(units_list)
+                        # Cap at pool size — avoids false failures when a node
+                        # contains a non-standard CP unit (e.g. a 12 CP capstone
+                        # makes node_cp // 6 exceed the actual unit count).
+                        need = min(need, len(units_list))
                         ok = len(present) >= need
                         if not ok and report:
                             missing = [u for u in units_list if u not in all_scheduled]
@@ -1124,10 +1157,12 @@ def main():
                         help="Validate an existing schedule JSON file instead of generating one")
     parser.add_argument("--list-aos",       action="store_true",
                         help="List available AOS for the given course and exit (outputs JSON)")
+    parser.add_argument("--data-dir",       default=None,
+                        help="Directory containing data JSON files (default: <script_dir>/data)")
     args = parser.parse_args()
 
     print("Loading data...")
-    units_db, courses_db, aos_db = load_data()
+    units_db, courses_db, aos_db = load_data(args.data_dir)
 
     # ── list-aos mode ──────────────────────────────────────────────────────────
     if args.list_aos:

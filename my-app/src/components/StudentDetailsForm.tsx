@@ -8,9 +8,11 @@ type AosOption = { code: string; title: string };
 
 // ── data loading ──────────────────────────────────────────────────────────────
 
+const MOCK_DATA_DIR = path.join(process.cwd(), "..", "algo", "src", "data");
+
 function readJson(filename: string) {
   return JSON.parse(
-    readFileSync(path.join(process.cwd(), "public/data", filename), "utf-8"),
+    readFileSync(path.join(MOCK_DATA_DIR, filename), "utf-8"),
   );
 }
 
@@ -21,8 +23,8 @@ function loadData(): {
   majorAosList: AosOption[];
   courseToAos: Record<string, string[]>;
 } {
-  const coursesRaw = readJson("final_courses.json");
-  const aosRaw = readJson("final_aos.json");
+  const coursesRaw = readJson("mock_courses.json");
+  const aosRaw = readJson("mock_aos.json");
 
   // Valid AOS = present in final_aos.json with non-zero credit points
   const validAosCodes = new Set<string>(

@@ -848,6 +848,10 @@ export default function CoursePlanner({
         isOpen={electiveSlotId !== null}
         onClose={() => setElectiveSlotId(null)}
         onSelectUnit={handleElectiveSelected}
+        planUnits={semesters
+          .flatMap((s) => s.units)
+          .filter((u): u is Unit => !!u && u.code !== "ELECTIVE")
+          .map((u) => ({ code: u.code, name: u.name, level: u.level }))}
       />
     </DndContext>
   );

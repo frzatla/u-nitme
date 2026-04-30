@@ -6,6 +6,7 @@ export type Plan = {
   courseCode: string;
   university: string;
   areaOfStudy: string;
+  interests?: string[];
   semesterOffering: string;
   yearStart: number | string;
   yearEnd: number | string;

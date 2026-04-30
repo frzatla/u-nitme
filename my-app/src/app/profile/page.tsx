@@ -12,8 +12,8 @@ import { readFileSync, unlinkSync } from "fs";
 import path from "path";
 import { savePendingPlan } from "@/lib/pendingPlan";
 
-const ALGO_DIR = path.join(process.cwd(), "src/algo");
-const AOS_PATH = path.join(process.cwd(), "public/data/final_aos.json");
+const ALGO_DIR  = path.join(process.cwd(), "..", "algo", "src");
+const AOS_PATH  = path.join(ALGO_DIR, "data", "mock_aos.json");
 const NO_AREA_OF_STUDY_VALUE = "__NO_AREA_OF_STUDY__";
 
 // On Windows try "py" first (Python Launcher); on other platforms try "python3" first
@@ -49,21 +49,35 @@ async function runAlgo(
   minorMajorType?: string,
   minorMajorCode?: string,
 ): Promise<Schedule | null> {
+  const outputFile = `schedule_${crypto.randomUUID()}.json`;
 
+  const args = [
+    "algo1.py",
+    "--course", courseCode,
+    "--specialisation", aosCode,
+    "--campus", "Clayton",
+    "--output", outputFile,
+  ];
+
+  if (minorMajorType === "major" && minorMajorCode) {
+    args.push("--major", minorMajorCode);
+  } else if (minorMajorType === "minor" && minorMajorCode) {
+    args.push("--minor", minorMajorCode);
+  }
+
+  const result = spawnPython(args);
+
+  if (result.status !== 0) {
+    console.error("algo1.py stderr:", result.stderr);
+    console.error("algo1.py stdout:", result.stdout);
+    return null;
+  }
+
+  const outputPath = path.join(ALGO_DIR, outputFile);
   try {
-    const response = await fetch(process.env.ALGO_URL ?? "https://u-nitme-algo.vercel.app/", {
-      method: "POST",
-      body: JSON.stringify({
-        course: courseCode,
-        specialisation: aosCode,
-        campus: "Clayton",
-        ...(minorMajorType && minorMajorCode) ? { [minorMajorType]: minorMajorCode } : {}
-      })
-    })
-    if (!response.ok) throw new Error(await response.text())
-
-    const schedule = (await response.json()) as Schedule
-    return schedule
+    const raw = readFileSync(outputPath, "utf-8");
+    unlinkSync(outputPath);
+    return JSON.parse(raw) as Schedule;
   } catch (e) {
     console.error("Failed to read schedule output:", e);
     return null;
@@ -127,6 +141,11 @@ export default async function NewPlanPage() {
       rawAosCode === NO_AREA_OF_STUDY_VALUE ? "" : rawAosCode;
     const minorMajorType = String(formData.get("minorMajorType") || "");
     const minorMajorCode = String(formData.get("minorMajorCode") || "");
+    const interests = formData
+      .getAll("interests")
+      .map((value) => String(value))
+      .filter(Boolean)
+      .slice(0, 3);
 
     const newPlan: Plan = {
       id: planId,
@@ -134,6 +153,7 @@ export default async function NewPlanPage() {
       courseCode: courseCode,
       university: String(formData.get("university") || ""),
       areaOfStudy: aosCode,
+      interests,
       semesterOffering: String(formData.get("semesterOffering") || ""),
       yearStart: Number(formData.get("yearStart")),
       yearEnd: Number(formData.get("yearEnd")),
