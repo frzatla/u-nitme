@@ -78,36 +78,44 @@ async function searchUnits(query: string): Promise<string> {
 
 // ── System prompt ─────────────────────────────────────────────────────────────
 
-const SYSTEM_PROMPT = `You're a friendly uni advisor helping Monash students pick free electives. Think of yourself as a helpful senior student who knows the course catalogue really well.
+const SYSTEM_PROMPT = `You are a friendly uni advisor helping Monash students pick free electives — like a helpful senior student who knows the catalogue well.
 
-Keep it real and casual — you're talking to uni students, not writing a formal report. Short sentences, friendly tone, maybe a touch of enthusiasm when a unit is genuinely cool.
+CRITICAL — OUTPUT FORMAT:
+Your response must start IMMEDIATELY with your actual answer. Never output any of the following before or between recommendations:
+- Task summaries ("User wants: ...", "Goal: ...", "Persona: ...")
+- Constraint lists ("Constraints:", "Don't suggest...", "Format:", "Tone:")
+- Planning or analysis notes ("FIT1234 is not relevant because...", "Student has X in plan so...")
+- Restatements of the question
+- Any preamble whatsoever
+Your FIRST word must be part of the actual recommendation or conversational reply — nothing else.
 
-What you do:
-- Suggest free elective units that fit what the student's interested in
-- Point out if anything needs a prerequisite so they don't get caught off guard
-- Keep recommendations short and punchy — unit code, level, title, and a one-liner on why it's worth it
-- When a unit has assessment info, briefly mention the format (e.g. "assessed via exam + assignments")
+Tone: casual, friendly, short sentences. A touch of enthusiasm when a unit is genuinely cool.
 
-Prerequisites are the PRIMARY requirement — always read and report them accurately:
-- Every unit in the list has a "Prerequisites" line — read it carefully before recommending
-- "None" means no specific subject prerequisites (but level-year guidance below may still apply)
-- When prerequisites are listed (e.g. "BEX1008 OR BEX1014"), tell the student exactly what they need
-- NEVER say a unit has no prerequisites if the Prerequisites field lists specific units
+When recommending units, for each one give:
+- Bold unit code + title
+- Level and credit points
+- One punchy sentence on why it's worth it
+- Prerequisites (exactly as listed — never say "None" if prerequisites are listed)
+- Assessment format briefly
+Remember to use "-" or dot points when listing multiple units.
+Paragraph spacing should not be too wide for each details of the units.
 
-Level-year guidance (soft recommendation, NOT a hard rule — prerequisites take priority):
-- Level 1 units: typically taken in Year 1, no subject prerequisites expected
-- Level 2 units: typically Year 2 — check the Prerequisites field for what's actually required
-- Level 3 units: typically Year 3 — check the Prerequisites field for what's actually required
-- A student who has already completed the listed prerequisites can enrol regardless of year level
+Prerequisites are the PRIMARY enrolment requirement:
+- Read the "Prerequisites" field carefully for every unit you recommend
+- State them exactly — e.g. "you'll need BEX1008 or BEX1014 first"
+- NEVER say a unit has no prerequisites if the field lists specific units
+- A student who has completed the listed prerequisites can enrol regardless of year level
 
-What you DON'T do:
-- Don't suggest full degrees or areas of study — just individual units
-- Don't recommend units they've already got in their plan
-- NEVER mention or suggest any unit that is not explicitly listed in the "Available elective units" block — not even if you know it from elsewhere
-- NEVER second-guess, retract, or contradict units that ARE in the "Available elective units" block — if it's on the list, it's valid
-- If the student asks broadly what's available and the list looks limited, suggest they tell you their interests so you can find better matches — don't imply the full catalogue only has those units
+Level-year guidance (soft, not a hard rule):
+- L1: typically Year 1, usually no prerequisites
+- L2: typically Year 2 — check prerequisites field
+- L3: typically Year 3 — check prerequisites field
 
-Format: use bold for unit codes and titles, bullet points for lists. Keep it readable.`;
+Hard rules:
+- Only suggest units from the "Available elective units" block — never invent or recall units from elsewhere
+- Never recommend units already in the student's plan
+- Never suggest degrees or areas of study — individual units only
+- If nothing fits, say so honestly and ask what they're interested in`;
 
 // ── GET — load session history ────────────────────────────────────────────────
 
@@ -158,7 +166,7 @@ export async function POST(request: NextRequest) {
     // 4. Build conversation history for Gemma
     const systemTurn = [
       { role: "user"  as const, parts: [{ text: `Instructions:\n${SYSTEM_PROMPT}` }] },
-      { role: "model" as const, parts: [{ text: "Got it! I'll keep it friendly and only suggest electives from the catalogue — nothing they've already got locked in." }] },
+      { role: "model" as const, parts: [{ text: "Got it. I'll jump straight into recommendations — no preamble, no task summaries, no planning notes. Just friendly, direct advice using only the units in the provided list." }] },
     ];
     const gemmaHistory = [
       ...systemTurn,
@@ -168,7 +176,7 @@ export async function POST(request: NextRequest) {
       })),
     ];
 
-    // 5. Call Gemma
+    // 5. Call Gemma (non-streaming — aggregate response correctly filters thought tokens)
     const model = genAI.getGenerativeModel({
       model: "gemma-4-26b-a4b-it",
       generationConfig: {
@@ -180,12 +188,12 @@ export async function POST(request: NextRequest) {
     const chat   = model.startChat({ history: gemmaHistory });
     const result = await chat.sendMessage(enrichedMessage);
 
-    const parts = result.response.candidates?.[0]?.content?.parts ?? [];
-    const text  = parts.length
+    const parts  = result.response.candidates?.[0]?.content?.parts ?? [];
+    const text   = parts.length
       ? parts.filter((p: any) => !p.thought).map((p: any) => p.text ?? "").join("").trim()
       : result.response.text();
 
-    // 6. Save updated history to Redis
+    // 6. Save to Redis
     const updated: StoredMessage[] = [
       ...history,
       { role: "user",      content: newMessage },

@@ -25,6 +25,7 @@ SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 MAX_UNITS_PER_SEM    = 4    # standard full-time load (24 CP/sem)
 ELECTIVE_SLOTS_PER_SEM = 1  # reserved elective slots per semester
 MAX_SEMESTERS        = 24   # safety upper bound
+MAX_LEVEL1_UNITS     = 10   # Monash cap: no more than 10 level-1 units in a degree
 
 # Preferred math units for FIT students — chosen over other math alternatives
 FIT_PREFERRED_MATH = {"MAT1830", "MAT1841"}
@@ -636,6 +637,7 @@ def schedule_units(required, prereq_graph, chain_lengths, unlock_depths, units_d
     completed    = set()
     remaining    = set(required)
     cumulative_cp = 0
+    l1_scheduled  = 0          # tracks how many level-1 units have been placed
     schedule     = []
     sem_cycle    = ["S1", "S2"]
     year         = 1
@@ -668,6 +670,9 @@ def schedule_units(required, prereq_graph, chain_lengths, unlock_depths, units_d
             level_cp_floor = {2: 48, 3: 96}.get(level, 0)
             if cumulative_cp < max(cp_needed, level_cp_floor):
                 continue
+            # Monash cap: no more than 10 level-1 units across the whole degree
+            if level == 1 and l1_scheduled >= MAX_LEVEL1_UNITS:
+                continue
             # offered this semester?
             offered = get_offered_semesters(u, units_db, campus)
             if sem not in offered:
@@ -684,6 +689,10 @@ def schedule_units(required, prereq_graph, chain_lengths, unlock_depths, units_d
                                       len(get_offered_semesters(u, units_db, campus)),
                                       u))
         chosen = available[:MAX_UNITS_PER_SEM - ELECTIVE_SLOTS_PER_SEM]
+        l1_scheduled += sum(
+            1 for u in chosen
+            if (units_db.get(u, {}).get("level") or 1) == 1
+        )
 
         if chosen or remaining:
             sem_number  = sem_idx + 1          # 1-based count of scheduled semesters
