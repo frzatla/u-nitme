@@ -1,0 +1,163 @@
+{
+    "startYear": 2024,
+    "advancedStanding": [],
+    "internationalStudent": false,
+    "courseInfo": {
+        "courseCode": "C2001",
+        "minor": "CYBERSEC05"
+    },
+    "teachingPeriods": [
+        {
+            "year": 2024,
+            "code": "S1-01",
+            "units": [
+                {
+                    "unitCode": "MAT1830",
+                    "placeholder": false,
+                    "grade": "C",
+                    "status": "COMPLETED"
+                },
+                {
+                    "unitCode": "FIT1051",
+                    "placeholder": false,
+                    "grade": "HD",
+                    "status": "COMPLETED"
+                },
+                {
+                    "unitCode": "FIT1045",
+                    "placeholder": false,
+                    "grade": "HD",
+                    "status": "COMPLETED"
+                },
+                {
+                    "unitCode": "FIT1047",
+                    "placeholder": false,
+                    "grade": "HD",
+                    "status": "COMPLETED"
+                }
+            ],
+            "intermission": false,
+            "studyAbroad": false
+        },
+        {
+            "year": 2024,
+            "code": "S2-01",
+            "units": [
+                {
+                    "unitCode": "FIT1049",
+                    "placeholder": false
+                },
+                {
+                    "unitCode": "MAT1841",
+                    "placeholder": false
+                },
+                {
+                    "unitCode": "FIT1008",
+                    "placeholder": false
+                },
+                {
+                    "unitCode": "FIT2095",
+                    "placeholder": false
+                }
+            ],
+            "intermission": false,
+            "studyAbroad": false
+        },
+        {
+            "year": 2025,
+            "code": "S1-01",
+            "units": [
+                {
+                    "unitCode": "FIT2004",
+                    "placeholder": false
+                },
+                {
+                    "unitCode": "FIT2099",
+                    "placeholder": false
+                },
+                {
+                    "unitCode": "FIT2094",
+                    "placeholder": false
+                },
+                {
+                    "unitCode": "FIT1050",
+                    "placeholder": false
+                }
+            ],
+            "intermission": false,
+            "studyAbroad": false
+        },
+        {
+            "year": 2025,
+            "code": "S2-01",
+            "units": [
+                {
+                    "unitCode": "FIT2014",
+                    "placeholder": false
+                },
+                {
+                    "unitCode": "FIT2102",
+                    "placeholder": false
+                },
+                {
+                    "unitCode": "FIT2100",
+                    "placeholder": false
+                },
+                {
+                    "unitCode": "FIT1093",
+                    "placeholder": false
+                }
+            ],
+            "intermission": false,
+            "studyAbroad": false
+        },
+        {
+            "year": 2026,
+            "code": "S1-01",
+            "units": [
+                {
+                    "unitCode": "FIT3161",
+                    "placeholder": false
+                },
+                {
+                    "unitCode": "FIT3165",
+                    "placeholder": false
+                },
+                {
+                    "unitCode": "FIT1057",
+                    "placeholder": false
+                },
+                {
+                    "unitCode": "FIT3173",
+                    "placeholder": false
+                }
+            ],
+            "intermission": false,
+            "studyAbroad": false
+        },
+        {
+            "year": 2026,
+            "code": "S2-01",
+            "units": [
+                {
+                    "unitCode": "FIT3162",
+                    "placeholder": false
+                },
+                {
+                    "unitCode": "FIT3155",
+                    "placeholder": false
+                },
+                {
+                    "unitCode": "FIT3143",
+                    "placeholder": false
+                },
+                {
+                    "unitCode": "FIT3168",
+                    "placeholder": false
+                }
+            ],
+            "intermission": false,
+            "studyAbroad": false
+        }
+    ]
+}
