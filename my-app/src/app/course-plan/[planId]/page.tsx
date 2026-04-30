@@ -7,7 +7,6 @@ import CoursePlanClient from "../CoursePlanClient";
 import CoursePlanner from "@/components/CoursePlanner";
 import { getProfileByEmail, updateProfile } from "@/lib/profile";
 import { deletePendingPlan, getPendingPlan } from "@/lib/pendingPlan";
-import { isAdminUser } from "@/lib/auth";
 
 export default async function CoursePlanPage({
   params,
@@ -25,7 +24,6 @@ export default async function CoursePlanPage({
   const email: string = user?.primaryEmailAddress?.emailAddress;
 
   if (!email) redirect("/sign-in");
-  if (isAdminUser(user)) redirect("/admin");
 
   let plan: Plan | null = null;
 

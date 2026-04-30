@@ -3,13 +3,11 @@ import Image from "next/image";
 import { UserButton } from "@clerk/nextjs";
 import { currentUser } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
-import { revalidatePath } from "next/cache";
 import {
+  ArrowRight,
   BookOpen,
   Calendar,
-  ChevronRight,
   Layers,
-  LibraryBig,
   Plus,
   Sparkles,
 } from "lucide-react";
@@ -19,7 +17,6 @@ import {
   getProfileByEmail,
   updateProfile,
 } from "../../lib/profile";
-import { isAdminUser } from "../../lib/auth";
 
 function getGreeting() {
   const hour = new Date().getHours();
@@ -37,10 +34,6 @@ export default async function DashboardPage() {
     redirect("/sign-in");
   }
 
-  if (isAdminUser(user)) {
-    redirect("/admin");
-  }
-
   if (email) {
     try {
       const existing = await getProfileByEmail(email);
@@ -52,7 +45,6 @@ export default async function DashboardPage() {
 
   const profile = await getProfileByEmail(email);
   const plans = profile?.plans ?? [];
-  const orderedPlans = [...plans].reverse();
   const userName = email.split("@")[0];
   const lastPlan = plans[plans.length - 1] ?? null;
   const universityName = lastPlan?.university || "—";
@@ -74,25 +66,24 @@ export default async function DashboardPage() {
     nextPlans.splice(planIndex, 1);
 
     await updateProfile(email, { plans: nextPlans });
-    revalidatePath("/dashboard");
   }
 
   return (
-    <main className="min-h-screen bg-[#f5f4ef] font-[var(--font-geist-sans)] text-black">
-      <header className="border-b border-black/[0.06] bg-[#f5f4ef]/95 backdrop-blur-xl">
-        <div className="mx-auto flex h-20 max-w-6xl items-center justify-between px-6 md:px-10">
+    <main className="min-h-screen bg-white font-[var(--font-geist-sans)] text-black">
+      <header className="border-b border-black/[0.06] bg-white">
+        <div className="mx-auto flex h-20 max-w-[1200px] items-center justify-between px-6 md:px-10">
           <div className="flex items-center gap-4">
-            <div className="relative h-10 w-10 overflow-hidden rounded-2xl border border-black/8 bg-white">
+            <div className="relative h-8 w-8 overflow-hidden rounded-lg">
               <Image
                 src="/U-NIT ME-3.png"
                 alt="U-NIT ME logo"
                 fill
-                sizes="40px"
+                sizes="32px"
                 className="object-contain"
                 priority
               />
             </div>
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-4">
               <span className="text-sm font-medium tracking-tight">
                 U-NIT ME
               </span>
@@ -106,77 +97,67 @@ export default async function DashboardPage() {
         </div>
       </header>
 
-      <section className="px-6 pb-16 pt-8 md:px-10 md:pt-10">
-        <div className="mx-auto max-w-6xl">
-          <div>
-            <p className="text-[11px] uppercase tracking-[0.24em] text-black/45">
+      <section className="px-6 pb-20 pt-10 md:px-10 md:pt-12">
+        <div className="mx-auto max-w-[1200px]">
+          <div className="mb-14">
+            <p className="text-[11px] uppercase tracking-[0.24em] text-black/60">
               Dashboard
             </p>
-            <h1 className="mt-4 text-[36px] font-semibold leading-[0.95] tracking-[-0.07em] text-black md:text-[60px]">
+            <h1 className="mt-4 text-[44px] font-semibold leading-[0.94] tracking-[-0.07em] text-black md:text-[74px]">
               {getGreeting()},
               <br />
-              <span className="text-black/22">{userName}.</span>
+              <span className="text-black/18">{userName}.</span>
             </h1>
-            <p className="mt-5 max-w-xl text-sm leading-7 text-black/45 md:text-base">
-              Keep track of saved course plans, revisit the latest version,
-              and start a new one when your study direction changes.
-            </p>
           </div>
 
-          <div className="mt-8 grid gap-4 md:grid-cols-3">
-            <div className="rounded-[24px] bg-black px-6 py-6 text-white">
-              <div className="flex items-center gap-3 text-[11px] uppercase tracking-[0.24em] text-white/38">
-                <Layers className="h-4 w-4" />
+          <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
+            <div className="rounded-[24px] bg-black px-8 py-7 text-white">
+              <div className="flex items-center gap-3 text-[11px] uppercase tracking-[0.24em] text-white/35">
+                <Layers className="h-5 w-5" />
                 <span>Saved Plans</span>
               </div>
-              <div className="mt-7 text-[42px] font-semibold leading-none tracking-[-0.08em]">
+              <div className="mt-8 text-[56px] font-semibold leading-none tracking-[-0.08em]">
                 {plans.length}
               </div>
             </div>
 
-            <div className="rounded-[24px] border border-black/[0.08] bg-white px-6 py-6 shadow-[0_1px_2px_rgba(0,0,0,0.02)]">
-              <div className="flex items-center gap-3 text-[11px] uppercase tracking-[0.24em] text-black/28">
-                <LibraryBig className="h-4 w-4" />
+            <div className="rounded-[24px] border border-black/[0.08] bg-white px-8 py-7 shadow-[0_1px_2px_rgba(0,0,0,0.02)]">
+              <div className="flex items-center gap-3 text-[11px] uppercase tracking-[0.24em] text-black/22">
+                <BookOpen className="h-5 w-5" />
                 <span>University</span>
               </div>
-              <div className="mt-7 text-[28px] font-medium leading-[1.05] tracking-[-0.05em] text-black">
+              <div className="mt-8 text-[34px] font-medium leading-[1] tracking-[-0.05em] text-black">
                 {universityName}
               </div>
             </div>
 
-            <div className="rounded-[24px] border border-black/[0.08] bg-white px-6 py-6 shadow-[0_1px_2px_rgba(0,0,0,0.02)]">
-              <div className="flex items-center gap-3 text-[11px] uppercase tracking-[0.24em] text-black/28">
-                <Calendar className="h-4 w-4" />
-                <span>Latest Plan</span>
+            <div className="rounded-[24px] border border-black/[0.08] bg-white px-8 py-7 shadow-[0_1px_2px_rgba(0,0,0,0.02)]">
+              <div className="flex items-center gap-3 text-[11px] uppercase tracking-[0.24em] text-black/22">
+                <Calendar className="h-5 w-5" />
+                <span>Last Plan</span>
               </div>
-              <div className="mt-7 text-[28px] font-medium leading-[1.05] tracking-[-0.05em] text-black/68">
+              <div className="mt-8 text-[34px] font-medium leading-[1] tracking-[-0.05em] text-black/42">
                 {lastPlanName}
               </div>
             </div>
           </div>
 
-          <div className="mt-14 flex items-center justify-between gap-4">
-            <div>
-              <p className="text-[11px] uppercase tracking-[0.24em] text-black/45">
-                Your Plans
-              </p>
-              <p className="mt-2 text-sm text-black/38">
-                Everything you&apos;ve saved, ordered by most recent.
-              </p>
-            </div>
-
+          <div className="mt-16 flex items-center justify-between">
+            <p className="text-[11px] uppercase tracking-[0.24em] text-black/60">
+              Your Plans
+            </p>
             <Link
               href="/profile"
-              className="inline-flex items-center gap-2 rounded-full border border-black/[0.12] bg-white px-5 py-3 text-sm font-medium text-black transition-colors hover:border-black/20 hover:bg-black/[0.02]"
+              className="inline-flex items-center gap-3 rounded-full border border-black/[0.12] bg-white px-8 py-4 text-[15px] font-medium text-black transition-colors hover:border-black/20 hover:bg-black/[0.02]"
             >
-              <Plus className="h-4 w-4" />
+              <Plus className="h-5 w-5" />
               New Plan
             </Link>
           </div>
 
-          {orderedPlans.length > 0 ? (
-            <div className="mt-8 grid gap-4">
-              {orderedPlans.map((plan, index) => {
+          {plans.length > 0 ? (
+            <div className="mt-8 space-y-6">
+              {plans.map((plan, index) => {
                 const start = Number(plan?.yearStart);
                 const end = Number(plan?.yearEnd);
                 const unitCount =
@@ -191,23 +172,16 @@ export default async function DashboardPage() {
 
                 return (
                   <div
-                    key={plan.id}
-                    className="rounded-[28px] border border-black/[0.08] bg-white p-6 shadow-[0_1px_2px_rgba(0,0,0,0.02)]"
+                    key={`${plan.planName || plan.courseCode || "plan"}-${index}`}
+                    className="rounded-[28px] border border-black/[0.08] bg-white p-8 shadow-[0_1px_2px_rgba(0,0,0,0.02)]"
                   >
-                    <div className="flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
-                      <div className="min-w-0 flex-1">
-                        <div className="flex items-center gap-3">
-                          <h2 className="truncate text-[28px] font-semibold leading-none tracking-[-0.06em] text-black md:text-[34px]">
-                            {plan.planName || plan.courseCode || "Course Plan"}
-                          </h2>
-                          {index === 0 && (
-                            <span className="rounded-full bg-black px-3 py-1 text-[11px] uppercase tracking-[0.18em] text-white">
-                              Latest
-                            </span>
-                          )}
-                        </div>
+                    <div className="flex flex-col gap-7 lg:flex-row lg:items-end lg:justify-between">
+                      <div>
+                        <h2 className="text-[42px] font-semibold leading-none tracking-[-0.06em] text-black">
+                          {plan.planName || plan.courseCode || "Course Plan"}
+                        </h2>
 
-                        <div className="mt-4 flex flex-wrap gap-2.5">
+                        <div className="mt-5 flex flex-wrap gap-3">
                           {[
                             plan.courseCode,
                             plan.university,
@@ -222,14 +196,16 @@ export default async function DashboardPage() {
                             .map((item) => (
                               <span
                                 key={item}
-                                className="rounded-full bg-black/[0.04] px-3 py-1.5 text-xs text-black/55"
+                                className="rounded-full bg-black/[0.04] px-4 py-2 text-sm text-black/52"
                               >
                                 {item}
                               </span>
                             ))}
                         </div>
+                      </div>
 
-                        <div className="mt-5 flex flex-wrap items-center gap-5 text-sm text-black/38">
+                      <div className="flex flex-col items-start gap-6 lg:items-end">
+                        <div className="flex items-center gap-6 text-sm text-black/26">
                           <div className="flex items-center gap-2">
                             <BookOpen className="h-4 w-4" />
                             <span>{unitCount} units</span>
@@ -241,21 +217,21 @@ export default async function DashboardPage() {
                             </span>
                           </div>
                         </div>
-                      </div>
 
-                      <div className="flex flex-wrap items-center gap-3">
-                        <Link
-                          href={`/course-plan/${plan.id}`}
-                          className="inline-flex items-center gap-2 rounded-full border border-black/[0.12] bg-white px-5 py-3 text-sm font-medium text-black/68 transition-colors hover:border-black/20 hover:bg-black/[0.02] hover:text-black"
-                        >
-                          Open Plan
-                          <ChevronRight className="h-4 w-4" />
-                        </Link>
+                        <div className="flex flex-wrap items-center gap-3">
+                          <Link
+                            href={`/course-plan/${plan.id}`}
+                            className="inline-flex items-center gap-3 rounded-full border border-black/[0.1] bg-white px-8 py-4 text-[15px] font-medium text-black transition-colors hover:border-black/20 hover:bg-black/[0.02]"
+                          >
+                            View Plan
+                            <ArrowRight className="h-5 w-5" />
+                          </Link>
 
-                        <DeletePlanButton
-                          planId={plan.id}
-                          action={handleDeletePlan}
-                        />
+                          <DeletePlanButton
+                            planId={plan.id}
+                            action={handleDeletePlan}
+                          />
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -263,26 +239,26 @@ export default async function DashboardPage() {
               })}
             </div>
           ) : (
-            <div className="mt-8 rounded-[28px] border border-dashed border-black/[0.1] bg-white px-8 py-16 md:px-12 md:py-20">
+            <div className="mt-8 rounded-[28px] border border-dashed border-black/[0.1] bg-white px-8 py-20 md:px-12 md:py-24">
               <div className="mx-auto max-w-2xl text-center">
-                <div className="mx-auto flex h-20 w-20 items-center justify-center rounded-[22px] border border-black/[0.08] bg-[#f5f4ef] shadow-[0_1px_2px_rgba(0,0,0,0.02)]">
-                  <Sparkles className="h-8 w-8 text-black/16" />
+                <div className="mx-auto flex h-24 w-24 items-center justify-center rounded-[26px] border border-black/[0.08] bg-white shadow-[0_1px_2px_rgba(0,0,0,0.02)]">
+                  <Sparkles className="h-9 w-9 text-black/14" />
                 </div>
 
-                <h2 className="mt-8 text-[24px] font-semibold tracking-[-0.05em] text-black">
+                <h2 className="mt-10 text-[26px] font-semibold tracking-[-0.05em] text-black">
                   No saved plans yet
                 </h2>
 
-                <p className="mx-auto mt-4 max-w-xl text-base leading-8 text-black/35">
-                  Generate your first course plan and keep it here for quick
-                  access later.
+                <p className="mx-auto mt-4 max-w-xl text-lg leading-8 text-black/26">
+                  Create your first AI-generated course plan and it&apos;ll show
+                  up here. Takes about 30 seconds.
                 </p>
 
                 <Link
                   href="/profile"
-                  className="mt-8 inline-flex items-center gap-2 rounded-full border border-black/[0.12] bg-white px-6 py-3 text-sm font-medium text-black/68 transition-colors hover:border-black/20 hover:bg-black/[0.02] hover:text-black"
+                  className="inline-flex items-center gap-3 rounded-full border border-black/[0.12] bg-white px-8 py-4 text-[15px] font-medium text-black transition-colors hover:border-black/20 hover:bg-black/[0.02]"
                 >
-                  <Plus className="h-4 w-4" />
+                  <Plus className="h-5 w-5" />
                   Create First Plan
                 </Link>
               </div>
