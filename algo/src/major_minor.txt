@@ -36,3 +36,6 @@ COMPUTSC02
 CYBERSEC05 
 DATASCI04 
 WEBDEVT03 
+
+how to run the validator:
+py major_minor_validator.py --input test1.json
