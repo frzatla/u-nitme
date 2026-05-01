@@ -102,21 +102,41 @@ function RobotToggleIcon() {
   );
 }
 
+const GREETING = "Hi! Ask me anything about your course plan, dashboard, units, prerequisites, or what to check next.";
+
 export default function FloatingChatbot({
   context,
-  greeting = "Hi! Ask me anything about your course plan, dashboard, units, prerequisites, or what to check next.",
+  greeting = GREETING,
 }: FloatingChatbotProps) {
+  const [sessionId] = useState<string>(() => {
+    if (typeof window === "undefined") return crypto.randomUUID();
+    const stored = sessionStorage.getItem("floating-chat-session");
+    if (stored) return stored;
+    const id = crypto.randomUUID();
+    sessionStorage.setItem("floating-chat-session", id);
+    return id;
+  });
+
   const [isOpen, setIsOpen] = useState(false);
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
   const [messages, setMessages] = useState<ChatMessage[]>([
-    {
-      role: "assistant",
-      content: greeting,
-    },
+    { role: "assistant", content: greeting },
   ]);
   const bottomRef = useRef<HTMLDivElement>(null);
   const robotButtonRef = useRef<HTMLButtonElement>(null);
+
+  // Load existing session history from Redis on mount
+  useEffect(() => {
+    fetch(`/api/chat?sessionId=${sessionId}`)
+      .then((r) => r.json())
+      .then((data) => {
+        if (data.messages && data.messages.length > 0) {
+          setMessages([{ role: "assistant", content: greeting }, ...data.messages]);
+        }
+      })
+      .catch(() => {});
+  }, [sessionId, greeting]);
 
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -171,12 +191,7 @@ export default function FloatingChatbot({
     const text = input.trim();
     if (!text || loading) return;
 
-    const nextMessages: ChatMessage[] = [
-      ...messages,
-      { role: "user", content: text },
-    ];
-
-    setMessages(nextMessages);
+    setMessages((prev) => [...prev, { role: "user", content: text }]);
     setInput("");
     setLoading(true);
 
@@ -184,27 +199,18 @@ export default function FloatingChatbot({
       const response = await fetch("/api/chat", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          messages: nextMessages.slice(1),
-          context,
-        }),
+        body: JSON.stringify({ sessionId, newMessage: text, context }),
       });
       const data = await response.json();
 
-      setMessages((currentMessages) => [
-        ...currentMessages,
-        {
-          role: "assistant",
-          content: data.text ?? "Sorry, I could not answer that right now.",
-        },
+      setMessages((prev) => [
+        ...prev,
+        { role: "assistant", content: data.text ?? "Sorry, I could not answer that right now." },
       ]);
     } catch {
-      setMessages((currentMessages) => [
-        ...currentMessages,
-        {
-          role: "assistant",
-          content: "Sorry, I could not connect. Please try again.",
-        },
+      setMessages((prev) => [
+        ...prev,
+        { role: "assistant", content: "Sorry, I could not connect. Please try again." },
       ]);
     } finally {
       setLoading(false);

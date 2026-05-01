@@ -1,15 +1,9 @@
-import IORedis from "ioredis";
+import { Redis } from "@upstash/redis";
 
-declare global {
-  // eslint-disable-next-line no-var
-  var __redis: IORedis | undefined;
-}
-
-if (!global.__redis) {
-  global.__redis = new IORedis(process.env.REDIS_URL || "redis://localhost:6379");
-}
-
-export const redis = global.__redis;
+export const redis = new Redis({
+  url:   process.env.UPSTASH_REDIS_REST_URL!,
+  token: process.env.UPSTASH_REDIS_REST_TOKEN!,
+});
 
 export type StoredMessage = { role: "user" | "assistant"; content: string };
 

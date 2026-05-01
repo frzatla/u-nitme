@@ -124,8 +124,7 @@ export async function GET(request: NextRequest) {
   if (!sessionId) return NextResponse.json({ messages: [] });
 
   try {
-    const raw = await redis.get(chatKey(sessionId));
-    const stored: StoredMessage[] | null = raw ? JSON.parse(raw) : null;
+    const stored = await redis.get<StoredMessage[]>(chatKey(sessionId));
     return NextResponse.json({ messages: stored ?? [] });
   } catch {
     return NextResponse.json({ messages: [] });
@@ -147,8 +146,7 @@ export async function POST(request: NextRequest) {
 
   try {
     // 1. Load history from Redis
-    const rawHistory = await redis.get(chatKey(sessionId));
-    const history: StoredMessage[] = rawHistory ? JSON.parse(rawHistory) : [];
+    const history: StoredMessage[] = (await redis.get<StoredMessage[]>(chatKey(sessionId))) ?? [];
 
     // 2. Search for relevant units (always includes explicitly mentioned codes)
     const unitResults = await searchUnits(newMessage);
@@ -199,7 +197,7 @@ export async function POST(request: NextRequest) {
       { role: "user",      content: newMessage },
       { role: "assistant", content: text },
     ];
-    await redis.setex(chatKey(sessionId), CHAT_TTL, JSON.stringify(updated));
+    await redis.setex(chatKey(sessionId), CHAT_TTL, updated);
 
     return NextResponse.json({ text });
   } catch (error) {
