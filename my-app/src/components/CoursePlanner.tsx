@@ -352,7 +352,7 @@ function UnitCardContent({
   const placeholderTitle = isDeletedPlaceholder
     ? SELECTABLE_PLACEHOLDER_NAME
     : "Free Elective";
-  const canDelete = !isElective && unit.category !== "Core" && onDelete;
+  const canDelete = !isElective && unit.category !== "Core" && unit.category !== "Specialisation" && onDelete;
 
   if (isElective) {
     return (
@@ -646,7 +646,8 @@ export default function CoursePlanner({
       if (
         !currentSlot ||
         currentSlot.code === SELECTABLE_PLACEHOLDER_CODE ||
-        currentSlot.category === "Core"
+        currentSlot.category === "Core" ||
+        currentSlot.category === "Specialisation"
       ) {
         return s;
       }
