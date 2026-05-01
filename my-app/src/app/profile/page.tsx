@@ -12,8 +12,9 @@ import { readFileSync, unlinkSync } from "fs";
 import path from "path";
 import { savePendingPlan } from "@/lib/pendingPlan";
 
-const ALGO_DIR  = path.join(process.cwd(), "..", "algo", "src");
-const AOS_PATH  = path.join(ALGO_DIR, "data", "mock_aos.json");
+const ALGO_DIR      = path.join(process.cwd(), "..", "algo", "src");
+const AOS_PATH      = path.join(ALGO_DIR, "data", "mock_aos.json");
+const COURSES_PATH  = path.join(ALGO_DIR, "data", "mock_courses.json");
 const NO_AREA_OF_STUDY_VALUE = "__NO_AREA_OF_STUDY__";
 
 // On Windows try "py" first (Python Launcher); on other platforms try "python3" first
@@ -86,19 +87,34 @@ async function runAlgo(
 
 function enrichCategories(
   schedule: Schedule,
+  courseCode: string,
   aosCode: string,
   minorMajorType?: string,
   minorMajorCode?: string
 ): Schedule {
-  let aosUnits = new Set<string>();
+  let coreUnits       = new Set<string>();
+  let aosUnits        = new Set<string>();
   let minorMajorUnits = new Set<string>();
 
   try {
-    const aosRaw = JSON.parse(readFileSync(AOS_PATH, "utf-8"));
+    // Core units: the req_2 group in the course definition
+    const coursesRaw = JSON.parse(readFileSync(COURSES_PATH, "utf-8"));
+    const courseEntry = coursesRaw[courseCode];
+    const req2 = (courseEntry?.requirement_groups ?? []).find(
+      (g: any) => g.id === "req_2"
+    );
+    if (req2?.units?.length) {
+      coreUnits = new Set<string>(req2.units);
+    }
+
+    // Specialisation units: all_units of the selected AOS
+    const aosRaw  = JSON.parse(readFileSync(AOS_PATH, "utf-8"));
     const aosEntry = aosRaw[aosCode];
     if (aosEntry?.all_units) {
       aosUnits = new Set(Object.keys(aosEntry.all_units));
     }
+
+    // Minor / Major units
     if (minorMajorCode) {
       const mmEntry = aosRaw[minorMajorCode];
       if (mmEntry?.all_units) {
@@ -112,12 +128,19 @@ function enrichCategories(
     units: sem.units.map((unit) => {
       let category: UnitCategory = "Core";
       if (unit.code === "ELECTIVE") {
+        // Free elective placeholder
         category = "Elective";
       } else if (minorMajorUnits.has(unit.code)) {
+        // Minor / Major takes priority over core/specialisation
         category = minorMajorType === "minor" ? "Minor" : "Major";
+      } else if (coreUnits.has(unit.code)) {
+        // Explicitly listed as core in the course's req_2
+        category = "Core";
       } else if (aosUnits.has(unit.code)) {
+        // In the AOS but not in core → Specialisation
         category = "Specialisation";
       }
+      // Anything else (e.g. prerequisite units pulled in by the algo) stays "Core"
       return { ...unit, category };
     }),
   }));
@@ -167,7 +190,7 @@ export default async function NewPlanPage() {
     );
 
     if (rawSchedule) {
-      newPlan.schedule = enrichCategories(rawSchedule, aosCode, minorMajorType || undefined, minorMajorCode || undefined);
+      newPlan.schedule = enrichCategories(rawSchedule, courseCode, aosCode, minorMajorType || undefined, minorMajorCode || undefined);
     }
 
     console.log("raw sched", rawSchedule, newPlan.schedule);
