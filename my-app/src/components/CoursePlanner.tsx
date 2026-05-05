@@ -26,6 +26,7 @@ import {
   GraduationCap,
   GripVertical,
   Search,
+  Trash2,
 } from "lucide-react";
 import { Schedule, UnitCategory } from "@/lib/types";
 import { getDifficultyLabel } from "@/lib/difficulty";
@@ -101,6 +102,9 @@ const categoryDotStyles: Record<UnitCategory, string> = {
   Elective: "bg-[#DD8255]",
   Specialisation: "bg-[#A07ED1]",
 };
+
+const SELECTABLE_PLACEHOLDER_CODE = "ELECTIVE";
+const SELECTABLE_PLACEHOLDER_NAME = "Select a Unit";
 
 // ── Helpers ───────────────────────────────────────────────────────────────────
 
@@ -202,7 +206,11 @@ function computeValidSemesters(
   const unitSemIdx = new Map<string, number>();
   semesters.forEach((sem, idx) => {
     sem.units.forEach((unit) => {
-      if (unit && unit.code !== "ELECTIVE" && unit.code !== draggedCode)
+      if (
+        unit &&
+        unit.code !== SELECTABLE_PLACEHOLDER_CODE &&
+        unit.code !== draggedCode
+      )
         unitSemIdx.set(unit.code, idx);
     });
   });
@@ -263,7 +271,11 @@ function computeValidSemesters(
     if (valid) {
       outer: for (let si = 0; si <= targetIdx; si++) {
         for (const unit of semesters[si].units) {
-          if (!unit || unit.code === "ELECTIVE" || unit.code === draggedCode)
+          if (
+            !unit ||
+            unit.code === SELECTABLE_PLACEHOLDER_CODE ||
+            unit.code === draggedCode
+          )
             continue;
           for (const req of allRequisites.get(unit.code) ?? []) {
             const type = req.type.toLowerCase();
@@ -321,17 +333,35 @@ function swapSlots(
   return next;
 }
 
+function makeSelectablePlaceholder(unit: Unit): Unit {
+  return {
+    code: SELECTABLE_PLACEHOLDER_CODE,
+    name: SELECTABLE_PLACEHOLDER_NAME,
+    category: unit.category,
+    level: "—",
+    cp: unit.cp,
+  };
+}
+
 // ── DnD sub-components ────────────────────────────────────────────────────────
 
 function UnitCardContent({
   unit,
   isDragging = false,
+  onDelete,
 }: {
   unit: Unit;
   isDragging?: boolean;
+  onDelete?: () => void;
 }) {
   const pillStyle = categoryPillStyles[unit.category];
-  const isElective = unit.code === "ELECTIVE";
+  const isElective = unit.code === SELECTABLE_PLACEHOLDER_CODE;
+  const isDeletedPlaceholder =
+    unit.name === SELECTABLE_PLACEHOLDER_NAME || unit.category !== "Elective";
+  const placeholderTitle = isDeletedPlaceholder
+    ? SELECTABLE_PLACEHOLDER_NAME
+    : "Free Elective";
+  const canDelete = !isElective && unit.category !== "Core" && onDelete;
 
   if (isElective) {
     return (
@@ -351,7 +381,7 @@ function UnitCardContent({
         <div className="mt-5 flex flex-col items-start gap-1">
           <Search className="h-5 w-5 text-[#DD8255]/60" />
           <p className="text-[15px] font-medium tracking-[-0.03em] text-black/60">
-            Free Elective
+            {placeholderTitle}
           </p>
           <p className="text-[12px] text-black/35">Click to search for a unit</p>
         </div>
@@ -381,10 +411,27 @@ function UnitCardContent({
           {unit.category}
         </span>
         <div className="flex items-center gap-1.5">
+          {canDelete && (
+            <button
+              type="button"
+              aria-label={`Delete ${unit.code}`}
+              onPointerDown={(event) => event.stopPropagation()}
+              onClick={(event) => {
+                event.stopPropagation();
+                const confirmed = window.confirm(
+                  `Are you sure you want to remove ${unit.code} from this plan?`,
+                );
+
+                if (!confirmed) return;
+
+                onDelete?.();
+              }}
+              className="flex h-7 w-7 items-center justify-center rounded-full border border-red-200 bg-red-50 text-red-600 transition hover:border-red-300 hover:bg-red-100 hover:text-red-700"
+            >
+              <Trash2 className="h-3.5 w-3.5" />
+            </button>
+          )}
           <GripVertical className="h-4 w-4 text-black/20" />
-          <span className="text-[11px] font-medium uppercase tracking-[0.12em] text-black/18">
-            {unit.level}
-          </span>
         </div>
       </div>
 
@@ -415,11 +462,13 @@ function DraggableUnitCard({
   slotId,
   onCardClick,
   onElectiveClick,
+  onDelete,
 }: {
   unit: Unit;
   slotId: string;
   onCardClick: (unit: Unit) => void;
   onElectiveClick?: (slotId: string) => void;
+  onDelete?: (slotId: string) => void;
 }) {
   const { attributes, listeners, setNodeRef, transform, isDragging } =
     useDraggable({ id: slotId });
@@ -437,14 +486,18 @@ function DraggableUnitCard({
       {...listeners}
       {...attributes}
       onClick={() => {
-        if (unit.code === "ELECTIVE") {
+        if (unit.code === SELECTABLE_PLACEHOLDER_CODE) {
           onElectiveClick?.(slotId);
         } else {
           onCardClick(unit);
         }
       }}
     >
-      <UnitCardContent unit={unit} isDragging={isDragging} />
+      <UnitCardContent
+        unit={unit}
+        isDragging={isDragging}
+        onDelete={onDelete ? () => onDelete(slotId) : undefined}
+      />
     </div>
   );
 }
@@ -606,7 +659,7 @@ export default function CoursePlanner({
 
     const { semId, idx } = parseSlotId(slotId);
     const unit = semesters.find((s) => s.id === semId)?.units[idx];
-    if (!unit || unit.code === "ELECTIVE") {
+    if (!unit || unit.code === SELECTABLE_PLACEHOLDER_CODE) {
       // ELECTIVEs can go anywhere
       setValidSemIds(new Set(semesters.map((s) => s.id)));
       return;
@@ -617,7 +670,10 @@ export default function CoursePlanner({
       ...new Set(
         semesters
           .flatMap((s) => s.units)
-          .filter((u): u is Unit => u !== null && u.code !== "ELECTIVE")
+          .filter(
+            (u): u is Unit =>
+              u !== null && u.code !== SELECTABLE_PLACEHOLDER_CODE,
+          )
           .map((u) => u.code),
       ),
     ];
@@ -679,12 +735,41 @@ export default function CoursePlanner({
     const next = semesters.map((s) => {
       if (s.id !== semId) return s;
       const units = [...s.units] as Slot[];
-      units[idx] = unit;
+      const currentSlot = units[idx];
+      units[idx] =
+        currentSlot?.code === SELECTABLE_PLACEHOLDER_CODE
+          ? { ...unit, category: currentSlot.category, cp: currentSlot.cp }
+          : unit;
       return { ...s, units };
     });
     setSemesters(next);
     onSemestersChange?.(next);
     setElectiveSlotId(null);
+  }
+
+  function handleDeleteUnit(slotId: string) {
+    const { semId, idx } = parseSlotId(slotId);
+    const next = semesters.map((s) => {
+      if (s.id !== semId) return s;
+
+      const units = [...s.units] as Slot[];
+      const currentSlot = units[idx];
+
+      if (
+        !currentSlot ||
+        currentSlot.code === SELECTABLE_PLACEHOLDER_CODE ||
+        currentSlot.category === "Core"
+      ) {
+        return s;
+      }
+
+      units[idx] = makeSelectablePlaceholder(currentSlot);
+      return { ...s, units };
+    });
+
+    setSelectedUnit(null);
+    setSemesters(next);
+    onSemestersChange?.(next);
   }
 
   // Find the unit being dragged (for DragOverlay)
@@ -922,6 +1007,7 @@ export default function CoursePlanner({
                                     slotId={slotId}
                                     onCardClick={setSelectedUnit}
                                     onElectiveClick={setElectiveSlotId}
+                                    onDelete={handleDeleteUnit}
                                   />
                                 ) : (
                                   <EmptyUnitCard />
@@ -963,7 +1049,10 @@ export default function CoursePlanner({
         onSelectUnit={handleElectiveSelected}
         planUnits={semesters
           .flatMap((s) => s.units)
-          .filter((u): u is Unit => !!u && u.code !== "ELECTIVE")
+          .filter(
+            (u): u is Unit =>
+              !!u && u.code !== SELECTABLE_PLACEHOLDER_CODE,
+          )
           .map((u) => ({ code: u.code, name: u.name, level: u.level }))}
       />
     </DndContext>

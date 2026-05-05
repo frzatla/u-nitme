@@ -2,11 +2,15 @@ import Image from "next/image";
 import { UserButton } from "@clerk/nextjs";
 import { currentUser } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
-import { Plan, Profile } from "@/lib/types";
+import { Plan } from "@/lib/types";
 import CoursePlanClient from "../CoursePlanClient";
-import CoursePlanner from "@/components/CoursePlanner";
 import { getProfileByEmail, updateProfile } from "@/lib/profile";
-import { deletePendingPlan, getPendingPlan } from "@/lib/pendingPlan";
+import { deletePendingPlan } from "@/lib/pendingPlan";
+// import { isAdminUser } from "@/lib/auth";
+import {
+  buildCoursePlanInfoPills,
+  getCoursePlanById,
+} from "@/lib/coursePlan";
 
 export default async function CoursePlanPage({
   params,
@@ -25,16 +29,11 @@ export default async function CoursePlanPage({
 
   if (!email) redirect("/sign-in");
 
-  let plan: Plan | null = null;
-
-  if (pending === "true") {
-    // Load from pendingPlan
-    plan = await getPendingPlan(email);
-  } else {
-    // Load from saved plans
-    const profile = await getProfileByEmail(email);
-    plan = profile?.plans?.find((p) => p.id === planId) ?? null;
-  }
+  const plan: Plan | null = await getCoursePlanById(
+    email,
+    planId,
+    pending === "true",
+  );
 
   console.log("plan:", plan.schedule);
 
@@ -65,18 +64,7 @@ export default async function CoursePlanPage({
 
   const isPending = pending === "true";
 
-  const coursePlanName = plan.planName;
-
-  const infoPills = [
-    plan.university,
-    plan.schedule.course_title,
-    plan.schedule.specialisation &&
-      `Specialisation: ${plan.schedule.specialisation}`,
-    plan.schedule.major && `Major: ${plan.schedule.major}`,
-    plan.schedule.minor && `Minor: ${plan.schedule.minor}`,
-    plan.semesterOffering,
-    `${plan.yearStart}-${plan.yearEnd}`,
-  ].filter(Boolean) as string[];
+  const infoPills = buildCoursePlanInfoPills(plan);
 
   return (
     <main className="min-h-screen bg-[#f5f5f2] text-black">
