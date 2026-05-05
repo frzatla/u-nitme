@@ -7,7 +7,12 @@ type CourseOption = { code: string; title: string };
 type AosOption = { code: string; title: string };
 
 const NO_AREA_OF_STUDY_VALUE = "__NO_AREA_OF_STUDY__";
-const MAX_INTERESTS = 3;
+
+function getMaxInterests(minorMajorType: string) {
+  if (minorMajorType === "major") return 1;
+  if (minorMajorType === "minor") return 2;
+  return 3;
+}
 
 const interestOptions = [
   "AI",
@@ -179,6 +184,8 @@ export default function StudentDetailsFormContent({
   const [yearStart, setYearStart] = useState("");
   const [yearEnd, setYearEnd] = useState("");
 
+  const maxInterests = getMaxInterests(minorMajorType);
+
   const filteredAos =
     selectedCourse && courseToAos[selectedCourse]
       ? aosList.filter((a) => courseToAos[selectedCourse].includes(a.code))
@@ -226,7 +233,7 @@ export default function StudentDetailsFormContent({
         return current.filter((item) => item !== interest);
       }
 
-      if (current.length >= MAX_INTERESTS) {
+      if (current.length >= maxInterests) {
         return current;
       }
 
@@ -257,49 +264,6 @@ export default function StudentDetailsFormContent({
               className={inputClass}
             />
           </div>
-        </div>
-      </section>
-
-      <section>
-        <div>
-          <div className="mb-3 flex items-center justify-between gap-4">
-            <label className="block text-sm font-medium text-black/75">
-              Interests <span className="text-black/30">*</span>
-            </label>
-            <span className="text-xs text-black/35">
-              {selectedInterests.length}/{MAX_INTERESTS} selected
-            </span>
-          </div>
-
-          <div className="flex flex-wrap gap-2">
-            {interestOptions.map((interest) => {
-              const isSelected = selectedInterests.includes(interest);
-              const isDisabled =
-                !isSelected && selectedInterests.length >= MAX_INTERESTS;
-
-              return (
-                <button
-                  key={interest}
-                  type="button"
-                  onClick={() => toggleInterest(interest)}
-                  disabled={isDisabled}
-                  className={`inline-flex items-center gap-1.5 rounded-full border px-3 py-2 text-sm transition-all ${
-                    isSelected
-                      ? "border-black bg-black text-white"
-                      : "border-black/10 bg-black/[0.03] text-black/55 hover:border-black/20 hover:bg-white"
-                  } ${isDisabled ? "cursor-not-allowed opacity-35" : ""}`}
-                  aria-pressed={isSelected}
-                >
-                  {isSelected && <Check className="h-3.5 w-3.5" />}
-                  {interest}
-                </button>
-              );
-            })}
-          </div>
-
-          <p className="mt-2 text-xs text-black/40">
-            Pick exactly 3 keywords to personalize elective recommendations.
-          </p>
         </div>
       </section>
 
@@ -390,8 +354,13 @@ export default function StudentDetailsFormContent({
                 name="minorMajorType"
                 value={minorMajorType}
                 onChange={(e) => {
-                  setMinorMajorType(e.target.value);
+                  const nextType = e.target.value;
+                  setMinorMajorType(nextType);
                   setSelectedMinorMajorCode("");
+                  const nextMax = getMaxInterests(nextType);
+                  setSelectedInterests((current) =>
+                    current.length > nextMax ? current.slice(0, nextMax) : current,
+                  );
                 }}
                 className={`${inputClass} appearance-none pr-10`}
               >
@@ -424,6 +393,49 @@ export default function StudentDetailsFormContent({
               onChange={setSelectedMinorMajorCode}
             />
           </div>
+        </div>
+      </section>
+
+      <section>
+        <div>
+          <div className="mb-3 flex items-center justify-between gap-4">
+            <label className="block text-sm font-medium text-black/75">
+              Interests <span className="text-black/30">*</span>
+            </label>
+            <span className="text-xs text-black/35">
+              {selectedInterests.length}/{maxInterests} selected
+            </span>
+          </div>
+
+          <div className="flex flex-wrap gap-2">
+            {interestOptions.map((interest) => {
+              const isSelected = selectedInterests.includes(interest);
+              const isDisabled =
+                !isSelected && selectedInterests.length >= maxInterests;
+
+              return (
+                <button
+                  key={interest}
+                  type="button"
+                  onClick={() => toggleInterest(interest)}
+                  disabled={isDisabled}
+                  className={`inline-flex items-center gap-1.5 rounded-full border px-3 py-2 text-sm transition-all ${
+                    isSelected
+                      ? "border-black bg-black text-white"
+                      : "border-black/10 bg-black/[0.03] text-black/55 hover:border-black/20 hover:bg-white"
+                  } ${isDisabled ? "cursor-not-allowed opacity-35" : ""}`}
+                  aria-pressed={isSelected}
+                >
+                  {isSelected && <Check className="h-3.5 w-3.5" />}
+                  {interest}
+                </button>
+              );
+            })}
+          </div>
+
+          <p className="mt-2 text-xs text-black/40">
+            Pick up to {maxInterests} keyword{maxInterests === 1 ? "" : "s"} to personalize elective recommendations.
+          </p>
         </div>
       </section>
 
@@ -509,7 +521,7 @@ export default function StudentDetailsFormContent({
       <div className="pt-1">
         <button
           type="submit"
-          disabled={selectedInterests.length !== MAX_INTERESTS}
+          disabled={selectedInterests.length === 0}
           className="flex w-full items-center justify-center gap-2 rounded-xl bg-black px-4 py-3.5 text-sm font-medium text-white transition-colors hover:bg-black/90 disabled:cursor-not-allowed disabled:opacity-40"
         >
           <Sparkles className="h-4 w-4" />
