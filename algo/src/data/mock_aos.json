@@ -28,10 +28,7 @@
                 "description": "Continuous professional development is a crucial part of meeting the Engineers Australia Stage 1 Competency Standard to be a Professional Engineer. You must enrol in ENG0001 in your final year and satisfy the professional development requirements if you are studying at the Clayton campus.<br /><br />The Engineering Accreditation Council Malaysia have similar industrial training requirements. You must enrol in ENG0002 in the second semester of your third year and complete the industrial training required if you are studying at the Malaysia campus.",
                 "credit_points": 0,
                 "num_required": null,
-                "units": [
-                    "ENG0001",
-                    "ENG0002"
-                ],
+                "units": [],
                 "children": [],
                 "level": 1
             },
@@ -292,19 +289,12 @@
                 "credit_points": 84,
                 "num_required": null,
                 "units": [
-                    "FIT1008",
-                    "FIT1045",
-                    "FIT1047",
-                    "FIT1049",
-                    "FIT2004",
-                    "FIT2094",
                     "FIT2099",
                     "FIT2100",
                     "FIT3077",
                     "FIT3155",
                     "FIT3161",
                     "FIT3162",
-                    "FIT1058",
                     "FIT2101"
                 ],
                 "children": [],
@@ -425,20 +415,12 @@
                 "num_required": null,
                 "units": [
                     "FIT1043",
-                    "FIT1045",
-                    "FIT1047",
                     "FIT1093",
-                    "FIT2004",
-                    "FIT2086",
-                    "FIT2094",
                     "FIT2179",
                     "FIT3152",
                     "FIT3154",
                     "FIT3163",
-                    "FIT3164",
-                    "FIT1008",
-                    "FIT1049",
-                    "FIT1058"
+                    "FIT3164"
                 ],
                 "children": [],
                 "level": 1
@@ -560,11 +542,8 @@
                 "credit_points": 102,
                 "num_required": null,
                 "units": [
-                    "FIT1047",
-                    "FIT1049",
                     "FIT1057",
                     "FIT1093",
-                    "FIT2094",
                     "FIT2099",
                     "FIT2100",
                     "FIT2173",
@@ -572,11 +551,7 @@
                     "FIT3168",
                     "FIT3188",
                     "FIT3189",
-                    "FIT1008",
-                    "FIT1045",
-                    "FIT1055",
-                    "FIT1058",
-                    "FIT2004"
+                    "FIT1055"
                 ],
                 "children": [],
                 "level": 1
@@ -694,22 +669,15 @@
                 "credit_points": 96,
                 "num_required": null,
                 "units": [
-                    "FIT1045",
                     "FIT1059",
                     "FIT1061",
                     "FIT1110",
-                    "FIT2004",
-                    "FIT2086",
                     "FIT2111",
                     "FIT2112",
                     "FIT3080",
                     "FIT3181",
                     "FIT3191",
-                    "FIT3193",
-                    "FIT1008",
-                    "FIT1047",
-                    "FIT1049",
-                    "FIT1058"
+                    "FIT3193"
                 ],
                 "children": [],
                 "level": 1
@@ -829,13 +797,8 @@
                 "units": [
                     "ATS1001",
                     "ATS1003",
-                    "ATS1006",
                     "ATS1012",
-                    "ATS2001",
-                    "ATS2003",
-                    "ATS2006",
                     "ATS2009",
-                    "ATS3002",
                     "ATS3006",
                     "ATS3007",
                     "ATS2007"
@@ -950,19 +913,14 @@
                 "units": [
                     "ATS1002",
                     "ATS1004",
-                    "ATS1006",
                     "ATS1008",
                     "ATS2002",
                     "ATS2004",
-                    "ATS2006",
                     "ATS2008",
                     "ATS3001",
                     "ATS3005",
-                    "ATS3002",
                     "ATS3008",
-                    "ATS2003",
-                    "ATS2005",
-                    "ATS2001"
+                    "ATS2005"
                 ],
                 "children": [],
                 "level": 1
@@ -1077,7 +1035,6 @@
                     "ATS1016",
                     "ATS2004",
                     "ATS2007",
-                    "ATS2010",
                     "ATS2017",
                     "ATS3004",
                     "ATS3007",
@@ -1198,7 +1155,6 @@
                     "ATS1013",
                     "ATS2005",
                     "ATS2008",
-                    "ATS2010",
                     "ATS2011",
                     "ATS3005",
                     "ATS3008",
@@ -1316,19 +1272,9 @@
                 "credit_points": 84,
                 "num_required": null,
                 "units": [
-                    "BEX1001",
-                    "BEX1002",
-                    "BEX1003",
-                    "BEX1006",
-                    "BEX2001",
-                    "BEX2002",
-                    "BEX2004",
                     "BEX2011",
                     "BEX3001",
-                    "BEX3003",
-                    "BEX3009",
-                    "BEX3004",
-                    "BEX2013"
+                    "BEX3004"
                 ],
                 "children": [],
                 "level": 1
@@ -1434,23 +1380,7 @@
                 "description": "Complete all of the following mandatory core units.",
                 "credit_points": 90,
                 "num_required": null,
-                "units": [
-                    "BEX1002",
-                    "BEX1004",
-                    "BEX1008",
-                    "BEX1010",
-                    "BEX2003",
-                    "BEX2007",
-                    "BEX2012",
-                    "BEX2014",
-                    "BEX3002",
-                    "BEX3006",
-                    "BEX3011",
-                    "BEX3015",
-                    "BEX1007",
-                    "BEX2018",
-                    "BEX1015"
-                ],
+                "units": [],
                 "children": [],
                 "level": 1
             },
@@ -1553,17 +1483,10 @@
                 "credit_points": 72,
                 "num_required": null,
                 "units": [
-                    "BEX1001",
-                    "BEX1003",
                     "BEX1005",
                     "BEX1010",
-                    "BEX2001",
                     "BEX2006",
-                    "BEX2008",
-                    "BEX2013",
-                    "BEX3003",
-                    "BEX3009",
-                    "BEX2002"
+                    "BEX2008"
                 ],
                 "children": [],
                 "level": 1
@@ -1677,19 +1600,7 @@
                 "description": "Complete all of the following mandatory core units.",
                 "credit_points": 72,
                 "num_required": null,
-                "units": [
-                    "BEX1002",
-                    "BEX1003",
-                    "BEX1006",
-                    "BEX1011",
-                    "BEX2002",
-                    "BEX2004",
-                    "BEX2005",
-                    "BEX2010",
-                    "BEX3003",
-                    "BEX3008",
-                    "BEX3014"
-                ],
+                "units": [],
                 "children": [],
                 "level": 1
             },
@@ -1927,28 +1838,7 @@
                 "description": "Complete all of the following mandatory core units.",
                 "credit_points": 126,
                 "num_required": null,
-                "units": [
-                    "ENG1001",
-                    "ENG1004",
-                    "ENG1006",
-                    "ENG1007",
-                    "ENG1011",
-                    "ENG1016",
-                    "ENG2003",
-                    "ENG2004",
-                    "ENG2005",
-                    "ENG2008",
-                    "ENG2012",
-                    "ENG2014",
-                    "ENG3003",
-                    "ENG3005",
-                    "ENG3009",
-                    "ENG3014",
-                    "ENG2001",
-                    "ENG2002",
-                    "ENG2018",
-                    "ENG2011"
-                ],
+                "units": [],
                 "children": [],
                 "level": 1
             },
@@ -2060,26 +1950,7 @@
                 "description": "Complete all of the following mandatory core units.",
                 "credit_points": 114,
                 "num_required": null,
-                "units": [
-                    "ENG1001",
-                    "ENG1004",
-                    "ENG1005",
-                    "ENG1006",
-                    "ENG1007",
-                    "ENG1011",
-                    "ENG2002",
-                    "ENG2003",
-                    "ENG2004",
-                    "ENG2008",
-                    "ENG2009",
-                    "ENG2012",
-                    "ENG3003",
-                    "ENG3004",
-                    "ENG3007",
-                    "ENG3008",
-                    "ENG2001",
-                    "ENG2017"
-                ],
+                "units": [],
                 "children": [],
                 "level": 1
             },
@@ -2194,27 +2065,7 @@
                 "description": "Complete all of the following mandatory core units.",
                 "credit_points": 120,
                 "num_required": null,
-                "units": [
-                    "ENG1001",
-                    "ENG1004",
-                    "ENG1007",
-                    "ENG1008",
-                    "ENG1013",
-                    "ENG1017",
-                    "ENG2001",
-                    "ENG2006",
-                    "ENG2008",
-                    "ENG2010",
-                    "ENG2013",
-                    "ENG2015",
-                    "ENG3001",
-                    "ENG3003",
-                    "ENG3010",
-                    "ENG3014",
-                    "ENG1006",
-                    "ENG2018",
-                    "ENG2002"
-                ],
+                "units": [],
                 "children": [],
                 "level": 1
             },
@@ -2328,24 +2179,7 @@
                 "description": "Complete all of the following mandatory core units.",
                 "credit_points": 102,
                 "num_required": null,
-                "units": [
-                    "ENG1001",
-                    "ENG1003",
-                    "ENG1004",
-                    "ENG1006",
-                    "ENG1007",
-                    "ENG1015",
-                    "ENG2001",
-                    "ENG2006",
-                    "ENG2007",
-                    "ENG2008",
-                    "ENG2009",
-                    "ENG2015",
-                    "ENG3001",
-                    "ENG3003",
-                    "ENG3006",
-                    "ENG3013"
-                ],
+                "units": [],
                 "children": [],
                 "level": 1
             },
@@ -2435,6 +2269,2523 @@
             "total_requirements": 4,
             "total_units": 34,
             "max_depth": 2
+        }
+    },
+    "APCYBSEC01": {
+        "course_code": "APCYBSEC01",
+        "course_title": "Applied cybersecurity",
+        "total_credit_points": 48,
+        "requirement_groups": [
+            {
+                "id": "root_1",
+                "parent_id": null,
+                "type": "AND",
+                "title": "APCYBSEC01 - Complete Requirements",
+                "description": "Complete all requirements for Applied cybersecurity",
+                "credit_points": 48,
+                "num_required": null,
+                "units": [],
+                "children": [
+                    "req_2"
+                ],
+                "level": 0
+            },
+            {
+                "id": "req_2",
+                "parent_id": "root_1",
+                "type": "OR",
+                "title": "Core units",
+                "description": "You must complete the following units.<br /><br />Note 1: If you are in the double degree course with the Bachelor of Engineering (Honours) completing a software engineering specialisation, you must replace FIT2100, FIT2165 and FIT2173 with three FIT-coded level 2 or level 3 electives.<br /><br />Note 2: If you are selected for the Industry Based Learning (IBL) program you will complete FIT3045. You will not complete FIT3031.",
+                "credit_points": 48,
+                "num_required": null,
+                "units": [
+                    "FIT2165",
+                    "FIT3031",
+                    "FIT3168",
+                    "FIT3186",
+                    "FIT2173",
+                    "FIT2100",
+                    "FIT1057",
+                    "FIT1093"
+                ],
+                "children": [],
+                "level": 1
+            }
+        ],
+        "all_units": {
+            "FIT2165": "Computer networks",
+            "FIT3031": "Network security",
+            "FIT3168": "IT forensics",
+            "FIT3186": "Vulnerability analysis, response and mitigation",
+            "FIT2173": "Software security",
+            "FIT2100": "Operating systems",
+            "FIT1057": "Introduction to cybersecurity",
+            "FIT1093": "Cybersecurity tools and techniques"
+        },
+        "statistics": {
+            "total_requirements": 2,
+            "total_units": 8,
+            "max_depth": 1
+        }
+    },
+    "GAMEIMMD01": {
+        "course_code": "GAMEIMMD01",
+        "course_title": "Games and immersive media",
+        "total_credit_points": 48,
+        "requirement_groups": [
+            {
+                "id": "root_1",
+                "parent_id": null,
+                "type": "AND",
+                "title": "GAMEIMMD01 - Complete Requirements",
+                "description": "Complete all requirements for Games and immersive media",
+                "credit_points": 48,
+                "num_required": null,
+                "units": [],
+                "children": [
+                    "req_2",
+                    "req_3",
+                    "req_4"
+                ],
+                "level": 0
+            },
+            {
+                "id": "req_2",
+                "parent_id": "root_1",
+                "type": "AND",
+                "title": "Level 2 unit",
+                "description": "Non-IT students undertaking this major as a stand-alone option need to complete FIT1045 to satisfy the prerequisites of FIT2096. If you are enrolled in C2000 Bachelor of Information Technology you will complete FIT1045 as part of your course.<br />You must complete one of the following units.",
+                "credit_points": 6,
+                "num_required": null,
+                "units": [
+                    "FIT2096",
+                    "FIT2169"
+                ],
+                "children": [],
+                "level": 1
+            },
+            {
+                "id": "req_3",
+                "parent_id": "root_1",
+                "type": "AND",
+                "title": "Level 3 units",
+                "description": "You must complete the following units.<br /><br />Note: If you are selected for the Industry Based Learning (IBL) program you will complete FIT3045 Industry-based learning. You will not complete FIT3172.",
+                "credit_points": 18,
+                "num_required": null,
+                "units": [
+                    "FIT3187",
+                    "FIT3097",
+                    "FIT3172"
+                ],
+                "children": [],
+                "level": 1
+            },
+            {
+                "id": "req_4",
+                "parent_id": "root_1",
+                "type": "AND",
+                "title": "Level 1 and 2 units",
+                "description": "You must complete the following units",
+                "credit_points": 24,
+                "num_required": null,
+                "units": [
+                    "FIT1033",
+                    "FIT2145",
+                    "FIT1073",
+                    "FIT2098"
+                ],
+                "children": [],
+                "level": 1
+            }
+        ],
+        "all_units": {
+            "FIT2096": "Games programming",
+            "FIT2169": "Immersive environments",
+            "FIT3187": "3D character animation",
+            "FIT3097": "Technical art",
+            "FIT3172": "Sonics",
+            "FIT1033": "Foundations of 3D",
+            "FIT2145": "Game prototyping",
+            "FIT1073": "Game design",
+            "FIT2098": "Virtual and augmented reality"
+        },
+        "statistics": {
+            "total_requirements": 4,
+            "total_units": 9,
+            "max_depth": 1
+        }
+    },
+    "SFTWRDEV08": {
+        "course_code": "SFTWRDEV08",
+        "course_title": "Software development",
+        "total_credit_points": 48,
+        "requirement_groups": [
+            {
+                "id": "root_1",
+                "parent_id": null,
+                "type": "AND",
+                "title": "SFTWRDEV08 - Complete Requirements",
+                "description": "Complete all requirements for Software development",
+                "credit_points": 48,
+                "num_required": null,
+                "units": [],
+                "children": [
+                    "req_2"
+                ],
+                "level": 0
+            },
+            {
+                "id": "req_2",
+                "parent_id": "root_1",
+                "type": "AND",
+                "title": "Core units",
+                "description": "You must complete the following units.<br /><br />Note 1: If you are enrolled in the double degree with the Bachelor of Engineering (Honours) and the Software Engineering specialisation, you must replace FIT3077 and FIT3184 with two electives: one FIT-coded Level 2 or Level 3 elective, and one FIT-coded Level 3 elective.<br /><br />Note 2: If you are selected for the Industry Based Learning (IBL) program you will complete FIT3045 Industry-based learning you will not complete FIT3184.<br />",
+                "credit_points": 48,
+                "num_required": null,
+                "units": [
+                    "FIT2081",
+                    "FIT3178",
+                    "FIT3077",
+                    "FIT1051",
+                    "FIT2175",
+                    "FIT1050",
+                    "FIT2104",
+                    "FIT3184"
+                ],
+                "children": [],
+                "level": 1
+            }
+        ],
+        "all_units": {
+            "FIT2081": "Mobile application development",
+            "FIT3178": "iOS app development",
+            "FIT3077": "Software engineering: Architecture and design",
+            "FIT1051": "Programming fundamentals in java",
+            "FIT2175": "Usability",
+            "FIT1050": "Web fundamentals",
+            "FIT2104": "Web database interface",
+            "FIT3184": "Cloud computing"
+        },
+        "statistics": {
+            "total_requirements": 2,
+            "total_units": 8,
+            "max_depth": 1
+        }
+    },
+    "3DMODANI03": {
+        "course_code": "3DMODANI03",
+        "course_title": "3D modelling and animation",
+        "total_credit_points": 24,
+        "requirement_groups": [
+            {
+                "id": "root_1",
+                "parent_id": null,
+                "type": "AND",
+                "title": "3DMODANI03 - Complete Requirements",
+                "description": "Complete all requirements for 3D modelling and animation",
+                "credit_points": 24,
+                "num_required": null,
+                "units": [],
+                "children": [
+                    "req_2"
+                ],
+                "level": 0
+            },
+            {
+                "id": "req_2",
+                "parent_id": "root_1",
+                "type": "AND",
+                "title": "Core units",
+                "description": "You must complete the following units",
+                "credit_points": 24,
+                "num_required": null,
+                "units": [
+                    "FIT1033",
+                    "FIT3187",
+                    "FIT2098",
+                    "FIT2169"
+                ],
+                "children": [],
+                "level": 1
+            }
+        ],
+        "all_units": {
+            "FIT1033": "Foundations of 3D",
+            "FIT3187": "3D character animation",
+            "FIT2098": "Virtual and augmented reality",
+            "FIT2169": "Immersive environments"
+        },
+        "statistics": {
+            "total_requirements": 2,
+            "total_units": 4,
+            "max_depth": 1
+        }
+    },
+    "COMPUTSC02": {
+        "course_code": "COMPUTSC02",
+        "course_title": "Computer science",
+        "total_credit_points": 24,
+        "requirement_groups": [
+            {
+                "id": "root_1",
+                "parent_id": null,
+                "type": "AND",
+                "title": "COMPUTSC02 - Complete Requirements",
+                "description": "Complete all requirements for Computer science",
+                "credit_points": 24,
+                "num_required": null,
+                "units": [],
+                "children": [
+                    "req_2",
+                    "req_3"
+                ],
+                "level": 0
+            },
+            {
+                "id": "req_2",
+                "parent_id": "root_1",
+                "type": "AND",
+                "title": "Additional Computer science unit",
+                "description": "You must complete one of the following units",
+                "credit_points": 6,
+                "num_required": null,
+                "units": [
+                    "FIT2014",
+                    "FIT3155"
+                ],
+                "children": [],
+                "level": 1
+            },
+            {
+                "id": "req_3",
+                "parent_id": "root_1",
+                "type": "AND",
+                "title": "Core units",
+                "description": "Non-IT students undertaking this minor need to complete FIT1058 or MAT1830 to satisfy the prerequisites for FIT2004 in this minor.<br />You must complete the following units.",
+                "credit_points": 18,
+                "num_required": null,
+                "units": [
+                    "FIT1045",
+                    "FIT2004",
+                    "FIT1008"
+                ],
+                "children": [],
+                "level": 1
+            }
+        ],
+        "all_units": {
+            "FIT2014": "Theory of computation",
+            "FIT3155": "Advanced data structures and algorithms",
+            "FIT1045": "Introduction to programming",
+            "FIT2004": "Algorithms and data structures",
+            "FIT1008": "Fundamentals of algorithms"
+        },
+        "statistics": {
+            "total_requirements": 3,
+            "total_units": 5,
+            "max_depth": 1
+        }
+    },
+    "CYBERSEC05": {
+        "course_code": "CYBERSEC05",
+        "course_title": "Cybersecurity",
+        "total_credit_points": 24,
+        "requirement_groups": [
+            {
+                "id": "root_1",
+                "parent_id": null,
+                "type": "AND",
+                "title": "CYBERSEC05 - Complete Requirements",
+                "description": "Complete all requirements for Cybersecurity",
+                "credit_points": 24,
+                "num_required": null,
+                "units": [],
+                "children": [
+                    "req_2",
+                    "req_3"
+                ],
+                "level": 0
+            },
+            {
+                "id": "req_2",
+                "parent_id": "root_1",
+                "type": "AND",
+                "title": "Elective unit",
+                "description": "You must complete one of the following units",
+                "credit_points": 6,
+                "num_required": null,
+                "units": [
+                    "FIT3168",
+                    "FIT3186",
+                    "FIT3031"
+                ],
+                "children": [],
+                "level": 1
+            },
+            {
+                "id": "req_3",
+                "parent_id": "root_1",
+                "type": "AND",
+                "title": "Core units",
+                "description": "Note: Non-IT students undertaking this minor need to complete FIT1045 and FIT1047 to satisfy the prerequisites of some of the units in the minor.<br />You must complete the following units.",
+                "credit_points": 18,
+                "num_required": null,
+                "units": [
+                    "FIT1057",
+                    "FIT1093",
+                    "FIT2173"
+                ],
+                "children": [],
+                "level": 1
+            }
+        ],
+        "all_units": {
+            "FIT3168": "IT forensics",
+            "FIT3186": "Vulnerability analysis, response and mitigation",
+            "FIT3031": "Network security",
+            "FIT1057": "Introduction to cybersecurity",
+            "FIT1093": "Cybersecurity tools and techniques",
+            "FIT2173": "Software security"
+        },
+        "statistics": {
+            "total_requirements": 3,
+            "total_units": 6,
+            "max_depth": 1
+        }
+    },
+    "DATASCI04": {
+        "course_code": "DATASCI04",
+        "course_title": "Data science",
+        "total_credit_points": 24,
+        "requirement_groups": [
+            {
+                "id": "root_1",
+                "parent_id": null,
+                "type": "AND",
+                "title": "DATASCI04 - Complete Requirements",
+                "description": "Complete all requirements for Data science",
+                "credit_points": 24,
+                "num_required": null,
+                "units": [],
+                "children": [
+                    "req_2"
+                ],
+                "level": 0
+            },
+            {
+                "id": "req_2",
+                "parent_id": "root_1",
+                "type": "AND",
+                "title": "Core units",
+                "description": "You must complete the following units. <br />Note: FIT1043 has a prerequisite of any Year 12 Mathematics or MTH1010 or equivalent.  If you wish to complete this minor you must also complete a Level 1 maths unit and an introductory programming unit.",
+                "credit_points": 24,
+                "num_required": null,
+                "units": [
+                    "FIT1043",
+                    "FIT3152",
+                    "FIT2086",
+                    "FIT2179"
+                ],
+                "children": [],
+                "level": 1
+            }
+        ],
+        "all_units": {
+            "FIT1043": "Introduction to data science",
+            "FIT3152": "Data analytics",
+            "FIT2086": "Modelling for data analysis",
+            "FIT2179": "Data visualisation"
+        },
+        "statistics": {
+            "total_requirements": 2,
+            "total_units": 4,
+            "max_depth": 1
+        }
+    },
+    "WEBDEVT03": {
+        "course_code": "WEBDEVT03",
+        "course_title": "Web development",
+        "total_credit_points": 24,
+        "requirement_groups": [
+            {
+                "id": "root_1",
+                "parent_id": null,
+                "type": "AND",
+                "title": "WEBDEVT03 - Complete Requirements",
+                "description": "Complete all requirements for Web development",
+                "credit_points": 24,
+                "num_required": null,
+                "units": [],
+                "children": [
+                    "req_2",
+                    "req_3"
+                ],
+                "level": 0
+            },
+            {
+                "id": "req_2",
+                "parent_id": "root_1",
+                "type": "AND",
+                "title": "Level 2 and 3 units",
+                "description": "You must complete 12 credit points from the following units",
+                "credit_points": 12,
+                "num_required": null,
+                "units": [
+                    "FIT2104",
+                    "FIT2175",
+                    "FIT2095",
+                    "FIT3157",
+                    "FIT2094"
+                ],
+                "children": [],
+                "level": 1
+            },
+            {
+                "id": "req_3",
+                "parent_id": "root_1",
+                "type": "AND",
+                "title": "Core unit",
+                "description": "You must complete the following units",
+                "credit_points": 12,
+                "num_required": null,
+                "units": [
+                    "FIT1045",
+                    "FIT1050"
+                ],
+                "children": [],
+                "level": 1
+            }
+        ],
+        "all_units": {
+            "FIT2104": "Web database interface",
+            "FIT2175": "Usability",
+            "FIT2095": "Full stack development",
+            "FIT3157": "Advanced web design",
+            "FIT2094": "Databases",
+            "FIT1045": "Introduction to programming",
+            "FIT1050": "Web fundamentals"
+        },
+        "statistics": {
+            "total_requirements": 3,
+            "total_units": 7,
+            "max_depth": 1
+        }
+    },
+    "ANTHROPL11": {
+        "course_code": "ANTHROPL11",
+        "course_title": "Anthropology",
+        "total_credit_points": 48,
+        "requirement_groups": [
+            {
+                "id": "root_1",
+                "parent_id": null,
+                "type": "AND",
+                "title": "ANTHROPL11 - Complete Requirements",
+                "description": "Complete all requirements for Anthropology",
+                "credit_points": 48,
+                "num_required": null,
+                "units": [],
+                "children": [
+                    "req_2",
+                    "req_3",
+                    "req_5",
+                    "req_6",
+                    "req_7"
+                ],
+                "level": 0
+            },
+            {
+                "id": "req_2",
+                "parent_id": "root_1",
+                "type": "AND",
+                "title": "Level 2 cornerstone units",
+                "description": "You must complete 6 credit points from the following units",
+                "credit_points": 6,
+                "num_required": null,
+                "units": [
+                    "ATS2378",
+                    "ATS2625"
+                ],
+                "children": [],
+                "level": 1
+            },
+            {
+                "id": "req_3",
+                "parent_id": "root_1",
+                "type": "AND",
+                "title": "Level 2 and 3 elective units.",
+                "description": "You must complete 24 credit points from the following units or from any cornerstone or capstone unit not already taken, with at least two units at Level 3.<br /><br />Please visit the intercampus exchange website for how to enrol in Malaysian units. ",
+                "credit_points": 24,
+                "num_required": null,
+                "units": [
+                    "ATS3329",
+                    "ATS3354",
+                    "ATS3376",
+                    "ATS3951",
+                    "ATS2671",
+                    "ATS3359",
+                    "ATS3618",
+                    "ATS2628",
+                    "ATS2281",
+                    "ATS3222",
+                    "ATS2354",
+                    "ATS2359",
+                    "ATS2371",
+                    "ATS2274",
+                    "ATS2020",
+                    "ATS3935",
+                    "ATS2829",
+                    "ATS2160",
+                    "ATS2648",
+                    "AMU2906"
+                ],
+                "children": [
+                    "req_4"
+                ],
+                "level": 1
+            },
+            {
+                "id": "req_4",
+                "parent_id": "req_3",
+                "type": "AND",
+                "title": "International study tour",
+                "description": "",
+                "credit_points": 0,
+                "num_required": null,
+                "units": [
+                    "ATS3248"
+                ],
+                "children": [],
+                "level": 2
+            },
+            {
+                "id": "req_5",
+                "parent_id": "root_1",
+                "type": "AND",
+                "title": "Level 1 gateway units",
+                "description": "You must complete the following units",
+                "credit_points": 12,
+                "num_required": null,
+                "units": [
+                    "ATS1255",
+                    "ATS1396"
+                ],
+                "children": [],
+                "level": 1
+            },
+            {
+                "id": "req_6",
+                "parent_id": "root_1",
+                "type": "AND",
+                "title": "Rules",
+                "description": "No more than 12 credit points at Level 1 may be credited to the major and at least 18 credit points must be at Level 3.",
+                "credit_points": 0,
+                "num_required": null,
+                "units": [],
+                "children": [],
+                "level": 1
+            },
+            {
+                "id": "req_7",
+                "parent_id": "root_1",
+                "type": "AND",
+                "title": "Level 3 capstone units ",
+                "description": "You must complete 6 credit points from the following units",
+                "credit_points": 6,
+                "num_required": null,
+                "units": [
+                    "ATS3264",
+                    "ATS3634"
+                ],
+                "children": [],
+                "level": 1
+            }
+        ],
+        "all_units": {
+            "ATS2378": "Global inequality and alternatives to development",
+            "ATS2625": "Mobile worlds: Borders, displacement and belonging",
+            "ATS3329": "Language, culture and power",
+            "ATS3354": "Interrogating racism: Indigenous Australians and the state",
+            "ATS3376": "Anthropology of human rights",
+            "ATS3951": "Japanese popular culture and identity",
+            "ATS2671": "Managing intercultural communication",
+            "ATS3359": "Hearing the country: Studies in Indigenous Australian ethnoecology",
+            "ATS3618": "Global health",
+            "ATS2628": "Global inequality and international development",
+            "ATS2281": "Aboriginal languages",
+            "ATS3222": "Developing research literacy",
+            "ATS2354": "Interrogating racism: Indigenous Australians and the state",
+            "ATS2359": "Hearing the country: Studies in Indigenous Australian ethnoecology",
+            "ATS2371": "Magic, science and religion",
+            "ATS2274": "Languages, cultures and interaction in Asia",
+            "ATS2020": "Colonialism in comparison: Australia, New Zealand and the Pacific",
+            "ATS3935": "Professional practice",
+            "ATS2829": "People and plagues: Diseases that changed history",
+            "ATS2160": "Korea: Language, people and culture",
+            "ATS2648": "Contemporary Japan",
+            "AMU2906": "Genders, sexualities and religions in Southeast Asia",
+            "ATS3248": "Field methods in anthropology and international development",
+            "ATS1255": "Encountering cultures: Introduction to anthropology 1",
+            "ATS1396": "Drug cultures",
+            "ATS3264": "Practising applied qualitative research",
+            "ATS3634": "Indigenous peoples globally"
+        },
+        "statistics": {
+            "total_requirements": 7,
+            "total_units": 27,
+            "max_depth": 2
+        }
+    },
+    "CRIMINOL09": {
+        "course_code": "CRIMINOL09",
+        "course_title": "Criminology",
+        "total_credit_points": 48,
+        "requirement_groups": [
+            {
+                "id": "root_1",
+                "parent_id": null,
+                "type": "AND",
+                "title": "CRIMINOL09 - Complete Requirements",
+                "description": "Complete all requirements for Criminology",
+                "credit_points": 48,
+                "num_required": null,
+                "units": [],
+                "children": [
+                    "req_2",
+                    "req_3",
+                    "req_4",
+                    "req_5",
+                    "req_7"
+                ],
+                "level": 0
+            },
+            {
+                "id": "req_2",
+                "parent_id": "root_1",
+                "type": "AND",
+                "title": "Level 2 cornerstone units",
+                "description": "You must complete 6 credit points from the following units.<br />Note: You must complete either ATS2469 Victims, justice and the law or ATS2456 Cybercrime and cybersecurity",
+                "credit_points": 6,
+                "num_required": null,
+                "units": [
+                    "ATS2056",
+                    "ATS2555",
+                    "ATS2456",
+                    "ATS2469"
+                ],
+                "children": [],
+                "level": 1
+            },
+            {
+                "id": "req_3",
+                "parent_id": "root_1",
+                "type": "AND",
+                "title": "Rules",
+                "description": "No more than 12 credit points at Level 1 may be credited to the major and at least 18 credit points must be at Level 3.",
+                "credit_points": 0,
+                "num_required": null,
+                "units": [],
+                "children": [],
+                "level": 1
+            },
+            {
+                "id": "req_4",
+                "parent_id": "root_1",
+                "type": "AND",
+                "title": "Level 1 gateway units",
+                "description": "You must complete the following units",
+                "credit_points": 12,
+                "num_required": null,
+                "units": [
+                    "ATS1423",
+                    "ATS1421"
+                ],
+                "children": [],
+                "level": 1
+            },
+            {
+                "id": "req_5",
+                "parent_id": "root_1",
+                "type": "AND",
+                "title": "Level 2 and 3 elective units",
+                "description": "You must complete 24 credit points from the remaining cornerstone and capstone units or the units below, with at least 12 credit points at Level 3.",
+                "credit_points": 24,
+                "num_required": null,
+                "units": [
+                    "ATS2056",
+                    "ATS2456",
+                    "ATS3866",
+                    "ATS2457",
+                    "ATS2326",
+                    "ATS3223",
+                    "ATS2458",
+                    "ATS2723",
+                    "ATS3004",
+                    "ATS3935",
+                    "ATS3942",
+                    "ATS3222",
+                    "ATS3852",
+                    "ATS3224",
+                    "ATS3106",
+                    "ATS3161",
+                    "ATS3081",
+                    "ATS3082"
+                ],
+                "children": [
+                    "req_6"
+                ],
+                "level": 1
+            },
+            {
+                "id": "req_6",
+                "parent_id": "req_5",
+                "type": "AND",
+                "title": "International study tours",
+                "description": "",
+                "credit_points": 0,
+                "num_required": null,
+                "units": [
+                    "ATS3465",
+                    "ATS2465"
+                ],
+                "children": [],
+                "level": 2
+            },
+            {
+                "id": "req_7",
+                "parent_id": "root_1",
+                "type": "AND",
+                "title": "Level 3 capstone units",
+                "description": "You must complete 6 credit points from the following units.",
+                "credit_points": 6,
+                "num_required": null,
+                "units": [
+                    "ATS3466",
+                    "ATS3004"
+                ],
+                "children": [],
+                "level": 1
+            }
+        ],
+        "all_units": {
+            "ATS2056": "Crime and inequality",
+            "ATS2555": "Foundations in researching crime and justice",
+            "ATS2456": "Cybercrime and cybersecurity",
+            "ATS2469": "Victims, justice and the law",
+            "ATS1423": "Criminal justice in practice",
+            "ATS1421": "Understanding crime",
+            "ATS3866": "Crimes of the powerful",
+            "ATS2457": "Crime, media and culture",
+            "ATS2326": "Youth social change and justice",
+            "ATS3223": "Gender and family violence",
+            "ATS2458": "Policing",
+            "ATS2723": "Social research methods",
+            "ATS3004": "Crime, risk and security",
+            "ATS3935": "Professional practice",
+            "ATS3942": "Crime and the city",
+            "ATS3222": "Developing research literacy",
+            "ATS3852": "Researching social justice",
+            "ATS3224": "Gender, family violence and criminal justice system responses",
+            "ATS3106": "Developing criminal justice policy",
+            "ATS3161": "Prisons and punishment",
+            "ATS3081": "Investigation and intelligence",
+            "ATS3082": "Hate crime: Theories, contexts and responses",
+            "ATS3465": "Comparative criminal justice in practice",
+            "ATS2465": "Comparative criminal justice in practice",
+            "ATS3466": "Sex, gender and crime"
+        },
+        "statistics": {
+            "total_requirements": 7,
+            "total_units": 25,
+            "max_depth": 2
+        }
+    },
+    "COMMUNIC05": {
+        "course_code": "COMMUNIC05",
+        "course_title": "Communications and media studies",
+        "total_credit_points": 48,
+        "requirement_groups": [
+            {
+                "id": "root_1",
+                "parent_id": null,
+                "type": "AND",
+                "title": "COMMUNIC05 - Complete Requirements",
+                "description": "Complete all requirements for Communications and media studies",
+                "credit_points": 48,
+                "num_required": null,
+                "units": [],
+                "children": [
+                    "req_2",
+                    "req_3",
+                    "req_5",
+                    "req_6",
+                    "req_7"
+                ],
+                "level": 0
+            },
+            {
+                "id": "req_2",
+                "parent_id": "root_1",
+                "type": "AND",
+                "title": "Level 1 gateway units ",
+                "description": "You must complete the following units",
+                "credit_points": 12,
+                "num_required": null,
+                "units": [
+                    "ATS1279",
+                    "ATS1280"
+                ],
+                "children": [],
+                "level": 1
+            },
+            {
+                "id": "req_3",
+                "parent_id": "root_1",
+                "type": "AND",
+                "title": "Level 2 and 3 elective units",
+                "description": "You must complete 18 credit points from the following units or from any cornerstone or capstone unit not already taken, with at least two units at Level 3.",
+                "credit_points": 18,
+                "num_required": null,
+                "units": [
+                    "ATS3222",
+                    "ATS2280",
+                    "ATS3824",
+                    "ATS3801",
+                    "ATS2561",
+                    "ATS3221",
+                    "ATS2250",
+                    "ATS3971",
+                    "ATS3531",
+                    "ATS2538",
+                    "ATS2876",
+                    "ATS3252",
+                    "ATS2457",
+                    "ATS2784",
+                    "ATS3935"
+                ],
+                "children": [
+                    "req_4"
+                ],
+                "level": 1
+            },
+            {
+                "id": "req_4",
+                "parent_id": "req_3",
+                "type": "AND",
+                "title": "International study tours",
+                "description": "",
+                "credit_points": 0,
+                "num_required": null,
+                "units": [
+                    "ATS3795"
+                ],
+                "children": [],
+                "level": 2
+            },
+            {
+                "id": "req_5",
+                "parent_id": "root_1",
+                "type": "AND",
+                "title": "Rules",
+                "description": "No more than 12 credit points at Level 1 may be credited to the major and at least 18 credit points must be at Level 3.",
+                "credit_points": 0,
+                "num_required": null,
+                "units": [],
+                "children": [],
+                "level": 1
+            },
+            {
+                "id": "req_6",
+                "parent_id": "root_1",
+                "type": "AND",
+                "title": "Level 3 capstone units",
+                "description": "You must complete 6 credit points from the following units",
+                "credit_points": 6,
+                "num_required": null,
+                "units": [
+                    "ATS3992",
+                    "ATS3964"
+                ],
+                "children": [],
+                "level": 1
+            },
+            {
+                "id": "req_7",
+                "parent_id": "root_1",
+                "type": "AND",
+                "title": "Level 2 cornerstone units ",
+                "description": "You must complete 12 credit points from the following units",
+                "credit_points": 12,
+                "num_required": null,
+                "units": [
+                    "ATS2874",
+                    "ATS2440",
+                    "ATS2324"
+                ],
+                "children": [],
+                "level": 1
+            }
+        ],
+        "all_units": {
+            "ATS1279": "Media and culture",
+            "ATS1280": "Understanding the media",
+            "ATS3222": "Developing research literacy",
+            "ATS2280": "Video games: Industry and culture",
+            "ATS3824": "Popular music and society",
+            "ATS3801": "Understanding media violence",
+            "ATS2561": "Sex and the media",
+            "ATS3221": "The music industries",
+            "ATS2250": "Communications and cultures in the global era",
+            "ATS3971": "Propaganda: Dark arts in a digital age",
+            "ATS3531": "Gender and sexuality in film and television",
+            "ATS2538": "Film and television industries and technologies: key contexts",
+            "ATS2876": "Reinventing media: Creative solutions for a divided world",
+            "ATS3252": "Music cities",
+            "ATS2457": "Crime, media and culture",
+            "ATS2784": "News and power",
+            "ATS3935": "Professional practice",
+            "ATS3795": "Global correspondent",
+            "ATS3992": "Working with artificial intelligence",
+            "ATS3964": "Gender, race and media practices",
+            "ATS2874": "Consumer cultures",
+            "ATS2440": "The public sphere",
+            "ATS2324": "Climate change communication"
+        },
+        "statistics": {
+            "total_requirements": 7,
+            "total_units": 23,
+            "max_depth": 2
+        }
+    },
+    "BIOETHIC04": {
+        "course_code": "BIOETHIC04",
+        "course_title": "Bioethics",
+        "total_credit_points": 24,
+        "requirement_groups": [
+            {
+                "id": "root_1",
+                "parent_id": null,
+                "type": "AND",
+                "title": "BIOETHIC04 - Complete Requirements",
+                "description": "Complete all requirements for Bioethics",
+                "credit_points": 24,
+                "num_required": null,
+                "units": [],
+                "children": [
+                    "req_2",
+                    "req_3",
+                    "req_4",
+                    "req_5"
+                ],
+                "level": 0
+            },
+            {
+                "id": "req_2",
+                "parent_id": "root_1",
+                "type": "AND",
+                "title": "Level 2 and 3 elective units",
+                "description": "You must complete 12 credit points from the following units below, or the remaining gateway or cornerstone unit not already completed. It is highly recommended that you complete a Level 2 unit before enrolling in a Level 3 unit.",
+                "credit_points": 12,
+                "num_required": null,
+                "units": [
+                    "ATS2871",
+                    "ATS2292",
+                    "ATS2839",
+                    "ATS2875",
+                    "ATS3869",
+                    "ATS2868",
+                    "ATS2829"
+                ],
+                "children": [],
+                "level": 1
+            },
+            {
+                "id": "req_3",
+                "parent_id": "root_1",
+                "type": "AND",
+                "title": "Rules",
+                "description": "No more than 12 credit points at Level 1 may be credited to the minor.",
+                "credit_points": 0,
+                "num_required": null,
+                "units": [],
+                "children": [],
+                "level": 1
+            },
+            {
+                "id": "req_4",
+                "parent_id": "root_1",
+                "type": "AND",
+                "title": "Level 1 gateway units",
+                "description": "You must complete the following unit",
+                "credit_points": 6,
+                "num_required": null,
+                "units": [
+                    "ATS1264"
+                ],
+                "children": [],
+                "level": 1
+            },
+            {
+                "id": "req_5",
+                "parent_id": "root_1",
+                "type": "AND",
+                "title": "Level 2 cornerstone unit",
+                "description": "You must complete 6 credit points from the following units",
+                "credit_points": 6,
+                "num_required": null,
+                "units": [
+                    "ATS2306",
+                    "ATS2637"
+                ],
+                "children": [],
+                "level": 1
+            }
+        ],
+        "all_units": {
+            "ATS2871": "Environmental ethics",
+            "ATS2292": "The ethics of artificial intelligence",
+            "ATS2839": "Ethics",
+            "ATS2875": "The moral psychology of evil",
+            "ATS3869": "Political philosophy",
+            "ATS2868": "Anarchy, property, and the state",
+            "ATS2829": "People and plagues: Diseases that changed history",
+            "ATS1264": "Ethics, health and justice",
+            "ATS2306": "Ethics, genetics and society",
+            "ATS2637": "Global bioethics"
+        },
+        "statistics": {
+            "total_requirements": 5,
+            "total_units": 10,
+            "max_depth": 1
+        }
+    },
+    "FILMSCRN06": {
+        "course_code": "FILMSCRN06",
+        "course_title": "Film and screen studies",
+        "total_credit_points": 24,
+        "requirement_groups": [
+            {
+                "id": "root_1",
+                "parent_id": null,
+                "type": "AND",
+                "title": "FILMSCRN06 - Complete Requirements",
+                "description": "Complete all requirements for Film and screen studies",
+                "credit_points": 24,
+                "num_required": null,
+                "units": [],
+                "children": [
+                    "req_2",
+                    "req_3",
+                    "req_5"
+                ],
+                "level": 0
+            },
+            {
+                "id": "req_2",
+                "parent_id": "root_1",
+                "type": "AND",
+                "title": "Level 1 gateway units ",
+                "description": "You must complete the following units",
+                "credit_points": 12,
+                "num_required": null,
+                "units": [
+                    "ATS1304",
+                    "ATS1305"
+                ],
+                "children": [],
+                "level": 1
+            },
+            {
+                "id": "req_3",
+                "parent_id": "root_1",
+                "type": "AND",
+                "title": "Level 2 and 3 elective units ",
+                "description": "You must complete 12 credit points from the following units below. It is highly recommended that you complete a Level 2 unit before enrolling in a Level 3 unit.",
+                "credit_points": 12,
+                "num_required": null,
+                "units": [
+                    "ATS2535",
+                    "ATS2538",
+                    "ATS3983",
+                    "ATS2257",
+                    "ATS3531",
+                    "ATS2290",
+                    "ATS3540",
+                    "ATS3935",
+                    "ATS3969",
+                    "ATS2311",
+                    "ATS2845",
+                    "ATS2964",
+                    "ATS3290",
+                    "ATS2327",
+                    "ATS3539",
+                    "ATS3299",
+                    "ATS2530"
+                ],
+                "children": [
+                    "req_4"
+                ],
+                "level": 1
+            },
+            {
+                "id": "req_4",
+                "parent_id": "req_3",
+                "type": "AND",
+                "title": "International study tour",
+                "description": "",
+                "credit_points": 0,
+                "num_required": null,
+                "units": [
+                    "ATS2220"
+                ],
+                "children": [],
+                "level": 2
+            },
+            {
+                "id": "req_5",
+                "parent_id": "root_1",
+                "type": "AND",
+                "title": "Rules",
+                "description": "No more than 12 credit points at Level 1 may be credited to the minor.",
+                "credit_points": 0,
+                "num_required": null,
+                "units": [],
+                "children": [],
+                "level": 1
+            }
+        ],
+        "all_units": {
+            "ATS1304": "Introduction to television studies",
+            "ATS1305": "Introduction to film studies",
+            "ATS2535": "Screen storytelling: From classical narrative to multi-media world building",
+            "ATS2538": "Film and television industries and technologies: key contexts",
+            "ATS3983": "Screen project: From film theory to media production",
+            "ATS2257": "Bingeing to branding: Television in the age of streaming",
+            "ATS3531": "Gender and sexuality in film and television",
+            "ATS2290": "Interdisciplinary research collaboration",
+            "ATS3540": "Documentary Screens: Self, revolution and the everyday",
+            "ATS3935": "Professional practice",
+            "ATS3969": "Screen studies in the digital era",
+            "ATS2311": "First Nations Australian film and television",
+            "ATS2845": "Screenwriting for media production",
+            "ATS2964": "Film and screen theory and criticism",
+            "ATS3290": "Interdisciplinary research collaboration",
+            "ATS2327": "Seeing ourselves on screen Diversity and representation in film and television",
+            "ATS3539": "Asian screen cultures",
+            "ATS3299": "Screen and the body",
+            "ATS2530": "Film and television genres",
+            "ATS2220": "Screening Europe: Transnational histories, narratives and identities"
+        },
+        "statistics": {
+            "total_requirements": 5,
+            "total_units": 20,
+            "max_depth": 2
+        }
+    },
+    "GENDERST06": {
+        "course_code": "GENDERST06",
+        "course_title": "Gender studies",
+        "total_credit_points": 24,
+        "requirement_groups": [
+            {
+                "id": "root_1",
+                "parent_id": null,
+                "type": "AND",
+                "title": "GENDERST06 - Complete Requirements",
+                "description": "Complete all requirements for Gender studies",
+                "credit_points": 24,
+                "num_required": null,
+                "units": [],
+                "children": [
+                    "req_2",
+                    "req_5",
+                    "req_6"
+                ],
+                "level": 0
+            },
+            {
+                "id": "req_2",
+                "parent_id": "root_1",
+                "type": "AND",
+                "title": "Level 1 gateway units",
+                "description": "You must complete the following units",
+                "credit_points": 12,
+                "num_required": null,
+                "units": [],
+                "children": [
+                    "req_3",
+                    "req_4"
+                ],
+                "level": 1
+            },
+            {
+                "id": "req_3",
+                "parent_id": "req_2",
+                "type": "OR",
+                "title": "Clayton",
+                "description": "You must complete the following units",
+                "credit_points": 12,
+                "num_required": null,
+                "units": [
+                    "ATS1665",
+                    "ATS1666"
+                ],
+                "children": [],
+                "level": 2
+            },
+            {
+                "id": "req_4",
+                "parent_id": "req_2",
+                "type": "OR",
+                "title": "Malaysia",
+                "description": "You must complete the following units",
+                "credit_points": 12,
+                "num_required": null,
+                "units": [
+                    "AMU1310",
+                    "AMU1309"
+                ],
+                "children": [],
+                "level": 2
+            },
+            {
+                "id": "req_5",
+                "parent_id": "root_1",
+                "type": "AND",
+                "title": "Rules",
+                "description": "No more than 12 credit points at Level 1 may be credited to the minor.",
+                "credit_points": 0,
+                "num_required": null,
+                "units": [],
+                "children": [],
+                "level": 1
+            },
+            {
+                "id": "req_6",
+                "parent_id": "root_1",
+                "type": "AND",
+                "title": "Elective units",
+                "description": "You must complete 12 credit points from the following elective units, with at least 12 credit points at Level 2.",
+                "credit_points": 12,
+                "num_required": null,
+                "units": [
+                    "AMU2906",
+                    "AMU3574",
+                    "ATS3224",
+                    "ATS3222",
+                    "ATS2561",
+                    "ATS3935",
+                    "ATS2560",
+                    "AMU3575",
+                    "AMU2907",
+                    "AMU3127",
+                    "AMU2908",
+                    "AMU3744",
+                    "ATS2727",
+                    "ATS3852",
+                    "AMU3560",
+                    "ATS3223",
+                    "ATS2322",
+                    "ATS3715",
+                    "AMU2453",
+                    "ATS2718"
+                ],
+                "children": [],
+                "level": 1
+            }
+        ],
+        "all_units": {
+            "ATS1665": "Gender, self and society",
+            "ATS1666": "Gender, identity and power",
+            "AMU1310": "Introduction to gender studies",
+            "AMU1309": "Introduction to sexuality studies",
+            "AMU2906": "Genders, sexualities and religions in Southeast Asia",
+            "AMU3574": "Performing Asian, African and Black masculinities",
+            "ATS3224": "Gender, family violence and criminal justice system responses",
+            "ATS3222": "Developing research literacy",
+            "ATS2561": "Sex and the media",
+            "ATS3935": "Professional practice",
+            "ATS2560": "Breaking binaries: How gender is lived and theorised",
+            "AMU3575": "Task force: Responding to global challenges",
+            "AMU2907": "Sexual and reproductive health and rights in global contexts",
+            "AMU3127": "Stardom, screens and society",
+            "AMU2908": "Critical methodologies for action research",
+            "AMU3744": "Workplace learning internship",
+            "ATS2727": "Men, masculinity and society",
+            "ATS3852": "Researching social justice",
+            "AMU3560": "Contemporary feminisms in Asia",
+            "ATS3223": "Gender and family violence",
+            "ATS2322": "The personal is political: Examining gender politics in Australia",
+            "ATS3715": "Sex and sexualities in everyday life",
+            "AMU2453": "Research methods in the arts and social sciences",
+            "ATS2718": "Love, families, and relationships"
+        },
+        "statistics": {
+            "total_requirements": 6,
+            "total_units": 24,
+            "max_depth": 2
+        }
+    },
+    "HISTORY10": {
+        "course_code": "HISTORY10",
+        "course_title": "History",
+        "total_credit_points": 24,
+        "requirement_groups": [
+            {
+                "id": "root_1",
+                "parent_id": null,
+                "type": "AND",
+                "title": "HISTORY10 - Complete Requirements",
+                "description": "Complete all requirements for History",
+                "credit_points": 24,
+                "num_required": null,
+                "units": [],
+                "children": [
+                    "req_2",
+                    "req_3",
+                    "req_5"
+                ],
+                "level": 0
+            },
+            {
+                "id": "req_2",
+                "parent_id": "root_1",
+                "type": "AND",
+                "title": "Rules",
+                "description": "No more than 12 credit points at Level 1 may be credited to the minor.",
+                "credit_points": 0,
+                "num_required": null,
+                "units": [],
+                "children": [],
+                "level": 1
+            },
+            {
+                "id": "req_3",
+                "parent_id": "root_1",
+                "type": "AND",
+                "title": "Level 2 and 3 elective units",
+                "description": "You must complete 12 credit points from the following units below. It is highly recommended that you complete a Level 2 unit before enrolling in a Level 3 unit.",
+                "credit_points": 12,
+                "num_required": null,
+                "units": [
+                    "ATS2110",
+                    "ATS2827",
+                    "ATS2600",
+                    "ATS2595",
+                    "ATS3582",
+                    "ATS3623",
+                    "ATS2792",
+                    "ATS3415",
+                    "ATS3124",
+                    "ATS2620",
+                    "ATS3986",
+                    "ATS2806",
+                    "ATS3611",
+                    "ATS2309",
+                    "ATS2579",
+                    "ATS3580",
+                    "ATS2558",
+                    "ATS2106",
+                    "ATS2828",
+                    "ATS2189",
+                    "ATS2884",
+                    "ATS3476",
+                    "ATS2848",
+                    "ATS3438",
+                    "ATS3935",
+                    "ATS2633",
+                    "ATS3230",
+                    "ATS3479",
+                    "ATS3079",
+                    "ATS3865",
+                    "ATS2288",
+                    "ATS3584",
+                    "ATS3659",
+                    "ATS2829",
+                    "ATS3908",
+                    "ATS3890",
+                    "ATS3475",
+                    "ATS2556"
+                ],
+                "children": [
+                    "req_4"
+                ],
+                "level": 1
+            },
+            {
+                "id": "req_4",
+                "parent_id": "req_3",
+                "type": "AND",
+                "title": "International study tours ",
+                "description": "",
+                "credit_points": 0,
+                "num_required": null,
+                "units": [
+                    "ATS3995",
+                    "ATS3284",
+                    "ATS2995",
+                    "ATS2893",
+                    "ATS2921",
+                    "ATS3921",
+                    "ATS3311",
+                    "ATS3893"
+                ],
+                "children": [],
+                "level": 2
+            },
+            {
+                "id": "req_5",
+                "parent_id": "root_1",
+                "type": "AND",
+                "title": "Level 1 gateway units",
+                "description": "You must complete the following units",
+                "credit_points": 12,
+                "num_required": null,
+                "units": [
+                    "ATS1610",
+                    "ATS1611"
+                ],
+                "children": [],
+                "level": 1
+            }
+        ],
+        "all_units": {
+            "ATS2110": "The history of slavery: From antiquity to the present",
+            "ATS2827": "Encountering Empire",
+            "ATS2600": "The Holocaust",
+            "ATS2595": "The rise and fall of Nazi Germany",
+            "ATS3582": "Palestinians and Israelis: Entangled histories",
+            "ATS3623": "Nationality, ethnicity and conflict",
+            "ATS2792": "Understanding Australia: From the deep past to the present",
+            "ATS3415": "Innovation and social change: The history of technology",
+            "ATS3124": "Life in the Soviet Union",
+            "ATS2620": "Modern Japan: From Samurai to Pokemon",
+            "ATS3986": "Sitting on penguins: The history of Antarctica",
+            "ATS2806": "Capitalism and inequality in historical perspective",
+            "ATS3611": "A history of God",
+            "ATS2309": "Global France: A history from the revolution to today",
+            "ATS2579": "From demons to depression: A history of pre-modern mental health",
+            "ATS3580": "The modern Middle East",
+            "ATS2558": "Rebellion and revolt: Protest movements in the post-World War II world",
+            "ATS2106": "An environmental history of the world: People and our planet",
+            "ATS2828": "Battlelines: Combatants and civilians in the history of war",
+            "ATS2189": "Conflict and coexistence 1: Jews, Christians and Muslims from antiquity through the middle ages",
+            "ATS2884": "Changing history",
+            "ATS3476": "The Vietnam War, refugees and remembrance",
+            "ATS2848": "The economic history of the modern world",
+            "ATS3438": "The body: A human history",
+            "ATS3935": "Professional practice",
+            "ATS2633": "Global cities: Past, present and future",
+            "ATS3230": "Sex, gender and power in the ancient Near East",
+            "ATS3479": "Cultural heritage studies",
+            "ATS3079": "Modern China: From the Middle Kingdom to Mao and beyond",
+            "ATS3865": "History in action",
+            "ATS2288": "The Roman Empire in the age of Augustus",
+            "ATS3584": "The Indigenous history of modern Australia",
+            "ATS3659": "No Planet B: The climate crisis in historical perspective",
+            "ATS2829": "People and plagues: Diseases that changed history",
+            "ATS3908": "American empire: The United States from colonies to superpower",
+            "ATS3890": "Egypt's golden age",
+            "ATS3475": "Secrets and lies: Espionage and diplomacy in the medieval world",
+            "ATS2556": "Power struggles: anti-colonialism and anti-racism in history",
+            "ATS3995": "Science, society and culture in European history",
+            "ATS3284": "Final journey: Remembering the Holocaust",
+            "ATS2995": "Science, society and culture in European history",
+            "ATS2893": "The Renaissance in Florence",
+            "ATS2921": "Medieval Italy: Sites of encounter",
+            "ATS3921": "Medieval Italy: Sites of encounter",
+            "ATS3311": "Text and community in Medieval and Renaissance Italy",
+            "ATS3893": "The Renaissance in Florence",
+            "ATS1610": "The making of the modern world, 1750 to the present",
+            "ATS1611": "The Medieval and Early Modern world, 1050-1750"
+        },
+        "statistics": {
+            "total_requirements": 5,
+            "total_units": 48,
+            "max_depth": 2
+        }
+    },
+    "HMNRGTSJ02": {
+        "course_code": "HMNRGTSJ02",
+        "course_title": "Human rights and social justice",
+        "total_credit_points": 24,
+        "requirement_groups": [
+            {
+                "id": "root_1",
+                "parent_id": null,
+                "type": "AND",
+                "title": "HMNRGTSJ02 - Complete Requirements",
+                "description": "Complete all requirements for Human rights and social justice",
+                "credit_points": 24,
+                "num_required": null,
+                "units": [],
+                "children": [
+                    "req_2",
+                    "req_3",
+                    "req_4"
+                ],
+                "level": 0
+            },
+            {
+                "id": "req_2",
+                "parent_id": "root_1",
+                "type": "AND",
+                "title": "Rules",
+                "description": "No more than 12 credit points at Level 1 may be credited to the minor.",
+                "credit_points": 0,
+                "num_required": null,
+                "units": [],
+                "children": [],
+                "level": 1
+            },
+            {
+                "id": "req_3",
+                "parent_id": "root_1",
+                "type": "AND",
+                "title": "Level 1 gateway units",
+                "description": "You must complete the following units",
+                "credit_points": 12,
+                "num_required": null,
+                "units": [
+                    "ATS1315",
+                    "ATS1314"
+                ],
+                "children": [],
+                "level": 1
+            },
+            {
+                "id": "req_4",
+                "parent_id": "root_1",
+                "type": "AND",
+                "title": "Level 2 and 3 elective units",
+                "description": "You must complete 12 credit points from the following units. It is highly recommended that you complete a Level 2 unit before enrolling in a Level 3 unit.",
+                "credit_points": 12,
+                "num_required": null,
+                "units": [
+                    "ATS3329",
+                    "ATS3222",
+                    "ATS3639",
+                    "ATS3340",
+                    "ATS3476",
+                    "ATS3935",
+                    "ATS2628",
+                    "ATS2322",
+                    "ATS3584",
+                    "ATS2868",
+                    "ATS3916",
+                    "ATS3376",
+                    "ATS2624",
+                    "ATS2637",
+                    "ATS2110",
+                    "ATS3645",
+                    "ATS3230",
+                    "ATS3129",
+                    "ATS2640",
+                    "ATS2057",
+                    "ATS2600",
+                    "ATS2757",
+                    "ATS3623",
+                    "ATS2553",
+                    "ATS2284",
+                    "ATS3956",
+                    "ATS3632",
+                    "ATS3950",
+                    "ATS3354",
+                    "ATS2354"
+                ],
+                "children": [
+                    "req_5"
+                ],
+                "level": 1
+            },
+            {
+                "id": "req_5",
+                "parent_id": "req_4",
+                "type": "AND",
+                "title": "International study tours",
+                "description": "",
+                "credit_points": 0,
+                "num_required": null,
+                "units": [
+                    "ATS3284",
+                    "ATS3158",
+                    "ATS3314"
+                ],
+                "children": [],
+                "level": 2
+            }
+        ],
+        "all_units": {
+            "ATS1315": "Human rights and social justice",
+            "ATS1314": "Introduction to international human rights",
+            "ATS3329": "Language, culture and power",
+            "ATS3222": "Developing research literacy",
+            "ATS3639": "Poverty, climate change and international justice",
+            "ATS3340": "International security studies",
+            "ATS3476": "The Vietnam War, refugees and remembrance",
+            "ATS3935": "Professional practice",
+            "ATS2628": "Global inequality and international development",
+            "ATS2322": "The personal is political: Examining gender politics in Australia",
+            "ATS3584": "The Indigenous history of modern Australia",
+            "ATS2868": "Anarchy, property, and the state",
+            "ATS3916": "Critical perspectives on human rights",
+            "ATS3376": "Anthropology of human rights",
+            "ATS2624": "Global governance",
+            "ATS2637": "Global bioethics",
+            "ATS2110": "The history of slavery: From antiquity to the present",
+            "ATS3645": "Journalism and global change",
+            "ATS3230": "Sex, gender and power in the ancient Near East",
+            "ATS3129": "Arts internship",
+            "ATS2640": "The ethics of global conflict",
+            "ATS2057": "Genocide",
+            "ATS2600": "The Holocaust",
+            "ATS2757": "Towards decolonisation: The United Nations, rights and Indigenous peoples",
+            "ATS3623": "Nationality, ethnicity and conflict",
+            "ATS2553": "Indigenous justice in Australia",
+            "ATS2284": "Agency, advocacy and activism in performance",
+            "ATS3956": "Trauma and memory in the modern world",
+            "ATS3632": "Post-conflict: Justice, memory, reconciliation",
+            "ATS3950": "Activism for academic freedom: Applied workshop in research advocacy",
+            "ATS3354": "Interrogating racism: Indigenous Australians and the state",
+            "ATS2354": "Interrogating racism: Indigenous Australians and the state",
+            "ATS3284": "Final journey: Remembering the Holocaust",
+            "ATS3158": "Pandemics and social justice",
+            "ATS3314": "Seeking justice: South Africa and Rwanda"
+        },
+        "statistics": {
+            "total_requirements": 5,
+            "total_units": 35,
+            "max_depth": 2
+        }
+    },
+    "ACCOUNTG05": {
+        "course_code": "ACCOUNTG05",
+        "course_title": "Accounting",
+        "total_credit_points": 48,
+        "requirement_groups": [
+            {
+                "id": "root_1",
+                "parent_id": null,
+                "type": "AND",
+                "title": "ACCOUNTG05 - Complete Requirements",
+                "description": "Complete all requirements for Accounting",
+                "credit_points": 48,
+                "num_required": null,
+                "units": [],
+                "children": [
+                    "req_2",
+                    "req_7",
+                    "req_12"
+                ],
+                "level": 0
+            },
+            {
+                "id": "req_2",
+                "parent_id": "root_1",
+                "type": "OR",
+                "title": "Bachelor of Commerce",
+                "description": "If you are studying the Bachelor of Commerce, you must enrol in the units listed for the Bachelor of Commerce major at the Clayton campus, except if these are offered in the Winter or Summer teaching periods.  ",
+                "credit_points": 48,
+                "num_required": null,
+                "units": [],
+                "children": [
+                    "req_3",
+                    "req_6"
+                ],
+                "level": 1
+            },
+            {
+                "id": "req_3",
+                "parent_id": "req_2",
+                "type": "AND",
+                "title": "Additional commerce units and Professional Accounting Accreditation",
+                "description": "Note: If you are seeking professional accounting accreditation, you will need to complete specified units in addition to the requirements of the accounting major. Information regarding unit selection for accreditation is outlined below.<br /><br />If you are studying the Bachelor of Commerce, you must enrol in the units listed for the Bachelor of Commerce major at the Clayton campus, except if these are offered in Winter or Summer.<br /><br />Double degree with another faculty: Please note, if you are completing the Accounting major as part of your double degree, ECX2953 is required for professional accreditation and can be completed in Part A instead of ECC1000, and you will not be required to complete ECC1100.",
+                "credit_points": 12,
+                "num_required": null,
+                "units": [],
+                "children": [
+                    "req_4",
+                    "req_5"
+                ],
+                "level": 2
+            },
+            {
+                "id": "req_4",
+                "parent_id": "req_3",
+                "type": "AND",
+                "title": "Additional Accounting Units",
+                "description": "You must complete 12 credit points from the following units, with at least one unit at Level 3.",
+                "credit_points": 12,
+                "num_required": null,
+                "units": [
+                    "ACX3500",
+                    "BTC2000",
+                    "BFF1001",
+                    "ACX3150",
+                    "ECC1100",
+                    "BTX3931",
+                    "ACX3300",
+                    "BTX3699",
+                    "ACC3600",
+                    "ACX2900",
+                    "BFC2140",
+                    "ACX3900"
+                ],
+                "children": [],
+                "level": 3
+            },
+            {
+                "id": "req_5",
+                "parent_id": "req_3",
+                "type": "AND",
+                "title": "Professional Accounting Accreditation",
+                "description": "If you are seeking membership to ACCA, CA ANZ or CPA you should complete the following units as part of, and in addition to, the requirements of your Accounting major: ACC3600. ACX3900. BFC2140, BTC2000. BTX3931, ECC1100 (or their X coded equivalents). Some of these units will need to be completed in the elective space in your course. ACX3900 can also be used to satisfy course capstone requirements.",
+                "credit_points": null,
+                "num_required": null,
+                "units": [],
+                "children": [],
+                "level": 3
+            },
+            {
+                "id": "req_6",
+                "parent_id": "req_2",
+                "type": "AND",
+                "title": "Core commerce units",
+                "description": "You must complete the following units",
+                "credit_points": 36,
+                "num_required": null,
+                "units": [
+                    "ACC2400",
+                    "ACC2100",
+                    "ACC1100",
+                    "ACC3200",
+                    "ACC3100",
+                    "ACC2200"
+                ],
+                "children": [],
+                "level": 2
+            },
+            {
+                "id": "req_7",
+                "parent_id": "root_1",
+                "type": "AND",
+                "title": "Bachelor of Business",
+                "description": "If you are studying the Bachelor of Business, you must enrol in the units listed for the Bachelor of Business major at the Caulfield Campus, except if these are offered in the Winter or Summer teaching periods.",
+                "credit_points": 48,
+                "num_required": null,
+                "units": [],
+                "children": [
+                    "req_8",
+                    "req_9"
+                ],
+                "level": 1
+            },
+            {
+                "id": "req_8",
+                "parent_id": "req_7",
+                "type": "AND",
+                "title": "Core business units",
+                "description": "You must complete the following units",
+                "credit_points": 36,
+                "num_required": null,
+                "units": [
+                    "ACF1100",
+                    "ACF2100",
+                    "ACF3200",
+                    "ACF2400",
+                    "ACF2200",
+                    "ACF3100"
+                ],
+                "children": [],
+                "level": 2
+            },
+            {
+                "id": "req_9",
+                "parent_id": "req_7",
+                "type": "AND",
+                "title": "Additional business units and Professional Accounting Accreditation",
+                "description": "<br />Note: If you are seeking professional accounting accreditation, you will need to complete specified units in addition to the requirements of the accounting major.  Information regarding unit selection for accreditation is outlined below.<br /><br />If you are studying the Bachelor of Business, you must enrol in the units listed for the Bachelor of Business major at the Caulfield campus, except if these are offered in Winter or Summer.  <br /><br />Double degree with another faculty: Please note, if you are completing the Accounting major as part of your double degree, ECX2953 is required for professional accreditation and can be completed in Part A instead of ECF1100, and you will not be required to complete ECF1200.<br />",
+                "credit_points": 12,
+                "num_required": null,
+                "units": [],
+                "children": [
+                    "req_10",
+                    "req_11"
+                ],
+                "level": 2
+            },
+            {
+                "id": "req_10",
+                "parent_id": "req_9",
+                "type": "AND",
+                "title": "Professional Accounting Accreditation",
+                "description": "If you are seeking membership to ACCA, CA ANZ or CPA you should complete the following units as part of, and in addition to, the requirements of your Accounting major: ACF3600, ACX3900, BFF2140, BTF2000. BTX3931, ECF1200 (or their X coded equivalents).  Some of these units will need to be completed in the elective space in your course. ACX3900 can also be used to satisfy course capstone requirements.",
+                "credit_points": null,
+                "num_required": null,
+                "units": [],
+                "children": [],
+                "level": 3
+            },
+            {
+                "id": "req_11",
+                "parent_id": "req_9",
+                "type": "AND",
+                "title": "Additional Accounting Units",
+                "description": "You must complete 12 credit points from the following units, with at least one unit at Level 3.         ",
+                "credit_points": 12,
+                "num_required": null,
+                "units": [
+                    "ECF1200",
+                    "ACX2900",
+                    "BFF1001",
+                    "ACX3800",
+                    "ACX3500",
+                    "ACX3900",
+                    "BTX3699",
+                    "ACF3600",
+                    "BTX3931",
+                    "BTF2000",
+                    "ACX3150",
+                    "BFF2140",
+                    "ACX3300"
+                ],
+                "children": [],
+                "level": 3
+            },
+            {
+                "id": "req_12",
+                "parent_id": "root_1",
+                "type": "AND",
+                "title": "Rules",
+                "description": "No more than 12 credit points at Level 1 may be credited to a major and at least 18 credit points must be credited at Level 3.",
+                "credit_points": 0,
+                "num_required": null,
+                "units": [],
+                "children": [],
+                "level": 1
+            }
+        ],
+        "all_units": {
+            "ACX3500": "Accounting study tour",
+            "BTC2000": "Corporations law",
+            "BFF1001": "Foundations of finance",
+            "ACX3150": "Financial analysis and valuation",
+            "ECC1100": "Principles of macroeconomics",
+            "BTX3931": "Taxation law",
+            "ACX3300": "Predictive analytics in accounting",
+            "BTX3699": "Insolvency and reconstruction",
+            "ACC3600": "Auditing and assurance",
+            "ACX2900": "Accounting for sustainability",
+            "BFC2140": "Corporate finance",
+            "ACX3900": "Global issues in accounting",
+            "ACC2400": "Accounting information systems",
+            "ACC2100": "Financial accounting",
+            "ACC1100": "Introduction to financial accounting",
+            "ACC3200": "Management accounting",
+            "ACC3100": "Advanced financial accounting",
+            "ACC2200": "Introduction to management accounting",
+            "ACF1100": "Introduction to financial accounting",
+            "ACF2100": "Financial accounting",
+            "ACF3200": "Management accounting",
+            "ACF2400": "Accounting information systems",
+            "ACF2200": "Introduction to management accounting",
+            "ACF3100": "Advanced financial accounting",
+            "ECF1200": "Macroeconomics",
+            "ACX3800": "Accounting for climate change",
+            "ACF3600": "Auditing and assurance",
+            "BTF2000": "Corporations law",
+            "BFF2140": "Business finance"
+        },
+        "statistics": {
+            "total_requirements": 12,
+            "total_units": 29,
+            "max_depth": 3
+        }
+    },
+    "ACTRLSTD07": {
+        "course_code": "ACTRLSTD07",
+        "course_title": "Actuarial studies",
+        "total_credit_points": 48,
+        "requirement_groups": [
+            {
+                "id": "root_1",
+                "parent_id": null,
+                "type": "AND",
+                "title": "ACTRLSTD07 - Complete Requirements",
+                "description": "Complete all requirements for Actuarial studies",
+                "credit_points": 48,
+                "num_required": null,
+                "units": [],
+                "children": [
+                    "req_2",
+                    "req_3",
+                    "req_4"
+                ],
+                "level": 0
+            },
+            {
+                "id": "req_2",
+                "parent_id": "root_1",
+                "type": "AND",
+                "title": "Additional actuarial studies units",
+                "description": "You must complete one of the following units",
+                "credit_points": 6,
+                "num_required": null,
+                "units": [
+                    "ETC3460",
+                    "ETC3520",
+                    "ETC3550",
+                    "ETC2410",
+                    "BFC2140"
+                ],
+                "children": [],
+                "level": 1
+            },
+            {
+                "id": "req_3",
+                "parent_id": "root_1",
+                "type": "AND",
+                "title": "Rules",
+                "description": "No more than 12 credit points at Level 1 may be credited to a major and at least 18 credit points must be credited to the major at Level 3.",
+                "credit_points": 0,
+                "num_required": null,
+                "units": [],
+                "children": [],
+                "level": 1
+            },
+            {
+                "id": "req_4",
+                "parent_id": "root_1",
+                "type": "AND",
+                "title": "Core units",
+                "description": "You must complete the following units",
+                "credit_points": 42,
+                "num_required": null,
+                "units": [
+                    "ETC3430",
+                    "ETC3420",
+                    "ETC2520",
+                    "ETC2430",
+                    "ETC2560",
+                    "ETC3530",
+                    "ETC2440"
+                ],
+                "children": [],
+                "level": 1
+            }
+        ],
+        "all_units": {
+            "ETC3460": "Financial econometrics",
+            "ETC3520": "Foundations of quantitative finance",
+            "ETC3550": "Applied forecasting",
+            "ETC2410": "Introductory econometrics",
+            "BFC2140": "Corporate finance",
+            "ETC3430": "Financial mathematics under uncertainty",
+            "ETC3420": "Applied insurance methods",
+            "ETC2520": "Probability and statistical inference for economics and business",
+            "ETC2430": "Actuarial cash flow modelling",
+            "ETC2560": "Statistical modelling for actuarial studies",
+            "ETC3530": "Life insurance mathematics",
+            "ETC2440": "Mathematics for economics and business"
+        },
+        "statistics": {
+            "total_requirements": 4,
+            "total_units": 12,
+            "max_depth": 1
+        }
+    },
+    "BUSBKFIN09": {
+        "course_code": "BUSBKFIN09",
+        "course_title": "Banking and finance",
+        "total_credit_points": 48,
+        "requirement_groups": [
+            {
+                "id": "root_1",
+                "parent_id": null,
+                "type": "AND",
+                "title": "BUSBKFIN09 - Complete Requirements",
+                "description": "Complete all requirements for Banking and finance",
+                "credit_points": 48,
+                "num_required": null,
+                "units": [],
+                "children": [
+                    "req_2",
+                    "req_6",
+                    "req_7"
+                ],
+                "level": 0
+            },
+            {
+                "id": "req_2",
+                "parent_id": "root_1",
+                "type": "AND",
+                "title": "Additional banking and finance units",
+                "description": "You must complete one of the following paired unit groups (12 credit points)",
+                "credit_points": 12,
+                "num_required": null,
+                "units": [],
+                "children": [
+                    "req_3",
+                    "req_4",
+                    "req_5"
+                ],
+                "level": 1
+            },
+            {
+                "id": "req_3",
+                "parent_id": "req_2",
+                "type": "OR",
+                "title": "Banking",
+                "description": "You must complete the following units",
+                "credit_points": 12,
+                "num_required": null,
+                "units": [
+                    "BFF3841",
+                    "BFF3351"
+                ],
+                "children": [],
+                "level": 2
+            },
+            {
+                "id": "req_4",
+                "parent_id": "req_2",
+                "type": "OR",
+                "title": "Investment and security analysis ",
+                "description": "You must complete the following units",
+                "credit_points": 12,
+                "num_required": null,
+                "units": [
+                    "BFF3751",
+                    "BFF2701"
+                ],
+                "children": [],
+                "level": 2
+            },
+            {
+                "id": "req_5",
+                "parent_id": "req_2",
+                "type": "OR",
+                "title": "Financial management",
+                "description": "You must complete the following units",
+                "credit_points": 12,
+                "num_required": null,
+                "units": [
+                    "BFF3651",
+                    "BFF3140"
+                ],
+                "children": [],
+                "level": 2
+            },
+            {
+                "id": "req_6",
+                "parent_id": "root_1",
+                "type": "AND",
+                "title": "Rules",
+                "description": "No more than 12 credit points at level 1 may be credited to a major and at least 18 credit points must be credited to the major at Level 3.",
+                "credit_points": null,
+                "num_required": null,
+                "units": [],
+                "children": [],
+                "level": 1
+            },
+            {
+                "id": "req_7",
+                "parent_id": "root_1",
+                "type": "AND",
+                "title": "Core units",
+                "description": "You must complete the following units",
+                "credit_points": 36,
+                "num_required": null,
+                "units": [
+                    "BFF2140",
+                    "BFF2401",
+                    "BFF1001",
+                    "BFF3121",
+                    "BFF3231",
+                    "BFF3999"
+                ],
+                "children": [],
+                "level": 1
+            }
+        ],
+        "all_units": {
+            "BFF3841": "Credit analysis and lending management",
+            "BFF3351": "Investment banking",
+            "BFF3751": "Derivatives",
+            "BFF2701": "Equity markets",
+            "BFF3651": "Treasury management",
+            "BFF3140": "Advanced business finance",
+            "BFF2140": "Business finance",
+            "BFF2401": "Commercial banking and finance",
+            "BFF1001": "Foundations of finance",
+            "BFF3121": "Investments and portfolio management",
+            "BFF3231": "International finance",
+            "BFF3999": "Finance and society"
+        },
+        "statistics": {
+            "total_requirements": 7,
+            "total_units": 12,
+            "max_depth": 2
+        }
+    },
+    "BUSMNGMT02": {
+        "course_code": "BUSMNGMT02",
+        "course_title": "Business management",
+        "total_credit_points": 24,
+        "requirement_groups": [
+            {
+                "id": "root_1",
+                "parent_id": null,
+                "type": "AND",
+                "title": "BUSMNGMT02 - Complete Requirements",
+                "description": "Complete all requirements for Business management",
+                "credit_points": 24,
+                "num_required": null,
+                "units": [],
+                "children": [
+                    "req_2"
+                ],
+                "level": 0
+            },
+            {
+                "id": "req_2",
+                "parent_id": "root_1",
+                "type": "AND",
+                "title": "Business management units",
+                "description": "You must complete 24 credit points from the following units, offered at the Caulfield campus, with at least two units (12 credit points) at Level 2 or 3.",
+                "credit_points": 24,
+                "num_required": null,
+                "units": [
+                    "MGX3991",
+                    "MGX2661",
+                    "MGF2351",
+                    "MGF3621",
+                    "MGF3681",
+                    "MGF1010",
+                    "MGF2656",
+                    "MGX3121",
+                    "MGX3110",
+                    "MGF2341",
+                    "MGX3250",
+                    "MGX3100",
+                    "MGF1100",
+                    "MGX2111",
+                    "MGX3771",
+                    "MGX3441",
+                    "MGX2021"
+                ],
+                "children": [],
+                "level": 1
+            }
+        ],
+        "all_units": {
+            "MGX3991": "Leadership principles and practices",
+            "MGX2661": "Sustainable human resource management",
+            "MGF2351": "International business",
+            "MGF3621": "Organisational change",
+            "MGF3681": "International management",
+            "MGF1010": "Introduction to management",
+            "MGF2656": "HRM and managing global workforces",
+            "MGX3121": "Foundations and futures of globalisation",
+            "MGX3110": "Strategic management",
+            "MGF2341": "Managing employee relations",
+            "MGX3250": "Innovation, entrepreneurship and intrapreneurship",
+            "MGX3100": "Ethics and sustainable business practices",
+            "MGF1100": "Managerial communication",
+            "MGX2111": "Organisational behaviour",
+            "MGX3771": "Operations management",
+            "MGX3441": "Human resource strategy",
+            "MGX2021": "Social issues in organising"
+        },
+        "statistics": {
+            "total_requirements": 2,
+            "total_units": 17,
+            "max_depth": 1
+        }
+    },
+    "BUSMRKTG02": {
+        "course_code": "BUSMRKTG02",
+        "course_title": "Marketing",
+        "total_credit_points": 24,
+        "requirement_groups": [
+            {
+                "id": "root_1",
+                "parent_id": null,
+                "type": "AND",
+                "title": "BUSMRKTG02 - Complete Requirements",
+                "description": "Complete all requirements for Marketing",
+                "credit_points": 24,
+                "num_required": null,
+                "units": [],
+                "children": [
+                    "req_2",
+                    "req_3"
+                ],
+                "level": 0
+            },
+            {
+                "id": "req_2",
+                "parent_id": "root_1",
+                "type": "AND",
+                "title": "Additional marketing unit",
+                "description": "You must complete one Level 1, 2 or 3 unit (6 credit points) with the prefix MKF or MKX offered at the Caulfield campus.",
+                "credit_points": 6,
+                "num_required": null,
+                "units": [],
+                "children": [],
+                "level": 1
+            },
+            {
+                "id": "req_3",
+                "parent_id": "root_1",
+                "type": "AND",
+                "title": "Core units",
+                "description": "You must complete the following units",
+                "credit_points": 18,
+                "num_required": null,
+                "units": [
+                    "MKF2111",
+                    "MKF1120",
+                    "MKF2801"
+                ],
+                "children": [],
+                "level": 1
+            }
+        ],
+        "all_units": {
+            "MKF2111": "Buyer behaviour",
+            "MKF1120": "Marketing theory and practice",
+            "MKF2801": "Marketing insights"
+        },
+        "statistics": {
+            "total_requirements": 3,
+            "total_units": 3,
+            "max_depth": 1
+        }
+    },
+    "BUSECONO02": {
+        "course_code": "BUSECONO02",
+        "course_title": "Business economics",
+        "total_credit_points": 24,
+        "requirement_groups": [
+            {
+                "id": "root_1",
+                "parent_id": null,
+                "type": "AND",
+                "title": "BUSECONO02 - Complete Requirements",
+                "description": "Complete all requirements for Business economics",
+                "credit_points": 24,
+                "num_required": null,
+                "units": [],
+                "children": [
+                    "req_2",
+                    "req_3"
+                ],
+                "level": 0
+            },
+            {
+                "id": "req_2",
+                "parent_id": "root_1",
+                "type": "AND",
+                "title": "Regional economics unit",
+                "description": "You must complete one unit from the above list not previously completed, or from the following regional economics units.",
+                "credit_points": 6,
+                "num_required": null,
+                "units": [
+                    "ECX5550",
+                    "ECX5642",
+                    "ECX5001",
+                    "ECX5630",
+                    "ECX5631",
+                    "ECX5641"
+                ],
+                "children": [],
+                "level": 1
+            },
+            {
+                "id": "req_3",
+                "parent_id": "root_1",
+                "type": "AND",
+                "title": "Core units",
+                "description": "You must complete 18 credit points from the following units",
+                "credit_points": 18,
+                "num_required": null,
+                "units": [
+                    "ECX5400",
+                    "ECX5550",
+                    "ECX5600",
+                    "ECF5200",
+                    "ECX5001",
+                    "ECX5520",
+                    "ETF5922",
+                    "ECF5923",
+                    "ECC5801",
+                    "ECF5921",
+                    "ECX5470",
+                    "ECF5927",
+                    "ECF5560",
+                    "ECF5040"
+                ],
+                "children": [],
+                "level": 1
+            }
+        ],
+        "all_units": {
+            "ECX5550": "Business in Asia",
+            "ECX5642": "Southeast Asian economies and global business",
+            "ECX5001": "Economics of environment and sustainability",
+            "ECX5630": "Chinese economy and global business",
+            "ECX5631": "The Australian economy",
+            "ECX5641": "The Indian Economy",
+            "ECX5400": "Design and evaluation of economic, public, and social programs",
+            "ECX5600": "Behavioural economics",
+            "ECF5200": "Game theory and business strategy",
+            "ECX5520": "Economics of global investment decisions",
+            "ETF5922": "Data visualisation and communication",
+            "ECF5923": "Macroeconomic policy",
+            "ECC5801": "Prosperity, poverty and sustainability in a globalised world",
+            "ECF5921": "International economics",
+            "ECX5470": "Competition, regulation and policy",
+            "ECF5927": "Managerial economics",
+            "ECF5560": "Cost benefit analysis and economic decision making",
+            "ECF5040": "Industry economics"
+        },
+        "statistics": {
+            "total_requirements": 3,
+            "total_units": 18,
+            "max_depth": 1
+        }
+    },
+    "DIGMRKTG06": {
+        "course_code": "DIGMRKTG06",
+        "course_title": "Digital marketing",
+        "total_credit_points": 24,
+        "requirement_groups": [
+            {
+                "id": "root_1",
+                "parent_id": null,
+                "type": "AND",
+                "title": "DIGMRKTG06 - Complete Requirements",
+                "description": "Complete all requirements for Digital marketing",
+                "credit_points": 24,
+                "num_required": null,
+                "units": [],
+                "children": [
+                    "req_2"
+                ],
+                "level": 0
+            },
+            {
+                "id": "req_2",
+                "parent_id": "root_1",
+                "type": "AND",
+                "title": "Core units",
+                "description": "You must complete the following units",
+                "credit_points": 24,
+                "num_required": null,
+                "units": [
+                    "MKM2300",
+                    "MKW2420",
+                    "MKW1120",
+                    "MKM3400"
+                ],
+                "children": [],
+                "level": 1
+            }
+        ],
+        "all_units": {
+            "MKM2300": "Introduction to digital marketing",
+            "MKW2420": "Marketing research methods",
+            "MKW1120": "Marketing fundamentals",
+            "MKM3400": "Marketing analytics"
+        },
+        "statistics": {
+            "total_requirements": 2,
+            "total_units": 4,
+            "max_depth": 1
+        }
+    },
+    "DTANLBUS02": {
+        "course_code": "DTANLBUS02",
+        "course_title": "Data analytics for business",
+        "total_credit_points": 24,
+        "requirement_groups": [
+            {
+                "id": "root_1",
+                "parent_id": null,
+                "type": "AND",
+                "title": "DTANLBUS02 - Complete Requirements",
+                "description": "Complete all requirements for Data analytics for business",
+                "credit_points": 24,
+                "num_required": null,
+                "units": [],
+                "children": [
+                    "req_2",
+                    "req_3"
+                ],
+                "level": 0
+            },
+            {
+                "id": "req_2",
+                "parent_id": "root_1",
+                "type": "AND",
+                "title": "Intermediate units",
+                "description": "You must complete 12 credit points from the following units",
+                "credit_points": 12,
+                "num_required": null,
+                "units": [
+                    "ETF5922",
+                    "ETF5248",
+                    "ETF5910",
+                    "ETF5202",
+                    "ETF5650",
+                    "ETF5912",
+                    "ETF5970"
+                ],
+                "children": [],
+                "level": 1
+            },
+            {
+                "id": "req_3",
+                "parent_id": "root_1",
+                "type": "AND",
+                "title": "Advanced units",
+                "description": "You must complete 12 credit points from the following units",
+                "credit_points": 12,
+                "num_required": null,
+                "units": [
+                    "ETF5600",
+                    "ETF5330",
+                    "ETX5500",
+                    "ETF5231",
+                    "ETF5952",
+                    "ETF5932",
+                    "ETF5480"
+                ],
+                "children": [],
+                "level": 1
+            }
+        ],
+        "all_units": {
+            "ETF5922": "Data visualisation and communication",
+            "ETF5248": "Optimisation for business",
+            "ETF5910": "Introductory applied econometrics",
+            "ETF5202": "Statistical foundations of business analytics",
+            "ETF5650": "Business optimisation skills",
+            "ETF5912": "Data analysis in business",
+            "ETF5970": "Mathematics for business",
+            "ETF5600": "Quantitative analysis of limited dependent variables",
+            "ETF5330": "Quantitative methods for financial markets",
+            "ETX5500": "High dimensional data analysis",
+            "ETF5231": "Business forecasting",
+            "ETF5952": "Quantitative methods for risk analysis",
+            "ETF5932": "Predictive analytics and machine learning",
+            "ETF5480": "Decision modelling for business"
+        },
+        "statistics": {
+            "total_requirements": 3,
+            "total_units": 14,
+            "max_depth": 1
         }
     }
 }
