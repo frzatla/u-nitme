@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import { useState } from "react";
 import { Check, ChevronDown, Search, Sparkles } from "lucide-react";
 
 type CourseOption = { code: string; title: string };
@@ -344,10 +343,6 @@ export default function StudentDetailsFormContent({
                 setSelectedCourse(value);
                 setSelectedAos("");
               }}
-              onChange={(nextCourse) => {
-                setSelectedCourse(nextCourse);
-                setSelectedAos("");
-              }}
             />
           </div>
         </div>
@@ -394,10 +389,6 @@ export default function StudentDetailsFormContent({
                 id="minorMajorType"
                 name="minorMajorType"
                 value={minorMajorType}
-                onChange={(e) => {
-                  setMinorMajorType(e.target.value);
-                  setSelectedMinorMajorCode("");
-                }}
                 onChange={(e) => {
                   setMinorMajorType(e.target.value);
                   setSelectedMinorMajorCode("");
