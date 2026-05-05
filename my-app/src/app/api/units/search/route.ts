@@ -1,10 +1,13 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getElasticsearchClient, UNITS_INDEX } from "@/lib/elasticsearch";
+import { calculateUnitDifficulties } from "@/lib/unitDifficulty";
 
 export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url);
   const q = searchParams.get("q")?.trim();
   const level = searchParams.get("level");
+  const year = searchParams.get("year");
+  const semester = searchParams.get("semester");
   const size = Math.min(parseInt(searchParams.get("size") ?? "12"), 50);
 
   if (!q) return NextResponse.json({ units: [] });
@@ -36,7 +39,19 @@ export async function GET(request: NextRequest) {
       },
     });
 
-    const units = result.hits.hits.map((hit) => hit._source);
+    const searchUnits = result.hits.hits.map((hit) => hit._source as any);
+    const difficultyByCode = calculateUnitDifficulties(
+      searchUnits.map((unit) => String(unit.code || "")),
+      { year, semester },
+    );
+
+    const units = searchUnits.map((unit) => {
+      const code = String(unit.code || "").trim().toUpperCase();
+      return {
+        ...unit,
+        ...difficultyByCode[code],
+      };
+    });
     return NextResponse.json({ units });
   } catch (error) {
     console.error("Search error:", error);

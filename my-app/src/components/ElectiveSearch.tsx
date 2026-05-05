@@ -3,6 +3,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import { Search, X, Send, Bot, Sparkles, Plus, BookOpen } from "lucide-react";
 import { Unit } from "./CoursePlanner";
+import { getDifficultyLabel } from "@/lib/difficulty";
 
 type EsUnit = {
   code: string;
@@ -11,6 +12,8 @@ type EsUnit = {
   credit_points: number;
   school: string;
   offerings?: { period: string; location: string }[];
+  difficulty_score?: number | null;
+  difficulty_level?: string | null;
 };
 
 type ChatMessage = {
@@ -36,6 +39,8 @@ function toCoursePlannerUnit(u: EsUnit): Unit {
     category: "Elective",
     level: u.level ? `L${u.level}` : "—",
     cp: typeof u.credit_points === "number" ? u.credit_points : parseInt(String(u.credit_points)) || 6,
+    difficultyScore: u.difficulty_score ?? null,
+    difficultyLevel: u.difficulty_level ?? null,
   };
 }
 
@@ -71,6 +76,9 @@ function UnitResultCard({
             {unit.offerings.map((o) => o.period).slice(0, 2).join(" · ")}
           </p>
         )}
+        <p className="mt-1 text-[11px] text-black/35">
+          Difficulty: {getDifficultyLabel(unit)}
+        </p>
       </div>
       <button
         onClick={() => onAdd(unit)}
@@ -366,11 +374,6 @@ function ChatTab({ onSelectUnit, planUnits = [] }: { onSelectUnit: (unit: Unit) 
 
 export default function ElectiveSearch({ isOpen, onClose, onSelectUnit, planUnits = [] }: Props) {
   const [tab, setTab] = useState<Tab>("search");
-
-  // Reset to search tab when modal opens
-  useEffect(() => {
-    if (isOpen) setTab("search");
-  }, [isOpen]);
 
   // Close on Escape
   useEffect(() => {

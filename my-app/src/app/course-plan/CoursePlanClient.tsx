@@ -13,7 +13,10 @@ function buildUnitQueue(schedule: Schedule): Map<string, ScheduledUnit[]> {
   schedule.schedule.forEach((sem) => {
     sem.units.forEach((u) => {
       if (!map.has(u.code)) map.set(u.code, []);
-      map.get(u.code)!.push({ ...u });
+      const unit = { ...u };
+      delete unit.difficulty_score;
+      delete unit.difficulty_level;
+      map.get(u.code)!.push(unit);
     });
   });
   return map;

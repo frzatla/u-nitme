@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import {
   DndContext,
   DragOverlay,
@@ -28,6 +28,7 @@ import {
   Search,
 } from "lucide-react";
 import { Schedule, UnitCategory } from "@/lib/types";
+import { getDifficultyLabel } from "@/lib/difficulty";
 import UnitDetailPanel from "./UnitDetailPanel";
 import ElectiveSearch from "./ElectiveSearch";
 
@@ -39,14 +40,19 @@ export type Unit = {
   category: UnitCategory;
   level: string;
   cp: number;
+  difficultyScore?: number | null;
+  difficultyLevel?: string | null;
 };
 
 export type Slot = Unit | null;
+
+type UnitDifficultyPatch = Pick<Unit, "difficultyScore" | "difficultyLevel">;
 
 export type Semester = {
   id: string;
   title: string;
   year: number;
+  period?: string | null;
   units: Slot[]; // always exactly 4 slots
 };
 
@@ -118,6 +124,7 @@ function buildFromSchedule(schedule: Schedule, yearStart: number): Semester[] {
         id: s.semester,
         title: `Semester ${semNum}`,
         year: yearStart + (relativeYear - 1),
+        period: s.period,
         units: Array.from({ length: 4 }, (_, i) => {
           const u = s.units[i];
           return u
@@ -127,6 +134,8 @@ function buildFromSchedule(schedule: Schedule, yearStart: number): Semester[] {
                 category: u.category,
                 level: u.level !== null ? `L${u.level}` : "—",
                 cp: u.credit_points,
+                difficultyScore: u.difficulty_score ?? null,
+                difficultyLevel: u.difficulty_level ?? null,
               }
             : null;
         }),
@@ -346,9 +355,14 @@ function UnitCardContent({
           </p>
           <p className="text-[12px] text-black/35">Click to search for a unit</p>
         </div>
-        <div className="mt-5 flex items-center justify-between border-t border-black/[0.06] pt-3">
-          <span className="text-[13px] font-medium text-black/25">{unit.cp} CP</span>
-          <Search className="h-4 w-4 text-[#DD8255]/40" />
+        <div className="mt-5 border-t border-black/[0.06] pt-3">
+          <div className="flex items-center justify-between">
+            <span className="text-[13px] font-medium text-black/25">{unit.cp} CP</span>
+            <Search className="h-4 w-4 text-[#DD8255]/40" />
+          </div>
+          <p className="mt-1.5 text-[12px] text-black/35">
+            Difficulty: {getDifficultyLabel(unit)}
+          </p>
         </div>
       </div>
     );
@@ -381,11 +395,16 @@ function UnitCardContent({
         <p className="mt-1 text-[14px] leading-6 text-black/45">{unit.name}</p>
       </div>
 
-      <div className="mt-5 flex items-center justify-between border-t border-black/[0.06] pt-3">
-        <span className="text-[13px] font-medium text-black/25">
-          {unit.cp} CP
-        </span>
-        <Ellipsis className="h-4 w-4 text-black/18" />
+      <div className="mt-5 border-t border-black/[0.06] pt-3">
+        <div className="flex items-center justify-between">
+          <span className="text-[13px] font-medium text-black/25">
+            {unit.cp} CP
+          </span>
+          <Ellipsis className="h-4 w-4 text-black/18" />
+        </div>
+        <p className="mt-1.5 text-[12px] text-black/35">
+          Difficulty: {getDifficultyLabel(unit)}
+        </p>
       </div>
     </div>
   );
@@ -482,10 +501,103 @@ export default function CoursePlanner({
   const [validSemIds, setValidSemIds] = useState<Set<string> | null>(null);
   const [selectedUnit, setSelectedUnit] = useState<Unit | null>(null);
   const [electiveSlotId, setElectiveSlotId] = useState<string | null>(null);
+  const difficultyGroups = useMemo(() => {
+    const groups = new Map<string, Set<string>>();
+
+    semesters.forEach((sem) => {
+      const period = sem.period === "S2" ? "S2" : "S1";
+      if (!groups.has(period)) groups.set(period, new Set());
+
+      sem.units.forEach((unit) => {
+        if (unit && unit.code !== "ELECTIVE") {
+          groups.get(period)!.add(unit.code);
+        }
+      });
+    });
+
+    return [...groups.entries()]
+      .map(([period, codes]) => ({
+        period,
+        codes: [...codes].sort(),
+      }))
+      .filter((group) => group.codes.length > 0)
+      .sort((a, b) => a.period.localeCompare(b.period));
+  }, [semesters]);
+  const difficultyRequestKey = difficultyGroups
+    .map((group) => `${group.period}:${group.codes.join(",")}`)
+    .join("|");
 
   const sensors = useSensors(
     useSensor(PointerSensor, { activationConstraint: { distance: 5 } }),
   );
+
+  useEffect(() => {
+    if (!difficultyRequestKey) return;
+
+    const controller = new AbortController();
+    Promise.all(
+      difficultyGroups.map((group) => {
+        const params = new URLSearchParams({
+          codes: group.codes.join(","),
+          semester: group.period,
+        });
+
+        return fetch(`/api/units/difficulty?${params}`, {
+          signal: controller.signal,
+        })
+          .then((response) => response.json())
+          .then((data) =>
+            (data.units ?? []).map((unit: any) => ({
+              period: group.period,
+              code: unit.code,
+              difficultyScore: unit.difficulty_score ?? null,
+              difficultyLevel: unit.difficulty_level ?? null,
+            })),
+          );
+      }),
+    )
+      .then((results) => {
+        const difficultyByCode = new Map<string, UnitDifficultyPatch>(
+          results.flat().map((unit) => [
+            `${unit.period}:${unit.code}`,
+            {
+              difficultyScore: unit.difficultyScore,
+              difficultyLevel: unit.difficultyLevel,
+            },
+          ]),
+        );
+
+        setSemesters((current) => {
+          let changed = false;
+          const next = current.map((sem) => ({
+            ...sem,
+            units: sem.units.map((unit) => {
+              if (!unit || unit.code === "ELECTIVE") return unit;
+              const period = sem.period === "S2" ? "S2" : "S1";
+              const difficulty = difficultyByCode.get(`${period}:${unit.code}`);
+              if (!difficulty) return unit;
+              if (
+                unit.difficultyScore === difficulty.difficultyScore &&
+                unit.difficultyLevel === difficulty.difficultyLevel
+              ) {
+                return unit;
+              }
+              changed = true;
+              return { ...unit, ...difficulty };
+            }),
+          }));
+
+          return changed ? next : current;
+        });
+      })
+      .catch((error) => {
+        if (error.name !== "AbortError") {
+          console.error("Failed to load difficulty scores:", error);
+        }
+      });
+
+    return () => controller.abort();
+  }, [difficultyGroups, difficultyRequestKey]);
 
   function handleDragStart(event: DragStartEvent) {
     const slotId = String(event.active.id);
@@ -845,6 +957,7 @@ export default function CoursePlanner({
 
       {/* Elective search modal */}
       <ElectiveSearch
+        key={electiveSlotId ?? "closed"}
         isOpen={electiveSlotId !== null}
         onClose={() => setElectiveSlotId(null)}
         onSelectUnit={handleElectiveSelected}

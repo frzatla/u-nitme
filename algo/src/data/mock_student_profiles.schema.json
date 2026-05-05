@@ -1,0 +1,38 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Mock student profiles",
+  "type": "object",
+  "required": ["version", "students"],
+  "properties": {
+    "version": { "type": "integer" },
+    "generated_by": { "type": "string" },
+    "students": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "student_id",
+          "display_name",
+          "cohort_band",
+          "academic_status",
+          "gpa"
+        ],
+        "properties": {
+          "student_id": { "type": "string", "pattern": "^S\\d{4}$" },
+          "display_name": { "type": "string" },
+          "cohort_band": {
+            "type": "string",
+            "enum": ["developing", "steady", "strong", "high"]
+          },
+          "academic_status": {
+            "type": "string",
+            "enum": ["active", "graduate", "dropout"]
+          },
+          "gpa": { "type": "number", "minimum": 0, "maximum": 4 }
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "additionalProperties": false
+}

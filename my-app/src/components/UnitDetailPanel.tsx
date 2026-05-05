@@ -5,6 +5,7 @@ import { X, BookOpen, MessageSquare } from "lucide-react";
 import UnitHandbookCard from "./UnitHandbookCard";
 import UnitReviewModal from "./UnitReviewModal";
 import { UnitCategory } from "@/lib/types";
+import { getDifficultyLabel } from "@/lib/difficulty";
 
 type PanelUnit = {
   code: string;
@@ -12,6 +13,8 @@ type PanelUnit = {
   category: UnitCategory;
   level: string;
   cp: number;
+  difficultyScore?: number | null;
+  difficultyLevel?: string | null;
 };
 
 const categoryPillStyles: Record<UnitCategory, string> = {
@@ -30,12 +33,15 @@ type Props = {
 };
 
 export default function UnitDetailPanel({ unit, onClose }: Props) {
-  const [tab, setTab] = useState<Tab>("handbook");
+  const [tabState, setTabState] = useState<{ code: string | null; tab: Tab }>({
+    code: null,
+    tab: "handbook",
+  });
+  const tab = tabState.code === unit?.code ? tabState.tab : "handbook";
 
-  // Reset tab when unit changes
-  useEffect(() => {
-    setTab("handbook");
-  }, [unit?.code]);
+  function selectTab(nextTab: Tab) {
+    setTabState({ code: unit?.code ?? null, tab: nextTab });
+  }
 
   // Close on Escape
   useEffect(() => {
@@ -91,7 +97,7 @@ export default function UnitDetailPanel({ unit, onClose }: Props) {
         {/* Tab bar */}
         <div className="flex border-b border-black/[0.06]">
           <button
-            onClick={() => setTab("handbook")}
+            onClick={() => selectTab("handbook")}
             className={`flex flex-1 items-center justify-center gap-2 px-4 py-3 text-[13px] font-medium transition-colors ${
               tab === "handbook"
                 ? "border-b-2 border-black text-black"
@@ -102,7 +108,7 @@ export default function UnitDetailPanel({ unit, onClose }: Props) {
             Handbook
           </button>
           <button
-            onClick={() => setTab("reviews")}
+            onClick={() => selectTab("reviews")}
             className={`flex flex-1 items-center justify-center gap-2 px-4 py-3 text-[13px] font-medium transition-colors ${
               tab === "reviews"
                 ? "border-b-2 border-black text-black"
@@ -123,7 +129,8 @@ export default function UnitDetailPanel({ unit, onClose }: Props) {
         {/* Footer */}
         <div className="border-t border-black/[0.06] px-5 py-3">
           <p className="text-[12px] text-black/25">
-            {unit.cp} CP · Level {unit.level}
+            {unit.cp} CP · Level {unit.level} · Difficulty:{" "}
+            {getDifficultyLabel(unit)}
           </p>
         </div>
       </div>

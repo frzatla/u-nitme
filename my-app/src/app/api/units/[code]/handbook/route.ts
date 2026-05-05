@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { calculateUnitDifficulties } from "@/lib/unitDifficulty";
 
 // Cache the buildId at module level — valid until server restarts
 let cachedBuildId: string | null = null;
@@ -51,6 +52,7 @@ export async function GET(_request, { params }) {
     }
 
     const pc = json.pageProps.pageContent;
+    const difficulty = calculateUnitDifficulties([upper])[upper];
 
     const offerings: { period: string; location: string; mode: string }[] = (pc.unit_offering ?? [])
       .filter((o: any) => o.publish === "true")
@@ -103,6 +105,7 @@ export async function GET(_request, { params }) {
       offerings,
       assessments,
       requisites,
+      ...difficulty,
       handbookUrl: `https://handbook.monash.edu/2026/units/${upper}`,
     });
   } catch (err) {

@@ -1,0 +1,139 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Mock student transcript dataset",
+  "type": "object",
+  "required": [
+    "version",
+    "gpa_scale",
+    "grade_point_scale",
+    "mark_scale",
+    "students"
+  ],
+  "properties": {
+    "version": {
+      "type": "integer"
+    },
+    "generated_by": {
+      "type": "string"
+    },
+    "gpa_scale": {
+      "type": "string"
+    },
+    "grade_point_scale": {
+      "type": "string"
+    },
+    "mark_scale": {
+      "type": "string"
+    },
+    "formula_note": {
+      "type": "string"
+    },
+    "students": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/student"
+      }
+    }
+  },
+  "$defs": {
+    "student": {
+      "type": "object",
+      "required": [
+        "student_id",
+        "display_name",
+        "cohort_band",
+        "academic_status",
+        "gpa",
+        "enrolments"
+      ],
+      "properties": {
+        "student_id": {
+          "type": "string",
+          "pattern": "^S\\d{4}$"
+        },
+        "display_name": {
+          "type": "string"
+        },
+        "cohort_band": {
+          "type": "string",
+          "enum": [
+            "developing",
+            "steady",
+            "strong",
+            "high"
+          ]
+        },
+        "academic_status": {
+          "type": "string",
+          "enum": [
+            "active",
+            "graduate",
+            "dropout"
+          ]
+        },
+        "gpa": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 4
+        },
+        "enrolments": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/enrolment"
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "enrolment": {
+      "type": "object",
+      "required": [
+        "unit_code",
+        "year",
+        "semester",
+        "mark",
+        "grade",
+        "grade_point"
+      ],
+      "properties": {
+        "unit_code": {
+          "type": "string",
+          "pattern": "^[A-Z]{2,4}\\d{4}$"
+        },
+        "year": {
+          "type": "integer",
+          "minimum": 2020
+        },
+        "semester": {
+          "type": "string",
+          "enum": [
+            "S1",
+            "S2"
+          ]
+        },
+        "mark": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 100
+        },
+        "grade": {
+          "type": "string",
+          "enum": [
+            "HD",
+            "D",
+            "C",
+            "P",
+            "N"
+          ]
+        },
+        "grade_point": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 4
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}

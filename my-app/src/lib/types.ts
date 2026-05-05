@@ -56,12 +56,21 @@ export type UnitCategory =
   | "Elective"
   | "Specialisation";
 
+export type UnitDifficultyLevel =
+  | "Low"
+  | "Moderate"
+  | "Hard"
+  | "Very hard"
+  | "TBD";
+
 export type ScheduledUnit = {
   code: string;
   title: string;
   credit_points: number;
   level: number | null;
   chain_length: number | null;
+  difficulty_score?: number | null;
+  difficulty_level?: UnitDifficultyLevel | string | null;
   extended: boolean | null;
   category: UnitCategory;
 };

@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Check, ChevronDown, Search, Sparkles } from "lucide-react";
 
 type CourseOption = { code: string; title: string };
@@ -48,12 +48,6 @@ function SearchableSelect({
     );
   });
 
-  useEffect(() => {
-    if (!open) {
-      setQuery("");
-    }
-  }, [open]);
-
   return (
     <div>
       <label
@@ -69,7 +63,10 @@ function SearchableSelect({
         <button
           type="button"
           disabled={disabled}
-          onClick={() => setOpen((current) => !current)}
+          onClick={() => {
+            if (open) setQuery("");
+            setOpen((current) => !current);
+          }}
           className={`${inputClass} flex items-center justify-between pr-10 text-left disabled:cursor-not-allowed disabled:opacity-50`}
         >
           <span className={selectedOption ? "text-black" : "text-black/30"}>
@@ -105,6 +102,7 @@ function SearchableSelect({
                       type="button"
                       onClick={() => {
                         onChange(option.code);
+                        setQuery("");
                         setOpen(false);
                       }}
                       className="flex w-full items-start justify-between rounded-xl px-4 py-3 text-left transition-colors hover:bg-black/[0.04]"
@@ -176,14 +174,6 @@ export default function StudentDetailsFormContent({
       : minorMajorType === "major"
         ? majorAosList
         : [];
-
-  useEffect(() => {
-    setSelectedAos("");
-  }, [selectedCourse]);
-
-  useEffect(() => {
-    setSelectedMinorMajorCode("");
-  }, [minorMajorType]);
 
   function clampEndYear(nextStart: string, nextEnd: string) {
     if (!nextEnd) return "";
@@ -264,7 +254,10 @@ export default function StudentDetailsFormContent({
               options={courseCode}
               value={selectedCourse}
               required
-              onChange={setSelectedCourse}
+              onChange={(nextCourse) => {
+                setSelectedCourse(nextCourse);
+                setSelectedAos("");
+              }}
             />
           </div>
         </div>
@@ -311,7 +304,10 @@ export default function StudentDetailsFormContent({
                 id="minorMajorType"
                 name="minorMajorType"
                 value={minorMajorType}
-                onChange={(e) => setMinorMajorType(e.target.value)}
+                onChange={(e) => {
+                  setMinorMajorType(e.target.value);
+                  setSelectedMinorMajorCode("");
+                }}
                 className={`${inputClass} appearance-none pr-10`}
               >
                 <option value="">None</option>

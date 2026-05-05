@@ -10,6 +10,7 @@ import {
   AlertCircle,
   Link,
 } from "lucide-react";
+import { getDifficultyLabel } from "@/lib/difficulty";
 
 type Offering = { period: string; location: string; mode: string };
 type Assessment = { name: string; weight: string; type: string };
@@ -28,35 +29,69 @@ type HandbookData = {
   assessments: Assessment[];
   requisites: Requisite[];
   handbookUrl: string;
+  difficulty_score?: number | null;
+  difficulty_level?: string | null;
 };
 
 type Props = {
-  unit: { code: string; name: string } | null;
+  unit: {
+    code: string;
+    name: string;
+    difficultyScore?: number | null;
+    difficultyLevel?: string | null;
+  } | null;
+};
+
+type HandbookState = {
+  code: string | null;
+  data: HandbookData | null;
+  error: string | null;
 };
 
 export default function UnitHandbookCard({ unit }: Props) {
-  const [data, setData] = useState<HandbookData | null>(null);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+  const [state, setState] = useState<HandbookState>({
+    code: null,
+    data: null,
+    error: null,
+  });
+  const currentCode = unit?.code ?? null;
 
   useEffect(() => {
-    if (!unit || unit.code === "ELECTIVE") return;
+    if (!currentCode || currentCode === "ELECTIVE") return;
 
-    setData(null);
-    setError(null);
-    setLoading(true);
+    let cancelled = false;
 
-    fetch(`/api/units/${unit.code}/handbook`)
+    fetch(`/api/units/${currentCode}/handbook`)
       .then((r) => r.json())
       .then((d) => {
-        if (d.error) setError(d.error);
-        else setData(d);
+        if (cancelled) return;
+        setState({
+          code: currentCode,
+          data: d.error ? null : d,
+          error: d.error ?? null,
+        });
       })
-      .catch(() => setError("Failed to fetch handbook"))
-      .finally(() => setLoading(false));
-  }, [unit?.code]);
+      .catch(() => {
+        if (!cancelled) {
+          setState({
+            code: currentCode,
+            data: null,
+            error: "Failed to fetch handbook",
+          });
+        }
+      });
+
+    return () => {
+      cancelled = true;
+    };
+  }, [currentCode]);
 
   if (!unit) return null;
+
+  const isCurrent = state.code === unit.code;
+  const data = isCurrent ? state.data : null;
+  const error = isCurrent ? state.error : null;
+  const loading = unit.code !== "ELECTIVE" && !isCurrent;
 
   const uniqueOfferings =
     data?.offerings.filter(
@@ -65,6 +100,10 @@ export default function UnitHandbookCard({ unit }: Props) {
           (x) => x.period === o.period && x.location === o.location
         ) === i
     ) ?? [];
+  const difficultyText = getDifficultyLabel({
+    difficulty_score: data?.difficulty_score ?? unit?.difficultyScore ?? null,
+    difficulty_level: data?.difficulty_level ?? unit?.difficultyLevel ?? null,
+  });
 
   return (
     <div className="divide-y divide-black/[0.05]">
@@ -111,6 +150,9 @@ export default function UnitHandbookCard({ unit }: Props) {
               )}
               <span className="inline-flex items-center gap-1.5 rounded-full bg-black/[0.04] px-3 py-1 text-[11px] font-medium text-black/50">
                 {data.creditPoints} CP
+              </span>
+              <span className="inline-flex items-center gap-1.5 rounded-full bg-black/[0.04] px-3 py-1 text-[11px] font-medium text-black/50">
+                Difficulty: {difficultyText}
               </span>
             </div>
           </div>

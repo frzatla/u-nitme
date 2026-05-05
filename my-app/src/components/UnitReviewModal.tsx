@@ -15,29 +15,56 @@ type Props = {
   unit: { code: string; name: string } | null;
 };
 
+type ReviewState = {
+  code: string | null;
+  reviews: Review[];
+  error: string | null;
+};
+
 export default function UnitReviewModal({ unit }: Props) {
-  const [reviews, setReviews] = useState<Review[]>([]);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+  const [state, setState] = useState<ReviewState>({
+    code: null,
+    reviews: [],
+    error: null,
+  });
+  const currentCode = unit?.code ?? null;
 
   useEffect(() => {
-    if (!unit || unit.code === "ELECTIVE") return;
+    if (!currentCode || currentCode === "ELECTIVE") return;
 
-    setReviews([]);
-    setError(null);
-    setLoading(true);
+    let cancelled = false;
 
-    fetch(`/api/units/${unit.code}/reviews`)
+    fetch(`/api/units/${currentCode}/reviews`)
       .then((r) => r.json())
       .then((data) => {
-        if (data.error) setError(data.error);
-        else setReviews(data);
+        if (cancelled) return;
+        setState({
+          code: currentCode,
+          reviews: data.error ? [] : data,
+          error: data.error ?? null,
+        });
       })
-      .catch(() => setError("Failed to fetch reviews"))
-      .finally(() => setLoading(false));
-  }, [unit?.code]);
+      .catch(() => {
+        if (!cancelled) {
+          setState({
+            code: currentCode,
+            reviews: [],
+            error: "Failed to fetch reviews",
+          });
+        }
+      });
+
+    return () => {
+      cancelled = true;
+    };
+  }, [currentCode]);
 
   if (!unit) return null;
+
+  const isCurrent = state.code === unit.code;
+  const reviews = isCurrent ? state.reviews : [];
+  const error = isCurrent ? state.error : null;
+  const loading = unit.code !== "ELECTIVE" && !isCurrent;
 
   return (
     <div className="px-5 py-5">
