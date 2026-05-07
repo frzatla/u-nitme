@@ -12,6 +12,7 @@ import {
 } from "lucide-react";
 import CoursePlanner, { type Semester } from "../../components/CoursePlanner";
 import FloatingChatbot from "../../components/FloatingChatbot";
+import PlanNameEditor from "../../components/PlanNameEditor";
 import { savePlanWithSchedule } from "../actions";
 import { Plan, Schedule, ScheduledUnit } from "@/lib/types";
 
@@ -141,9 +142,18 @@ export default function CoursePlanClient({
         <div className="mx-auto max-w-7xl">
           <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
             <div>
-              <h1 className="text-3xl font-semibold tracking-tight md:text-4xl">
-                {plan.planName}
-              </h1>
+              <PlanNameEditor
+                email={email}
+                planId={plan.id}
+                initialName={plan.planName || ""}
+                fallbackName={plan.courseCode || "Course Plan"}
+                isPending={isNewPlan}
+                variant="planner"
+                headingLevel="h1"
+                onRenamed={(nextName) =>
+                  setPlan((current) => ({ ...current, planName: nextName }))
+                }
+              />
               <div className="mt-4 flex flex-wrap gap-2">
                 {infoPills.map((pill) => (
                   <span

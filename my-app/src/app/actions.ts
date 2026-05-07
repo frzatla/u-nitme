@@ -1,8 +1,46 @@
 "use server";
 import { getProfileByEmail, updateProfile } from "@/lib/profile";
-import { deletePendingPlan, getPendingPlan } from "@/lib/pendingPlan";
+import {
+  deletePendingPlan,
+  getPendingPlan,
+  savePendingPlan,
+} from "@/lib/pendingPlan";
 import { Plan, Schedule } from "@/lib/types";
+import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
+
+export async function renamePlan(
+  email: string,
+  planId: string,
+  planName: string,
+  isPending = false,
+) {
+  const nextName = planName.trim();
+  if (!email || !planId || !nextName) return;
+
+  if (isPending) {
+    const pendingPlan = await getPendingPlan(email);
+    if (!pendingPlan || pendingPlan.id !== planId) return;
+
+    await savePendingPlan(email, { ...pendingPlan, planName: nextName });
+  } else {
+    const profile = await getProfileByEmail(email);
+    const plans: Plan[] = profile?.plans ?? [];
+    let changed = false;
+
+    const updatedPlans = plans.map((plan) => {
+      if (plan.id !== planId) return plan;
+      changed = true;
+      return { ...plan, planName: nextName };
+    });
+
+    if (!changed) return;
+    await updateProfile(email, { plans: updatedPlans });
+  }
+
+  revalidatePath("/dashboard");
+  revalidatePath(`/course-plan/${planId}`);
+}
 
 export async function savePlanWithSchedule(
   email: string,
