@@ -1,0 +1,100 @@
+{
+  "tool": "major_minor_validator.py",
+  "kind": "output",
+  "description": "Validation result returned by major_minor_validator.py. The shape depends on whether all checked AOS are complete.",
+
+  "top_level_fields": {
+    "complete": { "type": "boolean", "description": "True if every checked AOS is fully satisfied." },
+    "message":  { "type": "string",  "description": "Human-readable summary." },
+    "results":  { "type": "array",   "description": "One entry per checked AOS (major and/or minor). Empty if neither was set." }
+  },
+
+  "result_entry_fields": {
+    "code":              { "type": "string",  "description": "The AOS code from the plan." },
+    "label":             { "type": "string",  "description": "'major' or 'minor'." },
+    "title":             { "type": "string",  "description": "Human-readable AOS title." },
+    "found":             { "type": "boolean", "description": "False if the code wasn't in the AOS database; in that case `complete` is false and a `message` field replaces the rest." },
+    "complete":          { "type": "boolean", "description": "Whether all requirement groups for this AOS are satisfied." },
+    "total_required_cp": { "type": "number",  "description": "The AOS's total_credit_points." },
+    "completed_cp":      { "type": "number",  "description": "Sum of credit points for units in the schedule that map to this AOS's tree." },
+    "incomplete_groups": { "type": "array",   "description": "Empty when complete is true. Otherwise a list of failing groups." }
+  },
+
+  "incomplete_group_fields": {
+    "group":         { "type": "string", "description": "Full path through the requirement tree, e.g. 'Part C > Core units'." },
+    "type":          { "type": "string", "description": "'AND' or 'OR'." },
+    "needed":        { "type": "number", "description": "How many units this group requires." },
+    "have":          { "type": "number", "description": "How many of the required units the student has scheduled." },
+    "missing_units": { "type": "array",  "description": "AND leaf nodes only — unit codes the student is missing." },
+    "options":       { "type": "array",  "description": "OR leaf nodes only — remaining options the student could pick to satisfy the group." },
+    "of":            { "type": "number", "description": "OR branch nodes only — total number of children, where `needed` of `of` must be satisfied." }
+  },
+
+  "examples": {
+    "complete": {
+      "complete": true,
+      "message": "All major and minor requirements are completed!",
+      "results": [
+        {
+          "code": "CYBERSEC05",
+          "label": "minor",
+          "title": "Cybersecurity",
+          "found": true,
+          "complete": true,
+          "total_required_cp": 24,
+          "completed_cp": 24,
+          "incomplete_groups": []
+        }
+      ]
+    },
+    "incomplete": {
+      "complete": false,
+      "message": "Some requirements are incomplete.",
+      "results": [
+        {
+          "code": "CYBERSEC05",
+          "label": "minor",
+          "title": "Cybersecurity",
+          "found": true,
+          "complete": false,
+          "total_required_cp": 24,
+          "completed_cp": 12,
+          "incomplete_groups": [
+            {
+              "group": "CYBERSEC05 - Complete Requirements > Core units",
+              "type": "AND",
+              "needed": 3,
+              "have": 2,
+              "missing_units": ["FIT2173"]
+            },
+            {
+              "group": "CYBERSEC05 - Complete Requirements > Elective unit",
+              "type": "OR",
+              "needed": 1,
+              "have": 0,
+              "options": ["FIT3168", "FIT3186", "FIT3031"]
+            }
+          ]
+        }
+      ]
+    },
+    "aos_not_found": {
+      "complete": false,
+      "message": "Some requirements are incomplete.",
+      "results": [
+        {
+          "code": "BOGUSCODE01",
+          "label": "minor",
+          "found": false,
+          "complete": false,
+          "message": "Minor 'BOGUSCODE01' not found in AOS database"
+        }
+      ]
+    },
+    "no_major_or_minor": {
+      "complete": true,
+      "message": "No major or minor specified in the plan — nothing to validate.",
+      "results": []
+    }
+  }
+}

@@ -1,0 +1,104 @@
+{
+  "tool": "major_minor_validator.py",
+  "kind": "input",
+  "description": "Course plan JSON accepted by major_minor_validator.py. Three input shapes are accepted (Allocate+, algo1.py output, and a wrapper containing one). Major/minor codes can live at the top level or inside courseInfo. Only the fields listed below are read; extra fields are ignored.",
+
+  "shapes": [
+    {
+      "name": "Allocate+ (preferred)",
+      "fields": {
+        "courseInfo":       { "type": "object",        "required": false, "description": "Optional. May contain `courseCode`, `major`, `minor`." },
+        "courseInfo.major": { "type": "string | null", "required": false, "description": "AOS code of the student's major (e.g. 'APCYBSEC01'). Falls back to top-level `major` if missing." },
+        "courseInfo.minor": { "type": "string | null", "required": false, "description": "AOS code of the student's minor (e.g. 'CYBERSEC05'). Falls back to top-level `minor` if missing." },
+        "major":            { "type": "string | null", "required": false, "description": "Optional alternative location for the major code (top-level)." },
+        "minor":            { "type": "string | null", "required": false, "description": "Optional alternative location for the minor code (top-level)." },
+        "teachingPeriods":  { "type": "array",         "required": true,  "description": "List of teaching-period blocks (one per semester)." }
+      },
+      "teaching_period_object": {
+        "year":         { "type": "number",  "required": false, "description": "Calendar year (e.g. 2024). Not used by the validator." },
+        "code":         { "type": "string",  "required": false, "description": "Period code (e.g. 'S1-01'). Not used." },
+        "units":        { "type": "array",   "required": true,  "description": "List of unit objects in that period." },
+        "intermission": { "type": "boolean", "required": false, "description": "Optional. Not used." },
+        "studyAbroad":  { "type": "boolean", "required": false, "description": "Optional. Not used." }
+      },
+      "unit_object": {
+        "unitCode":    { "type": "string",  "required": true,  "description": "Unit code (e.g. 'FIT1057')." },
+        "placeholder": { "type": "boolean", "required": false, "description": "If true, the unit is treated as a free elective placeholder and ignored." },
+        "grade":       { "type": "string",  "required": false, "description": "Optional. Not used by the validator (a unit counts whether or not it's been completed)." },
+        "status":      { "type": "string",  "required": false, "description": "Optional. e.g. 'COMPLETED'. Not used." }
+      }
+    },
+    {
+      "name": "algo1.py schedule output",
+      "fields": {
+        "major":    { "type": "string | null", "required": false, "description": "AOS code of the student's major." },
+        "minor":    { "type": "string | null", "required": false, "description": "AOS code of the student's minor." },
+        "schedule": { "type": "array",         "required": true,  "description": "List of semester objects." }
+      },
+      "semester_object": {
+        "units":  { "type": "array",         "required": true,  "description": "List of unit objects." },
+        "period": { "type": "string | null", "required": false, "description": "Optional. Not used." }
+      },
+      "unit_object": {
+        "code": { "type": "string", "required": true, "description": "Unit code. The string 'ELECTIVE' is treated as a placeholder and ignored." }
+      }
+    },
+    {
+      "name": "Wrapper",
+      "description": "An object with the schedule nested under a `schedule` key, of the form: { \"schedule\": { \"major\": ..., \"minor\": ..., \"schedule\": [ ... ] } }"
+    }
+  ],
+
+  "example_allocate_plus": {
+    "startYear": 2024,
+    "advancedStanding": [],
+    "internationalStudent": false,
+    "courseInfo": {
+      "courseCode": "C2001",
+      "major": "APCYBSEC01",
+      "minor": "CYBERSEC05"
+    },
+    "teachingPeriods": [
+      {
+        "year": 2024,
+        "code": "S1-01",
+        "units": [
+          { "unitCode": "MAT1830", "placeholder": false, "grade": "C",  "status": "COMPLETED" },
+          { "unitCode": "FIT1051", "placeholder": false, "grade": "HD", "status": "COMPLETED" },
+          { "unitCode": "FIT1045", "placeholder": false, "grade": "HD", "status": "COMPLETED" },
+          { "unitCode": "FIT1047", "placeholder": false, "grade": "HD", "status": "COMPLETED" }
+        ],
+        "intermission": false,
+        "studyAbroad": false
+      },
+      {
+        "year": 2024,
+        "code": "S2-01",
+        "units": [
+          { "unitCode": "FIT1049", "placeholder": false },
+          { "unitCode": "MAT1841", "placeholder": false },
+          { "unitCode": "FIT1008", "placeholder": false },
+          { "unitCode": "FIT2095", "placeholder": false }
+        ],
+        "intermission": false,
+        "studyAbroad": false
+      }
+    ]
+  },
+
+  "example_algo1_output": {
+    "major": "APCYBSEC01",
+    "minor": "CYBERSEC05",
+    "schedule": [
+      {
+        "period": "S1",
+        "units": [
+          { "code": "FIT1057" },
+          { "code": "FIT1093" },
+          { "code": "FIT2173" },
+          { "code": "ELECTIVE" }
+        ]
+      }
+    ]
+  }
+}
