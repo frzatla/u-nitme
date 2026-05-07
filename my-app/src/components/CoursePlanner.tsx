@@ -176,7 +176,7 @@ function getSummary(semesters: Semester[], schedule: Schedule): Summary {
     sem.units.forEach((u) => {
       if (!u) return;
       totalPlannedUnits++;
-      totalCredits += u.credit_points ?? 6;
+      totalCredits += u.cp ?? 6;
       breakdown[u.category] = (breakdown[u.category] ?? 0) + 1;
     }),
   );
@@ -366,7 +366,11 @@ function UnitCardContent({
   const placeholderTitle = isDeletedPlaceholder
     ? SELECTABLE_PLACEHOLDER_NAME
     : "Free Elective";
-  const canDelete = !isElective && unit.category !== "Core" && unit.category !== "Specialisation" && onDelete;
+  const canDelete =
+    !isElective &&
+    unit.category !== "Core" &&
+    unit.category !== "Specialisation" &&
+    onDelete;
 
   if (isElective) {
     return (
