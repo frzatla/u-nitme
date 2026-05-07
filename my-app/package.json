@@ -17,6 +17,7 @@
     "@elastic/elasticsearch": "^9.3.4",
     "@google/generative-ai": "^0.24.1",
     "@supabase/supabase-js": "^2.99.1",
+    "@upstash/redis": "^1.37.0",
     "dotenv": "^17.3.1",
     "framer-motion": "^12.36.0",
     "groq-sdk": "^1.1.1",

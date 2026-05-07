@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useRef, useEffect } from "react";
-import { Search, X, Send, Bot, Sparkles, Plus, BookOpen } from "lucide-react";
+import { Search, X, Send, Bot, Sparkles, Plus, BookOpen, ChevronDown } from "lucide-react";
 import { Unit } from "./CoursePlanner";
 import DifficultySquare from "./DifficultySquare";
 
@@ -19,6 +19,7 @@ type EsUnit = {
 type ChatMessage = {
   role: "user" | "assistant";
   content: string;
+  thinking?: string;
 };
 
 type Tab = "search" | "chat";
@@ -139,6 +140,30 @@ function MarkdownMessage({ content }: { content: string }) {
   return <div className="space-y-1.5 text-[14px] leading-relaxed">{elements}</div>;
 }
 
+// ── Collapsible thinking block ────────────────────────────────────────────────
+
+function ThinkingBlock({ content, streaming = false }: { content: string; streaming?: boolean }) {
+  const [open, setOpen] = useState(false);
+  return (
+    <div className="mb-2">
+      <button
+        onClick={() => setOpen((o) => !o)}
+        className="flex items-center gap-1 text-[12px] text-black/40 hover:text-black/60 transition-colors"
+      >
+        <span className="italic">{streaming ? "Thinking…" : "Thinking"}</span>
+        <ChevronDown
+          className={`h-3 w-3 transition-transform duration-200 ${open ? "rotate-180" : ""}`}
+        />
+      </button>
+      {open && (
+        <div className="mt-1.5 max-h-48 overflow-y-auto rounded-xl bg-black/[0.04] px-3 py-2 text-[12px] leading-relaxed text-black/50 whitespace-pre-wrap">
+          {content}
+        </div>
+      )}
+    </div>
+  );
+}
+
 // ─────────────────────────────────────────────────────────────────────────────
 
 function SearchTab({
@@ -248,17 +273,39 @@ function SearchTab({
   );
 }
 
+const GREETING: ChatMessage = {
+  role: "assistant",
+  content:
+    "Hi! I can help you find the perfect free elective. Tell me about your interests, the skills you want to build, or what topics excite you — and I'll suggest some units you might love.",
+};
+
 function ChatTab({ onSelectUnit, planUnits = [] }: { onSelectUnit: (unit: Unit) => void; planUnits?: PlanUnit[] }) {
-  const [messages, setMessages] = useState<ChatMessage[]>([
-    {
-      role: "assistant",
-      content:
-        "Hi! I can help you find the perfect free elective. Tell me about your interests, the skills you want to build, or what topics excite you — and I'll suggest some units you might love.",
-    },
-  ]);
+  const [sessionId] = useState<string>(() => {
+    if (typeof window === "undefined") return crypto.randomUUID();
+    const stored = sessionStorage.getItem("elective-chat-session");
+    if (stored) return stored;
+    const id = crypto.randomUUID();
+    sessionStorage.setItem("elective-chat-session", id);
+    return id;
+  });
+
+  const [messages, setMessages] = useState<ChatMessage[]>([GREETING]);
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
+  const [streamingThought, setStreamingThought] = useState("");
   const bottomRef = useRef<HTMLDivElement>(null);
+
+  // Load existing history from Redis on mount
+  useEffect(() => {
+    fetch(`/api/units/chat?sessionId=${sessionId}`)
+      .then((r) => r.json())
+      .then((data) => {
+        if (data.messages && data.messages.length > 0) {
+          setMessages([GREETING, ...data.messages]);
+        }
+      })
+      .catch(() => {});
+  }, [sessionId]);
 
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -268,31 +315,29 @@ function ChatTab({ onSelectUnit, planUnits = [] }: { onSelectUnit: (unit: Unit) 
     const text = input.trim();
     if (!text || loading) return;
 
-    const newMessages: ChatMessage[] = [
-      ...messages,
-      { role: "user", content: text },
-    ];
-    setMessages(newMessages);
+    setMessages((prev) => [...prev, { role: "user", content: text }]);
     setInput("");
     setLoading(true);
-
-    // Build API payload — exclude the initial greeting (assistant only, index 0)
-    const apiMessages = newMessages
-      .slice(1) // skip initial greeting
-      .map((m) => ({ role: m.role, content: m.content }));
+    setStreamingThought("");
 
     try {
       const res = await fetch("/api/units/chat", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ messages: apiMessages, planUnits }),
+        body: JSON.stringify({ sessionId, newMessage: text, planUnits }),
       });
+
+      if (!res.ok || !res.body) {
+        const err = await res.json().catch(() => ({}));
+        throw new Error(err.error ?? "Bad response");
+      }
+
       const data = await res.json();
       setMessages((prev) => [
         ...prev,
         { role: "assistant", content: data.text ?? "Sorry, something went wrong." },
       ]);
-    } catch {
+    } catch (err: any) {
       setMessages((prev) => [
         ...prev,
         { role: "assistant", content: "Sorry, I couldn't connect. Please try again." },
@@ -323,9 +368,12 @@ function ChatTab({ onSelectUnit, planUnits = [] }: { onSelectUnit: (unit: Unit) 
                   : "bg-[#f5f5f4] text-black"
               }`}
             >
-              {msg.role === "assistant"
-                ? <MarkdownMessage content={msg.content} />
-                : msg.content}
+              {msg.role === "assistant" ? (
+                <>
+                  {msg.thinking && <ThinkingBlock content={msg.thinking} />}
+                  <MarkdownMessage content={msg.content} />
+                </>
+              ) : msg.content}
             </div>
           </div>
         ))}
@@ -334,7 +382,10 @@ function ChatTab({ onSelectUnit, planUnits = [] }: { onSelectUnit: (unit: Unit) 
             <div className="flex-shrink-0 mt-0.5 flex h-7 w-7 items-center justify-center rounded-full bg-black">
               <Sparkles className="h-3.5 w-3.5 text-white" />
             </div>
-            <div className="rounded-2xl bg-[#f5f5f4] px-4 py-3">
+            <div className="rounded-2xl bg-[#f5f5f4] px-4 py-3 max-w-[85%]">
+              {streamingThought && (
+                <ThinkingBlock content={streamingThought} streaming />
+              )}
               <div className="flex gap-1.5">
                 {[0, 1, 2].map((i) => (
                   <span
