@@ -12,6 +12,7 @@ import {
   Sparkles,
 } from "lucide-react";
 import DeletePlanButton from "../../components/DeletePlanButton";
+import PlanNameEditor from "../../components/PlanNameEditor";
 import {
   createNewProfile,
   getProfileByEmail,
@@ -189,9 +190,14 @@ export default async function DashboardPage() {
                   >
                     <div className="flex flex-col gap-7 lg:flex-row lg:items-end lg:justify-between">
                       <div>
-                        <h2 className="text-[42px] font-semibold leading-none tracking-[-0.06em] text-black">
-                          {plan.planName || plan.courseCode || "Course Plan"}
-                        </h2>
+                        <PlanNameEditor
+                          email={email}
+                          planId={plan.id}
+                          initialName={plan.planName || ""}
+                          fallbackName={plan.courseCode || "Course Plan"}
+                          variant="dashboard"
+                          headingLevel="h2"
+                        />
 
                         <div className="mt-5 flex flex-wrap gap-3">
                           {[

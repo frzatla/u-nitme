@@ -4,7 +4,12 @@ import { PendingPlan, Plan } from "./types";
 const PENDING_TABLE = "pendingPlan";
 
 export async function savePendingPlan(email: string, plan: Plan) {
-  await supabase.from(PENDING_TABLE).delete().eq("email", email);
+  const { error: deleteError } = await supabase
+    .from(PENDING_TABLE)
+    .delete()
+    .eq("email", email);
+
+  if (deleteError) throw deleteError;
 
   const payload: PendingPlan = { email, plan };
 
