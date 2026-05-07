@@ -33,18 +33,14 @@ FIT_PREFERRED_MATH = {"MAT1830", "MAT1841"}
 # ─── data loading ────────────────────────────────────────────────────────────
 
 def load_data(data_dir: str | None = None):
-    # Two modes:
-    #   production (--data-dir supplied by web app) → load final_*.json
-    #   standalone dev (no --data-dir)              → load mock_*.json from local data/
+    # Always load the mock_*.json dataset. --data-dir lets the caller point at
+    # a different directory containing those files; otherwise the script's
+    # local data/ folder is used.
     if data_dir is None:
-        data_dir      = os.path.join(SCRIPT_DIR, "data")
-        units_file    = "mock_units.json"
-        courses_file  = "mock_courses.json"
-        aos_file      = "mock_aos.json"
-    else:
-        units_file    = "final_units.json"
-        courses_file  = "final_courses.json"
-        aos_file      = "final_aos.json"
+        data_dir = os.path.join(SCRIPT_DIR, "data")
+    units_file   = "mock_units.json"
+    courses_file = "mock_courses.json"
+    aos_file     = "mock_aos.json"
 
     def _load(name):
         fpath = os.path.join(data_dir, name)
