@@ -152,14 +152,9 @@ function groupSemestersByYear(semesters: Semester[]): YearGroup[] {
 }
 
 function getSummary(semesters: Semester[], schedule: Schedule): Summary {
-  const totalPlannedUnits = schedule.summary.total_units;
-  const totalCredits = schedule.summary.total_cp;
-  const completedTarget = semesters.length * 4;
-  const progress =
-    completedTarget > 0
-      ? Math.min(100, Math.round((totalPlannedUnits / completedTarget) * 100))
-      : 0;
-
+  // Count all slots (including ELECTIVE placeholders) so stats reach 100%
+  let totalPlannedUnits = 0;
+  let totalCredits = 0;
   const breakdown: Record<UnitCategory, number> = {
     Core: 0,
     Major: 0,
@@ -167,11 +162,21 @@ function getSummary(semesters: Semester[], schedule: Schedule): Summary {
     Elective: 0,
     Specialisation: 0,
   };
+
   semesters.forEach((sem) =>
     sem.units.forEach((u) => {
-      if (u) breakdown[u.category] = (breakdown[u.category] ?? 0) + 1;
+      if (!u) return;
+      totalPlannedUnits++;
+      totalCredits += u.credit_points ?? 6;
+      breakdown[u.category] = (breakdown[u.category] ?? 0) + 1;
     }),
   );
+
+  const completedTarget = semesters.length * 4;
+  const progress =
+    completedTarget > 0
+      ? Math.min(100, Math.round((totalPlannedUnits / completedTarget) * 100))
+      : 0;
 
   return {
     totalPlannedUnits,
