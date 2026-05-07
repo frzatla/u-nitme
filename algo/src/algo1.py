@@ -693,7 +693,7 @@ def schedule_units(required, prereq_graph, chain_lengths, unlock_depths, units_d
             sem_units = []
             for u in chosen:
                 ud = units_db.get(u, {})
-                cp = int(ud.get("credit_points") or 6)
+                cp = 6
                 sem_units.append({
                     "code":          u,
                     "title":         ud.get("title", ""),
@@ -750,7 +750,7 @@ def schedule_units(required, prereq_graph, chain_lengths, unlock_depths, units_d
             unscheduled.append({
                 "code":          u,
                 "title":         ud.get("title", ""),
-                "credit_points": int(ud.get("credit_points") or 6),
+                "credit_points": 6,
                 "level":         ud.get("level", 1),
                 "chain_length":  chain_lengths.get(u, 0),
                 "note":          "Could not schedule — prerequisite cycle or offering conflict",
