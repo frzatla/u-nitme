@@ -184,13 +184,7 @@ export default function StudentDetailsFormContent({
   const [yearStart, setYearStart] = useState("");
   const [yearEnd, setYearEnd] = useState("");
 
-  function toggleInterest(interest: string) {
-    setSelectedInterests((prev) => {
-      if (prev.includes(interest)) return prev.filter((i) => i !== interest);
-      if (prev.length >= MAX_INTERESTS) return prev;
-      return [...prev, interest];
-    });
-  }
+  const maxInterests = getMaxInterests(minorMajorType);
 
   const filteredAos =
     selectedCourse && courseToAos[selectedCourse]
@@ -233,6 +227,20 @@ export default function StudentDetailsFormContent({
     return nextEnd;
   }
 
+  function toggleInterest(interest: string) {
+    setSelectedInterests((current) => {
+      if (current.includes(interest)) {
+        return current.filter((item) => item !== interest);
+      }
+
+      if (current.length >= maxInterests) {
+        return current;
+      }
+
+      return [...current, interest];
+    });
+  }
+
   return (
     <>
       {selectedInterests.map((interest) => (
@@ -256,47 +264,6 @@ export default function StudentDetailsFormContent({
               className={inputClass}
             />
           </div>
-        </div>
-      </section>
-
-      <section>
-        <div>
-          <div className="mb-3 flex items-center justify-between gap-4">
-            <label className="block text-sm font-medium text-black/75">
-              Interests <span className="text-black/30">*</span>
-            </label>
-            <span className="text-xs text-black/35">
-              {selectedInterests.length}/{MAX_INTERESTS} selected
-            </span>
-          </div>
-          <div className="flex flex-wrap gap-2">
-            {interestOptions.map((interest) => {
-              const isSelected = selectedInterests.includes(interest);
-              const isDisabled =
-                !isSelected && selectedInterests.length >= MAX_INTERESTS;
-              return (
-                <button
-                  key={interest}
-                  type="button"
-                  onClick={() => toggleInterest(interest)}
-                  disabled={isDisabled}
-                  aria-pressed={isSelected}
-                  className={`inline-flex items-center gap-1.5 rounded-full border px-3 py-2 text-sm transition-all ${
-                    isSelected
-                      ? "border-black bg-black text-white"
-                      : "border-black/10 bg-black/[0.03] text-black/55 hover:border-black/20 hover:bg-white"
-                  } ${isDisabled ? "cursor-not-allowed opacity-35" : ""}`}
-                >
-                  {isSelected && <Check className="h-3.5 w-3.5" />}
-                  {interest}
-                </button>
-              );
-            })}
-          </div>
-          <p className="mt-2 text-xs text-black/40">
-            Pick exactly 3 interests — we'll auto-fill your elective slots with
-            matching units.
-          </p>
         </div>
       </section>
 
@@ -543,9 +510,7 @@ export default function StudentDetailsFormContent({
               required
               value={yearEnd}
               onChange={(event) => {
-                const nextEnd = clampEndYear(yearStart, event.target.value);
-                console.log("Course end:", nextEnd);
-                setYearEnd(nextEnd);
+                setYearEnd(clampEndYear(yearStart, event.target.value));
               }}
               className={inputClass}
             />
