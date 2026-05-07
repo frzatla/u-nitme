@@ -27,9 +27,9 @@ export async function GET(request: NextRequest) {
             // Prefix on code keyword: "FIT" → FIT1008, FIT2004, etc.
             { prefix: { code: { value: q.toUpperCase(), boost: 5 } } },
             // Exact code match (e.g. "FIT1008")
-            { term:   { code: { value: q.toUpperCase(), boost: 6 } } },
+            { term: { code: { value: q.toUpperCase(), boost: 6 } } },
             // Full-text fuzzy search on title (e.g. "algorithms", "data science")
-            { match:  { title: { query: q, fuzziness: "AUTO", boost: 2 } } },
+            { match: { title: { query: q, fuzziness: "AUTO", boost: 2 } } },
             // Phrase prefix on title for partial words (e.g. "intro to prog")
             { match_phrase_prefix: { title: { query: q, boost: 1 } } },
           ],
@@ -46,7 +46,9 @@ export async function GET(request: NextRequest) {
     );
 
     const units = searchUnits.map((unit) => {
-      const code = String(unit.code || "").trim().toUpperCase();
+      const code = String(unit.code || "")
+        .trim()
+        .toUpperCase();
       return {
         ...unit,
         ...difficultyByCode[code],
@@ -54,7 +56,7 @@ export async function GET(request: NextRequest) {
     });
     return NextResponse.json({ units });
   } catch (error) {
-    console.error("Search error:", error);
+    // console.error("Search error:", error);
     return NextResponse.json({ error: "Search failed" }, { status: 500 });
   }
 }

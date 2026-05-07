@@ -54,11 +54,16 @@ Format: use bold for unit codes and titles, bullet points for lists. Keep it rea
 type ChatMessage = { role: "user" | "assistant"; content: string };
 
 export async function POST(request: NextRequest) {
-  const { messages, planUnits = [] } =
-    (await request.json()) as { messages: ChatMessage[]; planUnits?: PlanUnit[] };
+  const { messages, planUnits = [] } = (await request.json()) as {
+    messages: ChatMessage[];
+    planUnits?: PlanUnit[];
+  };
 
   if (!messages?.length) {
-    return NextResponse.json({ error: "No messages provided" }, { status: 400 });
+    return NextResponse.json(
+      { error: "No messages provided" },
+      { status: 400 },
+    );
   }
 
   try {
@@ -87,8 +92,18 @@ export async function POST(request: NextRequest) {
 
     // 4. Build conversation history with system prompt as first exchange
     const systemTurn = [
-      { role: "user"  as const, parts: [{ text: `Instructions:\n${SYSTEM_PROMPT}` }] },
-      { role: "model" as const, parts: [{ text: "Got it! I'll keep it friendly and only suggest electives from the catalogue — nothing they've already got locked in." }] },
+      {
+        role: "user" as const,
+        parts: [{ text: `Instructions:\n${SYSTEM_PROMPT}` }],
+      },
+      {
+        role: "model" as const,
+        parts: [
+          {
+            text: "Got it! I'll keep it friendly and only suggest electives from the catalogue — nothing they've already got locked in.",
+          },
+        ],
+      },
     ];
     const history = [
       ...systemTurn,
@@ -102,12 +117,12 @@ export async function POST(request: NextRequest) {
     const model = genAI.getGenerativeModel({
       model: "gemma-4-26b-a4b-it",
       generationConfig: {
-        temperature: 1.2,   // higher = more natural/conversational (default ~1.0)
-        topP: 0.95,         // nucleus sampling — keeps responses varied but coherent
+        temperature: 1.2, // higher = more natural/conversational (default ~1.0)
+        topP: 0.95, // nucleus sampling — keeps responses varied but coherent
         maxOutputTokens: 512, // enough for a good recommendation, not an essay
       },
     });
-    const chat   = model.startChat({ history });
+    const chat = model.startChat({ history });
     const result = await chat.sendMessage(enrichedMessage);
 
     // Strip thought parts — only return the visible response
@@ -122,7 +137,7 @@ export async function POST(request: NextRequest) {
 
     return NextResponse.json({ text });
   } catch (error) {
-    console.error("Chat error:", error);
+    // console.error("Chat error:", error);
     return NextResponse.json({ error: "Chat failed" }, { status: 500 });
   }
 }

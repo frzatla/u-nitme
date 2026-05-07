@@ -27,10 +27,10 @@ export async function GET(request, { params }) {
     });
 
     if (!res.ok) {
-      console.log("Reddit request failed", await res.json())
+      // console.log("Reddit request failed", await res.json())
       return NextResponse.json(
         { error: "Reddit request failed", status: res.status },
-        { status: 502 }
+        { status: 502 },
       );
     }
 
@@ -59,7 +59,10 @@ export async function GET(request, { params }) {
 
     return NextResponse.json(reviews);
   } catch (err) {
-    console.error("Reddit fetch error:", err);
-    return NextResponse.json({ error: "Internal server error" }, { status: 500 });
+    // console.error("Reddit fetch error:", err);
+    return NextResponse.json(
+      { error: "Internal server error" },
+      { status: 500 },
+    );
   }
 }

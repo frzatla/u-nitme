@@ -34,7 +34,8 @@ function buildHistory(messages: ChatMessage[]) {
       ],
     },
     ...messages.slice(0, -1).map((message) => ({
-      role: message.role === "assistant" ? ("model" as const) : ("user" as const),
+      role:
+        message.role === "assistant" ? ("model" as const) : ("user" as const),
       parts: [{ text: message.content }],
     })),
   ];
@@ -85,7 +86,7 @@ export async function POST(request: NextRequest) {
     const text = result.response.text().trim();
     return NextResponse.json({ text });
   } catch (error) {
-    console.error("General chat error:", error);
+    // console.error("General chat error:", error);
     return NextResponse.json({ error: "Chat failed" }, { status: 500 });
   }
 }

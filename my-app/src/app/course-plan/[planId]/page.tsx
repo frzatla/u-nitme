@@ -7,10 +7,7 @@ import CoursePlanClient from "../CoursePlanClient";
 import { getProfileByEmail, updateProfile } from "@/lib/profile";
 import { deletePendingPlan } from "@/lib/pendingPlan";
 // import { isAdminUser } from "@/lib/auth";
-import {
-  buildCoursePlanInfoPills,
-  getCoursePlanById,
-} from "@/lib/coursePlan";
+import { buildCoursePlanInfoPills, getCoursePlanById } from "@/lib/coursePlan";
 
 export default async function CoursePlanPage({
   params,
@@ -22,7 +19,7 @@ export default async function CoursePlanPage({
   const { planId } = await params;
   const { pending } = await searchParams;
 
-  console.log("pending:", pending);
+  // console.log("pending:", pending);
 
   const user = await currentUser();
   const email: string = user?.primaryEmailAddress?.emailAddress;
@@ -35,7 +32,7 @@ export default async function CoursePlanPage({
     pending === "true",
   );
 
-  console.log("plan:", plan.schedule);
+  // console.log("plan:", plan.schedule);
 
   if (!plan || !plan.schedule) redirect("/profile");
 

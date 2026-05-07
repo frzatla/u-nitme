@@ -61,7 +61,7 @@ export async function updateProfile(email, updates) {
     .eq("email", email)
     .single();
 
-  console.log("Row after update:", updated.data);
+  // console.log("Row after update:", updated.data);
 
   if (error) throw error;
   return data;

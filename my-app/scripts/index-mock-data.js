@@ -8,21 +8,25 @@
  *   (reads credentials from .env.local automatically)
  */
 
-require("dotenv").config({ path: require("path").join(__dirname, "../.env.local") });
+require("dotenv").config({
+  path: require("path").join(__dirname, "../.env.local"),
+});
 
 const { Client } = require("@elastic/elasticsearch");
 const fs = require("fs");
 const path = require("path");
 
 const cloudId = process.env.ELASTICSEARCH_CLOUD_ID;
-const apiKey  = process.env.ELASTICSEARCH_API_KEY;
+const apiKey = process.env.ELASTICSEARCH_API_KEY;
 
 if (!cloudId || !apiKey) {
-  console.error("ERROR: Set ELASTICSEARCH_CLOUD_ID and ELASTICSEARCH_API_KEY in .env.local");
+  console.error(
+    "ERROR: Set ELASTICSEARCH_CLOUD_ID and ELASTICSEARCH_API_KEY in .env.local",
+  );
   process.exit(1);
 }
 
-const client   = new Client({ cloud: { id: cloudId }, auth: { apiKey } });
+const client = new Client({ cloud: { id: cloudId }, auth: { apiKey } });
 const DATA_DIR = path.join(__dirname, "../../algo/src/data");
 
 // ── helpers ───────────────────────────────────────────────────────────────────
@@ -55,52 +59,53 @@ async function bulkIndex(indexName, docs) {
     const result = await client.bulk({ operations });
     if (result.errors) {
       const errs = result.items.filter((it) => it.index?.error);
-      if (errs.length) console.error(`  ${errs.length} errors`, errs[0].index.error);
+      if (errs.length)
+        console.error(`  ${errs.length} errors`, errs[0].index.error);
     }
     total += slice.length;
     process.stdout.write(`\r  Indexed ${total}/${docs.length}...`);
   }
-  console.log(`\r  Done — ${total} documents in '${indexName}'.`);
+  // console.log(`\r  Done — ${total} documents in '${indexName}'.`);
 }
 
 // ── 1. Units ──────────────────────────────────────────────────────────────────
 
 async function indexUnits() {
-  console.log("\n[1/3] Indexing units...");
+  // console.log("\n[1/3] Indexing units...");
 
   await recreateIndex("units", {
     properties: {
-      code:          { type: "keyword" },
-      title:         { type: "text", analyzer: "english" },
+      code: { type: "keyword" },
+      title: { type: "text", analyzer: "english" },
       credit_points: { type: "integer" },
-      level:         { type: "integer" },
-      school:        { type: "keyword" },
-      academic_org:  { type: "keyword" },
+      level: { type: "integer" },
+      school: { type: "keyword" },
+      academic_org: { type: "keyword" },
       offerings: {
         type: "nested",
         properties: {
-          period:   { type: "keyword" },
+          period: { type: "keyword" },
           location: { type: "keyword" },
-          mode:     { type: "text" },
+          mode: { type: "text" },
         },
       },
     },
   });
 
-  const raw  = loadJson("mock_units.json");
+  const raw = loadJson("mock_units.json");
   const docs = Object.values(raw).map((u) => ({
-    _id:   u.code,
+    _id: u.code,
     _body: {
-      code:          u.code,
-      title:         (u.title || "").trim(),
+      code: u.code,
+      title: (u.title || "").trim(),
       credit_points: parseInt(u.credit_points) || 6,
-      level:         u.level || 1,
-      school:        u.school || u.academic_org || "",
-      academic_org:  u.academic_org || "",
-      offerings:     (u.offerings || []).map((o) => ({
-        period:   o.period || "",
+      level: u.level || 1,
+      school: u.school || u.academic_org || "",
+      academic_org: u.academic_org || "",
+      offerings: (u.offerings || []).map((o) => ({
+        period: o.period || "",
         location: o.location || "",
-        mode:     o.mode || "",
+        mode: o.mode || "",
       })),
     },
   }));
@@ -111,36 +116,36 @@ async function indexUnits() {
 // ── 2. AOS ────────────────────────────────────────────────────────────────────
 
 async function indexAos() {
-  console.log("\n[2/3] Indexing areas of study (AOS)...");
+  // console.log("\n[2/3] Indexing areas of study (AOS)...");
 
   await recreateIndex("aos", {
     properties: {
-      course_code:          { type: "keyword" },
-      course_title:         { type: "text", analyzer: "english" },
-      total_credit_points:  { type: "integer" },
+      course_code: { type: "keyword" },
+      course_title: { type: "text", analyzer: "english" },
+      total_credit_points: { type: "integer" },
       // flat list of unit codes in this AOS
-      unit_codes:           { type: "keyword" },
+      unit_codes: { type: "keyword" },
       // "CODE: Title" strings joined — full-text searchable
-      unit_summary:         { type: "text", analyzer: "english" },
+      unit_summary: { type: "text", analyzer: "english" },
     },
   });
 
-  const raw  = loadJson("mock_aos.json");
+  const raw = loadJson("mock_aos.json");
   const docs = Object.values(raw).map((a) => {
-    const allUnits   = a.all_units || {};
-    const unitCodes  = Object.keys(allUnits);
+    const allUnits = a.all_units || {};
+    const unitCodes = Object.keys(allUnits);
     const unitSummary = Object.entries(allUnits)
       .map(([code, title]) => `${code}: ${title}`)
       .join(" | ");
 
     return {
-      _id:   a.course_code,
+      _id: a.course_code,
       _body: {
-        course_code:         a.course_code,
-        course_title:        a.course_title || "",
+        course_code: a.course_code,
+        course_title: a.course_title || "",
         total_credit_points: a.total_credit_points || 0,
-        unit_codes:          unitCodes,
-        unit_summary:        unitSummary,
+        unit_codes: unitCodes,
+        unit_summary: unitSummary,
       },
     };
   });
@@ -151,29 +156,27 @@ async function indexAos() {
 // ── 3. Courses ────────────────────────────────────────────────────────────────
 
 async function indexCourses() {
-  console.log("\n[3/3] Indexing courses...");
+  // console.log("\n[3/3] Indexing courses...");
 
   await recreateIndex("courses", {
     properties: {
-      course_code:         { type: "keyword" },
-      course_title:        { type: "text", analyzer: "english" },
+      course_code: { type: "keyword" },
+      course_title: { type: "text", analyzer: "english" },
       total_credit_points: { type: "integer" },
       // AOS codes available in this course (for filtering / display)
-      available_aos:       { type: "keyword" },
+      available_aos: { type: "keyword" },
       // "AOS_CODE: AOS Title" strings — full-text searchable
-      aos_summary:         { type: "text", analyzer: "english" },
+      aos_summary: { type: "text", analyzer: "english" },
     },
   });
 
-  const raw    = loadJson("mock_courses.json");
+  const raw = loadJson("mock_courses.json");
   const aosMeta = loadJson("mock_aos.json");
 
   const docs = Object.values(raw).map((c) => {
     // Collect all AOS codes referenced in requirement_groups
     const availableAos = [
-      ...new Set(
-        (c.requirement_groups || []).flatMap((g) => g.units || [])
-      ),
+      ...new Set((c.requirement_groups || []).flatMap((g) => g.units || [])),
     ].filter((code) => aosMeta[code]); // only keep codes that are real AOS entries
 
     const aosSummary = availableAos
@@ -181,13 +184,13 @@ async function indexCourses() {
       .join(" | ");
 
     return {
-      _id:   c.course_code,
+      _id: c.course_code,
       _body: {
-        course_code:         c.course_code,
-        course_title:        c.course_title || "",
+        course_code: c.course_code,
+        course_title: c.course_title || "",
         total_credit_points: c.total_credit_points || 0,
-        available_aos:       availableAos,
-        aos_summary:         aosSummary,
+        available_aos: availableAos,
+        aos_summary: aosSummary,
       },
     };
   });
@@ -198,18 +201,18 @@ async function indexCourses() {
 // ── main ──────────────────────────────────────────────────────────────────────
 
 async function main() {
-  console.log("Connecting to Elasticsearch...");
+  // console.log("Connecting to Elasticsearch...");
   const info = await client.info();
-  console.log(`Connected to cluster: ${info.cluster_name}`);
+  // console.log(`Connected to cluster: ${info.cluster_name}`);
 
   await indexUnits();
   await indexAos();
   await indexCourses();
 
-  console.log("\nAll done!");
+  // console.log("\nAll done!");
 }
 
 main().catch((err) => {
-  console.error("\nFatal error:", err.message ?? err);
+  // console.error("\nFatal error:", err.message ?? err);
   process.exit(1);
 });

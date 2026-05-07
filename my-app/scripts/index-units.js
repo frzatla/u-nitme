@@ -6,7 +6,9 @@
  *   ELASTICSEARCH_CLOUD_ID=... ELASTICSEARCH_API_KEY=... node scripts/index-units.js
  */
 
-require("dotenv").config({ path: require("path").join(__dirname, "../.env.local") });
+require("dotenv").config({
+  path: require("path").join(__dirname, "../.env.local"),
+});
 
 const { Client } = require("@elastic/elasticsearch");
 const fs = require("fs");
@@ -18,7 +20,7 @@ const apiKey = process.env.ELASTICSEARCH_API_KEY;
 
 if (!cloudId || !apiKey) {
   console.error(
-    "ERROR: Set ELASTICSEARCH_CLOUD_ID and ELASTICSEARCH_API_KEY environment variables."
+    "ERROR: Set ELASTICSEARCH_CLOUD_ID and ELASTICSEARCH_API_KEY environment variables.",
   );
   process.exit(1);
 }
@@ -57,7 +59,7 @@ async function main() {
       },
     },
   });
-  console.log("Index created with mappings.");
+  // console.log("Index created with mappings.");
 
   // Stream ndjson and bulk index in batches of 250
   const rl = readline.createInterface({
@@ -93,10 +95,10 @@ async function main() {
   }
   await flushBatch();
 
-  console.log(`\nDone! Indexed ${total} units into '${INDEX_NAME}'.`);
+  // console.log(`\nDone! Indexed ${total} units into '${INDEX_NAME}'.`);
 }
 
 main().catch((err) => {
-  console.error("\nFatal error:", err.message ?? err);
+  // console.error("\nFatal error:", err.message ?? err);
   process.exit(1);
 });

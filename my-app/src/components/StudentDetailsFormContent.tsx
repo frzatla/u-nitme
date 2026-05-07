@@ -507,7 +507,9 @@ export default function StudentDetailsFormContent({
               required
               value={yearEnd}
               onChange={(event) => {
-                setYearEnd(clampEndYear(yearStart, event.target.value));
+                const nextEnd = clampEndYear(yearStart, event.target.value);
+                console.log("Course end:", nextEnd);
+                setYearEnd(nextEnd);
               }}
               className={inputClass}
             />

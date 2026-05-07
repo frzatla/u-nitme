@@ -26,7 +26,7 @@ export async function GET(request: NextRequest) {
       })),
     });
   } catch (error) {
-    console.error("Difficulty calculation error:", error);
+    // console.error("Difficulty calculation error:", error);
     return NextResponse.json(
       { error: "Difficulty calculation failed" },
       { status: 500 },
