@@ -174,22 +174,19 @@ export async function POST(request: NextRequest) {
       })),
     ];
 
-    // 5. Call Gemma (non-streaming — aggregate response correctly filters thought tokens)
+    // 5. Call Gemini 2.5 Flash (non-thinking by default — clean response, no filtering needed)
     const model = genAI.getGenerativeModel({
-      model: "gemma-4-26b-a4b-it",
+      model: "gemini-3-flash-preview",
       generationConfig: {
         temperature: 0.4,
         topP: 0.9,
-        maxOutputTokens: 512,
+        maxOutputTokens: 2048,
       },
     });
     const chat   = model.startChat({ history: gemmaHistory });
     const result = await chat.sendMessage(enrichedMessage);
 
-    const parts  = result.response.candidates?.[0]?.content?.parts ?? [];
-    const text   = parts.length
-      ? parts.filter((p: any) => !p.thought).map((p: any) => p.text ?? "").join("").trim()
-      : result.response.text();
+    const text = result.response.text().trim();
 
     // 6. Save to Redis
     const updated: StoredMessage[] = [

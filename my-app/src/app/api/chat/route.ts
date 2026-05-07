@@ -144,20 +144,17 @@ export async function POST(request: NextRequest) {
     const fullContext    = [appContext, ragContext].filter(Boolean).join("\n\n");
     const enrichedMessage = fullContext ? `${fullContext}\n\nStudent question: ${newMessage}` : newMessage;
 
-    // 4. Call Gemma
+    // 4. Call Gemini 3 Flash (non-thinking by default — no thought filtering needed)
     const genAI  = new GoogleGenerativeAI(apiKey);
     const model  = genAI.getGenerativeModel({
-      model: "gemma-4-26b-a4b-it",
-      generationConfig: { temperature: 0.4, topP: 0.9, maxOutputTokens: 600 },
+      model: "gemini-3-flash-preview",
+      generationConfig: { temperature: 0.4, topP: 0.9, maxOutputTokens: 2048 },
     });
     const chat   = model.startChat({ history: buildGemmaHistory(history) });
     const result = await chat.sendMessage(enrichedMessage);
 
-    // 5. Filter thought parts
-    const parts = result.response.candidates?.[0]?.content?.parts ?? [];
-    const text  = parts.length
-      ? parts.filter((p: any) => !p.thought).map((p: any) => p.text ?? "").join("").trim()
-      : result.response.text().trim();
+    // Gemini 3 Flash is non-thinking by default — response.text() is clean
+    const text = result.response.text().trim();
 
     // 6. Save updated history to Redis
     const updated: StoredMessage[] = [
