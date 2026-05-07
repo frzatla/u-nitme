@@ -32,15 +32,11 @@ FIT_PREFERRED_MATH = {"MAT1830", "MAT1841"}
 
 # ─── data loading ────────────────────────────────────────────────────────────
 
-def load_data(data_dir: str | None = None):
-    # Always load the mock_*.json dataset. --data-dir lets the caller point at
-    # a different directory containing those files; otherwise the script's
-    # local data/ folder is used.
-    if data_dir is None:
-        data_dir = os.path.join(SCRIPT_DIR, "data")
-    units_file   = "mock_units.json"
-    courses_file = "mock_courses.json"
-    aos_file     = "mock_aos.json"
+def load_data():
+    data_dir      = os.path.join(SCRIPT_DIR, "data")
+    units_file    = "mock_units.json"
+    courses_file  = "mock_courses.json"
+    aos_file      = "mock_aos.json"
 
     def _load(name):
         fpath = os.path.join(data_dir, name)
@@ -1153,12 +1149,10 @@ def main():
                         help="Validate an existing schedule JSON file instead of generating one")
     parser.add_argument("--list-aos",       action="store_true",
                         help="List available AOS for the given course and exit (outputs JSON)")
-    parser.add_argument("--data-dir",       default=None,
-                        help="Directory containing data JSON files (default: <script_dir>/data)")
     args = parser.parse_args()
 
     print("Loading data...")
-    units_db, courses_db, aos_db = load_data(args.data_dir)
+    units_db, courses_db, aos_db = load_data()
 
     # ── list-aos mode ──────────────────────────────────────────────────────────
     if args.list_aos:
