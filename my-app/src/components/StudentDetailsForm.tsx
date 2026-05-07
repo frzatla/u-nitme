@@ -26,7 +26,7 @@ function loadData(): {
   const coursesRaw = readJson("mock_courses.json");
   const aosRaw = readJson("mock_aos.json");
 
-  // Valid AOS = present in final_aos.json with non-zero credit points
+  // Valid AOS = present in mock_aos.json with non-zero credit points
   const validAosCodes = new Set<string>(
     Object.values(aosRaw)
       .filter((a: any) => a.total_credit_points > 0)

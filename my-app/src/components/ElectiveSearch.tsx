@@ -3,7 +3,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import { Search, X, Send, Bot, Sparkles, Plus, BookOpen } from "lucide-react";
 import { Unit } from "./CoursePlanner";
-import { getDifficultyLabel } from "@/lib/difficulty";
+import DifficultySquare from "./DifficultySquare";
 
 type EsUnit = {
   code: string;
@@ -76,9 +76,10 @@ function UnitResultCard({
             {unit.offerings.map((o) => o.period).slice(0, 2).join(" · ")}
           </p>
         )}
-        <p className="mt-1 text-[11px] text-black/35">
-          Difficulty: {getDifficultyLabel(unit)}
-        </p>
+        <div className="mt-1 flex items-center gap-1.5 text-[11px] text-black/35">
+          <span>Difficulty</span>
+          <DifficultySquare unit={unit} size="sm" />
+        </div>
       </div>
       <button
         onClick={() => onAdd(unit)}

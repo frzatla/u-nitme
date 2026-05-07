@@ -29,9 +29,9 @@ import {
   Trash2,
 } from "lucide-react";
 import { Schedule, UnitCategory } from "@/lib/types";
-import { getDifficultyLabel } from "@/lib/difficulty";
 import UnitDetailPanel from "./UnitDetailPanel";
 import ElectiveSearch from "./ElectiveSearch";
+import DifficultySquare from "./DifficultySquare";
 
 // ── Types ─────────────────────────────────────────────────────────────────────
 
@@ -383,16 +383,17 @@ function UnitCardContent({
           <p className="text-[15px] font-medium tracking-[-0.03em] text-black/60">
             {placeholderTitle}
           </p>
-          <p className="text-[12px] text-black/35">Click to search for a unit</p>
+          <p className="text-[12px] text-black/35">
+            Click to search for a unit
+          </p>
         </div>
         <div className="mt-5 border-t border-black/[0.06] pt-3">
           <div className="flex items-center justify-between">
-            <span className="text-[13px] font-medium text-black/25">{unit.cp} CP</span>
+            <span className="text-[13px] font-medium text-black/25">
+              {unit.cp} CP
+            </span>
             <Search className="h-4 w-4 text-[#DD8255]/40" />
           </div>
-          <p className="mt-1.5 text-[12px] text-black/35">
-            Difficulty: {getDifficultyLabel(unit)}
-          </p>
         </div>
       </div>
     );
@@ -449,9 +450,10 @@ function UnitCardContent({
           </span>
           <Ellipsis className="h-4 w-4 text-black/18" />
         </div>
-        <p className="mt-1.5 text-[12px] text-black/35">
-          Difficulty: {getDifficultyLabel(unit)}
-        </p>
+        <div className="mt-1.5 flex items-center gap-1.5 text-[12px] text-black/35">
+          <span>Difficulty</span>
+          <DifficultySquare unit={unit} size="sm" />
+        </div>
       </div>
     </div>
   );
@@ -1050,8 +1052,7 @@ export default function CoursePlanner({
         planUnits={semesters
           .flatMap((s) => s.units)
           .filter(
-            (u): u is Unit =>
-              !!u && u.code !== SELECTABLE_PLACEHOLDER_CODE,
+            (u): u is Unit => !!u && u.code !== SELECTABLE_PLACEHOLDER_CODE,
           )
           .map((u) => ({ code: u.code, name: u.name, level: u.level }))}
       />

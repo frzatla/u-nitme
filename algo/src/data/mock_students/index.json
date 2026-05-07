@@ -1,56 +1,18 @@
 {
-  "version": 1,
+  "version": 2,
   "generated_by": "algo/src/generate_mock_students.js",
-  "note": "Difficulty is calculated at request time from these period files; no unit difficulty values are stored.",
+  "note": "Difficulty is computed from these two rolling windows (previous_semester + current_semester) over graduate and dropout students only.",
   "profile_file": "students.json",
   "periods": [
     {
-      "year": 2022,
-      "semester": "S1",
-      "file": "enrolments/2022-S1.json",
-      "enrolment_count": 599
+      "label": "previous_semester",
+      "file": "enrolments/previous_semester.json",
+      "enrolment_count": 2286
     },
     {
-      "year": 2022,
-      "semester": "S2",
-      "file": "enrolments/2022-S2.json",
-      "enrolment_count": 605
-    },
-    {
-      "year": 2023,
-      "semester": "S1",
-      "file": "enrolments/2023-S1.json",
-      "enrolment_count": 577
-    },
-    {
-      "year": 2023,
-      "semester": "S2",
-      "file": "enrolments/2023-S2.json",
-      "enrolment_count": 657
-    },
-    {
-      "year": 2024,
-      "semester": "S1",
-      "file": "enrolments/2024-S1.json",
-      "enrolment_count": 594
-    },
-    {
-      "year": 2024,
-      "semester": "S2",
-      "file": "enrolments/2024-S2.json",
-      "enrolment_count": 588
-    },
-    {
-      "year": 2025,
-      "semester": "S1",
-      "file": "enrolments/2025-S1.json",
-      "enrolment_count": 563
-    },
-    {
-      "year": 2025,
-      "semester": "S2",
-      "file": "enrolments/2025-S2.json",
-      "enrolment_count": 576
+      "label": "current_semester",
+      "file": "enrolments/current_semester.json",
+      "enrolment_count": 2735
     }
   ]
 }

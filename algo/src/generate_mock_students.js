@@ -10,16 +10,52 @@ const STUDENTS_DIR = path.join(DATA_DIR, "mock_students");
 const STUDENT_PROFILES_PATH = path.join(STUDENTS_DIR, "students.json");
 const STUDENT_ENROLMENTS_DIR = path.join(STUDENTS_DIR, "enrolments");
 
+// Difficulty is calculated from finalised cohorts only — students whose final
+// outcome (graduate or dropout) is on the books. Active students are kept as
+// part of the cohort for realism but they don't generate enrolment rows.
 const STUDENT_COUNTS = [
-  { band: "developing", status: "active", count: 18, minGpa: 1.75, maxGpa: 2.55 },
-  { band: "steady", status: "active", count: 34, minGpa: 2.45, maxGpa: 3.15 },
-  { band: "strong", status: "active", count: 30, minGpa: 3.05, maxGpa: 3.65 },
-  { band: "high", status: "active", count: 18, minGpa: 3.6, maxGpa: 4.0 },
-  { band: "strong", status: "graduate", count: 26, minGpa: 3.0, maxGpa: 3.8 },
-  { band: "developing", status: "dropout", count: 18, minGpa: 1.35, maxGpa: 2.45 },
+  { band: "developing", status: "active",   count: 18, minGpa: 1.75, maxGpa: 2.55 },
+  { band: "steady",     status: "active",   count: 30, minGpa: 2.45, maxGpa: 3.15 },
+  { band: "strong",     status: "active",   count: 26, minGpa: 3.05, maxGpa: 3.65 },
+  { band: "high",       status: "active",   count: 16, minGpa: 3.6,  maxGpa: 4.0  },
+  { band: "developing", status: "graduate", count: 30, minGpa: 1.85, maxGpa: 2.55 },
+  { band: "steady",     status: "graduate", count: 60, minGpa: 2.55, maxGpa: 3.15 },
+  { band: "strong",     status: "graduate", count: 70, minGpa: 3.05, maxGpa: 3.65 },
+  { band: "high",       status: "graduate", count: 40, minGpa: 3.55, maxGpa: 3.95 },
+  { band: "developing", status: "dropout",  count: 60, minGpa: 1.30, maxGpa: 2.30 },
+  { band: "steady",     status: "dropout",  count: 40, minGpa: 2.20, maxGpa: 2.85 },
 ];
 
+const PERIOD_LABELS = ["previous_semester", "current_semester"];
 const UNIT_RE = /\b[A-Z]{2,4}\d{4}\b/g;
+
+// Curated calibration — well-known reputations within FIT/MAT.
+// Boost latent load for famously brutal units, dampen for friendly intros.
+// These nudges layer on top of level/prereq/assessment-driven load and make
+// same-level variation match real-world expectations.
+const KNOWN_HARD_BOOST = {
+  // Algorithms / theory family — hard regardless of nominal level.
+  // Target landing zone is "Very Hard" (>=75) for the famously brutal ones.
+  FIT2004: 0.42, // Algorithms & data structures
+  FIT2014: 0.44, // Theory of computation
+  FIT2102: 0.40, // Programming paradigms
+  FIT3155: 0.36, // Advanced algorithms
+  FIT3171: 0.28, // Databases
+  FIT3173: 0.30, // Software security
+  FIT3175: 0.20, // Usability
+  FIT3047: 0.26, // Industry experience studio
+  MAT1830: 0.20, // Discrete maths
+};
+
+const KNOWN_EASY_NUDGE = {
+  // Intro-friendly programming and breadth units
+  FIT1045: 0.16, // Intro to programming — meant to be the gentlest entry
+  FIT1043: 0.14, // Intro to data science
+  FIT1056: 0.12, // Intro to web dev
+  FIT1048: 0.12,
+  FIT1049: 0.14,
+  FIT1051: 0.12,
+};
 
 function hashString(value) {
   let hash = 2166136261;
@@ -88,16 +124,21 @@ function unitLatentLoad(code, unit) {
   const reqCodes = collectReqCodes(unit.requisites?.prerequisites);
   const assessments = assessmentComplexity(unit);
 
-  return clamp(
-    0.16 +
-      (level - 1) * 0.14 +
-      Math.min(reqCodes.length, 10) * 0.026 +
-      Math.min(assessments.count, 8) * 0.015 +
-      assessments.examCount * 0.025 +
-      randomBetween(`${code}:latent`, -0.055, 0.065),
-    0.05,
-    0.9,
-  );
+  // Wide noise (-0.18..+0.18) so two units at the same level differ a lot —
+  // mimics the real-world spread between, say, an easy elective and a brutal
+  // algorithms course at the same level.
+  let load =
+    0.10 +
+    (level - 1) * 0.16 +
+    Math.min(reqCodes.length, 10) * 0.028 +
+    Math.min(assessments.count, 8) * 0.016 +
+    assessments.examCount * 0.028 +
+    randomBetween(`${code}:latent`, -0.18, 0.18);
+
+  if (KNOWN_HARD_BOOST[code]) load += KNOWN_HARD_BOOST[code];
+  if (KNOWN_EASY_NUDGE[code]) load -= KNOWN_EASY_NUDGE[code];
+
+  return clamp(load, 0.02, 0.95);
 }
 
 function createStudents() {
@@ -142,44 +183,50 @@ function markFromGradePoint(seed, gradePoint) {
   return Math.round(clamp(48 + gradePoint * 11 + randomBetween(seed, -3, 3), 0, 100));
 }
 
-function pickOfferingSemester(code, unit) {
-  const periods = (unit.offerings ?? []).map((offering) =>
-    String(offering.period || "").toLowerCase(),
-  );
-  const hasS1 = periods.some((period) => period.includes("first"));
-  const hasS2 = periods.some((period) => period.includes("second"));
-  if (hasS1 && hasS2) return random01(`${code}:semester`) > 0.5 ? "S1" : "S2";
-  if (hasS2) return "S2";
-  return "S1";
+// Bias graduates slightly toward "current_semester" (they just finished) and
+// dropouts slightly toward "previous_semester" (a bit of distance since they
+// left). Active students don't generate enrolments at all.
+function pickPeriod(seed, status) {
+  const r = random01(seed);
+  if (status === "graduate") return r < 0.55 ? "current_semester" : "previous_semester";
+  if (status === "dropout")  return r < 0.45 ? "current_semester" : "previous_semester";
+  return r < 0.5 ? "current_semester" : "previous_semester";
 }
 
 function attachEnrolments(units, students) {
   const codes = Object.keys(units).sort();
+  const finalisedStudents = students.filter(
+    (s) => s.academic_status === "graduate" || s.academic_status === "dropout",
+  );
 
   for (const code of codes) {
     const unit = units[code];
     const level = inferLevel(code, unit);
     const latentLoad = unitLatentLoad(code, unit);
     const reqCount = collectReqCodes(unit.requisites?.prerequisites).length;
-    const enrolmentCount = Math.round(randomBetween(`${code}:count`, 13, 23));
-    const selectivity = clamp(latentLoad * 0.62 + (level - 1) * 0.08 + reqCount * 0.012, 0, 0.88);
+    const enrolmentCount = Math.round(randomBetween(`${code}:count`, 14, 24));
+    const selectivity = clamp(
+      latentLoad * 0.62 + (level - 1) * 0.08 + reqCount * 0.012,
+      0,
+      0.88,
+    );
 
-    const selected = [...students]
+    const selected = [...finalisedStudents]
       .sort((a, b) => {
-        const aLoadPenalty = Math.max(0, a.enrolments.length - 34) * 0.035;
-        const bLoadPenalty = Math.max(0, b.enrolments.length - 34) * 0.035;
-        const aCompletionPenalty = a.academic_status === "dropout" && level >= 3 ? 0.22 : 0;
-        const bCompletionPenalty = b.academic_status === "dropout" && level >= 3 ? 0.22 : 0;
+        const aLoadPenalty = Math.max(0, a.enrolments.length - 28) * 0.035;
+        const bLoadPenalty = Math.max(0, b.enrolments.length - 28) * 0.035;
+        const aDropoutPenalty = a.academic_status === "dropout" && level >= 3 ? 0.22 : 0;
+        const bDropoutPenalty = b.academic_status === "dropout" && level >= 3 ? 0.22 : 0;
         const aScore =
           random01(`${code}:${a.student_id}:pick`) +
           selectivity * ((a.gpa - 2.45) / 1.55) -
           aLoadPenalty -
-          aCompletionPenalty;
+          aDropoutPenalty;
         const bScore =
           random01(`${code}:${b.student_id}:pick`) +
           selectivity * ((b.gpa - 2.45) / 1.55) -
           bLoadPenalty -
-          bCompletionPenalty;
+          bDropoutPenalty;
         return bScore - aScore;
       })
       .slice(0, enrolmentCount);
@@ -192,8 +239,7 @@ function attachEnrolments(units, students) {
       const mark = markFromGradePoint(`${student.student_id}:${code}:mark`, gradePoint);
       student.enrolments.push({
         unit_code: code,
-        year: 2022 + Math.floor(randomBetween(`${student.student_id}:${code}:year`, 0, 4)),
-        semester: pickOfferingSemester(code, unit),
+        period: pickPeriod(`${student.student_id}:${code}:period`, student.academic_status),
         mark,
         grade: gradeFromMark(mark),
         grade_point: gradePoint,
@@ -202,10 +248,10 @@ function attachEnrolments(units, students) {
   }
 
   for (const student of students) {
-    student.enrolments.sort((a, b) =>
-      a.year === b.year
-        ? a.semester.localeCompare(b.semester) || a.unit_code.localeCompare(b.unit_code)
-        : a.year - b.year,
+    student.enrolments.sort(
+      (a, b) =>
+        a.period.localeCompare(b.period) ||
+        a.unit_code.localeCompare(b.unit_code),
     );
   }
 }
@@ -219,7 +265,7 @@ function writeSegmentedStudentData(students) {
     STUDENT_PROFILES_PATH,
     `${JSON.stringify(
       {
-        version: 1,
+        version: 2,
         generated_by: "algo/src/generate_mock_students.js",
         students: profiles,
       },
@@ -228,59 +274,55 @@ function writeSegmentedStudentData(students) {
     )}\n`,
   );
 
-  const periodMap = new Map();
+  const periodMap = new Map(PERIOD_LABELS.map((label) => [label, []]));
   for (const student of students) {
     for (const enrolment of student.enrolments) {
-      const key = `${enrolment.year}-${enrolment.semester}`;
-      if (!periodMap.has(key)) periodMap.set(key, []);
-      periodMap.get(key).push({
+      const bucket = periodMap.get(enrolment.period);
+      if (!bucket) continue;
+      bucket.push({
         student_id: student.student_id,
         ...enrolment,
       });
     }
   }
 
-  const periods = [...periodMap.entries()]
-    .sort(([a], [b]) => a.localeCompare(b))
-    .map(([key, enrolments]) => {
-      const [year, semester] = key.split("-");
-      enrolments.sort(
-        (a, b) =>
-          a.student_id.localeCompare(b.student_id) ||
-          a.unit_code.localeCompare(b.unit_code),
-      );
+  const periods = PERIOD_LABELS.map((label) => {
+    const enrolments = periodMap.get(label) ?? [];
+    enrolments.sort(
+      (a, b) =>
+        a.student_id.localeCompare(b.student_id) ||
+        a.unit_code.localeCompare(b.unit_code),
+    );
 
-      const file = `enrolments/${key}.json`;
-      fs.writeFileSync(
-        path.join(STUDENTS_DIR, file),
-        `${JSON.stringify(
-          {
-            version: 1,
-            year: Number(year),
-            semester,
-            enrolments,
-          },
-          null,
-          2,
-        )}\n`,
-      );
+    const file = `enrolments/${label}.json`;
+    fs.writeFileSync(
+      path.join(STUDENTS_DIR, file),
+      `${JSON.stringify(
+        {
+          version: 2,
+          label,
+          enrolments,
+        },
+        null,
+        2,
+      )}\n`,
+    );
 
-      return {
-        year: Number(year),
-        semester,
-        file,
-        enrolment_count: enrolments.length,
-      };
-    });
+    return {
+      label,
+      file,
+      enrolment_count: enrolments.length,
+    };
+  });
 
   fs.writeFileSync(
     path.join(STUDENTS_DIR, "index.json"),
     `${JSON.stringify(
       {
-        version: 1,
+        version: 2,
         generated_by: "algo/src/generate_mock_students.js",
         note:
-          "Difficulty is calculated at request time from these period files; no unit difficulty values are stored.",
+          "Difficulty is computed from these two rolling windows (previous_semester + current_semester) over graduate and dropout students only.",
         profile_file: "students.json",
         periods,
       },
@@ -298,19 +340,26 @@ function main() {
   writeSegmentedStudentData(students);
 
   const studentDataset = {
-    version: 2,
+    version: 3,
     generated_by: "algo/src/generate_mock_students.js",
     gpa_scale: "0.00-4.00",
     grade_point_scale: "0.00-4.00",
     mark_scale: "0-100",
     formula_note:
-      "Unit difficulty is intentionally not stored here or in mock_units.json. The web app calculates it from this transcript data at request time so new graduate/dropout/enrolment rows affect the result immediately.",
+      "Difficulty is calculated at request time from these transcripts. Only enrolments belonging to graduate or dropout students contribute; data is split into two rolling windows (previous_semester + current_semester).",
     students,
   };
 
   fs.writeFileSync(STUDENTS_PATH, `${JSON.stringify(studentDataset, null, 2)}\n`);
 
-  console.log(`Generated ${students.length} mock students from ${Object.keys(units).length} units.`);
+  const finalisedCount = students.filter(
+    (s) => s.academic_status === "graduate" || s.academic_status === "dropout",
+  ).length;
+  const totalEnrolments = students.reduce((sum, s) => sum + s.enrolments.length, 0);
+  console.log(
+    `Generated ${students.length} mock students (${finalisedCount} contribute to difficulty) ` +
+      `with ${totalEnrolments} enrolments across ${Object.keys(units).length} units.`,
+  );
 }
 
 main();

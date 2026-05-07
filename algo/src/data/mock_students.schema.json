@@ -89,8 +89,7 @@
       "type": "object",
       "required": [
         "unit_code",
-        "year",
-        "semester",
+        "period",
         "mark",
         "grade",
         "grade_point"
@@ -100,15 +99,11 @@
           "type": "string",
           "pattern": "^[A-Z]{2,4}\\d{4}$"
         },
-        "year": {
-          "type": "integer",
-          "minimum": 2020
-        },
-        "semester": {
+        "period": {
           "type": "string",
           "enum": [
-            "S1",
-            "S2"
+            "previous_semester",
+            "current_semester"
           ]
         },
         "mark": {

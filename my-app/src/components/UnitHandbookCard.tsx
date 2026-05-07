@@ -10,7 +10,7 @@ import {
   AlertCircle,
   Link,
 } from "lucide-react";
-import { getDifficultyLabel } from "@/lib/difficulty";
+import DifficultySquare from "./DifficultySquare";
 
 type Offering = { period: string; location: string; mode: string };
 type Assessment = { name: string; weight: string; type: string };
@@ -100,10 +100,10 @@ export default function UnitHandbookCard({ unit }: Props) {
           (x) => x.period === o.period && x.location === o.location
         ) === i
     ) ?? [];
-  const difficultyText = getDifficultyLabel({
+  const difficultyUnit = {
     difficulty_score: data?.difficulty_score ?? unit?.difficultyScore ?? null,
     difficulty_level: data?.difficulty_level ?? unit?.difficultyLevel ?? null,
-  });
+  };
 
   return (
     <div className="divide-y divide-black/[0.05]">
@@ -152,7 +152,8 @@ export default function UnitHandbookCard({ unit }: Props) {
                 {data.creditPoints} CP
               </span>
               <span className="inline-flex items-center gap-1.5 rounded-full bg-black/[0.04] px-3 py-1 text-[11px] font-medium text-black/50">
-                Difficulty: {difficultyText}
+                Difficulty
+                <DifficultySquare unit={difficultyUnit} size="sm" />
               </span>
             </div>
           </div>

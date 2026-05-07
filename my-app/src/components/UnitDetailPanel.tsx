@@ -5,7 +5,7 @@ import { X, BookOpen, MessageSquare } from "lucide-react";
 import UnitHandbookCard from "./UnitHandbookCard";
 import UnitReviewModal from "./UnitReviewModal";
 import { UnitCategory } from "@/lib/types";
-import { getDifficultyLabel } from "@/lib/difficulty";
+import DifficultySquare from "./DifficultySquare";
 
 type PanelUnit = {
   code: string;
@@ -129,8 +129,11 @@ export default function UnitDetailPanel({ unit, onClose }: Props) {
         {/* Footer */}
         <div className="border-t border-black/[0.06] px-5 py-3">
           <p className="text-[12px] text-black/25">
-            {unit.cp} CP · Level {unit.level} · Difficulty:{" "}
-            {getDifficultyLabel(unit)}
+            {unit.cp} CP · Level {unit.level} ·{" "}
+            <span className="inline-flex items-center gap-1.5">
+              Difficulty
+              <DifficultySquare unit={unit} size="sm" />
+            </span>
           </p>
         </div>
       </div>
