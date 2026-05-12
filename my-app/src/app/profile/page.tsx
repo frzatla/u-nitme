@@ -18,6 +18,7 @@ import { readFileSync, unlinkSync } from "fs";
 import path from "path";
 import { savePendingPlan } from "@/lib/pendingPlan";
 import { getElasticsearchClient, UNITS_INDEX } from "@/lib/elasticsearch";
+import { isAdminUser } from "@/lib/auth";
 
 const ALGO_DIR = path.join(process.cwd(), "..", "algo", "src");
 const AOS_PATH = path.join(ALGO_DIR, "data", "mock_aos.json");
@@ -382,6 +383,9 @@ function getDurationYears(yearStart: number, yearEnd: number) {
 
 export default async function NewPlanPage() {
   const user = await currentUser();
+
+  if (!user) redirect("/sign-in");
+  if (isAdminUser(user)) redirect("/admin");
 
   async function handleSubmit(formData: FormData) {
     "use server";

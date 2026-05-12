@@ -6,7 +6,7 @@ import { Plan } from "@/lib/types";
 import CoursePlanClient from "../CoursePlanClient";
 import { getProfileByEmail, updateProfile } from "@/lib/profile";
 import { deletePendingPlan } from "@/lib/pendingPlan";
-// import { isAdminUser } from "@/lib/auth";
+import { isAdminUser } from "@/lib/auth";
 import { buildCoursePlanInfoPills, getCoursePlanById } from "@/lib/coursePlan";
 import { loadCoursePlanOptions } from "@/lib/courseOptions";
 
@@ -26,6 +26,7 @@ export default async function CoursePlanPage({
   const email: string = user?.primaryEmailAddress?.emailAddress;
 
   if (!email) redirect("/sign-in");
+  if (isAdminUser(user)) redirect("/admin");
 
   const plan: Plan | null = await getCoursePlanById(
     email,
