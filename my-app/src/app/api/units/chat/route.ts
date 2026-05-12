@@ -1,18 +1,17 @@
 import { NextRequest, NextResponse } from "next/server";
 import { GoogleGenerativeAI } from "@google/generative-ai";
-import { getElasticsearchClient, UNITS_INDEX } from "@/lib/elasticsearch";
+import { getTypesenseClient, UNITS_COLLECTION } from "@/lib/typesense";
 import { redis, chatKey, CHAT_TTL, StoredMessage } from "@/lib/redis";
 
 const genAI = new GoogleGenerativeAI(process.env.GOOGLE_AI_API_KEY!);
 
 type PlanUnit = { code: string; name: string; level: string };
 
-// ── Elasticsearch unit search ─────────────────────────────────────────────────
+// ── Typesense unit search ─────────────────────────────────────────────────────
 
-function formatHits(hits: any[]): string {
-  return hits
-    .map((h) => {
-      const s = h._source as Record<string, unknown>;
+function formatDocs(docs: any[]): string {
+  return docs
+    .map((s) => {
       const assessments = Array.isArray(s.assessments) && s.assessments.length
         ? `\n    Assessments: ${(s.assessments as string[]).join(", ")}`
         : "";
@@ -28,52 +27,54 @@ function formatHits(hits: any[]): string {
 }
 
 async function searchUnits(query: string): Promise<string> {
-  const client = getElasticsearchClient();
+  const client = getTypesenseClient();
 
-  // If the message mentions specific unit codes (e.g. BEX1008), always fetch them first
+  // If the message mentions specific unit codes (e.g. BEX1008), fetch them by code first
   const mentionedCodes = [...query.matchAll(/\b([A-Z]{2,4}\d{4})\b/g)].map((m) => m[1]);
 
   if (mentionedCodes.length > 0) {
-    const exactResult = await client.search({
-      index: UNITS_INDEX,
-      size: mentionedCodes.length,
-      query: { terms: { code: mentionedCodes } },
+    const exactResult = await client.collections(UNITS_COLLECTION).documents().search({
+      q:         "*",
+      query_by:  "code",
+      filter_by: `code:=[${mentionedCodes.join(",")}]`,
+      per_page:  mentionedCodes.length,
     });
-    const exactHits = exactResult.hits.hits;
-    const exactIds = new Set(exactHits.map((h) => h._id));
+    const exactDocs = exactResult.hits?.map((h) => h.document) ?? [];
+    const exactCodes = new Set(exactDocs.map((d: any) => d.code));
 
-    // Supplement with keyword results to fill context, but always keep the exact hits
-    const supplemental = await client.search({
-      index: UNITS_INDEX,
-      size: 6,
-      query: { multi_match: { query, fields: ["title^2", "overview^1.5", "school"], fuzziness: "AUTO" } },
+    // Supplement with keyword results, keeping exact hits at the front
+    const supplemental = await client.collections(UNITS_COLLECTION).documents().search({
+      q:                query,
+      query_by:         "title,overview,school",
+      query_by_weights: "4,3,2",
+      num_typos:        2,
+      per_page:         6,
     });
-    const extra = supplemental.hits.hits.filter((h) => !exactIds.has(h._id));
-    return formatHits([...exactHits, ...extra].slice(0, 8));
+    const extra = (supplemental.hits?.map((h) => h.document) ?? []).filter(
+      (d: any) => !exactCodes.has(d.code),
+    );
+    return formatDocs([...exactDocs, ...extra].slice(0, 8));
   }
 
   // No specific unit mentioned — keyword search on the topic
-  const targeted = await client.search({
-    index: UNITS_INDEX,
-    size: 8,
-    query: {
-      multi_match: {
-        query,
-        fields: ["code^3", "title^2", "overview^1.5", "school"],
-        fuzziness: "AUTO",
-      },
-    },
+  const targeted = await client.collections(UNITS_COLLECTION).documents().search({
+    q:                query,
+    query_by:         "code,title,overview,school",
+    query_by_weights: "6,4,3,2",
+    num_typos:        2,
+    per_page:         8,
   });
 
-  if (targeted.hits.hits.length >= 3) return formatHits(targeted.hits.hits);
+  const targetedDocs = targeted.hits?.map((h) => h.document) ?? [];
+  if (targetedDocs.length >= 3) return formatDocs(targetedDocs);
 
-  // Vague query with no good matches — broad fallback so the model always has context
-  const broad = await client.search({
-    index: UNITS_INDEX,
-    size: 8,
-    query: { match_all: {} },
+  // Vague query — broad fallback so the model always has context
+  const broad = await client.collections(UNITS_COLLECTION).documents().search({
+    q:        "*",
+    query_by: "title",
+    per_page: 8,
   });
-  return formatHits(broad.hits.hits);
+  return formatDocs(broad.hits?.map((h) => h.document) ?? []);
 }
 
 // ── System prompt ─────────────────────────────────────────────────────────────

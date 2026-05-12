@@ -1,42 +1,34 @@
 import { NextRequest, NextResponse } from "next/server";
-import { getElasticsearchClient, UNITS_INDEX } from "@/lib/elasticsearch";
+import { getTypesenseClient, UNITS_COLLECTION } from "@/lib/typesense";
 
 export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url);
-  const q = searchParams.get("q")?.trim();
+  const q     = searchParams.get("q")?.trim();
   const level = searchParams.get("level");
-  const size = Math.min(parseInt(searchParams.get("size") ?? "12"), 50);
+  const size  = Math.min(parseInt(searchParams.get("size") ?? "12"), 50);
 
   if (!q) return NextResponse.json({ units: [] });
 
   try {
-    const client = getElasticsearchClient();
+    const client = getTypesenseClient();
 
-    const filter: object[] = [];
-    if (level) filter.push({ term: { level: parseInt(level) } });
+    const params: Record<string, any> = {
+      q,
+      query_by:         "code,title,overview",
+      query_by_weights: "6,4,2",
+      num_typos:        q.length > 4 ? 2 : 1,
+      prefix:           true,
+      per_page:         size,
+    };
 
-    const result = await client.search({
-      index: UNITS_INDEX,
-      size,
-      query: {
-        bool: {
-          should: [
-            // Prefix on code keyword: "FIT" → FIT1008, FIT2004, etc.
-            { prefix: { code: { value: q.toUpperCase(), boost: 5 } } },
-            // Exact code match (e.g. "FIT1008")
-            { term:   { code: { value: q.toUpperCase(), boost: 6 } } },
-            // Full-text fuzzy search on title (e.g. "algorithms", "data science")
-            { match:  { title: { query: q, fuzziness: "AUTO", boost: 2 } } },
-            // Phrase prefix on title for partial words (e.g. "intro to prog")
-            { match_phrase_prefix: { title: { query: q, boost: 1 } } },
-          ],
-          minimum_should_match: 1,
-          filter,
-        },
-      },
-    });
+    if (level) params.filter_by = `level:=${parseInt(level)}`;
 
-    const units = result.hits.hits.map((hit) => hit._source);
+    const result = await client
+      .collections(UNITS_COLLECTION)
+      .documents()
+      .search(params);
+
+    const units = result.hits?.map((h) => h.document) ?? [];
     return NextResponse.json({ units });
   } catch (error) {
     console.error("Search error:", error);
