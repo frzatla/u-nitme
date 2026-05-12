@@ -9,6 +9,13 @@ import {
   Loader2,
   ArrowLeft,
   Download,
+  GraduationCap,
+  X,
+  Award,
+  BookOpen,
+  Target,
+  GitBranch,
+  LayoutGrid,
 } from "lucide-react";
 import CoursePlanner, { type Semester } from "../../components/CoursePlanner";
 import FloatingChatbot from "../../components/FloatingChatbot";
@@ -90,6 +97,8 @@ export default function CoursePlanClient({
     null,
   );
   const [isSaving, startTransition] = useTransition();
+  const [validateModalOpen, setValidateModalOpen] = useState(false);
+  const [mockPass, setMockPass] = useState(false);
 
   function onSave() {
     const updatedSchedule = modifiedSemesters
@@ -167,6 +176,13 @@ export default function CoursePlanClient({
             </div>
 
             <div className="flex items-center gap-3">
+              <button
+                onClick={() => setValidateModalOpen(true)}
+                className="flex items-center gap-2 rounded-lg border border-white/30 bg-white/10 px-4 py-2 text-xs font-medium text-white transition-all hover:bg-white/20"
+              >
+                <GraduationCap className="h-3.5 w-3.5" />
+                Validate Plan
+              </button>
               <Link
                 href={exportHref}
                 target="_blank"
@@ -263,6 +279,81 @@ export default function CoursePlanClient({
         </div>
       </section>
       <FloatingChatbot context={chatbotContext} />
+
+      {/* Validate Plan modal */}
+      {validateModalOpen && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center px-4"
+          onClick={() => setValidateModalOpen(false)}
+        >
+          <div className="absolute inset-0 bg-black/25 backdrop-blur-[2px]" />
+          <div
+            className="relative z-10 w-full max-w-md overflow-hidden rounded-[28px] bg-white shadow-2xl"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Header — colour signals pass/fail immediately */}
+            <div className={`flex items-center justify-between px-5 py-4 ${mockPass ? "bg-emerald-600" : "bg-red-500"}`}>
+              <div className="flex items-center gap-3">
+                <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-white/20">
+                  <GraduationCap className="h-4 w-4 text-white" />
+                </div>
+                <div>
+                  <p className="text-[15px] font-semibold tracking-[-0.02em] text-white">
+                    Plan Validation
+                  </p>
+                  <p className="text-[12px] text-white/70">
+                    {mockPass ? "All requirements satisfied" : "Some requirements not met"}
+                  </p>
+                </div>
+              </div>
+              <button
+                onClick={() => setValidateModalOpen(false)}
+                className="flex h-7 w-7 items-center justify-center rounded-full bg-white/20 transition hover:bg-white/30"
+              >
+                <X className="h-3.5 w-3.5 text-white" />
+              </button>
+            </div>
+
+            {/* Checklist — TODO: replace mock checks with real graduation requirement logic */}
+            <div className="divide-y divide-black/[0.06] px-5">
+              {[
+                { label: "Minimum credit points met",        Icon: Award      },
+                { label: "Core units all scheduled",         Icon: BookOpen   },
+                { label: "Specialisation requirements covered", Icon: Target  },
+                { label: "No prerequisite conflicts detected",  Icon: GitBranch },
+                { label: "Elective slots filled",            Icon: LayoutGrid },
+              ].map(({ label, Icon }) => (
+                <div key={label} className="flex items-center justify-between py-3.5">
+                  <div className="flex items-center gap-3">
+                    <Icon className={`h-4 w-4 shrink-0 ${mockPass ? "text-emerald-500" : "text-red-400"}`} />
+                    <span className="text-[13px] text-black/60">{label}</span>
+                  </div>
+                  {mockPass ? (
+                    <span className="text-[11px] font-semibold uppercase tracking-[0.06em] text-emerald-600">Pass</span>
+                  ) : (
+                    <span className="text-[11px] font-semibold uppercase tracking-[0.06em] text-red-500">Fail</span>
+                  )}
+                </div>
+              ))}
+            </div>
+
+            {/* Footer */}
+            <div className="border-t border-black/[0.06] px-5 py-4">
+              <div className="flex items-center justify-between">
+                <p className={`text-[13px] font-medium ${mockPass ? "text-emerald-600" : "text-red-500"}`}>
+                  {mockPass ? "✓ On track to graduate" : "✗ Requirements not met"}
+                </p>
+                <button
+                  onClick={() => setValidateModalOpen(false)}
+                  className="rounded-xl bg-black px-4 py-2 text-[13px] font-medium text-white transition hover:bg-black/80"
+                >
+                  Done
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </>
   );
 }
