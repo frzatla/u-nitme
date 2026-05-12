@@ -8,6 +8,7 @@ import { getProfileByEmail, updateProfile } from "@/lib/profile";
 import { deletePendingPlan } from "@/lib/pendingPlan";
 // import { isAdminUser } from "@/lib/auth";
 import { buildCoursePlanInfoPills, getCoursePlanById } from "@/lib/coursePlan";
+import { loadCoursePlanOptions } from "@/lib/courseOptions";
 
 export default async function CoursePlanPage({
   params,
@@ -53,15 +54,10 @@ export default async function CoursePlanPage({
     redirect(`/course-plan/${savedPlan.id}`);
   }
 
-  async function handleDiscard() {
-    "use server";
-    await deletePendingPlan(email);
-    redirect("/profile");
-  }
-
   const isPending = pending === "true";
 
   const infoPills = buildCoursePlanInfoPills(plan);
+  const coursePlanOptions = loadCoursePlanOptions();
 
   return (
     <main className="min-h-screen bg-[#f5f5f2] text-black">
@@ -88,9 +84,9 @@ export default async function CoursePlanPage({
         plan={plan}
         email={email}
         infoPills={infoPills}
+        coursePlanOptions={coursePlanOptions}
         isPending={isPending} // ← add this
         handleSave={handleSave} // ← add this
-        handleDiscard={handleDiscard} // ← add this
       />
 
       <footer className="border-t border-black/10 px-6 py-5 md:px-8">

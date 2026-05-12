@@ -6,6 +6,11 @@ import {
   savePendingPlan,
 } from "@/lib/pendingPlan";
 import { Plan, Schedule } from "@/lib/types";
+import {
+  buildGeneratedPlan,
+  NO_AREA_OF_STUDY_VALUE,
+  PlanGenerationInput,
+} from "@/lib/coursePlanGenerator";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 
@@ -76,4 +81,49 @@ export async function savePlanWithSchedule(
   }
 
   redirect("/dashboard");
+}
+
+export async function regeneratePlanWithDetails(
+  email: string,
+  planId: string,
+  input: PlanGenerationInput,
+  isPending = false,
+) {
+  if (!email || !planId || !input.courseCode || !input.university) return;
+
+  const nextInput: PlanGenerationInput = {
+    ...input,
+    planName: input.planName.trim() || "Course Plan",
+    areaOfStudy:
+      input.areaOfStudy === NO_AREA_OF_STUDY_VALUE ? "" : input.areaOfStudy,
+    interests: input.interests.filter(Boolean).slice(0, 3),
+    yearStart: Number(input.yearStart),
+    yearEnd: Number(input.yearEnd),
+  };
+
+  const generatedPlan = await buildGeneratedPlan(planId, nextInput, !isPending);
+  if (!generatedPlan.schedule) return;
+
+  if (isPending) {
+    await savePendingPlan(email, { ...generatedPlan, saved: false });
+    revalidatePath(`/course-plan/${planId}`);
+    redirect(`/course-plan/${planId}?pending=true`);
+  }
+
+  const profile = await getProfileByEmail(email);
+  const plans: Plan[] = profile?.plans ?? [];
+  let changed = false;
+
+  const updatedPlans = plans.map((plan) => {
+    if (plan.id !== planId) return plan;
+    changed = true;
+    return generatedPlan;
+  });
+
+  if (!changed) return;
+
+  await updateProfile(email, { plans: updatedPlans });
+  revalidatePath("/dashboard");
+  revalidatePath(`/course-plan/${planId}`);
+  redirect(`/course-plan/${planId}`);
 }
