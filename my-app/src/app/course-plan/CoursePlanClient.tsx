@@ -1,20 +1,67 @@
 "use client";
 
-import { useState, useTransition } from "react";
+import { FormEvent, useMemo, useState, useTransition } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import {
-  RefreshCw,
   BookmarkCheck,
   Loader2,
   ArrowLeft,
   Download,
+  Pencil,
+  Sparkles,
+  X,
 } from "lucide-react";
 import CoursePlanner, { type Semester } from "../../components/CoursePlanner";
 import FloatingChatbot from "../../components/FloatingChatbot";
 import PlanNameEditor from "../../components/PlanNameEditor";
-import { savePlanWithSchedule } from "../actions";
+import { regeneratePlanWithDetails, savePlanWithSchedule } from "../actions";
 import { Plan, Schedule, ScheduledUnit } from "@/lib/types";
+import type { CoursePlanOptions } from "@/lib/courseOptions";
+
+const NO_AREA_OF_STUDY_VALUE = "__NO_AREA_OF_STUDY__";
+
+const interestOptions = [
+  "AI",
+  "Problem Solving",
+  "Cybersecurity",
+  "Data",
+  "Software",
+  "Design",
+  "Business",
+  "Pitching",
+  "Leadership",
+  "Communication",
+  "Finance",
+  "Health",
+  "Sustainability",
+  "Robotics",
+  "Games",
+  "Education",
+];
+
+function getMaxInterests(minorMajorType: string) {
+  if (minorMajorType === "major") return 1;
+  if (minorMajorType === "minor") return 2;
+  return 3;
+}
+
+function clampEndYear(nextStart: string, nextEnd: string) {
+  if (!nextEnd) return "";
+
+  const start = Number(nextStart);
+  const end = Number(nextEnd);
+
+  if (!Number.isFinite(start) || !Number.isFinite(end)) return nextEnd;
+  if (end < start + 2) return String(start + 2);
+  if (end > start + 7) return String(start + 7);
+  return nextEnd;
+}
+
+const fieldClass =
+  "w-full rounded-lg border border-white/12 bg-white/[0.08] px-3 py-2 text-xs text-white outline-none transition focus:border-white/30 focus:bg-white/[0.12]";
+
+const labelClass = "mb-1.5 block text-[10px] uppercase tracking-[0.16em] text-white/35";
 
 function buildUnitQueue(schedule: Schedule): Map<string, ScheduledUnit[]> {
   const map = new Map<string, ScheduledUnit[]>();
@@ -70,26 +117,68 @@ type Props = {
   plan: Plan;
   email: string;
   infoPills: string[];
+  coursePlanOptions: CoursePlanOptions;
   isPending: boolean;
   handleSave: () => Promise<void>;
-  handleDiscard: () => Promise<void>;
 };
 
 export default function CoursePlanClient({
   plan: initialPlan,
   email,
   infoPills,
+  coursePlanOptions,
   isPending: isNewPlan,
   handleSave,
-  handleDiscard,
 }: Props) {
   const router = useRouter();
   const [plan, setPlan] = useState(initialPlan);
-
   const [modifiedSemesters, setModifiedSemesters] = useState<Semester[] | null>(
     null,
   );
   const [isSaving, startTransition] = useTransition();
+  const [isRegenerating, startRegenerateTransition] = useTransition();
+  const [isEditingDetails, setIsEditingDetails] = useState(false);
+  const [details, setDetails] = useState(() => ({
+    courseCode: initialPlan.courseCode || "",
+    university: initialPlan.university || "Monash University",
+    areaOfStudy: initialPlan.areaOfStudy || "",
+    minorMajorType: initialPlan.schedule?.major
+      ? "major"
+      : initialPlan.schedule?.minor
+        ? "minor"
+        : "",
+    minorMajorCode: initialPlan.schedule?.major || initialPlan.schedule?.minor || "",
+    interests: initialPlan.interests ?? [],
+    semesterOffering: initialPlan.semesterOffering || "February",
+    yearStart: String(initialPlan.yearStart || ""),
+    yearEnd: String(initialPlan.yearEnd || ""),
+  }));
+
+  const filteredAos = useMemo(() => {
+    if (!details.courseCode || !coursePlanOptions.courseToAos[details.courseCode]) {
+      return [];
+    }
+
+    return coursePlanOptions.aosList.filter((aos) =>
+      coursePlanOptions.courseToAos[details.courseCode].includes(aos.code),
+    );
+  }, [coursePlanOptions.aosList, coursePlanOptions.courseToAos, details.courseCode]);
+
+  const areaOfStudyOptions =
+    details.courseCode && filteredAos.length === 0
+      ? [{ code: NO_AREA_OF_STUDY_VALUE, title: "No area of study" }]
+      : filteredAos;
+  const areaOfStudyValue =
+    details.courseCode && filteredAos.length === 0
+      ? NO_AREA_OF_STUDY_VALUE
+      : details.areaOfStudy;
+  const minorMajorOptions =
+    details.minorMajorType === "minor"
+      ? coursePlanOptions.minorAosList
+      : details.minorMajorType === "major"
+        ? coursePlanOptions.majorAosList
+        : [];
+  const maxInterests = getMaxInterests(details.minorMajorType);
 
   function onSave() {
     const updatedSchedule = modifiedSemesters
@@ -102,9 +191,7 @@ export default function CoursePlanClient({
   }
 
   function onDiscard() {
-    startTransition(async () => {
-      await handleDiscard();
-    });
+    setIsEditingDetails(false);
   }
 
   function onBackToDashboard() {
@@ -136,6 +223,52 @@ export default function CoursePlanClient({
     `Summary: ${plan.schedule?.summary.total_units ?? 0} units, ${plan.schedule?.summary.total_cp ?? 0} credit points`,
   ].join("\n");
 
+  function toggleInterest(interest: string) {
+    setDetails((current) => {
+      if (current.interests.includes(interest)) {
+        return {
+          ...current,
+          interests: current.interests.filter((item) => item !== interest),
+        };
+      }
+
+      if (current.interests.length >= maxInterests) return current;
+      return { ...current, interests: [...current.interests, interest] };
+    });
+  }
+
+  function onApplyDetails(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+
+    if (modifiedSemesters) {
+      const confirmed = window.confirm(
+        "Regenerating from these details will replace your current semester edits. Continue?",
+      );
+      if (!confirmed) return;
+    }
+
+    startRegenerateTransition(async () => {
+      await regeneratePlanWithDetails(
+        email,
+        plan.id,
+        {
+          planName: plan.planName || "Course Plan",
+          courseCode: details.courseCode,
+          university: details.university,
+          areaOfStudy:
+            areaOfStudyValue === NO_AREA_OF_STUDY_VALUE ? "" : areaOfStudyValue,
+          interests: details.interests,
+          semesterOffering: details.semesterOffering,
+          yearStart: Number(details.yearStart),
+          yearEnd: Number(details.yearEnd),
+          minorMajorType: details.minorMajorType,
+          minorMajorCode: details.minorMajorCode,
+        },
+        isNewPlan,
+      );
+    });
+  }
+
   return (
     <>
       <section className="bg-black px-6 py-10 text-white md:px-8 md:py-12">
@@ -150,9 +283,9 @@ export default function CoursePlanClient({
                 isPending={isNewPlan}
                 variant="planner"
                 headingLevel="h1"
-                onRenamed={(nextName) =>
-                  setPlan((current) => ({ ...current, planName: nextName }))
-                }
+                onRenamed={(nextName) => {
+                  setPlan((current) => ({ ...current, planName: nextName }));
+                }}
               />
               <div className="mt-4 flex flex-wrap gap-2">
                 {infoPills.map((pill) => (
@@ -192,12 +325,16 @@ export default function CoursePlanClient({
                     Save Plan
                   </button>
                   <button
-                    onClick={onDiscard}
-                    disabled={isSaving}
+                    onClick={() => setIsEditingDetails((current) => !current)}
+                    disabled={isSaving || isRegenerating}
                     className="flex items-center gap-2 rounded-lg border border-white/15 px-4 py-2 text-xs text-white/50 transition-all hover:border-white/30 hover:text-white disabled:opacity-60"
                   >
-                    <RefreshCw className="h-3.5 w-3.5" />
-                    Regenerate
+                    {isEditingDetails ? (
+                      <X className="h-3.5 w-3.5" />
+                    ) : (
+                      <Pencil className="h-3.5 w-3.5" />
+                    )}
+                    {isEditingDetails ? "Close" : "Edit Details"}
                   </button>
                 </>
               ) : (
@@ -221,17 +358,312 @@ export default function CoursePlanClient({
                       Saved
                     </span>
                   )}
-                  <Link
-                    href="/profile"
+                  <button
+                    type="button"
+                    onClick={() => setIsEditingDetails((current) => !current)}
+                    disabled={isSaving || isRegenerating}
                     className="flex items-center gap-2 rounded-lg border border-white/15 px-4 py-2 text-xs text-white/50 transition-all hover:border-white/30 hover:text-white"
                   >
-                    <RefreshCw className="h-3.5 w-3.5" />
-                    Regenerate
-                  </Link>
+                    {isEditingDetails ? (
+                      <X className="h-3.5 w-3.5" />
+                    ) : (
+                      <Pencil className="h-3.5 w-3.5" />
+                    )}
+                    {isEditingDetails ? "Close" : "Edit Details"}
+                  </button>
                 </>
               )}
             </div>
           </div>
+
+          {isEditingDetails && (
+            <form
+              onSubmit={onApplyDetails}
+              className="mt-8 rounded-2xl border border-white/10 bg-white/[0.05] p-4 md:p-5"
+            >
+              <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+                <div>
+                  <label htmlFor="edit-university" className={labelClass}>
+                    University
+                  </label>
+                  <select
+                    id="edit-university"
+                    value={details.university}
+                    onChange={(event) =>
+                      setDetails((current) => ({
+                        ...current,
+                        university: event.target.value,
+                      }))
+                    }
+                    className={fieldClass}
+                    required
+                  >
+                    <option value="Monash University">Monash University</option>
+                  </select>
+                </div>
+
+                <div>
+                  <label htmlFor="edit-course" className={labelClass}>
+                    Course
+                  </label>
+                  <select
+                    id="edit-course"
+                    value={details.courseCode}
+                    onChange={(event) => {
+                      const nextCourse = event.target.value;
+                      const nextAosCodes =
+                        coursePlanOptions.courseToAos[nextCourse] ?? [];
+                      setDetails((current) => ({
+                        ...current,
+                        courseCode: nextCourse,
+                        areaOfStudy:
+                          nextAosCodes.length === 0
+                            ? NO_AREA_OF_STUDY_VALUE
+                            : "",
+                      }));
+                    }}
+                    className={fieldClass}
+                    required
+                  >
+                    <option value="" disabled>
+                      Select course
+                    </option>
+                    {coursePlanOptions.courses.map((course) => (
+                      <option key={course.code} value={course.code}>
+                        {course.code}: {course.title}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+
+                <div>
+                  <label htmlFor="edit-aos" className={labelClass}>
+                    Area of Study
+                  </label>
+                  <select
+                    id="edit-aos"
+                    value={areaOfStudyValue}
+                    onChange={(event) =>
+                      setDetails((current) => ({
+                        ...current,
+                        areaOfStudy: event.target.value,
+                      }))
+                    }
+                    className={fieldClass}
+                    disabled={!details.courseCode}
+                    required
+                  >
+                    <option value="" disabled>
+                      {details.courseCode
+                        ? "Select area of study"
+                        : "Select course first"}
+                    </option>
+                    {areaOfStudyOptions.map((aos) => (
+                      <option key={aos.code} value={aos.code}>
+                        {aos.code}: {aos.title}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+
+                <div>
+                  <label htmlFor="edit-offering" className={labelClass}>
+                    Offering
+                  </label>
+                  <select
+                    id="edit-offering"
+                    value={details.semesterOffering}
+                    onChange={(event) =>
+                      setDetails((current) => ({
+                        ...current,
+                        semesterOffering: event.target.value,
+                      }))
+                    }
+                    className={fieldClass}
+                    required
+                  >
+                    <option value="February">February</option>
+                  </select>
+                </div>
+
+                <div>
+                  <label htmlFor="edit-minor-major-type" className={labelClass}>
+                    Minor / Major
+                  </label>
+                  <select
+                    id="edit-minor-major-type"
+                    value={details.minorMajorType}
+                    onChange={(event) => {
+                      const nextType = event.target.value;
+                      const nextMax = getMaxInterests(nextType);
+                      setDetails((current) => ({
+                        ...current,
+                        minorMajorType: nextType,
+                        minorMajorCode: "",
+                        interests:
+                          current.interests.length > nextMax
+                            ? current.interests.slice(0, nextMax)
+                            : current.interests,
+                      }));
+                    }}
+                    className={fieldClass}
+                  >
+                    <option value="">None</option>
+                    <option value="major">Major</option>
+                    <option value="minor">Minor</option>
+                  </select>
+                </div>
+
+                <div>
+                  <label htmlFor="edit-minor-major-code" className={labelClass}>
+                    Select{" "}
+                    {details.minorMajorType === "major"
+                      ? "Major"
+                      : details.minorMajorType === "minor"
+                        ? "Minor"
+                        : "Option"}
+                  </label>
+                  <select
+                    id="edit-minor-major-code"
+                    value={details.minorMajorCode}
+                    onChange={(event) =>
+                      setDetails((current) => ({
+                        ...current,
+                        minorMajorCode: event.target.value,
+                      }))
+                    }
+                    className={fieldClass}
+                    disabled={!details.minorMajorType}
+                  >
+                    <option value="">
+                      {details.minorMajorType ? "Select option" : "None"}
+                    </option>
+                    {minorMajorOptions.map((option) => (
+                      <option key={option.code} value={option.code}>
+                        {option.code}: {option.title}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+
+                <div>
+                  <label htmlFor="edit-start-year" className={labelClass}>
+                    Start Year
+                  </label>
+                  <input
+                    id="edit-start-year"
+                    type="number"
+                    min="2020"
+                    max="2035"
+                    value={details.yearStart}
+                    onChange={(event) => {
+                      const nextStart = event.target.value;
+                      setDetails((current) => ({
+                        ...current,
+                        yearStart: nextStart,
+                        yearEnd: clampEndYear(nextStart, current.yearEnd),
+                      }));
+                    }}
+                    className={fieldClass}
+                    required
+                  />
+                </div>
+
+                <div>
+                  <label htmlFor="edit-end-year" className={labelClass}>
+                    End Year
+                  </label>
+                  <input
+                    id="edit-end-year"
+                    type="number"
+                    min={
+                      details.yearStart
+                        ? String(Number(details.yearStart) + 2)
+                        : "2022"
+                    }
+                    max={
+                      details.yearStart
+                        ? String(Number(details.yearStart) + 7)
+                        : "2040"
+                    }
+                    value={details.yearEnd}
+                    onChange={(event) =>
+                      setDetails((current) => ({
+                        ...current,
+                        yearEnd: clampEndYear(
+                          current.yearStart,
+                          event.target.value,
+                        ),
+                      }))
+                    }
+                    className={fieldClass}
+                    required
+                  />
+                </div>
+              </div>
+
+              <div className="mt-5">
+                <div className="mb-2 flex items-center justify-between gap-4">
+                  <p className={labelClass}>Interests</p>
+                  <span className="text-xs text-white/35">
+                    {details.interests.length}/{maxInterests} selected
+                  </span>
+                </div>
+                <div className="flex flex-wrap gap-2">
+                  {interestOptions.map((interest) => {
+                    const isSelected = details.interests.includes(interest);
+                    const isDisabled =
+                      !isSelected && details.interests.length >= maxInterests;
+
+                    return (
+                      <button
+                        key={interest}
+                        type="button"
+                        onClick={() => toggleInterest(interest)}
+                        disabled={isDisabled}
+                        className={`rounded-full border px-3 py-1.5 text-xs transition ${
+                          isSelected
+                            ? "border-white bg-white text-black"
+                            : "border-white/12 bg-white/[0.05] text-white/55 hover:border-white/25 hover:text-white"
+                        } ${isDisabled ? "cursor-not-allowed opacity-35" : ""}`}
+                      >
+                        {interest}
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+
+              <div className="mt-6 flex flex-wrap items-center justify-end gap-3">
+                <button
+                  type="button"
+                  onClick={onDiscard}
+                  disabled={isRegenerating}
+                  className="rounded-lg border border-white/15 px-4 py-2 text-xs text-white/50 transition hover:border-white/30 hover:text-white disabled:opacity-60"
+                >
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  disabled={
+                    isRegenerating ||
+                    !details.courseCode ||
+                    !details.university ||
+                    !areaOfStudyValue ||
+                    details.interests.length === 0
+                  }
+                  className="flex items-center gap-2 rounded-lg bg-white px-4 py-2 text-xs font-medium text-black transition hover:bg-white/90 disabled:cursor-not-allowed disabled:opacity-60"
+                >
+                  {isRegenerating ? (
+                    <Loader2 className="h-3.5 w-3.5 animate-spin" />
+                  ) : (
+                    <Sparkles className="h-3.5 w-3.5" />
+                  )}
+                  Apply Changes
+                </button>
+              </div>
+            </form>
+          )}
         </div>
       </section>
 
