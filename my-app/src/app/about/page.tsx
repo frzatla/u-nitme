@@ -388,8 +388,8 @@ export default function AboutPage() {
             </span>
             <SignInButton
               mode="redirect"
-              forceRedirectUrl="/dashboard"
-              fallbackRedirectUrl="/dashboard"
+              forceRedirectUrl="/post-sign-in"
+              fallbackRedirectUrl="/post-sign-in"
             >
               <button className="inline-flex items-center gap-2 rounded-full border border-white/12 bg-white/[0.03] px-5 py-2.5 text-xs uppercase tracking-[0.18em] text-[#f3f1eb]/72 transition hover:border-white/25 hover:bg-white/[0.05] hover:text-[#f3f1eb]">
                 Sign In
@@ -448,8 +448,8 @@ export default function AboutPage() {
                 <div className="flex items-center gap-5">
                   <SignInButton
                     mode="redirect"
-                    forceRedirectUrl="/dashboard"
-                    fallbackRedirectUrl="/dashboard"
+                    forceRedirectUrl="/post-sign-in"
+                    fallbackRedirectUrl="/post-sign-in"
                   >
                     <button className="group inline-flex items-center gap-4">
                       <span className="flex h-16 w-16 items-center justify-center rounded-full border border-white/18 transition duration-500 group-hover:scale-105 group-hover:bg-white">
@@ -934,8 +934,8 @@ export default function AboutPage() {
           <FadeUp delay={0.32}>
             <SignInButton
               mode="redirect"
-              forceRedirectUrl="/dashboard"
-              fallbackRedirectUrl="/dashboard"
+              forceRedirectUrl="/post-sign-in"
+              fallbackRedirectUrl="/post-sign-in"
             >
               <button className="group mt-12 inline-flex items-center gap-4">
                 <span className="flex h-16 w-16 items-center justify-center rounded-full border border-white/18 transition duration-500 group-hover:scale-105 group-hover:bg-white">

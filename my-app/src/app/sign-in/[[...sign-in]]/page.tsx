@@ -2,6 +2,9 @@ import { SignIn } from "@clerk/nextjs";
 
 export default async function Page() {
   return (
-    <SignIn forceRedirectUrl="/dashboard" fallbackRedirectUrl="/dashboard" />
+    <SignIn
+      forceRedirectUrl="/post-sign-in"
+      fallbackRedirectUrl="/post-sign-in"
+    />
   );
 }
