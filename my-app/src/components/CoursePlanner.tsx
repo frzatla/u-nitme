@@ -856,7 +856,7 @@ export default function CoursePlanner({
                   <RotateCcw className="h-4 w-4" />
                   Regenerate
                 </button>
-                <button className="inline-flex items-center gap-2 rounded-2xl bg-white px-5 py-3 text-[14px] font-medium text-black transition hover:bg-white/90">
+<button className="inline-flex items-center gap-2 rounded-2xl bg-white px-5 py-3 text-[14px] font-medium text-black transition hover:bg-white/90">
                   <Download className="h-4 w-4" />
                   Export
                 </button>
