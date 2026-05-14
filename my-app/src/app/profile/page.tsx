@@ -26,7 +26,7 @@ const COURSES_PATH = path.join(ALGO_DIR, "data", "mock_courses.json");
 const MOCK_UNITS_PATH = path.join(ALGO_DIR, "data", "mock_units.json");
 const NO_AREA_OF_STUDY_VALUE = "__NO_AREA_OF_STUDY__";
 
-// On Windows try "py" first (Python Launcher); on other platforms try "python3" first
+// On Windows try "py" first (Python Launcher); on other platforms try "python3" first yes
 const PYTHON_COMMANDS =
   process.platform === "win32"
     ? ["py", "python", "python3"]
