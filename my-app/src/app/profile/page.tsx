@@ -13,45 +13,19 @@ import {
   ScheduledUnit,
   UnitCategory,
 } from "@/lib/types";
-import { spawnSync } from "child_process";
-import { readFileSync, unlinkSync } from "fs";
+import { readFileSync } from "fs";
 import path from "path";
 import { savePendingPlan } from "@/lib/pendingPlan";
 import { isAdminUser } from "@/lib/auth";
 import { getTypesenseClient, UNITS_COLLECTION } from "@/lib/typesense";
 
-const ALGO_DIR = path.join(process.cwd(), "..", "algo", "src");
-const AOS_PATH = path.join(ALGO_DIR, "data", "mock_aos.json");
-const COURSES_PATH = path.join(ALGO_DIR, "data", "mock_courses.json");
-const MOCK_UNITS_PATH = path.join(ALGO_DIR, "data", "mock_units.json");
+const DATA_DIR     = path.join(process.cwd(), "..", "algo", "src", "data");
+const AOS_PATH     = path.join(DATA_DIR, "mock_aos.json");
+const COURSES_PATH = path.join(DATA_DIR, "mock_courses.json");
+const MOCK_UNITS_PATH = path.join(DATA_DIR, "mock_units.json");
 const NO_AREA_OF_STUDY_VALUE = "__NO_AREA_OF_STUDY__";
 
-// On Windows try "py" first (Python Launcher); on other platforms try "python3" first yes
-const PYTHON_COMMANDS =
-  process.platform === "win32"
-    ? ["py", "python", "python3"]
-    : ["python3", "python", "py"];
-
-function spawnPython(args: string[]): ReturnType<typeof spawnSync> {
-  for (const cmd of PYTHON_COMMANDS) {
-    const result = spawnSync(cmd, args, {
-      cwd: ALGO_DIR,
-      encoding: "utf-8",
-      timeout: 60000,
-    });
-    // ENOENT = command not found on Unix
-    if (result.error && (result.error as any).code === "ENOENT") continue;
-    // 9009 = "command not recognized" on Windows
-    if (result.status === 9009) continue;
-    return result;
-  }
-  // All commands exhausted — return last result so the caller can log the error
-  return spawnSync(PYTHON_COMMANDS[PYTHON_COMMANDS.length - 1], args, {
-    cwd: ALGO_DIR,
-    encoding: "utf-8",
-    timeout: 60000,
-  });
-}
+const ALGO_API_URL = process.env.ALGO_API_URL ?? "https://u-nitme-algo.vercel.app/api";
 
 async function runAlgo(
   courseCode: string,
@@ -60,45 +34,30 @@ async function runAlgo(
   minorMajorType?: string,
   minorMajorCode?: string,
 ): Promise<Schedule | null> {
-  const outputFile = `schedule_${crypto.randomUUID()}.json`;
-
-  const args = [
-    "algo1.py",
-    "--course",
-    courseCode,
-    "--specialisation",
-    aosCode,
-    "--campus",
-    "Clayton",
-    "--output",
-    outputFile,
-  ];
-
-  if (minorMajorType === "major" && minorMajorCode) {
-    args.push("--major", minorMajorCode);
-  } else if (minorMajorType === "minor" && minorMajorCode) {
-    args.push("--minor", minorMajorCode);
-  }
-
-  if (standardYears && Number.isFinite(standardYears)) {
-    args.push("--years", String(standardYears));
-  }
-
-  const result = spawnPython(args);
-
-  if (result.status !== 0) {
-    // console.error("algo1.py stderr:", result.stderr);
-    // console.error("algo1.py stdout:", result.stdout);
-    return null;
-  }
-
-  const outputPath = path.join(ALGO_DIR, outputFile);
   try {
-    const raw = readFileSync(outputPath, "utf-8");
-    unlinkSync(outputPath);
-    return JSON.parse(raw) as Schedule;
+    const body: Record<string, any> = {
+      course: courseCode,
+      campus: "Clayton",
+    };
+    if (aosCode) body.specialisation = aosCode;
+    if (minorMajorType === "major" && minorMajorCode) body.major = minorMajorCode;
+    if (minorMajorType === "minor" && minorMajorCode) body.minor = minorMajorCode;
+    if (standardYears && Number.isFinite(standardYears)) body.years = standardYears;
+
+    const res = await fetch(ALGO_API_URL, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(body),
+    });
+
+    if (!res.ok) {
+      console.error("Algo API error:", res.status, await res.text());
+      return null;
+    }
+
+    return await res.json() as Schedule;
   } catch (e) {
-    // console.error("Failed to read schedule output:", e);
+    console.error("Algo API call failed:", e);
     return null;
   }
 }
