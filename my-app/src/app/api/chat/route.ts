@@ -1,11 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { GoogleGenerativeAI } from "@google/generative-ai";
-import {
-  getElasticsearchClient,
-  UNITS_INDEX,
-  AOS_INDEX,
-  COURSES_INDEX,
-} from "@/lib/elasticsearch";
+import { getTypesenseClient, UNITS_COLLECTION, AOS_COLLECTION, COURSES_COLLECTION } from "@/lib/typesense";
 import { redis, CHAT_TTL, StoredMessage } from "@/lib/redis";
 
 type ChatMessage = {
@@ -41,67 +36,52 @@ Do not pretend to be an official university advisor — for enrolment-critical d
 
 async function searchContext(query: string): Promise<string> {
   try {
-    const client = getElasticsearchClient();
+    const client = getTypesenseClient();
     const parts: string[] = [];
 
-    const unitResult = await client.search({
-      index: UNITS_INDEX,
-      size: 4,
-      query: {
-        multi_match: {
-          query,
-          fields: ["code^3", "title^2", "overview^1.5", "school"],
-          fuzziness: "AUTO",
-        },
-      },
+    const unitResult = await client.collections(UNITS_COLLECTION).documents().search({
+      q:                query,
+      query_by:         "code,title,overview,school",
+      query_by_weights: "6,4,3,2",
+      num_typos:        2,
+      per_page:         4,
     });
-    if (unitResult.hits.hits.length) {
-      const lines = unitResult.hits.hits.map((h) => {
-        const s = h._source as Record<string, any>;
-        const prereqs =
-          s.prerequisites && s.prerequisites !== "None"
-            ? ` | Prereqs: ${s.prerequisites}`
-            : "";
+    const unitDocs = unitResult.hits?.map((h) => h.document as Record<string, any>) ?? [];
+    if (unitDocs.length) {
+      const lines = unitDocs.map((s) => {
+        const prereqs = s.prerequisites && s.prerequisites !== "None" ? ` | Prereqs: ${s.prerequisites}` : "";
         return `  ${s.code} (L${s.level}, ${s.credit_points}CP): ${s.title}${prereqs}`;
       });
       parts.push(`=== Related Units ===\n${lines.join("\n")}`);
     }
 
-    const aosResult = await client.search({
-      index: AOS_INDEX,
-      size: 3,
-      query: {
-        multi_match: {
-          query,
-          fields: ["course_title^2", "unit_summary"],
-          fuzziness: "AUTO",
-        },
-      },
+    const aosResult = await client.collections(AOS_COLLECTION).documents().search({
+      q:                query,
+      query_by:         "course_title,unit_summary",
+      query_by_weights: "4,2",
+      num_typos:        2,
+      per_page:         3,
     });
-    if (aosResult.hits.hits.length) {
-      const lines = aosResult.hits.hits.map((h) => {
-        const s = h._source as Record<string, any>;
-        return `  ${s.course_code}: ${s.course_title} (${s.total_credit_points}CP total)`;
-      });
+    const aosDocs = aosResult.hits?.map((h) => h.document as Record<string, any>) ?? [];
+    if (aosDocs.length) {
+      const lines = aosDocs.map((s) =>
+        `  ${s.course_code}: ${s.course_title} (${s.total_credit_points}CP total)`,
+      );
       parts.push(`=== Related Areas of Study ===\n${lines.join("\n")}`);
     }
 
-    const courseResult = await client.search({
-      index: COURSES_INDEX,
-      size: 3,
-      query: {
-        multi_match: {
-          query,
-          fields: ["course_title^2", "aos_summary"],
-          fuzziness: "AUTO",
-        },
-      },
+    const courseResult = await client.collections(COURSES_COLLECTION).documents().search({
+      q:                query,
+      query_by:         "course_title,aos_summary",
+      query_by_weights: "4,2",
+      num_typos:        2,
+      per_page:         3,
     });
-    if (courseResult.hits.hits.length) {
-      const lines = courseResult.hits.hits.map((h) => {
-        const s = h._source as Record<string, any>;
-        return `  ${s.course_code}: ${s.course_title} (${s.total_credit_points}CP)`;
-      });
+    const courseDocs = courseResult.hits?.map((h) => h.document as Record<string, any>) ?? [];
+    if (courseDocs.length) {
+      const lines = courseDocs.map((s) =>
+        `  ${s.course_code}: ${s.course_title} (${s.total_credit_points}CP)`,
+      );
       parts.push(`=== Related Courses ===\n${lines.join("\n")}`);
     }
 

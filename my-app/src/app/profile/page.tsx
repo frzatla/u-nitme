@@ -17,8 +17,8 @@ import { spawnSync } from "child_process";
 import { readFileSync, unlinkSync } from "fs";
 import path from "path";
 import { savePendingPlan } from "@/lib/pendingPlan";
-import { getElasticsearchClient, UNITS_INDEX } from "@/lib/elasticsearch";
 import { isAdminUser } from "@/lib/auth";
+import { getTypesenseClient, UNITS_COLLECTION } from "@/lib/typesense";
 
 const ALGO_DIR = path.join(process.cwd(), "..", "algo", "src");
 const AOS_PATH = path.join(ALGO_DIR, "data", "mock_aos.json");
@@ -173,27 +173,23 @@ async function recommendElectives(
       readFileSync(MOCK_UNITS_PATH, "utf-8"),
     );
 
-    const client = getElasticsearchClient();
+    const client = getTypesenseClient();
     const candidateMap = new Map<string, any>();
 
     for (const interest of interests) {
       const keyword = INTEREST_KEYWORDS[interest] ?? interest.toLowerCase();
-      const result = await client.search({
-        index: UNITS_INDEX,
-        size: 15,
-        query: {
-          multi_match: {
-            query: keyword,
-            fields: ["title^2", "overview^1.5", "school"],
-            fuzziness: "AUTO",
-          },
-        },
+      const result = await client.collections(UNITS_COLLECTION).documents().search({
+        q:                keyword,
+        query_by:         "title,overview,school",
+        query_by_weights: "4,3,2",
+        num_typos:        2,
+        per_page:         15,
       });
-      for (const hit of result.hits.hits) {
-        const s = hit._source as any;
+      for (const hit of result.hits ?? []) {
+        const s = hit.document as any;
         if (planUnitCodes.has(s.code) || s.code === "ELECTIVE") continue;
         if (!candidateMap.has(s.code)) {
-          candidateMap.set(s.code, { ...s, _score: (hit as any)._score ?? 0 });
+          candidateMap.set(s.code, { ...s, _score: (hit as any).text_match ?? 0 });
         }
       }
     }
