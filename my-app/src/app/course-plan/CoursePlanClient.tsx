@@ -1,6 +1,6 @@
 "use client";
 
-import { FormEvent, useMemo, useState, useTransition } from "react";
+import { FormEvent, useRef, useEffect, useMemo, useState, useTransition } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import {
@@ -17,6 +17,7 @@ import {
   Pencil,
   Sparkles,
   X,
+  ChevronDown,
 } from "lucide-react";
 import CoursePlanner, { type Semester } from "../../components/CoursePlanner";
 import FloatingChatbot from "../../components/FloatingChatbot";
@@ -62,6 +63,74 @@ function clampEndYear(nextStart: string, nextEnd: string) {
   if (end < start + 2) return String(start + 2);
   if (end > start + 7) return String(start + 7);
   return nextEnd;
+}
+
+// ── Custom dark-themed select (native selects render white dropdowns on Windows) ──
+
+type SelectOption = { value: string; label: string };
+
+function DarkSelect({
+  id,
+  value,
+  onChange,
+  options,
+  placeholder,
+  disabled = false,
+}: {
+  id?: string;
+  value: string;
+  onChange: (value: string) => void;
+  options: SelectOption[];
+  placeholder?: string;
+  disabled?: boolean;
+}) {
+  const [open, setOpen] = useState(false);
+  const ref = useRef<HTMLDivElement>(null);
+  const selected = options.find((o) => o.value === value);
+
+  useEffect(() => {
+    function handleClickOutside(e: MouseEvent) {
+      if (ref.current && !ref.current.contains(e.target as Node)) setOpen(false);
+    }
+    if (open) document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, [open]);
+
+  return (
+    <div ref={ref} className="relative">
+      <button
+        id={id}
+        type="button"
+        disabled={disabled}
+        onClick={() => setOpen((v) => !v)}
+        className="flex w-full items-center justify-between gap-2 rounded-lg border border-white/12 bg-white/[0.08] px-3 py-2 text-xs text-left outline-none transition hover:bg-white/[0.12] disabled:cursor-not-allowed disabled:opacity-50"
+      >
+        <span className={selected ? "text-white truncate" : "text-white/35 truncate"}>
+          {selected ? selected.label : (placeholder ?? "Select...")}
+        </span>
+        <ChevronDown className="h-3.5 w-3.5 shrink-0 text-white/40" />
+      </button>
+
+      {open && !disabled && (
+        <div className="absolute left-0 right-0 top-[calc(100%+4px)] z-50 overflow-hidden rounded-lg border border-white/15 bg-[#1e1e2e] shadow-xl">
+          <div className="max-h-56 overflow-y-auto">
+            {options.map((opt) => (
+              <button
+                key={opt.value}
+                type="button"
+                onClick={() => { onChange(opt.value); setOpen(false); }}
+                className={`w-full px-3 py-2 text-left text-xs transition hover:bg-white/10 ${
+                  opt.value === value ? "bg-white/15 text-white" : "text-white/65"
+                }`}
+              >
+                {opt.label}
+              </button>
+            ))}
+          </div>
+        </div>
+      )}
+    </div>
+  );
 }
 
 const fieldClass =
@@ -410,132 +479,88 @@ export default function CoursePlanClient({
                   <label htmlFor="edit-university" className={labelClass}>
                     University
                   </label>
-                  <select
+                  <DarkSelect
                     id="edit-university"
                     value={details.university}
-                    onChange={(event) =>
-                      setDetails((current) => ({
-                        ...current,
-                        university: event.target.value,
-                      }))
-                    }
-                    className={fieldClass}
-                    required
-                  >
-                    <option value="Monash University">Monash University</option>
-                  </select>
+                    onChange={(value) => setDetails((c) => ({ ...c, university: value }))}
+                    options={[{ value: "Monash University", label: "Monash University" }]}
+                  />
                 </div>
 
                 <div>
                   <label htmlFor="edit-course" className={labelClass}>
                     Course
                   </label>
-                  <select
+                  <DarkSelect
                     id="edit-course"
                     value={details.courseCode}
-                    onChange={(event) => {
-                      const nextCourse = event.target.value;
-                      const nextAosCodes =
-                        coursePlanOptions.courseToAos[nextCourse] ?? [];
-                      setDetails((current) => ({
-                        ...current,
+                    onChange={(nextCourse) => {
+                      const nextAosCodes = coursePlanOptions.courseToAos[nextCourse] ?? [];
+                      setDetails((c) => ({
+                        ...c,
                         courseCode: nextCourse,
-                        areaOfStudy:
-                          nextAosCodes.length === 0
-                            ? NO_AREA_OF_STUDY_VALUE
-                            : "",
+                        areaOfStudy: nextAosCodes.length === 0 ? NO_AREA_OF_STUDY_VALUE : "",
                       }));
                     }}
-                    className={fieldClass}
-                    required
-                  >
-                    <option value="" disabled>
-                      Select course
-                    </option>
-                    {coursePlanOptions.courses.map((course) => (
-                      <option key={course.code} value={course.code}>
-                        {course.code}: {course.title}
-                      </option>
-                    ))}
-                  </select>
+                    placeholder="Select course"
+                    options={coursePlanOptions.courses.map((c) => ({
+                      value: c.code,
+                      label: `${c.code}: ${c.title}`,
+                    }))}
+                  />
                 </div>
 
                 <div>
                   <label htmlFor="edit-aos" className={labelClass}>
                     Area of Study
                   </label>
-                  <select
+                  <DarkSelect
                     id="edit-aos"
-                    value={areaOfStudyValue}
-                    onChange={(event) =>
-                      setDetails((current) => ({
-                        ...current,
-                        areaOfStudy: event.target.value,
-                      }))
-                    }
-                    className={fieldClass}
+                    value={areaOfStudyValue ?? ""}
+                    onChange={(value) => setDetails((c) => ({ ...c, areaOfStudy: value }))}
+                    placeholder={details.courseCode ? "Select area of study" : "Select course first"}
                     disabled={!details.courseCode}
-                    required
-                  >
-                    <option value="" disabled>
-                      {details.courseCode
-                        ? "Select area of study"
-                        : "Select course first"}
-                    </option>
-                    {areaOfStudyOptions.map((aos) => (
-                      <option key={aos.code} value={aos.code}>
-                        {aos.code}: {aos.title}
-                      </option>
-                    ))}
-                  </select>
+                    options={areaOfStudyOptions.map((a) => ({
+                      value: a.code,
+                      label: `${a.code}: ${a.title}`,
+                    }))}
+                  />
                 </div>
 
                 <div>
                   <label htmlFor="edit-offering" className={labelClass}>
                     Offering
                   </label>
-                  <select
+                  <DarkSelect
                     id="edit-offering"
                     value={details.semesterOffering}
-                    onChange={(event) =>
-                      setDetails((current) => ({
-                        ...current,
-                        semesterOffering: event.target.value,
-                      }))
-                    }
-                    className={fieldClass}
-                    required
-                  >
-                    <option value="February">February</option>
-                  </select>
+                    onChange={(value) => setDetails((c) => ({ ...c, semesterOffering: value }))}
+                    options={[{ value: "February", label: "February" }]}
+                  />
                 </div>
 
                 <div>
                   <label htmlFor="edit-minor-major-type" className={labelClass}>
                     Minor / Major
                   </label>
-                  <select
+                  <DarkSelect
                     id="edit-minor-major-type"
                     value={details.minorMajorType}
-                    onChange={(event) => {
-                      const nextType = event.target.value;
+                    onChange={(nextType) => {
                       const nextMax = getMaxInterests(nextType);
-                      setDetails((current) => ({
-                        ...current,
+                      setDetails((c) => ({
+                        ...c,
                         minorMajorType: nextType,
                         minorMajorCode: "",
-                        interests:
-                          current.interests.length > nextMax
-                            ? current.interests.slice(0, nextMax)
-                            : current.interests,
+                        interests: c.interests.length > nextMax ? c.interests.slice(0, nextMax) : c.interests,
                       }));
                     }}
-                    className={fieldClass}
-                  >
-                    <option value="">None</option>
-                    <option value="major">Major</option>
-                    <option value="minor">Minor</option>
-                  </select>
+                    options={[
+                      { value: "", label: "None" },
+                      { value: "major", label: "Major" },
+                      { value: "minor", label: "Minor" },
+                    ]}
+                  />
                 </div>
 
                 <div>
@@ -547,27 +572,17 @@ export default function CoursePlanClient({
                         ? "Minor"
                         : "Option"}
                   </label>
-                  <select
+                  <DarkSelect
                     id="edit-minor-major-code"
                     value={details.minorMajorCode}
-                    onChange={(event) =>
-                      setDetails((current) => ({
-                        ...current,
-                        minorMajorCode: event.target.value,
-                      }))
-                    }
-                    className={fieldClass}
+                    onChange={(value) => setDetails((c) => ({ ...c, minorMajorCode: value }))}
+                    placeholder={details.minorMajorType ? "Select option" : "None"}
                     disabled={!details.minorMajorType}
-                  >
-                    <option value="">
-                      {details.minorMajorType ? "Select option" : "None"}
-                    </option>
-                    {minorMajorOptions.map((option) => (
-                      <option key={option.code} value={option.code}>
-                        {option.code}: {option.title}
-                      </option>
-                    ))}
-                  </select>
+                    options={minorMajorOptions.map((o) => ({
+                      value: o.code,
+                      label: `${o.code}: ${o.title}`,
+                    }))}
+                  />
                 </div>
 
                 <div>

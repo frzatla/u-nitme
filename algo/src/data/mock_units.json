@@ -11857,5 +11857,174 @@
     "school": "Faculty of Engineering",
     "title": "Renewable energy systems",
     "overview": "Covers the design, analysis, and integration of renewable energy systems including solar photovoltaic, wind, and energy storage technologies. Students assess resource availability, design grid-connected and off-grid systems, and evaluate economic and environmental performance."
+  },
+  "MKW1120": {
+    "academic_org": "Faculty of Business and Economics",
+    "assessments": [
+      {
+        "name": "1 - Assignment",
+        "type": "assignment"
+      },
+      {
+        "name": "2 - Group project",
+        "type": "assignment"
+      },
+      {
+        "name": "3 - Examination",
+        "type": "exam"
+      }
+    ],
+    "code": "MKW1120",
+    "credit_points": "6",
+    "level": 1,
+    "offerings": [
+      {
+        "location": "Clayton",
+        "mode": "Teaching activities are on-campus (ON-CAMPUS)",
+        "name": "S1-01-CLAYTON-ON-CAMPUS",
+        "period": "First semester"
+      },
+      {
+        "location": "Clayton",
+        "mode": "Teaching activities are on-campus (ON-CAMPUS)",
+        "name": "S2-01-CLAYTON-ON-CAMPUS",
+        "period": "Second semester"
+      }
+    ],
+    "requisites": {
+      "permission": false,
+      "prerequisites": [],
+      "corequisites": [],
+      "prohibitions": [],
+      "cp_required": 0
+    },
+    "sca_band": 0,
+    "school": "Department of Marketing",
+    "title": "Marketing fundamentals",
+    "overview": "Introduces the core principles of marketing including consumer behaviour, market segmentation, targeting, and positioning. Students examine the marketing mix and develop foundational skills in creating and communicating value to customers in diverse market contexts."
+  },
+  "MKM2300": {
+    "academic_org": "Faculty of Business and Economics",
+    "assessments": [
+      {
+        "name": "1 - Case study analysis",
+        "type": "assignment"
+      },
+      {
+        "name": "2 - Campaign project",
+        "type": "assignment"
+      },
+      {
+        "name": "3 - Examination",
+        "type": "exam"
+      }
+    ],
+    "code": "MKM2300",
+    "credit_points": "6",
+    "level": 2,
+    "offerings": [
+      {
+        "location": "Clayton",
+        "mode": "Some activities have a choice of on-campus or online teaching activities (FLEXIBLE)",
+        "name": "S1-01-CLAYTON-FLEXIBLE",
+        "period": "First semester"
+      }
+    ],
+    "requisites": {
+      "permission": false,
+      "prerequisites": [
+        "MKW1120"
+      ],
+      "corequisites": [],
+      "prohibitions": [],
+      "cp_required": 0
+    },
+    "sca_band": 0,
+    "school": "Department of Marketing",
+    "title": "Introduction to digital marketing",
+    "overview": "Explores the digital marketing landscape including search engine optimisation, social media marketing, email campaigns, and content strategy. Students apply platform-specific tools and metrics to plan and evaluate integrated digital marketing campaigns for real-world brand contexts."
+  },
+  "MKW2420": {
+    "academic_org": "Faculty of Business and Economics",
+    "assessments": [
+      {
+        "name": "1 - Research report",
+        "type": "assignment"
+      },
+      {
+        "name": "2 - Survey design exercise",
+        "type": "other"
+      },
+      {
+        "name": "3 - Examination",
+        "type": "exam"
+      }
+    ],
+    "code": "MKW2420",
+    "credit_points": "6",
+    "level": 2,
+    "offerings": [
+      {
+        "location": "Clayton",
+        "mode": "Some activities have a choice of on-campus or online teaching activities (FLEXIBLE)",
+        "name": "S2-01-CLAYTON-FLEXIBLE",
+        "period": "Second semester"
+      }
+    ],
+    "requisites": {
+      "permission": false,
+      "prerequisites": [
+        "MKW1120"
+      ],
+      "corequisites": [],
+      "prohibitions": [],
+      "cp_required": 0
+    },
+    "sca_band": 0,
+    "school": "Department of Marketing",
+    "title": "Marketing research methods",
+    "overview": "Develops skills in designing and conducting marketing research using both qualitative and quantitative methods. Students learn survey design, focus group facilitation, data collection, and statistical interpretation to generate actionable consumer and market insights."
+  },
+  "MKM3400": {
+    "academic_org": "Faculty of Business and Economics",
+    "assessments": [
+      {
+        "name": "1 - Data analysis project",
+        "type": "assignment"
+      },
+      {
+        "name": "2 - Analytics dashboard presentation",
+        "type": "other"
+      },
+      {
+        "name": "3 - Examination",
+        "type": "exam"
+      }
+    ],
+    "code": "MKM3400",
+    "credit_points": "6",
+    "level": 3,
+    "offerings": [
+      {
+        "location": "Clayton",
+        "mode": "Some activities have a choice of on-campus or online teaching activities (FLEXIBLE)",
+        "name": "S2-01-CLAYTON-FLEXIBLE",
+        "period": "Second semester"
+      }
+    ],
+    "requisites": {
+      "permission": false,
+      "prerequisites": [
+        "MKM2300",
+        "MKW2420"
+      ],
+      "corequisites": [],
+      "prohibitions": [],
+      "cp_required": 0
+    },
+    "sca_band": 0,
+    "school": "Department of Marketing",
+    "title": "Marketing analytics",
+    "overview": "Applies data analytics techniques to marketing decision-making, covering customer lifetime value modelling, attribution analysis, A/B testing, and predictive segmentation. Students use tools such as Google Analytics and Python to extract strategic insights from large marketing datasets."
   }
 }
