@@ -1,20 +1,16 @@
-import { spawnSync } from "child_process";
-import { readFileSync, unlinkSync } from "fs";
+import { readFileSync } from "fs";
 import path from "path";
-import { getElasticsearchClient, UNITS_INDEX } from "@/lib/elasticsearch";
+import { getTypesenseClient, UNITS_COLLECTION } from "@/lib/typesense";
 import { Plan, Schedule, UnitCategory } from "@/lib/types";
 
-const ALGO_DIR = path.join(process.cwd(), "..", "algo", "src");
-const AOS_PATH = path.join(ALGO_DIR, "data", "mock_aos.json");
-const COURSES_PATH = path.join(ALGO_DIR, "data", "mock_courses.json");
-const MOCK_UNITS_PATH = path.join(ALGO_DIR, "data", "mock_units.json");
+const DATA_DIR     = path.join(process.cwd(), "..", "algo", "src", "data");
+const AOS_PATH     = path.join(DATA_DIR, "mock_aos.json");
+const COURSES_PATH = path.join(DATA_DIR, "mock_courses.json");
+const MOCK_UNITS_PATH = path.join(DATA_DIR, "mock_units.json");
 
 export const NO_AREA_OF_STUDY_VALUE = "__NO_AREA_OF_STUDY__";
 
-const PYTHON_COMMANDS =
-  process.platform === "win32"
-    ? ["py", "python", "python3"]
-    : ["python3", "python", "py"];
+const ALGO_API_URL = process.env.ALGO_API_URL ?? "https://u-nitme-algo.vercel.app/api";
 
 export type PlanGenerationInput = {
   planName: string;
@@ -29,25 +25,6 @@ export type PlanGenerationInput = {
   minorMajorCode?: string;
 };
 
-function spawnPython(args: string[]): ReturnType<typeof spawnSync> {
-  for (const cmd of PYTHON_COMMANDS) {
-    const result = spawnSync(cmd, args, {
-      cwd: ALGO_DIR,
-      encoding: "utf-8",
-      timeout: 60000,
-    });
-    if (result.error && (result.error as any).code === "ENOENT") continue;
-    if (result.status === 9009) continue;
-    return result;
-  }
-
-  return spawnSync(PYTHON_COMMANDS[PYTHON_COMMANDS.length - 1], args, {
-    cwd: ALGO_DIR,
-    encoding: "utf-8",
-    timeout: 60000,
-  });
-}
-
 async function runAlgo(
   courseCode: string,
   aosCode: string,
@@ -55,39 +32,30 @@ async function runAlgo(
   minorMajorType?: string,
   minorMajorCode?: string,
 ): Promise<Schedule | null> {
-  const outputFile = `schedule_${crypto.randomUUID()}.json`;
-
-  const args = [
-    "algo1.py",
-    "--course",
-    courseCode,
-    "--specialisation",
-    aosCode,
-    "--campus",
-    "Clayton",
-    "--output",
-    outputFile,
-  ];
-
-  if (minorMajorType === "major" && minorMajorCode) {
-    args.push("--major", minorMajorCode);
-  } else if (minorMajorType === "minor" && minorMajorCode) {
-    args.push("--minor", minorMajorCode);
-  }
-
-  if (standardYears && Number.isFinite(standardYears)) {
-    args.push("--years", String(standardYears));
-  }
-
-  const result = spawnPython(args);
-  if (result.status !== 0) return null;
-
-  const outputPath = path.join(ALGO_DIR, outputFile);
   try {
-    const raw = readFileSync(outputPath, "utf-8");
-    unlinkSync(outputPath);
-    return JSON.parse(raw) as Schedule;
-  } catch {
+    const body: Record<string, any> = {
+      course: courseCode,
+      campus: "Clayton",
+    };
+    if (aosCode) body.specialisation = aosCode;
+    if (minorMajorType === "major" && minorMajorCode) body.major = minorMajorCode;
+    if (minorMajorType === "minor" && minorMajorCode) body.minor = minorMajorCode;
+    if (standardYears && Number.isFinite(standardYears)) body.years = standardYears;
+
+    const res = await fetch(ALGO_API_URL, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(body),
+    });
+
+    if (!res.ok) {
+      console.error("Algo API error:", res.status, await res.text());
+      return null;
+    }
+
+    return await res.json() as Schedule;
+  } catch (e) {
+    console.error("Algo API call failed:", e);
     return null;
   }
 }
@@ -154,28 +122,24 @@ async function recommendElectives(
       readFileSync(MOCK_UNITS_PATH, "utf-8"),
     );
 
-    const client = getElasticsearchClient();
+    const client = getTypesenseClient();
     const candidateMap = new Map<string, any>();
 
     for (const interest of interests) {
       const keyword = INTEREST_KEYWORDS[interest] ?? interest.toLowerCase();
-      const result = await client.search({
-        index: UNITS_INDEX,
-        size: 15,
-        query: {
-          multi_match: {
-            query: keyword,
-            fields: ["title^2", "overview^1.5", "school"],
-            fuzziness: "AUTO",
-          },
-        },
+      const result = await client.collections(UNITS_COLLECTION).documents().search({
+        q:                keyword,
+        query_by:         "title,overview,school",
+        query_by_weights: "4,3,2",
+        num_typos:        2,
+        per_page:         15,
       });
 
-      for (const hit of result.hits.hits) {
-        const s = hit._source as any;
+      for (const hit of result.hits ?? []) {
+        const s = hit.document as any;
         if (planUnitCodes.has(s.code) || s.code === "ELECTIVE") continue;
         if (!candidateMap.has(s.code)) {
-          candidateMap.set(s.code, { ...s, _score: (hit as any)._score ?? 0 });
+          candidateMap.set(s.code, { ...s, _score: (hit as any).text_match ?? 0 });
         }
       }
     }
