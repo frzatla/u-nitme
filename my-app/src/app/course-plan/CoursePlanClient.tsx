@@ -67,7 +67,8 @@ function clampEndYear(nextStart: string, nextEnd: string) {
 const fieldClass =
   "w-full rounded-lg border border-white/12 bg-white/[0.08] px-3 py-2 text-xs text-white outline-none transition focus:border-white/30 focus:bg-white/[0.12]";
 
-const labelClass = "mb-1.5 block text-[10px] uppercase tracking-[0.16em] text-white/35";
+const labelClass =
+  "mb-1.5 block text-[10px] uppercase tracking-[0.16em] text-white/35";
 
 function buildUnitQueue(schedule: Schedule): Map<string, ScheduledUnit[]> {
   const map = new Map<string, ScheduledUnit[]>();
@@ -143,7 +144,7 @@ export default function CoursePlanClient({
   );
   const [isSaving, startTransition] = useTransition();
   const [validateModalOpen, setValidateModalOpen] = useState(false);
-  const [mockPass, setMockPass] = useState(false);
+  const [mockPass, setMockPass] = useState(true);
   const [isRegenerating, startRegenerateTransition] = useTransition();
   const [isEditingDetails, setIsEditingDetails] = useState(false);
   const [details, setDetails] = useState(() => ({
@@ -155,7 +156,8 @@ export default function CoursePlanClient({
       : initialPlan.schedule?.minor
         ? "minor"
         : "",
-    minorMajorCode: initialPlan.schedule?.major || initialPlan.schedule?.minor || "",
+    minorMajorCode:
+      initialPlan.schedule?.major || initialPlan.schedule?.minor || "",
     interests: initialPlan.interests ?? [],
     semesterOffering: initialPlan.semesterOffering || "February",
     yearStart: String(initialPlan.yearStart || ""),
@@ -163,14 +165,21 @@ export default function CoursePlanClient({
   }));
 
   const filteredAos = useMemo(() => {
-    if (!details.courseCode || !coursePlanOptions.courseToAos[details.courseCode]) {
+    if (
+      !details.courseCode ||
+      !coursePlanOptions.courseToAos[details.courseCode]
+    ) {
       return [];
     }
 
     return coursePlanOptions.aosList.filter((aos) =>
       coursePlanOptions.courseToAos[details.courseCode].includes(aos.code),
     );
-  }, [coursePlanOptions.aosList, coursePlanOptions.courseToAos, details.courseCode]);
+  }, [
+    coursePlanOptions.aosList,
+    coursePlanOptions.courseToAos,
+    details.courseCode,
+  ]);
 
   const areaOfStudyOptions =
     details.courseCode && filteredAos.length === 0
@@ -723,7 +732,9 @@ export default function CoursePlanClient({
             onClick={(e) => e.stopPropagation()}
           >
             {/* Header — colour signals pass/fail immediately */}
-            <div className={`flex items-center justify-between px-5 py-4 ${mockPass ? "bg-emerald-600" : "bg-red-500"}`}>
+            <div
+              className={`flex items-center justify-between px-5 py-4 ${mockPass ? "bg-emerald-600" : "bg-red-500"}`}
+            >
               <div className="flex items-center gap-3">
                 <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-white/20">
                   <GraduationCap className="h-4 w-4 text-white" />
@@ -733,7 +744,9 @@ export default function CoursePlanClient({
                     Plan Validation
                   </p>
                   <p className="text-[12px] text-white/70">
-                    {mockPass ? "All requirements satisfied" : "Some requirements not met"}
+                    {mockPass
+                      ? "All requirements satisfied"
+                      : "Some requirements not met"}
                   </p>
                 </div>
               </div>
@@ -748,21 +761,33 @@ export default function CoursePlanClient({
             {/* Checklist — TODO: replace mock checks with real graduation requirement logic */}
             <div className="divide-y divide-black/[0.06] px-5">
               {[
-                { label: "Minimum credit points met",        Icon: Award      },
-                { label: "Core units all scheduled",         Icon: BookOpen   },
-                { label: "Specialisation requirements covered", Icon: Target  },
-                { label: "No prerequisite conflicts detected",  Icon: GitBranch },
-                { label: "Elective slots filled",            Icon: LayoutGrid },
+                { label: "Minimum credit points met", Icon: Award },
+                { label: "Core units all scheduled", Icon: BookOpen },
+                { label: "Specialisation requirements covered", Icon: Target },
+                {
+                  label: "No prerequisite conflicts detected",
+                  Icon: GitBranch,
+                },
+                { label: "Elective slots filled", Icon: LayoutGrid },
               ].map(({ label, Icon }) => (
-                <div key={label} className="flex items-center justify-between py-3.5">
+                <div
+                  key={label}
+                  className="flex items-center justify-between py-3.5"
+                >
                   <div className="flex items-center gap-3">
-                    <Icon className={`h-4 w-4 shrink-0 ${mockPass ? "text-emerald-500" : "text-red-400"}`} />
+                    <Icon
+                      className={`h-4 w-4 shrink-0 ${mockPass ? "text-emerald-500" : "text-red-400"}`}
+                    />
                     <span className="text-[13px] text-black/60">{label}</span>
                   </div>
                   {mockPass ? (
-                    <span className="text-[11px] font-semibold uppercase tracking-[0.06em] text-emerald-600">Pass</span>
+                    <span className="text-[11px] font-semibold uppercase tracking-[0.06em] text-emerald-600">
+                      Pass
+                    </span>
                   ) : (
-                    <span className="text-[11px] font-semibold uppercase tracking-[0.06em] text-red-500">Fail</span>
+                    <span className="text-[11px] font-semibold uppercase tracking-[0.06em] text-red-500">
+                      Fail
+                    </span>
                   )}
                 </div>
               ))}
@@ -771,8 +796,12 @@ export default function CoursePlanClient({
             {/* Footer */}
             <div className="border-t border-black/[0.06] px-5 py-4">
               <div className="flex items-center justify-between">
-                <p className={`text-[13px] font-medium ${mockPass ? "text-emerald-600" : "text-red-500"}`}>
-                  {mockPass ? "✓ On track to graduate" : "✗ Requirements not met"}
+                <p
+                  className={`text-[13px] font-medium ${mockPass ? "text-emerald-600" : "text-red-500"}`}
+                >
+                  {mockPass
+                    ? "✓ On track to graduate"
+                    : "✗ Requirements not met"}
                 </p>
                 <button
                   onClick={() => setValidateModalOpen(false)}
