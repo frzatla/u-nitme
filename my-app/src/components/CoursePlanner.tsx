@@ -175,6 +175,8 @@ function getSummary(semesters: Semester[], schedule: Schedule): Summary {
   semesters.forEach((sem) =>
     sem.units.forEach((u) => {
       if (!u) return;
+      // Unselected ELECTIVE placeholders don't count as planned units or CP
+      if (u.code === SELECTABLE_PLACEHOLDER_CODE) return;
       totalPlannedUnits++;
       totalCredits += u.cp ?? 6;
       breakdown[u.category] = (breakdown[u.category] ?? 0) + 1;
@@ -397,10 +399,7 @@ function UnitCardContent({
           </p>
         </div>
         <div className="mt-5 border-t border-black/[0.06] pt-3">
-          <div className="flex items-center justify-between">
-            <span className="text-[13px] font-medium text-black/25">
-              {unit.cp} CP
-            </span>
+          <div className="flex items-center justify-end">
             <Search className="h-4 w-4 text-[#DD8255]/40" />
           </div>
         </div>
