@@ -1,8 +1,8 @@
-import Typesense from "typesense";
+import { Client } from "typesense";
 
-let tsClient: Typesense.Client | null = null;
+let tsClient: Client | null = null;
 
-export function getTypesenseClient(): Typesense.Client {
+export function getTypesenseClient(): Client {
   if (!tsClient) {
     const host   = process.env.TYPESENSE_HOST;
     const apiKey = process.env.TYPESENSE_SEARCH_KEY;
@@ -11,7 +11,7 @@ export function getTypesenseClient(): Typesense.Client {
       throw new Error("Missing TYPESENSE_HOST or TYPESENSE_SEARCH_KEY environment variables");
     }
 
-    tsClient = new Typesense.Client({
+    tsClient = new Client({
       nodes: [{ host, port: 443, protocol: "https" }],
       apiKey,
       connectionTimeoutSeconds: 5,
