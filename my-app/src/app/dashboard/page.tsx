@@ -178,15 +178,17 @@ export default async function DashboardPage() {
               {plans.map((plan, index) => {
                 const start = Number(plan?.yearStart);
                 const end = Number(plan?.yearEnd);
-                const unitCount =
-                  plan.schedule?.summary.total_units ??
-                  (Number.isFinite(start) &&
-                  Number.isFinite(end) &&
-                  end >= start
+                // Count non-ELECTIVE units across all semesters (matches plan page stats)
+                const allUnits = plan.schedule?.schedule.flatMap((s) => s.units) ?? [];
+                const placedUnits = allUnits.filter((u) => u.code !== "ELECTIVE");
+                const unitCount = plan.schedule
+                  ? placedUnits.length
+                  : Number.isFinite(start) && Number.isFinite(end) && end >= start
                     ? (end - start + 1) * 8
-                    : 0);
-                const totalCredits =
-                  plan.schedule?.summary.total_cp ?? unitCount * 6;
+                    : 0;
+                const totalCredits = plan.schedule
+                  ? placedUnits.reduce((sum, u) => sum + (u.credit_points ?? 6), 0)
+                  : unitCount * 6;
 
                 return (
                   <div
